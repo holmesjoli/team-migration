@@ -10,4 +10,9 @@ https://cadmus.eui.eu//handle/1814/73190
 git clone https://github.com/holmesjoli/team-migration.git
 ```
 
+# To render Rmarkdown
 
+```
+Cntrl+Shift+K
+Cmd+Shift+K
+```
