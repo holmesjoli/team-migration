@@ -2,11 +2,9 @@
 title: EDA
 ---
 
-
 ```{r, include = FALSE}
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 ```
-
 
 ```{r}
 library(magrittr)
@@ -34,6 +32,8 @@ n_acq <- length(acq_codes)
 
 loss_codes <- df_long %>% filter(loss) %>% distinct(code) %>% pull()
 n_loss <- length(loss_codes)
+
+n_cntry <- df %>% distinct(country) %>% pull() %>% length()
 ```
 
 * Number **acquisition** variables: `r n_acq`
@@ -41,3 +41,53 @@ n_loss <- length(loss_codes)
 
 * Number **loss** variables: `r n_loss`
 * **Loss** variables: `r loss_codes`
+
+* Number of countries: `r n_cntry`
+
+## Countries with 99 in A06 code
+
+```{r}
+df_long %>%
+  filter(bin) %>%
+  filter(acq) %>%
+  filter(values == 99) %>% 
+  distinct(country)
+```
+
+## Most common acq codes
+
+```{r}
+acq_code_common <- df_long %>%
+  filter(bin) %>%
+  filter(acq) %>%
+  filter(values == 1) %>%
+  distinct(code, country) %>% 
+  group_by(code) %>% 
+  tally() %>% 
+  arrange(desc(n))
+
+ggplot(acq_code_common, aes(x = reorder(code, -n), y = n)) +
+  geom_bar(stat="identity") +
+  labs(y = "N",
+       x = "Code",
+       title = "Number of countries where a citizen can gain citizenship by code") +
+  ylim(0, n_cntry)
+```
+
+```{r}
+loss_code_common <- df_long %>%
+  filter(bin) %>%
+  filter(loss) %>%
+  filter(values == 1) %>%
+  distinct(code, country) %>% 
+  group_by(code) %>% 
+  tally() %>% 
+  arrange(desc(n))
+
+ggplot(loss_code_common, aes(x = reorder(code, -n), y = n)) +
+  geom_bar(stat="identity") +
+  labs(y = "N",
+       x = "Code",
+       title = "Number of countries where a citizen can lose citizenship by code") +
+  ylim(0, n_cntry)
+```
