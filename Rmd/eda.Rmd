@@ -1,5 +1,6 @@
 ---
 title: EDA
+output: md_document
 ---
 
 ```{r, include = FALSE}
@@ -13,7 +14,7 @@ library(tidyr)
 library(ggplot2)
 library(purrr)
 
-df <- readr::read_csv("./data/data_v1.0_country-year.csv")
+df <- readr::read_csv("../data/data_v1.0_country-year.csv")
 
 df_long <- df %>%
   tidyr::pivot_longer(names_to = "sub_code", values_to = "values", -c(iso3, country, year, region)) %>% 
