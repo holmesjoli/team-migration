@@ -4,7 +4,7 @@ output: md_document
 ---
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, echo = FALSE)
 ```
 
 ```{r}
@@ -62,12 +62,12 @@ acq_code_common <- df_long %>%
   filter(bin) %>%
   filter(acq) %>%
   filter(values == 1) %>%
-  distinct(code, country) %>% 
-  group_by(code) %>% 
+  distinct(code, country, region) %>% 
+  group_by(code, region) %>% 
   tally() %>% 
   arrange(desc(n))
 
-ggplot(acq_code_common, aes(x = reorder(code, -n), y = n)) +
+ggplot(acq_code_common, aes(x = reorder(code, -n), y = n, fill = reorder(region, n))) +
   geom_bar(stat="identity") +
   labs(y = "N",
        x = "Code",
@@ -80,15 +80,21 @@ loss_code_common <- df_long %>%
   filter(bin) %>%
   filter(loss) %>%
   filter(values == 1) %>%
-  distinct(code, country) %>% 
-  group_by(code) %>% 
+  distinct(code, country, region) %>% 
+  group_by(code, region) %>% 
   tally() %>% 
   arrange(desc(n))
 
-ggplot(loss_code_common, aes(x = reorder(code, -n), y = n)) +
+ggplot(loss_code_common, aes(x = reorder(code, -n), y = n, fill = reorder(region, n))) +
   geom_bar(stat="identity") +
   labs(y = "N",
        x = "Code",
        title = "Number of countries where a citizen can lose citizenship by code") +
   ylim(0, n_cntry)
 ```
+
+## Initial Observations
+
+* All countries share at one way to gain citizenship (A01)
+* There isn't one universal way citizens can lose citizenship
+* L13 doesn't apply to any countries in Africa, Oceania, or the Americas

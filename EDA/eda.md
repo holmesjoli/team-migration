@@ -1,28 +1,4 @@
-    library(magrittr)
-    library(dplyr)
-    library(tidyr)
-    library(ggplot2)
-    library(purrr)
-
-    df <- readr::read_csv("../data/data_v1.0_country-year.csv")
-
-    df_long <- df %>%
-      tidyr::pivot_longer(names_to = "sub_code", values_to = "values", -c(iso3, country, year, region)) %>% 
-      mutate(bin = grepl("bin", sub_code),
-             acq = grepl("A", sub_code),
-             loss = grepl("L", sub_code),
-             code = substr(sub_code, 1, 3)
-             )
-
 ## Number of unique codes
-
-    acq_codes <- df_long %>% filter(acq) %>% distinct(code) %>% pull()
-    n_acq <- length(acq_codes)
-
-    loss_codes <- df_long %>% filter(loss) %>% distinct(code) %>% pull()
-    n_loss <- length(loss_codes)
-
-    n_cntry <- df %>% distinct(country) %>% pull() %>% length()
 
 -   Number **acquisition** variables: 24
 
@@ -38,12 +14,6 @@
 -   Number of countries: 190
 
 ## Countries with 99 in A06 code
-
-    df_long %>%
-      filter(bin) %>%
-      filter(acq) %>%
-      filter(values == 99) %>% 
-      distinct(country)
 
     ## # A tibble: 15 x 1
     ##    country    
@@ -66,38 +36,13 @@
 
 ## Most common acq codes
 
-    acq_code_common <- df_long %>%
-      filter(bin) %>%
-      filter(acq) %>%
-      filter(values == 1) %>%
-      distinct(code, country) %>% 
-      group_by(code) %>% 
-      tally() %>% 
-      arrange(desc(n))
-
-    ggplot(acq_code_common, aes(x = reorder(code, -n), y = n)) +
-      geom_bar(stat="identity") +
-      labs(y = "N",
-           x = "Code",
-           title = "Number of countries where a citizen can gain citizenship by code") +
-      ylim(0, n_cntry)
-
 ![](eda_files/figure-markdown_strict/unnamed-chunk-5-1.png)
 
-    loss_code_common <- df_long %>%
-      filter(bin) %>%
-      filter(loss) %>%
-      filter(values == 1) %>%
-      distinct(code, country) %>% 
-      group_by(code) %>% 
-      tally() %>% 
-      arrange(desc(n))
-
-    ggplot(loss_code_common, aes(x = reorder(code, -n), y = n)) +
-      geom_bar(stat="identity") +
-      labs(y = "N",
-           x = "Code",
-           title = "Number of countries where a citizen can lose citizenship by code") +
-      ylim(0, n_cntry)
-
 ![](eda_files/figure-markdown_strict/unnamed-chunk-6-1.png)
+
+## Initial Observations
+
+-   All countries share at one way to gain citizenship (A01)
+-   There isn’t one universal way citizens can lose citizenship
+-   L13 doesn’t apply to any countries in Africa, Oceania, or the
+    Americas
