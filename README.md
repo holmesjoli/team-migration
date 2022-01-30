@@ -17,7 +17,18 @@ Ctrl+Shift+K
 Cmd+Shift+K
 ```
 
-Right now, Rmarkdown is set to knit to a markdown file (.md).
+*Note*: Right now, Rmarkdown is set to knit to a markdown file (.md).
+
+### Update markdown on Github
+
+1. Knit markdown to reflect most up-to-date changes
+2. Add and push the who EDA folder to Github
+
+```
+git add EDA
+git commit -m 'commit message indicating whatever change you made'
+git push
+```
 
 ## Coding and collaborative practices
 
@@ -107,3 +118,10 @@ git commit -m "changed X because Y"
 git push origin master
 ```
 
+## Interesting visualization ideas
+
+* https://wildlife.org/new-radar-visualization-shows-the-flow-of-bird-migrations/
+* https://arushisingh5545.medium.com/how-are-bird-migrations-visualized-b14bfbe3e1ae
+* https://towardsdatascience.com/foraging-spots-detection-in-great-whales-migration-routes-19ee4540930e
+  * Could we do a simulation? 
+* Is there a time of year component to when people move
