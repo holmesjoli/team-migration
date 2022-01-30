@@ -14,6 +14,8 @@ library(tidyr)
 library(ggplot2)
 library(purrr)
 
+source("../R/dm.R")
+
 df <- readr::read_csv("../data/data_v1.0_country-year.csv") %>%
   select(-year)
 
@@ -21,11 +23,15 @@ df_acq <- readr::read_csv("../data/data_v1.0_country-year-mode_acq.csv", na = c(
   filter(article != "No provision") %>%
   select(-year) %>% 
   mutate(cntry_mode_id = paste(iso3, mode_id, sep = "_"))
-  
+
+df_acq_proc <- dm_procedure(df_acq)
+
 df_loss <- readr::read_csv("../data/data_v1.0_country-year-mode_loss.csv", na = c("n.a.", "n.a", "")) %>% 
   filter(article != "No provision") %>%
   select(-year) %>%
   mutate(cntry_mode_id = paste(iso3, mode_id, sep = "_"))
+
+df_loss_proc <- dm_procedure(df_loss)
 
 df_long <- df %>%
   tidyr::pivot_longer(names_to = "mode_id", values_to = "values", -c(iso3, country, region)) %>% 
@@ -40,27 +46,27 @@ df_long <- df %>%
          cntry_mode_id = paste(iso3, mode_id, sep = "_"))
 ```
 
-## Number of unique codes
+## Number of unique modes
 
 ```{r}
-acq_codes <- df_long %>% filter(acq) %>% distinct(code) %>% pull()
-n_acq <- length(acq_codes)
+acq_mode <- df_long %>% filter(acq) %>% distinct(par_mode_id) %>% pull()
+n_acq <- length(acq_mode)
 
-loss_codes <- df_long %>% filter(loss) %>% distinct(code) %>% pull()
-n_loss <- length(loss_codes)
+loss_mode <- df_long %>% filter(loss) %>% distinct(par_mode_id) %>% pull()
+n_loss <- length(loss_mode)
 
 n_cntry <- df %>% distinct(country) %>% pull() %>% length()
 ```
 
 * Number **acquisition** variables: `r n_acq`
-* **Acquisition** variables: `r acq_codes`
+* **Acquisition** variables: `r acq_mode`
 
 * Number **loss** variables: `r n_loss`
-* **Loss** variables: `r loss_codes`
+* **Loss** variables: `r loss_mode`
 
 * Number of countries: `r n_cntry`
 
-## Countries with 99 in A06 code
+## Countries with 99 in A06 mode
 
 ```{r}
 df_long %>%
@@ -70,41 +76,41 @@ df_long %>%
   distinct(country)
 ```
 
-## Most common acq codes
+## Most common acq modes
 
 ```{r}
-acq_code_common <- df_long %>%
+acq_mode_common <- df_long %>%
   filter(bin) %>%
   filter(acq) %>%
   filter(values == 1) %>%
-  distinct(code, country, region) %>% 
-  group_by(code, region) %>% 
+  distinct(par_mode_id, country, region) %>% 
+  group_by(par_mode_id, region) %>% 
   tally() %>% 
   arrange(desc(n))
 
-ggplot(acq_code_common, aes(x = reorder(code, -n), y = n, fill = reorder(region, n))) +
+ggplot(acq_mode_common, aes(x = reorder(par_mode_id, -n), y = n, fill = reorder(region, n))) +
   geom_bar(stat="identity") +
   labs(y = "N",
-       x = "Code",
-       title = "Number of countries where a citizen can gain citizenship by code") +
+       x = "Mode",
+       title = "Number of countries where a citizen can gain citizenship by mode") +
   ylim(0, n_cntry)
 ```
 
 ```{r}
-loss_code_common <- df_long %>%
+loss_mode_common <- df_long %>%
   filter(bin) %>%
   filter(loss) %>%
   filter(values == 1) %>%
-  distinct(code, country, region) %>% 
-  group_by(code, region) %>% 
+  distinct(par_mode_id, country, region) %>% 
+  group_by(par_mode_id, region) %>% 
   tally() %>% 
   arrange(desc(n))
 
-ggplot(loss_code_common, aes(x = reorder(code, -n), y = n, fill = reorder(region, n))) +
+ggplot(loss_mode_common, aes(x = reorder(par_mode_id, -n), y = n, fill = reorder(region, n))) +
   geom_bar(stat="identity") +
   labs(y = "N",
-       x = "Code",
-       title = "Number of countries where a citizen can lose citizenship by code") +
+       x = "Mode",
+       title = "Number of countries where a citizen can lose citizenship by mode") +
   ylim(0, n_cntry)
 ```
 
@@ -129,6 +135,7 @@ ggplot(acq_top_10 %>%
        title = "Top ten countries with the fewest ways to acquire citizenship") +
    theme(axis.text.x = element_text(angle = 65, vjust = 0.5, hjust=1))
 ```
+
 ```{r}
 ggplot(acq_top_10,
        aes(x = n, fill = region, color = region)) +
@@ -139,8 +146,23 @@ ggplot(acq_top_10,
    theme(axis.text.x = element_text(angle = 65, hjust=1))
 ```
 
-
 * Median number of ways to acquire citizenship: `r median(acq_top_10$n)`
+
+## Procedure of acquisition
+
+```{r}
+ggplot(df_acq_proc %>% 
+         group_by(procedure) %>% 
+         tally(), 
+       aes(x = reorder(procedure, -n), y = n)) +
+  geom_bar(stat="identity") +
+  labs(y = "N",
+       x = "Procedure",
+       title = "Procedure to acquire citizenship",
+       caption = "There may be more than one procedure per acquisition mode") +
+   theme(axis.text.x = element_text(angle = 65, hjust=1))
+
+```
 
 ## Losing citizenship by country
 
@@ -175,6 +197,22 @@ ggplot(loss_top_10,
 ```
 
 * Median number of ways to lose citizenship: `r median(loss_top_10$n)`
+
+## Procedure of acquisition
+
+```{r}
+ggplot(df_loss_proc %>% 
+         group_by(procedure) %>% 
+         tally(), 
+       aes(x = reorder(procedure, -n), y = n)) +
+  geom_bar(stat="identity") +
+  labs(y = "N",
+       x = "Procedure",
+       title = "Procedure to loss citizenship",
+       caption = "There may be more than one procedure per loss mode") +
+   theme(axis.text.x = element_text(angle = 65, hjust=1))
+
+```
 
 ## Initial Observations
 

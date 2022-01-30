@@ -1,4 +1,4 @@
-## Number of unique codes
+## Number of unique modes
 
 -   Number **acquisition** variables: 24
 
@@ -13,7 +13,7 @@
 
 -   Number of countries: 190
 
-## Countries with 99 in A06 code
+## Countries with 99 in A06 mode
 
     ## # A tibble: 15 x 1
     ##    country    
@@ -34,7 +34,7 @@
     ## 14 Uruguay    
     ## 15 Yemen
 
-## Most common acq codes
+## Most common acq modes
 
 ![](eda_files/figure-markdown_strict/unnamed-chunk-5-1.png)
 
@@ -43,17 +43,26 @@
 ## Acquiring citizenship by country
 
 ![](eda_files/figure-markdown_strict/unnamed-chunk-7-1.png)
+
 ![](eda_files/figure-markdown_strict/unnamed-chunk-8-1.png)
 
 -   Median number of ways to acquire citizenship: 15
 
-## Losing citizenship by country
+## Procedure of acquisition
 
 ![](eda_files/figure-markdown_strict/unnamed-chunk-9-1.png)
 
+## Losing citizenship by country
+
 ![](eda_files/figure-markdown_strict/unnamed-chunk-10-1.png)
 
+![](eda_files/figure-markdown_strict/unnamed-chunk-11-1.png)
+
 -   Median number of ways to lose citizenship: 5
+
+## Procedure of acquisition
+
+![](eda_files/figure-markdown_strict/unnamed-chunk-12-1.png)
 
 ## Initial Observations
 
