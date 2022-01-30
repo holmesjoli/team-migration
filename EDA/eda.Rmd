@@ -14,15 +14,30 @@ library(tidyr)
 library(ggplot2)
 library(purrr)
 
-df <- readr::read_csv("../data/data_v1.0_country-year.csv")
+df <- readr::read_csv("../data/data_v1.0_country-year.csv") %>%
+  select(-year)
+
+df_acq <- readr::read_csv("../data/data_v1.0_country-year-mode_acq.csv", na = c("n.a.", "n.a", "")) %>%
+  filter(article != "No provision") %>%
+  select(-year) %>% 
+  mutate(cntry_mode_id = paste(iso3, mode_id, sep = "_"))
+  
+df_loss <- readr::read_csv("../data/data_v1.0_country-year-mode_loss.csv", na = c("n.a.", "n.a", "")) %>% 
+  filter(article != "No provision") %>%
+  select(-year) %>%
+  mutate(cntry_mode_id = paste(iso3, mode_id, sep = "_"))
 
 df_long <- df %>%
-  tidyr::pivot_longer(names_to = "sub_code", values_to = "values", -c(iso3, country, year, region)) %>% 
-  mutate(bin = grepl("bin", sub_code),
-         acq = grepl("A", sub_code),
-         loss = grepl("L", sub_code),
-         code = substr(sub_code, 1, 3)
-         )
+  tidyr::pivot_longer(names_to = "sub_mode_id", values_to = "values", -c(iso3, country, region)) %>% 
+  tidyr::separate(sub_mode_id,
+                  into = c("sub_mode_id", "type"),
+                  sep = "([(_)])") %>%
+  mutate(mode_id = substr(sub_mode_id, 1, 3),
+         acq = grepl("A", sub_mode_id),
+         loss = grepl("L", sub_mode_id),
+         bin = "bin" == type,
+         cat = "cat" == type,
+         cntry_mode_id = paste(iso3, mode_id, sep = "_"))
 ```
 
 ## Number of unique codes
