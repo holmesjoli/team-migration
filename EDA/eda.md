@@ -40,14 +40,14 @@
 
 ![](eda_files/figure-markdown_strict/unnamed-chunk-6-1.png)
 
-## Countries with the fewest ways to gain citizenship
+## Acquiring citizenship by country
 
 ![](eda_files/figure-markdown_strict/unnamed-chunk-7-1.png)
 ![](eda_files/figure-markdown_strict/unnamed-chunk-8-1.png)
 
 -   Median number of ways to acquire citizenship: 15
 
-## Countries with the most ways to lose citizenship
+## Losing citizenship by country
 
 ![](eda_files/figure-markdown_strict/unnamed-chunk-9-1.png)
 

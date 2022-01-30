@@ -93,7 +93,7 @@ ggplot(loss_code_common, aes(x = reorder(code, -n), y = n, fill = reorder(region
   ylim(0, n_cntry)
 ```
 
-## Countries with the fewest ways to gain citizenship
+## Acquiring citizenship by country
 
 ```{r}
 acq_top_10 <- df_long %>%
@@ -127,7 +127,7 @@ ggplot(acq_top_10,
 
 * Median number of ways to acquire citizenship: `r median(acq_top_10$n)`
 
-## Countries with the most ways to lose citizenship
+## Losing citizenship by country
 
 ```{r}
 loss_top_10 <- df_long %>%
