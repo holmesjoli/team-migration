@@ -28,13 +28,13 @@ df_loss <- readr::read_csv("../data/data_v1.0_country-year-mode_loss.csv", na = 
   mutate(cntry_mode_id = paste(iso3, mode_id, sep = "_"))
 
 df_long <- df %>%
-  tidyr::pivot_longer(names_to = "sub_mode_id", values_to = "values", -c(iso3, country, region)) %>% 
-  tidyr::separate(sub_mode_id,
-                  into = c("sub_mode_id", "type"),
+  tidyr::pivot_longer(names_to = "mode_id", values_to = "values", -c(iso3, country, region)) %>% 
+  tidyr::separate(mode_id,
+                  into = c("mode_id", "type"),
                   sep = "([(_)])") %>%
-  mutate(mode_id = substr(sub_mode_id, 1, 3),
-         acq = grepl("A", sub_mode_id),
-         loss = grepl("L", sub_mode_id),
+  mutate(par_mode_id = substr(mode_id, 1, 3),
+         acq = grepl("A", mode_id),
+         loss = grepl("L", mode_id),
          bin = "bin" == type,
          cat = "cat" == type,
          cntry_mode_id = paste(iso3, mode_id, sep = "_"))
