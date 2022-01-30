@@ -93,6 +93,74 @@ ggplot(loss_code_common, aes(x = reorder(code, -n), y = n, fill = reorder(region
   ylim(0, n_cntry)
 ```
 
+## Countries with the fewest ways to gain citizenship
+
+```{r}
+acq_top_10 <- df_long %>%
+    filter(bin) %>%
+    filter(acq) %>%
+    filter(values == 1) %>% 
+    group_by(country, region) %>% 
+    tally() %>% 
+    arrange(n) %>%
+    ungroup()
+
+ggplot(acq_top_10 %>% 
+    slice(1:10), 
+       aes(x = reorder(country, n), y = n)) +
+  geom_bar(stat="identity") +
+  labs(y = "N",
+       x = "Country",
+       title = "Top ten countries with the fewest ways to acquire citizenship") +
+   theme(axis.text.x = element_text(angle = 65, vjust = 0.5, hjust=1))
+```
+```{r}
+ggplot(acq_top_10,
+       aes(x = reorder(country, n), y = n, fill = region)) +
+  geom_bar(stat="identity") +
+  labs(y = "N",
+       x = "Country",
+       title = "Number of ways to acquire citizenship by country") +
+   theme(axis.text.x = element_text(angle = 65, hjust=1))
+```
+
+
+* Median number of ways to acquire citizenship: `r median(acq_top_10$n)`
+
+## Countries with the most ways to lose citizenship
+
+```{r}
+loss_top_10 <- df_long %>%
+    filter(bin) %>%
+    filter(loss) %>%
+    filter(values == 1) %>% 
+    group_by(country, region) %>% 
+    tally() %>% 
+    arrange(desc(n)) %>%
+    ungroup()
+
+ggplot(loss_top_10 %>% 
+    slice(1:10), 
+       aes(x = reorder(country, -n), y = n)) +
+  geom_bar(stat="identity") +
+  labs(y = "N",
+       x = "Country",
+       title = "Top ten countries with the most ways to lose citizenship") +
+   theme(axis.text.x = element_text(angle = 65, vjust = 0.5, hjust=1))
+```
+
+```{r}
+ggplot(loss_top_10,
+       aes(x = reorder(country, -n), y = n, fill = region)) +
+  geom_bar(stat="identity") +
+  labs(y = "N",
+       x = "Country",
+       title = "Number of ways to loss citizenship by country") +
+   theme(axis.text.x = element_text(angle = 65, hjust=1))
+```
+
+* Median number of ways to lose citizenship: `r median(loss_top_10$n)`
+
 ## Initial Observations
 
 * All countries share at one way to gain citizenship (A01)
