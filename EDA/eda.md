@@ -61,3 +61,7 @@
 -   There isn’t one universal way citizens can lose citizenship
 -   L13 doesn’t apply to any countries in Africa, Oceania, or the
     Americas
+-   The average European country has more ways to acquire citizenship
+    than the average country from another region of the world
+-   There is a more uniform distribution across how many ways there are
+    to lose citizenship

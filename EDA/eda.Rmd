@@ -116,10 +116,10 @@ ggplot(acq_top_10 %>%
 ```
 ```{r}
 ggplot(acq_top_10,
-       aes(x = reorder(country, n), y = n, fill = region)) +
-  geom_bar(stat="identity") +
-  labs(y = "N",
-       x = "Country",
+       aes(x = n, fill = region, color = region)) +
+  geom_density(alpha = .5) +
+  labs(y = "Density",
+       x = "Number",
        title = "Number of ways to acquire citizenship by country") +
    theme(axis.text.x = element_text(angle = 65, hjust=1))
 ```
@@ -151,11 +151,11 @@ ggplot(loss_top_10 %>%
 
 ```{r}
 ggplot(loss_top_10,
-       aes(x = reorder(country, -n), y = n, fill = region)) +
-  geom_bar(stat="identity") +
-  labs(y = "N",
-       x = "Country",
-       title = "Number of ways to loss citizenship by country") +
+       aes(x = n, fill = region, color = region)) +
+  geom_density(alpha = .5) +
+  labs(y = "Density",
+       x = "Number",
+       title = "Number of ways to lose citizenship by country") +
    theme(axis.text.x = element_text(angle = 65, hjust=1))
 ```
 
@@ -166,3 +166,5 @@ ggplot(loss_top_10,
 * All countries share at one way to gain citizenship (A01)
 * There isn't one universal way citizens can lose citizenship
 * L13 doesn't apply to any countries in Africa, Oceania, or the Americas
+* The average European country has more ways to acquire citizenship than the average country from another region of the world
+* There is a more uniform distribution across how many ways there are to lose citizenship
