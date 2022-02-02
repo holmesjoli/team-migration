@@ -32,3 +32,26 @@ dm_procedure <- function(df, n = 10) {
            specification = stringr::str_trim(specification, "both")) %>% 
     filter(article != "" & procedure != "")
 }
+
+
+df <- readxl::read_excel(pth, sheet = 2, skip = 10) %>%
+  filter(Year == 2020) %>%
+  select(-c(Year, Index))
+
+sex <- c("Total", "Male", "Female")
+
+age_groups <- c("0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34", 
+                "35-39", "40-44", "45-49", "50-54", "55-59", "60-64", "65-69",
+                "70-74", "75+", "Total")
+
+n <- lapply(sex, function(x) {paste(x, age_groups, sep = "_")}) %>% unlist()
+names(df)[6:56] <- n
+
+df <- df %>%
+  pivot_longer(names_to = "variable", values_to = "value", cols = n) %>% 
+  tidyr::separate(variable,
+                  into = c("sex", "age_group"),
+                  sep = "([(_)])")
+  
+
+

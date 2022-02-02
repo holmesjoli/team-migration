@@ -13,13 +13,15 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 library(purrr)
+library(readxl)
 
 source("../R/dm.R")
 
 df <- readr::read_csv("../data/data_v1.0_country-year.csv") %>%
   select(-year)
 
-df_acq <- readr::read_csv("../data/data_v1.0_country-year-mode_acq.csv", na = c("n.a.", "n.a", "")) %>%
+df_acq <- readr::read_csv("../data/data_v1.0_country-year-mode_acq.csv", 
+                          na = c("n.a.", "n.a", "")) %>%
   filter(article != "No provision") %>%
   select(-year) %>% 
   mutate(cntry_mode_id = paste(iso3, mode_id, sep = "_"))
@@ -210,7 +212,8 @@ ggplot(df_loss_proc %>%
        x = "Procedure",
        title = "Procedure to loss citizenship",
        caption = "There may be more than one procedure per loss mode") +
-   theme(axis.text.x = element_text(angle = 65, hjust=1))
+   theme(axis.text.x = element_text(angle = 65, hjust=1)) + 
+  theme_minimal()
 
 ```
 
@@ -221,3 +224,106 @@ ggplot(df_loss_proc %>%
 * L13 doesn't apply to any countries in Africa, Oceania, or the Americas
 * The average European country has more ways to acquire citizenship than the average country from another region of the world
 * There is a more uniform distribution across how many ways there are to lose citizenship
+* The procedure of acquisition can differ from country to country. For example, A01 isn't always automatic Attribution
+
+
+```{r}
+ggplot(df %>%
+         select(country, region, contains("bin")) %>%
+         select(country, region, starts_with("A")) %>%
+         pivot_longer(values_to = "values", 
+                      names_to = "mode_id", 
+                      -c(country, region)) %>%
+        mutate(mode_id = gsub("_cat", "", mode_id),
+               mode_id = gsub("_bin", "", mode_id)) %>% 
+         filter(values != "99") %>%
+         dplyr::group_by(mode_id) %>% 
+         slice(1:14),
+       aes(x = mode_id, y = values, fill = region, color = region, group = factor(country))) +
+  geom_area(position = "identity") +
+  geom_point() +
+  facet_wrap(vars(country)) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust=1, size = 8),
+        panel.grid.minor = element_blank(),
+        panel.grid.major = element_blank(),
+        axis.text.y = element_blank()) +
+  labs(x = "",
+       y = "") +
+  coord_polar()
+```
+
+```{r}
+ggplot(df %>%
+         select(country, iso3, region, contains("bin")) %>%
+         select(country, iso3, region, starts_with("A")) %>%
+         pivot_longer(values_to = "values", 
+                      names_to = "mode_id", 
+                      -c(country, iso3, region)) %>%
+        mutate(mode_id = gsub("_cat", "", mode_id),
+               mode_id = gsub("_bin", "", mode_id)) %>% 
+         filter(values != "99") %>%
+         dplyr::group_by(mode_id) %>% 
+         filter(iso3 %in% c("GBR", "AUS", "NZL", "IND", "ZAF", "USA")),
+       aes(x = mode_id, y = values, fill = region, color = region, group = factor(country))) +
+  geom_area(position = "identity", alpha = .5) +
+  geom_point() +
+  # facet_wrap(vars(country)) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust=1, size = 8),
+        panel.grid.minor = element_blank(),
+        panel.grid.major = element_blank(),
+        axis.text.y = element_blank()) +
+  labs(x = "",
+       y = "") +
+  coord_polar()
+```
+
+```{r}
+
+df_long %>% 
+  filter(acq) %>% 
+  filter(bin)
+
+
+cntrys <- unique(df_long$iso3)
+
+z <- lapply(cntrys, function(i) {
+
+  pos <- grep(i, cntrys)
+
+  lapply(cntrys[pos+1:length(cntrys)], function(j) {
+    
+    if (!is.na(j)) {
+
+    df1 <- df_long %>% 
+          filter(acq) %>% 
+          filter(bin) %>% 
+          filter(iso3 %in% c(i, j)) %>% 
+      select(iso3, mode_id, values) %>%
+      pivot_wider(names_from = iso3, values_from = values)
+    
+    pct <- sum(df1[[2]] == df1[[3]])/length(eq)
+  
+    return(data.frame(
+               cntry1 = i,
+               cntry2 = j,
+               pct = pct)
+    )
+    
+    } else {
+      return(NULL)
+    }
+      
+  }) %>% plyr::compact() %>% dplyr::bind_rows()
+  
+}) %>% dplyr::bind_rows()
+
+
+z2 <- z %>%
+  mutate(id = seq(1, n(), 1)) %>%
+  pivot_longer(names_to = "name", values_to = "iso3", -c(id, pct)) %>% 
+  select(-name) %>% 
+  left_join(df %>% select(iso3, country, region)) %>% 
+  pivot_wider(names_from = id, values_from = iso3)
+```
