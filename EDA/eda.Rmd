@@ -214,6 +214,12 @@ ggplot(df_loss_proc %>%
 
 ```
 
+```{r}
+
+# Here is some new code that I will write
+
+```
+
 ## Initial Observations
 
 * All countries share at one way to gain citizenship (A01)
