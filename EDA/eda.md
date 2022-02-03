@@ -74,3 +74,5 @@
     than the average country from another region of the world
 -   There is a more uniform distribution across how many ways there are
     to lose citizenship
+-   Some countries have the "no requirement" for law A06b,c,d,e,f for aquiring the citizenship
+-   Some countries have option for duel-citizenship but with specific conditions or if they have relation treaty with other countries. 
