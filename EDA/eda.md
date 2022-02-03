@@ -64,6 +64,14 @@
 
 ![](eda_files/figure-markdown_strict/unnamed-chunk-12-1.png)
 
+## Visualizing similarity in countries aquisitions spacially
+
+![](eda_files/figure-markdown_strict/unnamed-chunk-13-1.png)
+
+### Comparing colonized countries with their colonizer
+
+![](eda_files/figure-markdown_strict/unnamed-chunk-14-1.png)
+
 ## Initial Observations
 
 -   All countries share at one way to gain citizenship (A01)
@@ -74,5 +82,7 @@
     than the average country from another region of the world
 -   There is a more uniform distribution across how many ways there are
     to lose citizenship
--   Some countries have the "no requirement" for law A06b,c,d,e,f for aquiring the citizenship
--   Some countries have option for duel-citizenship but with specific conditions or if they have relation treaty with other countries. 
+-   The procedure of acquisition can differ from country to country. For
+    example, A01 isn’t always automatic Attribution
+-   There may be some overlap in acquisition laws depending on if the
+    country was colonized
