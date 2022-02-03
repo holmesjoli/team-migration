@@ -217,15 +217,8 @@ ggplot(df_loss_proc %>%
 
 ```
 
-## Initial Observations
 
-* All countries share at one way to gain citizenship (A01)
-* There isn't one universal way citizens can lose citizenship
-* L13 doesn't apply to any countries in Africa, Oceania, or the Americas
-* The average European country has more ways to acquire citizenship than the average country from another region of the world
-* There is a more uniform distribution across how many ways there are to lose citizenship
-* The procedure of acquisition can differ from country to country. For example, A01 isn't always automatic Attribution
-
+## Visualizing similarity in countries aquisitions spacially
 
 ```{r}
 ggplot(df %>%
@@ -253,6 +246,8 @@ ggplot(df %>%
   coord_polar()
 ```
 
+### Comparing colonized countries with their colonizer
+
 ```{r}
 ggplot(df %>%
          select(country, iso3, region, contains("bin")) %>%
@@ -268,7 +263,7 @@ ggplot(df %>%
        aes(x = mode_id, y = values, fill = region, color = region, group = factor(country))) +
   geom_area(position = "identity", alpha = .5) +
   geom_point() +
-  # facet_wrap(vars(country)) +
+  facet_wrap(vars(country)) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust=1, size = 8),
         panel.grid.minor = element_blank(),
@@ -279,51 +274,14 @@ ggplot(df %>%
   coord_polar()
 ```
 
-```{r}
 
-df_long %>% 
-  filter(acq) %>% 
-  filter(bin)
+## Initial Observations
 
+* All countries share at one way to gain citizenship (A01)
+* There isn't one universal way citizens can lose citizenship
+* L13 doesn't apply to any countries in Africa, Oceania, or the Americas
+* The average European country has more ways to acquire citizenship than the average country from another region of the world
+* There is a more uniform distribution across how many ways there are to lose citizenship
+* The procedure of acquisition can differ from country to country. For example, A01 isn't always automatic Attribution
+* There may be some overlap in acquisition laws depending on if the country was colonized
 
-cntrys <- unique(df_long$iso3)
-
-z <- lapply(cntrys, function(i) {
-
-  pos <- grep(i, cntrys)
-
-  lapply(cntrys[pos+1:length(cntrys)], function(j) {
-    
-    if (!is.na(j)) {
-
-    df1 <- df_long %>% 
-          filter(acq) %>% 
-          filter(bin) %>% 
-          filter(iso3 %in% c(i, j)) %>% 
-      select(iso3, mode_id, values) %>%
-      pivot_wider(names_from = iso3, values_from = values)
-    
-    pct <- sum(df1[[2]] == df1[[3]])/length(eq)
-  
-    return(data.frame(
-               cntry1 = i,
-               cntry2 = j,
-               pct = pct)
-    )
-    
-    } else {
-      return(NULL)
-    }
-      
-  }) %>% plyr::compact() %>% dplyr::bind_rows()
-  
-}) %>% dplyr::bind_rows()
-
-
-z2 <- z %>%
-  mutate(id = seq(1, n(), 1)) %>%
-  pivot_longer(names_to = "name", values_to = "iso3", -c(id, pct)) %>% 
-  select(-name) %>% 
-  left_join(df %>% select(iso3, country, region)) %>% 
-  pivot_wider(names_from = id, values_from = iso3)
-```
