@@ -4,10 +4,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="./css/styles.css">
         <script src="https://d3js.org/d3.v7.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous">
+        </script>
     </head>
     <body>
         <h1>Paths to Citizenship</h1>
-        <div id="cntry-input" style="display: inline-block;"></div>
+            <div class="container" style="display:inline-block">
+                <p>There are <span id="nPaths"></span> paths to citizenship in </p>
+                <div class="dropdown">
+                    <div class="select">
+                        <span>Select Country</span>
+                    </div>
+                    <input type="hidden" name="cntry">
+                    <ul class="dropdown-menu" id="cntry-input"></ul>
+                </div>
+            </div>
+        </div>
         <script src="./js/script.js"></script>
     </body>
 </html>

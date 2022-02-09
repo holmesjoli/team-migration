@@ -19,27 +19,47 @@ d3.csv("./data/cit_long.csv").then(function(data) {
     let text = "";
 
     for (let i = 0; i < allCountry.length; i++) {
-
-        if (i === 0) {
-            text += `<input type="radio" id="cntry-input-${allISO3[i]}" class="country--option" name="cntry" value="${allISO3[i]}" checked>
-        <label for="cntry-input-${allISO3[i]}">${allCountry[i]}</label><br>`;
-        } else {
-            text += `<input type="radio" id="cntry-input-${allISO3[i]}" class="country--option" name="cntry" value="${allISO3[i]}">
-        <label for="cntry-input-${allISO3[i]}">${allCountry[i]}</label><br>`;
-        }
+        text += `<li id="${allISO3[i]}">${allCountry[i]}</li>`;
     }
 
     // Auto-populate a set of radio buttons using the country data
     document.getElementById("cntry-input").innerHTML = text;
 
-    // Filter the data according to the users input
-    d3.selectAll(".country--option")
-        .on("click", function() {
+    //Dropdown Menu
+    $('.dropdown').click(function () {
+        $(this).attr('tabindex', 1).focus();
+        $(this).toggleClass('active');
+        $(this).find('.dropdown-menu').slideToggle(300);
+    });
+    $('.dropdown').focusout(function () {
+        $(this).removeClass('active');
+        $(this).find('.dropdown-menu').slideUp(300);
+    });
+    $('.dropdown .dropdown-menu li').click(function () {
+        $(this).parents('.dropdown').find('span').text($(this).text());
+        $(this).parents('.dropdown').find('input').attr('value', $(this).attr('id'));
+    });
 
-        let selectedCntry = d3.select(this).property("value");
+    //End Dropdown Menu
+
+    $('.dropdown-menu li').click(function () {
+        var selectedCntry = $(this).parents('.dropdown').find('input').val();
+        
+    // $('.msg').html(input + '</span>');
+
+
+
+    }); 
+
+    // // Filter the data according to the users input
+    d3.selectAll(".dropdown-menu li").on("click", function() {
+
+        let selectedCntry = d3.select(this)["_groups"][0][0].innerHTML;
+
+        console.log(selectedCntry);
 
         let dataFiltered = data.filter(function(d) {
-            return d.iso3 === selectedCntry & d.bin ==="TRUE";
+            return d.country === selectedCntry & d.bin ==="TRUE";
         });
 
         // Set the number of paths to citizenship
