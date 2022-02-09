@@ -46,6 +46,9 @@ df_long <- df %>%
          bin = "bin" == type,
          cat = "cat" == type,
          cntry_mode_id = paste(iso3, mode_id, sep = "_"))
+
+df_long %>% 
+  readr::write_csv("../data/cit_long.csv")
 ```
 
 ## Number of unique modes
