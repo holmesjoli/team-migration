@@ -31,5 +31,16 @@ d3.csv("./data/cit_long.csv").then(function(data) {
 
     document.getElementById("cntry-input").innerHTML = text;
 
-    let selectedCntry = document.querySelector('input[name="cntry"]:checked').value;
+    d3.selectAll(".country--option")
+        .on("click", function() {
+
+        let selectedCntry = d3.select(this).property("value");
+
+        let dataFiltered = data.filter(function(d) {
+            return d.iso3 === selectedCntry;
+        });
+
+        console.log(dataFiltered);
+    });
+
 });
