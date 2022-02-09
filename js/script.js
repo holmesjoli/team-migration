@@ -1,3 +1,5 @@
+// Title Unique Array
+// Returns the unique values of a variable in a dataset as an array
 function uniqueArray(data, variable) {
 
     let all = data.map(function(d) {
@@ -6,7 +8,6 @@ function uniqueArray(data, variable) {
 
     return [...new Set(all)];
 }
-
 
 d3.csv("./data/cit_long.csv").then(function(data) {
 
