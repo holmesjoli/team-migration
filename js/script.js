@@ -29,18 +29,21 @@ d3.csv("./data/cit_long.csv").then(function(data) {
         }
     }
 
+    // Auto-populate a set of radio buttons using the country data
     document.getElementById("cntry-input").innerHTML = text;
 
+    // Filter the data according to the users input
     d3.selectAll(".country--option")
         .on("click", function() {
 
         let selectedCntry = d3.select(this).property("value");
 
         let dataFiltered = data.filter(function(d) {
-            return d.iso3 === selectedCntry;
+            return d.iso3 === selectedCntry & d.bin ==="TRUE";
         });
 
-        console.log(dataFiltered);
+        // Set the number of paths to citizenship
+        document.getElementById("nPaths").innerHTML = uniqueArray(dataFiltered, "mode_id").length;
     });
 
 });
