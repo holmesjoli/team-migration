@@ -53,6 +53,7 @@ d3.csv("./data/cit_long.csv").then(function(data) {
 
         // Set the number of paths to citizenship
         document.getElementById("nPaths").innerHTML = uniqueArray(dataFiltered, "mode_id").length;
+        document.getElementById("path-sentence").style["visibility"] = "visible";
     });
 
 });
