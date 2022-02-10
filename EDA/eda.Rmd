@@ -48,6 +48,8 @@ df_long <- df %>%
          cntry_mode_id = paste(iso3, mode_id, sep = "_"))
 
 df_long %>% 
+  filter(acq & values > 0) %>% 
+  select(-acq) %>%
   readr::write_csv("../data/cit_long.csv")
 ```
 
