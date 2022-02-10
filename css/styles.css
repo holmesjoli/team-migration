@@ -17,12 +17,6 @@ body {
     background-color: #fafafa
 }
 
-span.choose {
-    color: #555;
-    padding: 5px 0 10px;
-    display: inherit
-}
-
 .container {
     width: 500px;
     text-align: center
