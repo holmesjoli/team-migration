@@ -42,15 +42,6 @@ d3.csv("./data/cit_long.csv").then(function(data) {
 
     //End Dropdown Menu
 
-    $('.dropdown-menu li').click(function () {
-        var selectedCntry = $(this).parents('.dropdown').find('input').val();
-        
-    // $('.msg').html(input + '</span>');
-
-
-
-    }); 
-
     // // Filter the data according to the users input
     d3.selectAll(".dropdown-menu li").on("click", function() {
 
