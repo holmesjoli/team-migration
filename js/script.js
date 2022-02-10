@@ -47,8 +47,6 @@ d3.csv("./data/cit_long.csv").then(function(data) {
 
         let selectedCntry = d3.select(this)["_groups"][0][0].innerHTML;
 
-        console.log(selectedCntry);
-
         let dataFiltered = data.filter(function(d) {
             return d.country === selectedCntry & d.bin ==="TRUE";
         });
