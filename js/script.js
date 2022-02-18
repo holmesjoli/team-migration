@@ -9,15 +9,15 @@ function uniqueArray(data, variable) {
     return [...new Set(all)];
 }
 
-d3.csv("./data/xwalk.csv").then(function(data) {
+d3.csv("./data/xwalk_region.csv").then(function(data) {
 
-    let allCountry = uniqueArray(data, "country");
-    let allISO3 = uniqueArray(data, "iso3");
+    let allSubregion = uniqueArray(data, "subregion");
+    let allSubregionCode = uniqueArray(data, "subregion_code");
 
     let text = "";
 
-    for (let i = 0; i < allCountry.length; i++) {
-        text += `<li id="${allISO3[i]}">${allCountry[i]}</li>`;
+    for (let i = 0; i < allSubregion.length; i++) {
+        text += `<li id="${allSubregionCode[i]}">${allSubregion[i]}</li>`;
     }
 
     // Auto-populate a set of radio buttons using the country data
@@ -43,14 +43,14 @@ d3.csv("./data/xwalk.csv").then(function(data) {
     // // Filter the data according to the users input
     d3.selectAll(".dropdown-menu li").on("click", function() {
 
-        let selectedCntry = d3.select(this)["_groups"][0][0].innerHTML;
+        let selectedRegion = d3.select(this)["_groups"][0][0].innerHTML;
 
         let dataFiltered = data.filter(function(d) {
-            return d.country === selectedCntry & d.bin ==="TRUE";
+            return d.subregion === selectedRegion;
         });
 
         // Set the number of paths to citizenship
-        document.getElementById("nPaths").innerHTML = uniqueArray(dataFiltered, "mode_id").length;
+        document.getElementById("nPaths").innerHTML = uniqueArray(dataFiltered, "region").length;
         document.getElementById("path-sentence").style["visibility"] = "visible";
     });
 });
