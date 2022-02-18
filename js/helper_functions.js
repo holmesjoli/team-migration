@@ -26,3 +26,31 @@ function autoLi(value, valueId, selectorId) {
 
     document.getElementById(selectorId).innerHTML = text;
 }
+
+// Title Create an array one through n
+function arrayOneN(n) {
+    var foo = [];
+    for (var i = 1; i <= n; i++) {
+        foo.push(i);
+    }
+
+    return(foo);
+}
+
+function xPosition(nCol, nRow) {
+
+    const nArray = arrayOneN(nCol);
+    return [].concat.apply([], Array(nRow).fill(nArray));
+}
+
+function yPosition(nCol, nRow) {
+
+    var foo = [];
+    for (var i = 1; i <= nRow; i++) {
+        for (var j = 1; j <= nCol; j++) {
+            foo.push(i);
+        }
+    }
+
+    return foo;
+}
