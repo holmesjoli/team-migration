@@ -9,48 +9,50 @@ function uniqueArray(data, variable) {
     return [...new Set(all)];
 }
 
-d3.csv("./data/xwalk_region.csv").then(function(data) {
+d3.csv("./data/cit_long.csv").then(function(citLong) {
+    d3.csv("./data/xwalk_region.csv").then(function(xwalkRegion) {
 
-    let allSubregion = uniqueArray(data, "subregion");
-    let allSubregionCode = uniqueArray(data, "subregion_code");
+        let allSubregion = uniqueArray(xwalkRegion, "subregion");
+        let allSubregionCode = uniqueArray(xwalkRegion, "subregion_code");
 
-    let text = "";
+        let text = "";
 
-    for (let i = 0; i < allSubregion.length; i++) {
-        text += `<li id="${allSubregionCode[i]}">${allSubregion[i]}</li>`;
-    }
+        for (let i = 0; i < allSubregion.length; i++) {
+            text += `<li id="${allSubregionCode[i]}">${allSubregion[i]}</li>`;
+        }
 
-    // Auto-populate a set of radio buttons using the country data
-    document.getElementById("region-input").innerHTML = text;
+        // Auto-populate a set of radio buttons using the country data
+        document.getElementById("region-input").innerHTML = text;
 
-    //Dropdown Menu
-    $('.dropdown').click(function () {
-        $(this).attr('tabindex', 1).focus();
-        $(this).toggleClass('active');
-        $(this).find('.dropdown-menu').slideToggle(300);
-    });
-    $('.dropdown').focusout(function () {
-        $(this).removeClass('active');
-        $(this).find('.dropdown-menu').slideUp(300);
-    });
-    $('.dropdown .dropdown-menu li').click(function () {
-        $(this).parents('.dropdown').find('span').text($(this).text());
-        $(this).parents('.dropdown').find('input').attr('value', $(this).attr('id'));
-    });
-
-    //End Dropdown Menu
-
-    // // Filter the data according to the users input
-    d3.selectAll(".dropdown-menu li").on("click", function() {
-
-        let selectedRegion = d3.select(this)["_groups"][0][0].innerHTML;
-
-        let dataFiltered = data.filter(function(d) {
-            return d.subregion === selectedRegion;
+        //Dropdown Menu
+        $('.dropdown').click(function () {
+            $(this).attr('tabindex', 1).focus();
+            $(this).toggleClass('active');
+            $(this).find('.dropdown-menu').slideToggle(300);
+        });
+        $('.dropdown').focusout(function () {
+            $(this).removeClass('active');
+            $(this).find('.dropdown-menu').slideUp(300);
+        });
+        $('.dropdown .dropdown-menu li').click(function () {
+            $(this).parents('.dropdown').find('span').text($(this).text());
+            $(this).parents('.dropdown').find('input').attr('value', $(this).attr('id'));
         });
 
-        // Set the number of paths to citizenship
-        document.getElementById("nPaths").innerHTML = uniqueArray(dataFiltered, "region").length;
-        document.getElementById("path-sentence").style["visibility"] = "visible";
+        //End Dropdown Menu
+
+        // // Filter the data according to the users input
+        d3.selectAll(".dropdown-menu li").on("click", function() {
+
+            let selectedRegion = d3.select(this)["_groups"][0][0].innerHTML;
+
+            let dataFiltered = xwalkRegion.filter(function(d) {
+                return d.subregion === selectedRegion;
+            });
+
+            // Set the number of paths to citizenship
+            document.getElementById("nPaths").innerHTML = uniqueArray(dataFiltered, "region").length;
+            document.getElementById("path-sentence").style["visibility"] = "visible";
+        });
     });
 });
