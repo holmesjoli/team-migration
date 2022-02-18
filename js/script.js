@@ -17,12 +17,6 @@ d3.csv("./data/cit_long.csv").then(function(citLong) {
         const allSubregion = uniqueArray(xwalkRegion, "subregion");
         const allSubregionCode = uniqueArray(xwalkRegion, "subregion_code");
         const nCol = 6;
-        const nArray = arrayOneN(nCol);
-        const arrays = Array(2).fill(nArray);
-        var merged = [].concat.apply([], arrays);
-        console.log(merged);
-
-        console.log(xPosition(6, 2, 7));
 
         autoLi(allSubregion, allSubregionCode, "region-input");
 
@@ -58,8 +52,8 @@ d3.csv("./data/cit_long.csv").then(function(citLong) {
 
             // console.log(dataFiltered);
 
-            const width = 1000;
-            const height = 600;
+            const width = 500;
+            const height = 300;
 
             const margin = {top: 50, left: 100, right: 150, bottom: 100};
 
