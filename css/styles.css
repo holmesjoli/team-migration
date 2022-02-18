@@ -31,3 +31,8 @@ body {
     border: 1px black solid;
     height: 70vh;
 }
+
+/*Once we make the map we can delete the property: height: 10vh or make it larger */
+#map {
+    height: 25vh;
+}
