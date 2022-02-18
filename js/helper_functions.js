@@ -27,6 +27,25 @@ function autoLi(value, valueId, selectorId) {
     document.getElementById(selectorId).innerHTML = text;
 }
 
+//Title Generate Matrix
+//Description Geneates the number of columns and number of rows
+//Which depend on the number of countries
+function generateMatrix(nCntry) {
+
+    let nRow;
+
+    if (nCntry > 16) {
+        nRow = 2;
+    } else {
+        nRow = 1;
+    }
+
+    return {
+        nCol: Math.ceil(nCntry/nRow),
+        nRow: nRow
+    }
+}
+
 // Title Create an array one through n
 function arrayOneN(n) {
     var foo = [];
