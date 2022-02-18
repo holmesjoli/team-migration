@@ -10,17 +10,25 @@
     </head>
     <body>
         <h1>Paths to Citizenship</h1>
-            <div class="container" style="display:inline-block">
-                <p id="path-sentence">There are <span id="nPaths"></span> countries in </p>
-                <div class="dropdown">
-                    <div class="select">
-                        <span>Select region</span>
-                    </div>
-                    <input type="hidden" name="region">
-                    <ul class="dropdown-menu" id="region-input"></ul>
+        <div class="container" style="display:inline-block">
+            <div class="dropdown">
+                <div class="select">
+                    <span>Select region</span>
                 </div>
-                <div id="chart"></div>
+                <input type="hidden" name="region">
+                <ul class="dropdown-menu" id="region-input"></ul>
             </div>
+        </div>
+        <div id="map" class="viz">
+            <h2>Migration is natural</h2>
+        </div>
+        <div id="countries" class="viz">
+            <h2>Country selection</h2>
+        </div>
+        <div id="butterfly-path" class="viz">
+            <h2>Paths to citizenships in <span id="selectedCountry"></span></h2>
+            <p id="path-sentence">There are <span id="nPaths"></span> countries in </p>
+        </div>
         </div>
         <script src="./js/script.js"></script>
     </body>
