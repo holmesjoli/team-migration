@@ -56,12 +56,16 @@ function arrayOneN(n) {
     return(foo);
 }
 
+//Title xPosition
+//Description creates an array which can be used to set x
 function xPosition(nCol, nRow) {
 
     const nArray = arrayOneN(nCol);
     return [].concat.apply([], Array(nRow).fill(nArray));
 }
 
+//Title yPosition
+//Description creates an array which can be used to set y
 function yPosition(nCol, nRow) {
 
     var foo = [];
