@@ -34,8 +34,8 @@ d3.csv("./data/cit_long.csv").then(function(citLong) {
                 return d3.ascending(x.country, y.country);
             });
 
-            let selectedCntry = uniqueArray(dataFiltered, "region");
-            let nCntry = selectedCntry.length;
+            let selectedCntries = uniqueArray(dataFiltered, "region");
+            let nCntry = selectedCntries.length;
 
             let dim = generateMatrix(nCntry);
             let nCol = dim.nCol;
@@ -75,6 +75,16 @@ d3.csv("./data/cit_long.csv").then(function(citLong) {
                     .attr("cx", function(d) { return xScale(d.x); })
                     .attr("cy", function(d) { return yScale(d.y); })
                     .attr("r", 10);
+
+            svg.selectAll("text")
+                .data(dataFiltered)
+                .enter()
+                .append("text")
+                    .attr("id", function(d) {return `name-${d.iso3}`;})
+                    .attr("x", function(d) { return xScale(d.x); })
+                    .attr("y", function(d) { return yScale(d.y) + 30; })
+                    .style("text-anchor", "middle")
+                    .text(function(d) {return d.region;});
 
             // Set the number of paths to citizenship
             document.getElementById("nCountry").innerHTML = nCntry;
