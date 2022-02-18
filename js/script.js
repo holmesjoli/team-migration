@@ -31,7 +31,7 @@ d3.csv("./data/cit_long.csv").then(function(citLong) {
             });
 
             // Set the number of paths to citizenship
-            document.getElementById("nPaths").innerHTML = uniqueArray(dataFiltered, "region").length;
+            document.getElementById("nCountry").innerHTML = uniqueArray(dataFiltered, "region").length;
             document.getElementById("path-sentence").style["visibility"] = "visible";
         });
     });
