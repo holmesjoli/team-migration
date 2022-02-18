@@ -16,7 +16,7 @@ body {
 
 .container {
     width: 500px;
-    text-align: center
+    text-align: center;
 }
 
 .container p {
@@ -25,4 +25,9 @@ body {
 
 #nPaths {
     font-weight: bold;
+}
+
+.viz {
+    border: 1px black solid;
+    height: 70vh;
 }
