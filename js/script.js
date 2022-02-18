@@ -29,65 +29,17 @@ d3.csv("./data/cit_long.csv").then(function(citLong) {
             let dataFiltered = xwalkRegion.filter(function(d) {
                 return d.subregion === selectedRegion;
             });
-
+        
             dataFiltered.sort(function(x, y){
                 return d3.ascending(x.country, y.country);
             });
 
-            let selectedCntries = uniqueArray(dataFiltered, "region");
-            let nCntry = selectedCntries.length;
+            const selectedCntries = uniqueArray(dataFiltered, "region");
 
-            let dim = generateMatrix(nCntry);
-            let nCol = dim.nCol;
-            let nRow = dim.nRow;
-
-            let xPos = xPosition(nCol, nRow);
-            let yPos = yPosition(nCol, nRow);
-
-            dataFiltered.forEach(function(d, i) {
-                d.x = xPos[i];
-                d.y = yPos[i];
-            });
-
-            const width = 1200;
-            const height = 300;
-
-            const margin = {top: 50, left: 100, right: 150, bottom: 100};
-
-            const svg = d3.select("#countries")
-                .append("svg")
-                .attr("width", width)
-                .attr("height", height);
-
-            const xScale = d3.scaleLinear()
-                .domain([1, nCol])
-                .range([margin.left, width-margin.right]);
-
-            const yScale = d3.scaleLinear()
-                .domain([1, nRow])
-                .range([height-margin.bottom, margin.top]);
-
-            svg.selectAll("circle")
-                .data(dataFiltered)
-                .enter()
-                .append("circle")
-                    .attr("id", function(d) {return d.iso3;})
-                    .attr("cx", function(d) { return xScale(d.x); })
-                    .attr("cy", function(d) { return yScale(d.y); })
-                    .attr("r", 10);
-
-            svg.selectAll("text")
-                .data(dataFiltered)
-                .enter()
-                .append("text")
-                    .attr("id", function(d) {return `name-${d.iso3}`;})
-                    .attr("x", function(d) { return xScale(d.x); })
-                    .attr("y", function(d) { return yScale(d.y) + 30; })
-                    .style("text-anchor", "middle")
-                    .text(function(d) {return d.region;});
+            countryMenu(dataFiltered, "#countries", selectedCntries);
 
             // Set the number of paths to citizenship
-            document.getElementById("nCountry").innerHTML = nCntry;
+            document.getElementById("nCountry").innerHTML = selectedCntries.length;
             document.getElementById("path-sentence").style["visibility"] = "visible";
         });
     });
