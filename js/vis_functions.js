@@ -1,3 +1,4 @@
+// Generates the Country selection menu
 function countryMenu(dataFiltered, id, selectedCntries) {
 
     const width = 1200;
