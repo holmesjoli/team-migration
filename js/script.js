@@ -17,19 +17,9 @@ d3.csv("./data/cit_long.csv").then(function(citLong) {
         let allSubregion = uniqueArray(xwalkRegion, "subregion");
         let allSubregionCode = uniqueArray(xwalkRegion, "subregion_code");
 
-        let text = "";
+        autoLi(allSubregion, allSubregionCode, "region-input");
 
-        for (let i = 0; i < allSubregion.length; i++) {
-            text += `<li id="${allSubregionCode[i]}">${allSubregion[i]}</li>`;
-        }
-
-        // Auto-populate a set of radio buttons using the country data
-        document.getElementById("region-input").innerHTML = text;
-
-        //Dropdown Menu
         dropdown()
-
-        //End Dropdown Menu
 
         // // Filter the data according to the users input
         d3.selectAll(".dropdown-menu li").on("click", function() {

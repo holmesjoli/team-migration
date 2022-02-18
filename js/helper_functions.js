@@ -14,3 +14,15 @@ function dropdown() {
         $(this).parents('.dropdown').find('input').attr('value', $(this).attr('id'));
     });
 }
+
+// Autopopulate a group of list elements
+function autoLi(value, valueId, selectorId) {
+
+    let text = "";
+
+    for (let i = 0; i < value.length; i++) {
+        text += `<li id="${valueId[i]}">${value[i]}</li>`;
+    }
+
+    document.getElementById(selectorId).innerHTML = text;
+}
