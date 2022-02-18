@@ -9,9 +9,7 @@ function uniqueArray(data, variable) {
     return [...new Set(all)];
 }
 
-d3.csv("./data/cit_long.csv").then(function(data) {
-
-    console.log(data);
+d3.csv("./data/xwalk.csv").then(function(data) {
 
     let allCountry = uniqueArray(data, "country");
     let allISO3 = uniqueArray(data, "iso3");
@@ -23,7 +21,7 @@ d3.csv("./data/cit_long.csv").then(function(data) {
     }
 
     // Auto-populate a set of radio buttons using the country data
-    document.getElementById("cntry-input").innerHTML = text;
+    document.getElementById("region-input").innerHTML = text;
 
     //Dropdown Menu
     $('.dropdown').click(function () {
@@ -55,5 +53,4 @@ d3.csv("./data/cit_long.csv").then(function(data) {
         document.getElementById("nPaths").innerHTML = uniqueArray(dataFiltered, "mode_id").length;
         document.getElementById("path-sentence").style["visibility"] = "visible";
     });
-
 });
