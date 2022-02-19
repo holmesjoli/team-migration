@@ -86,7 +86,7 @@ function showCountries(svg, dataFiltered, xScale, yScale) {
             .attr("cx", function(d) { return xScale(d.x); })
             .attr("cy", function(d) { return yScale(d.y); })
             .attr("r", 10)
-            .attr("fill", "black");
+            .attr("fill", "#FFFFFF");
 
     svg.selectAll("text")
         .data(dataFiltered)
@@ -96,6 +96,7 @@ function showCountries(svg, dataFiltered, xScale, yScale) {
             .attr("id", function(d) { return `name-${d.iso3}`; })
             .attr("x", function(d) { return xScale(d.x); })
             .attr("y", function(d) { return yScale(d.y) + 30; })
+            .attr("fill", "#FFFFFF")
             .style("text-anchor", "middle")
             .text(function(d) {return d.region;})
             .call(wrap, 40);

@@ -8,10 +8,8 @@ html, body {
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
-}
-
-body {
-    background-color: #fafafa;
+    background-color: #333333;
+    color: #FFFFFF;
 }
 
 .container {
@@ -27,7 +25,7 @@ body {
 }
 
 .viz {
-    border: 1px black solid;
+    border: 1px #FFFFFF solid;
     height: 70vh;
 }
 
