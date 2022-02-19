@@ -14,7 +14,12 @@ function countryPosition(data, nCol, nRow) {
 
 
 // Generates the Country selection menu
-function showCountries(svg, dataFiltered, xScale, yScale, nCol, nRow) {
+function showCountries(svg, dataFiltered, xScale, yScale) {
+
+    const selectedCntries = uniqueArray(dataFiltered, "region");
+    const dim = generateMatrix(selectedCntries.length);
+    const nCol = dim.nCol;
+    const nRow = dim.nRow;
 
     dataFiltered.sort(function(x, y){
         return d3.ascending(x.country, y.country);

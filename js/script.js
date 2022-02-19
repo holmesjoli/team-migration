@@ -11,7 +11,7 @@ function uniqueArray(data, variable) {
 
 const width = 1200;
 const height = 300;
-const margin = {top: 50, left: 100, right: 100, bottom: 125};
+const margin = {top: 25, left: 100, right: 100, bottom: 125};
 
 const svgCountry = d3.select("#countries")
     .append("svg")
@@ -45,12 +45,7 @@ d3.csv("./data/cit_long.csv").then(function(citLong) {
                 return d.subregion_code === selectedRegion;
             });
 
-            const selectedCntries = uniqueArray(dataFiltered, "region");
-            const dim = generateMatrix(selectedCntries.length);
-            const nCol = dim.nCol;
-            const nRow = dim.nRow;
-
-            showCountries(svgCountry, dataFiltered, xScale, yScale, nCol, nRow);
+            showCountries(svgCountry, dataFiltered, xScale, yScale);
             // d3.selectAll(".selectRegion").on("click", function() {
 
             //     let selectedCntry = d3.select(this).property("id");
