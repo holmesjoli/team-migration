@@ -31,13 +31,7 @@ d3.csv("./data/cit_long.csv").then(function(citLong) {
         const nCol = dim.nCol;
         const nRow = dim.nRow;
 
-        const xPos = xPosition(nCol, nRow);
-        const yPos = yPosition(nCol, nRow);
-
-        dataInit.forEach(function(d, i) {
-            d.x = xPos[i];
-            d.y = yPos[i];
-        });
+        dataInit = countryPosition(dataInit, nCol, nRow);
 
         const width = 1200;
         const height = 300;
@@ -79,15 +73,7 @@ d3.csv("./data/cit_long.csv").then(function(citLong) {
             const nCol = dim.nCol;
             const nRow = dim.nRow;
 
-            const xPos = xPosition(nCol, nRow);
-            const yPos = yPosition(nCol, nRow);
-            console.log("nRow", nRow);
-            console.log("nCol", nCol);
-
-            dataFiltered.forEach(function(d, i) {
-                d.x = xPos[i];
-                d.y = yPos[i];
-            });
+            dataFiltered = countryPosition(dataFiltered, nCol, nRow);
 
             console.log(dataFiltered);
 

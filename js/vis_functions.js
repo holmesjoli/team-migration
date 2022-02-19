@@ -1,9 +1,20 @@
-// Generates the Country selection menu
-function countryMenu(dataFiltered, id) {
+// Country Position on a grid
+function countryPosition(data, nCol, nRow) {
 
-    const width = 1200;
-    const height = 300;
-    const margin = {top: 50, left: 100, right: 100, bottom: 125};
+    const xPos = xPosition(nCol, nRow);
+    const yPos = yPosition(nCol, nRow);
+
+    data.forEach(function(d, i) {
+        d.x = xPos[i];
+        d.y = yPos[i];
+    });
+
+    return data;
+}
+
+
+// Generates the Country selection menu
+function countryMenu(dataFiltered, xScale, yScale, svg) {
 
     const selectedCntries = uniqueArray(dataFiltered, "region");
     const dim = generateMatrix(selectedCntries.length);
@@ -18,37 +29,56 @@ function countryMenu(dataFiltered, id) {
         d.y = yPos[i];
     });
 
-    const svg = d3.select(id)
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height);
+    let enterPoints = svg.selectAll("circle")
+        .data(dataFiltered, function(d) { return d.iso3; });
 
-    const xScale = d3.scaleLinear()
-        .domain([1, nCol])
-        .range([margin.left, width-margin.right]);
-
-    const yScale = d3.scaleLinear()
-        .domain([1, nRow])
-        .range([height-margin.bottom, margin.top]);
-
-    svg.selectAll("circle")
-        .data(dataFiltered)
-        .enter()
+    enterPoints.enter()
         .append("circle")
-            .attr("id", function(d) {return d.iso3;})
-            .attr("class", "selectRegion")
-            .attr("cx", function(d) { return xScale(d.x); })
-            .attr("cy", function(d) { return yScale(d.y); })
-            .attr("r", 10);
+        .attr("cx", function(d) { return xScale(d.x); })
+        .attr("cy", function(d) { return yScale(d.y); })
+        .attr("r", 10)
+        .attr("fill", "black")
+    .merge(enterPoints)
+        .transition()
+        .duration(2000)
+        .delay(250)
+        .attr("cx", function(d) { return xScale(d.x); })
+        .attr("cy", function(d) { return yScale(d.y); })
+        .attr("r", 10)
+        .attr("fill", "black");
 
-    svg.selectAll("text")
-        .data(dataFiltered)
-        .enter()
-        .append("text")
-            .attr("id", function(d) {return `name-${d.iso3}`;})
-            .attr("x", function(d) { return xScale(d.x); })
-            .attr("y", function(d) { return yScale(d.y) + 30; })
-            .style("text-anchor", "middle")
-            .text(function(d) {return d.region;})
-            .call(wrap, 40);
+    enterPoints.exit()
+        .transition()
+        .duration(2000)
+        .delay(250)
+        .attr("r",0)
+        .remove();
+
+    // const points = svg.selectAll("circle")
+    //     .data(dataFiltered)
+    //     .enter()
+    //     .append("circle")
+    //         .attr("class", "selectRegion")
+    //         .attr("id", function(d) {return d.iso3;})
+    //         .attr("cx", function(d) { return xScale(d.x); })
+    //         .attr("cy", function(d) { return yScale(d.y); })
+    //         .attr("r", 10);
+
+    // points
+    //     .transition()
+    //     .duration(1500)
+    //     .attr("id", function(d) {return d.iso3;})
+    //     .attr("cx", function(d) { return xScale(d.x);})
+    //     .attr("cy", function(d) { return yScale(d.y);});
+
+    // svg.selectAll("text")
+    //     .data(dataFiltered)
+    //     .enter()
+    //     .append("text")
+    //         .attr("id", function(d) {return `name-${d.iso3}`;})
+    //         .attr("x", function(d) { return xScale(d.x); })
+    //         .attr("y", function(d) { return yScale(d.y) + 30; })
+    //         .style("text-anchor", "middle")
+    //         .text(function(d) {return d.region;})
+    //         .call(wrap, 40);
 }
