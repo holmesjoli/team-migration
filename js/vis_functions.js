@@ -1,18 +1,12 @@
-// Title Create an array one through n
-function arrayOneN(n) {
-    var foo = [];
-    for (var i = 1; i <= n; i++) {
-        foo.push(i);
-    }
-
-    return(foo);
-}
-
 //Title xPosition
 //Description creates an array which can be used to set x
 function xPosition(nCol, nRow) {
 
-    const nArray = arrayOneN(nCol);
+    const nArray = [];
+    for (var i = 1; i <= nCol; i++) {
+        nArray.push(i);
+    }
+
     return [].concat.apply([], Array(nRow).fill(nArray));
 }
 
