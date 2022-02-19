@@ -27,55 +27,15 @@ function autoLi(value, valueId, selectorId) {
     document.getElementById(selectorId).innerHTML = text;
 }
 
-//Title Generate Matrix
-//Description Geneates the number of columns and number of rows
-//Which depend on the number of countries
-function generateMatrix(nCntry) {
+// Title Unique Array
+// Returns the unique values of a variable in a dataset as an array
+function uniqueArray(data, variable) {
 
-    let nRow;
+    let all = data.map(function(d) {
+        return d[variable];
+    })
 
-    if (nCntry > 16) {
-        nRow = 2;
-    } else {
-        nRow = 1;
-    }
-
-    return {
-        nCol: Math.ceil(nCntry/nRow),
-        nRow: nRow
-    }
-}
-
-// Title Create an array one through n
-function arrayOneN(n) {
-    var foo = [];
-    for (var i = 1; i <= n; i++) {
-        foo.push(i);
-    }
-
-    return(foo);
-}
-
-//Title xPosition
-//Description creates an array which can be used to set x
-function xPosition(nCol, nRow) {
-
-    const nArray = arrayOneN(nCol);
-    return [].concat.apply([], Array(nRow).fill(nArray));
-}
-
-//Title yPosition
-//Description creates an array which can be used to set y
-function yPosition(nCol, nRow) {
-
-    var foo = [];
-    for (var i = 1; i <= nRow; i++) {
-        for (var j = 1; j <= nCol; j++) {
-            foo.push(i);
-        }
-    }
-
-    return foo;
+    return [...new Set(all)];
 }
 
 // Title Wrap text

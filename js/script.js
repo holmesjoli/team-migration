@@ -1,14 +1,3 @@
-// Title Unique Array
-// Returns the unique values of a variable in a dataset as an array
-function uniqueArray(data, variable) {
-
-    let all = data.map(function(d) {
-        return d[variable];
-    })
-
-    return [...new Set(all)];
-}
-
 const width = 1200;
 const height = 300;
 const margin = {top: 25, left: 100, right: 100, bottom: 125};

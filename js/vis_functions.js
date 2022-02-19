@@ -1,3 +1,35 @@
+// Title Create an array one through n
+function arrayOneN(n) {
+    var foo = [];
+    for (var i = 1; i <= n; i++) {
+        foo.push(i);
+    }
+
+    return(foo);
+}
+
+//Title xPosition
+//Description creates an array which can be used to set x
+function xPosition(nCol, nRow) {
+
+    const nArray = arrayOneN(nCol);
+    return [].concat.apply([], Array(nRow).fill(nArray));
+}
+
+//Title yPosition
+//Description creates an array which can be used to set y
+function yPosition(nCol, nRow) {
+
+    var foo = [];
+    for (var i = 1; i <= nRow; i++) {
+        for (var j = 1; j <= nCol; j++) {
+            foo.push(i);
+        }
+    }
+
+    return foo;
+}
+
 // Country Position on a grid
 function countryPosition(data, nCol, nRow) {
 
@@ -12,6 +44,24 @@ function countryPosition(data, nCol, nRow) {
     return data;
 }
 
+//Title Generate Matrix
+//Description Geneates the number of columns and number of rows
+//Which depend on the number of countries
+function generateMatrix(nCntry) {
+
+    let nRow;
+
+    if (nCntry > 16) {
+        nRow = 2;
+    } else {
+        nRow = 1;
+    }
+
+    return {
+        nCol: Math.ceil(nCntry/nRow),
+        nRow: nRow
+    }
+}
 
 // Generates the Country selection menu
 function showCountries(svg, dataFiltered, xScale, yScale) {
