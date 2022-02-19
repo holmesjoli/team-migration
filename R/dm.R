@@ -76,13 +76,12 @@ dm.dest_org <- function(pth = "./data/undesa_pd_2020_ims_stock_by_sex_destinatio
   
   names(df)[st:end] <- n
   
-  
   df %>%
     pivot_longer(names_to = "variable", values_to = "value", cols = n) %>%
     tidyr::separate(variable,
                     into = c("year", "sex"),
                     sep = "([(_)])")
-  
+
   return(df)
 }
 
@@ -99,3 +98,26 @@ lu.loc <- function(pth = "./data/undesa_pd_2020_ims_stock_by_sex_destination_and
            loc_code = `Location code of origin`)
 }
 
+#' @title ISO Crosswalk
+#' @description Extracts a table of ISO values from the web
+#' @return data.frame
+xwalk.iso <- function(url = "https://www.nationsonline.org/oneworld/country_code_list.htm") {
+  
+  url %>%
+    xml2::read_html(url) %>%
+    rvest::html_elements("table") %>% 
+    rvest::html_table() %>%
+    bind_rows() %>%
+    select(-X1) %>%
+    filter(!(X2 %in% LETTERS)) %>%
+    filter(X2 != "") %>%
+    rename(name = X2, iso2 = X3, iso3 = X4, un_code = X5)
+}
+
+dm.geojson <- function(pth = "./data/shape/World_Countries__Generalized_.shp") {
+  
+  df <- sf::read_sf(pth) %>%
+    select(ISO, geometry) %>%
+    rename(iso2 = ISO) %>% 
+    inner_join(xwalk.iso())
+}
