@@ -35,18 +35,19 @@ d3.csv("./data/cit_long.csv").then(function(citLong) {
             });
 
             showCountries(svgCountry, dataFiltered, xScale, yScale);
-            // d3.selectAll(".selectRegion").on("click", function() {
 
-            //     let selectedCntry = d3.select(this).property("id");
+            d3.selectAll(".cntry-shape").on("click", function() {
 
-            //     cntryFiltered = dataFiltered.filter(function(d) {
-            //         return d.iso3 === selectedCntry;
-            //     })
+                let selectedCntry = d3.select(this).property("id");
 
-            //     document.getElementById("selectedCountry").innerHTML = cntryFiltered[0].region;
-            //     document.getElementById("path-sentence").style["visibility"] = "visible";
+                cntryFiltered = dataFiltered.filter(function(d) {
+                    return d.iso3 === selectedCntry;
+                })
 
-            // });
+                document.getElementById("selectedCountry").innerHTML = cntryFiltered[0].region;
+                document.getElementById("path-sentence").style["visibility"] = "visible";
+
+            });
         });
     });
 });
