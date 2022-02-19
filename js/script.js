@@ -39,13 +39,15 @@ d3.csv("./data/cit_long.csv").then(function(citLong) {
             d3.selectAll(".selectRegion").on("click", function() {
 
                 let selectedCntry = d3.select(this)["_groups"][0][0]["__data__"].iso3;
-                console.log(selectedCntry);
 
-                document.getElementById("selectedCountry").innerHTML = selectedCntry;
+                cntryFiltered = dataFiltered.filter(function(d) {
+                    return d.iso3 === selectedCntry;
+                })
+
+                document.getElementById("selectedCountry").innerHTML = cntryFiltered[0].region;
                 document.getElementById("path-sentence").style["visibility"] = "visible";
 
             });
-
         });
     });
 });
