@@ -19,18 +19,6 @@ d3.csv("./data/cit_long.csv").then(function(citLong) {
 
         dropdown()
 
-        let dataInit = xwalkRegion.filter(function(d) {
-            return d.subregion_code === "913";
-        });
-
-        let initCntries = uniqueArray(dataInit, "region");
-
-        const dim = generateMatrix(initCntries.length);
-        const nCol = dim.nCol;
-        const nRow = dim.nRow;
-
-        dataInit = countryPosition(dataInit, nCol, nRow);
-
         const width = 1200;
         const height = 300;
         const margin = {top: 50, left: 100, right: 100, bottom: 125};
@@ -41,21 +29,12 @@ d3.csv("./data/cit_long.csv").then(function(citLong) {
             .attr("height", height);
 
         const xScale = d3.scaleLinear()
-            .domain([1, nCol])
+            .domain([1, 1])
             .range([margin.left, width-margin.right]);
 
         const yScale = d3.scaleLinear()
-            .domain([1, nRow])
+            .domain([1, 1])
             .range([height-margin.bottom, margin.top]);
-
-        svg.selectAll("circle")
-            .data(dataInit, function(d) { return d.iso3; })
-            .enter()
-            .append("circle")
-                .attr("cx", function(d) { return xScale(d.x); })
-                .attr("cy", function(d) { return yScale(d.y); })
-                .attr("r", 10)
-                .attr("fill", "black");
 
         // Filter the data according to the users input
         d3.selectAll(".dropdown-menu li").on("click", function() {
