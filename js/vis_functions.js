@@ -3,7 +3,7 @@ function countryMenu(dataFiltered, id) {
 
     const width = 1200;
     const height = 300;
-    const margin = {top: 50, left: 100, right: 150, bottom: 100};
+    const margin = {top: 50, left: 100, right: 150, bottom: 125};
 
     const selectedCntries = uniqueArray(dataFiltered, "region");
     const dim = generateMatrix(selectedCntries.length);
