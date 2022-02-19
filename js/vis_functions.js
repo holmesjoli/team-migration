@@ -28,27 +28,6 @@ function showCountries(dataFiltered, xScale, yScale, svg) {
                 .attr("r", 10)
                 .attr("fill", "black");
 
-    // let c = svg.selectAll("circle")
-    //             .data(dataFiltered, function(d) {return d.iso3;});
-
-    // c
-    //     .enter()
-    //     .append("circle")
-    //     .attr("cx", function(d) { return xScale(d.x); })
-    //     .attr("cy", function(d) { return yScale(d.y); })
-    //     .attr("r", 0)
-    // .merge(c)
-    //     .transition()
-    //     .duration(0)
-    //     .attr("cx", function(d) { return xScale(d.x); })
-    //     .attr("cy", function(d) { return yScale(d.y); })
-    //     .attr("r", 10);
-
-    // c.exit()
-    //     .transition()
-    //     .duration(0)
-    //     .remove();
-
     // svg.selectAll("text")
     //     .data(dataFiltered)
     //     .enter()
