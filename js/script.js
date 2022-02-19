@@ -72,42 +72,16 @@ d3.csv("./data/cit_long.csv").then(function(citLong) {
             const dim = generateMatrix(selectedCntries.length);
             const nCol = dim.nCol;
             const nRow = dim.nRow;
+            xScale.domain([1, nCol]);
+            yScale.domain([1, nRow]);
 
             dataFiltered = countryPosition(dataFiltered, nCol, nRow);
 
-            console.log(dataFiltered);
-
-            xScale.domain([1, nCol]);
-            yScale.domain([1, nRow]);
             dataFiltered.sort(function(x, y){
                 return d3.ascending(x.country, y.country);
             });
 
-            let c = svg.selectAll("circle")
-                .data(dataFiltered, function(d) {return d.iso3;});
-
-            c
-            .enter()
-            .append("circle")
-            .attr("cx", function(d) { return xScale(d.x); })
-            .attr("cy", function(d) { return yScale(d.y); })
-            .attr("r", 0)
-            .merge(c)
-            .transition()
-            .duration(1000)
-            .delay(1000)
-            .attr("cx", function(d) { return xScale(d.x); })
-            .attr("cy", function(d) { return yScale(d.y); })
-            .attr("r", 10);
-
-            c.exit()
-            .transition()
-            .duration(1000)
-            .delay(1000)
-            .attr("r", 0)
-            .remove();
-
-            // countryMenu(dataFiltered, xScale, yScale, svg);
+            showCountries(dataFiltered, xScale, yScale, svg)
 
             // d3.selectAll(".selectRegion").on("click", function() {
 

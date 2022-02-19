@@ -14,62 +14,31 @@ function countryPosition(data, nCol, nRow) {
 
 
 // Generates the Country selection menu
-function countryMenu(dataFiltered, xScale, yScale, svg) {
+function showCountries(dataFiltered, xScale, yScale, svg) {
 
-    const selectedCntries = uniqueArray(dataFiltered, "region");
-    const dim = generateMatrix(selectedCntries.length);
-    const nCol = dim.nCol;
-    const nRow = dim.nRow;
+    let c = svg.selectAll("circle")
+                .data(dataFiltered, function(d) {return d.iso3;});
 
-    const xPos = xPosition(nCol, nRow);
-    const yPos = yPosition(nCol, nRow);
-
-    dataFiltered.forEach(function(d, i) {
-        d.x = xPos[i];
-        d.y = yPos[i];
-    });
-
-    let enterPoints = svg.selectAll("circle")
-        .data(dataFiltered, function(d) { return d.iso3; });
-
-    enterPoints.enter()
+    c
+        .enter()
         .append("circle")
         .attr("cx", function(d) { return xScale(d.x); })
         .attr("cy", function(d) { return yScale(d.y); })
-        .attr("r", 10)
-        .attr("fill", "black")
-    .merge(enterPoints)
+        .attr("r", 0)
+    .merge(c)
         .transition()
-        .duration(2000)
-        .delay(250)
+        .duration(1000)
+        .delay(1000)
         .attr("cx", function(d) { return xScale(d.x); })
         .attr("cy", function(d) { return yScale(d.y); })
-        .attr("r", 10)
-        .attr("fill", "black");
+        .attr("r", 10);
 
-    enterPoints.exit()
+    c.exit()
         .transition()
-        .duration(2000)
-        .delay(250)
-        .attr("r",0)
+        .duration(1000)
+        .delay(1000)
+        .attr("r", 0)
         .remove();
-
-    // const points = svg.selectAll("circle")
-    //     .data(dataFiltered)
-    //     .enter()
-    //     .append("circle")
-    //         .attr("class", "selectRegion")
-    //         .attr("id", function(d) {return d.iso3;})
-    //         .attr("cx", function(d) { return xScale(d.x); })
-    //         .attr("cy", function(d) { return yScale(d.y); })
-    //         .attr("r", 10);
-
-    // points
-    //     .transition()
-    //     .duration(1500)
-    //     .attr("id", function(d) {return d.iso3;})
-    //     .attr("cx", function(d) { return xScale(d.x);})
-    //     .attr("cy", function(d) { return yScale(d.y);});
 
     // svg.selectAll("text")
     //     .data(dataFiltered)
