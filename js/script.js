@@ -12,8 +12,6 @@ function uniqueArray(data, variable) {
 d3.csv("./data/cit_long.csv").then(function(citLong) {
     d3.csv("./data/xwalk_region.csv").then(function(xwalkRegion) {
 
-        const allCountry = uniqueArray(citLong, "country");
-        const allCountryCode = uniqueArray(citLong, "iso3");
         const allSubregion = uniqueArray(xwalkRegion, "subregion");
         const allSubregionCode = uniqueArray(xwalkRegion, "subregion_code");
 
