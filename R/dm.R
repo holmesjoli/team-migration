@@ -88,17 +88,28 @@ xwalk.iso <- function(url = "https://www.nationsonline.org/oneworld/country_code
     rvest::html_table() %>%
     bind_rows() %>%
     select(-X1) %>%
-    filter(!(X2 %in% LETTERS)) %>%
+    filter(!(X2 %in% LETTERS)) %>%i
     filter(X2 != "") %>%
     rename(name = X2, iso2 = X3, iso3 = X4, un_code = X5)
 }
 
 #' @title World shape file
 #' @return data.frame
-dm.geojson <- function(pth = "./data/shape/World_Countries__Generalized_.shp") {
+dm.geojson <- function(pth = "./data/shape/world-administrative-boundaries.shp") {
   
   sf::read_sf(pth) %>%
-    select(ISO, geometry) %>%
-    rename(iso2 = ISO) %>% 
-    inner_join(xwalk.iso())
+    select(iso3, geometry)
 }
+
+dm.region_geojson <- function(xwalk) {
+  
+  df <- dm.geojson() %>%
+    full_join(xwalk) %>%
+    group_by(subregion_code, subregion) %>%
+    summarise(geometry = sf::st_union(geometry)) %>%
+    ungroup() %>%
+    rmapshaper::ms_simplify(keep=.05) %>%
+    sf::st_as_sf()
+
+}
+
