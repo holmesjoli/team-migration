@@ -24,10 +24,10 @@ d3.csv("./data/cit_long.csv").then(function(citLong) {
         // Filter the data according to the users input
         d3.selectAll(".dropdown-menu li").on("click", function() {
 
-            let selectedRegion = d3.select(this)["_groups"][0][0].innerHTML;
+            let selectedRegion = d3.select(this).property("id");
 
             let dataFiltered = xwalkRegion.filter(function(d) {
-                return d.subregion === selectedRegion;
+                return d.subregion_code === selectedRegion;
             });
 
             dataFiltered.sort(function(x, y){
@@ -38,7 +38,7 @@ d3.csv("./data/cit_long.csv").then(function(citLong) {
 
             d3.selectAll(".selectRegion").on("click", function() {
 
-                let selectedCntry = d3.select(this)["_groups"][0][0]["__data__"].iso3;
+                let selectedCntry = d3.select(this).property("id");
 
                 cntryFiltered = dataFiltered.filter(function(d) {
                     return d.iso3 === selectedCntry;
