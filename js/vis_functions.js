@@ -49,5 +49,6 @@ function countryMenu(dataFiltered, id) {
             .attr("x", function(d) { return xScale(d.x); })
             .attr("y", function(d) { return yScale(d.y) + 30; })
             .style("text-anchor", "middle")
-            .text(function(d) {return d.region;});
+            .text(function(d) {return d.region;})
+            .call(wrap, 40);
 }
