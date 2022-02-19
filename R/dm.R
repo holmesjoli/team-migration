@@ -93,9 +93,11 @@ xwalk.iso <- function(url = "https://www.nationsonline.org/oneworld/country_code
     rename(name = X2, iso2 = X3, iso3 = X4, un_code = X5)
 }
 
+#' @title World shape file
+#' @return data.frame
 dm.geojson <- function(pth = "./data/shape/World_Countries__Generalized_.shp") {
   
-  df <- sf::read_sf(pth) %>%
+  sf::read_sf(pth) %>%
     select(ISO, geometry) %>%
     rename(iso2 = ISO) %>% 
     inner_join(xwalk.iso())
