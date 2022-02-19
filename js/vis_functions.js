@@ -37,6 +37,7 @@ function countryMenu(dataFiltered, id) {
         .enter()
         .append("circle")
             .attr("id", function(d) {return d.iso3;})
+            .attr("class", "selectRegion")
             .attr("cx", function(d) { return xScale(d.x); })
             .attr("cy", function(d) { return yScale(d.y); })
             .attr("r", 10);

@@ -29,12 +29,22 @@ d3.csv("./data/cit_long.csv").then(function(citLong) {
             let dataFiltered = xwalkRegion.filter(function(d) {
                 return d.subregion === selectedRegion;
             });
-        
+
             dataFiltered.sort(function(x, y){
                 return d3.ascending(x.country, y.country);
             });
 
             countryMenu(dataFiltered, "#countries");
+
+            d3.selectAll(".selectRegion").on("click", function() {
+
+                let selectedCntry = d3.select(this)["_groups"][0][0]["__data__"].iso3;
+                console.log(selectedCntry);
+
+                document.getElementById("selectedCountry").innerHTML = selectedCntry;
+                document.getElementById("path-sentence").style["visibility"] = "visible";
+
+            });
 
         });
     });
