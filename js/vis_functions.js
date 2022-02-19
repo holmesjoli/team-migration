@@ -45,7 +45,7 @@ function generateMatrix(nCntry) {
 
     let nRow;
 
-    if (nCntry > 16) {
+    if (nCntry >= 14) {
         nRow = 2;
     } else {
         nRow = 1;
