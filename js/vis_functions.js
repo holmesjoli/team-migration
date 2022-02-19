@@ -27,17 +27,14 @@ function showCountries(dataFiltered, xScale, yScale, svg) {
         .attr("r", 0)
     .merge(c)
         .transition()
-        .duration(1000)
-        .delay(1000)
+        .duration(0)
         .attr("cx", function(d) { return xScale(d.x); })
         .attr("cy", function(d) { return yScale(d.y); })
         .attr("r", 10);
 
     c.exit()
         .transition()
-        .duration(1000)
-        .delay(1000)
-        .attr("r", 0)
+        .duration(0)
         .remove();
 
     // svg.selectAll("text")
