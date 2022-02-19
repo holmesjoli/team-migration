@@ -104,7 +104,7 @@ dm.geojson <- function(pth = "./data/shape/world-administrative-boundaries.shp")
 dm.region_geojson <- function(xwalk) {
   
   df <- dm.geojson() %>%
-    full_join(xwalk) %>%
+    inner_join(xwalk) %>%
     group_by(subregion_code, subregion) %>%
     summarise(geometry = sf::st_union(geometry)) %>%
     ungroup() %>%
