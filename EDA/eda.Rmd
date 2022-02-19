@@ -47,10 +47,23 @@ df_long <- df %>%
          cat = "cat" == type,
          cntry_mode_id = paste(iso3, mode_id, sep = "_"))
 
-df_long %>% 
-  filter(acq & values > 0) %>% 
-  select(-acq) %>%
-  readr::write_csv("../data/cit_long.csv")
+#df_long %>%
+#  filter(acq & values > 0) %>% 
+#  select(-acq)                   %>%
+#  readr::write_csv("../data/cit_long.csv")
+
+lu_loc <- read_csv("../data/lu_code.csv")
+xwalk <- read_csv("../data/xwalk_region.csv")
+flow <- read_csv("../data/flow.csv")
+
+cntry_code <- xwalk %>% 
+  distinct(region, loc_code, iso3)
+
+subregion_code <- xwalk %>% 
+  distinct(subregion, subregion_code)
+
+continent_code <- xwalk %>% 
+  distinct(continent, continent_code)
 ```
 
 ## Number of unique modes
@@ -289,3 +302,20 @@ ggplot(df %>%
 * The procedure of acquisition can differ from country to country. For example, A01 isn't always automatic Attribution
 * There may be some overlap in acquisition laws depending on if the country was colonized
 
+#### Example of Flow
+
+South America flow of people to other subregions of the world
+
+```{r}
+sa_flow <- flow %>% 
+  filter(dest_loc %in% subregion_code$subregion_code) %>% 
+  filter(orig_loc %in% subregion_code$subregion_code) %>% 
+  right_join(subregion_code %>% 
+    filter(subregion == "South America"), 
+    by = c("orig_loc" = "subregion_code")) %>% 
+  rename(subregion_orig = subregion) %>% 
+  right_join(subregion_code, by = c("dest_loc" = "subregion_code")) %>% 
+  rename(subregion_dest = subregion) %>%
+  filter(!is.na(value)) %>%
+  mutate(points = round(value/1000))
+```
