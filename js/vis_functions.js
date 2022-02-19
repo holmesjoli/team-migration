@@ -1,10 +1,11 @@
 // Generates the Country selection menu
-function countryMenu(dataFiltered, id, selectedCntries) {
+function countryMenu(dataFiltered, id) {
 
     const width = 1200;
     const height = 300;
     const margin = {top: 50, left: 100, right: 150, bottom: 100};
 
+    const selectedCntries = uniqueArray(dataFiltered, "region");
     const dim = generateMatrix(selectedCntries.length);
     const nCol = dim.nCol;
     const nRow = dim.nRow;
@@ -17,6 +18,7 @@ function countryMenu(dataFiltered, id, selectedCntries) {
         d.y = yPos[i];
     });
 
+    
     const svg = d3.select(id)
         .append("svg")
         .attr("width", width)

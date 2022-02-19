@@ -34,13 +34,8 @@ d3.csv("./data/cit_long.csv").then(function(citLong) {
                 return d3.ascending(x.country, y.country);
             });
 
-            const selectedCntries = uniqueArray(dataFiltered, "region");
+            countryMenu(dataFiltered, "#countries");
 
-            countryMenu(dataFiltered, "#countries", selectedCntries);
-
-            // Set the number of paths to citizenship
-            document.getElementById("nCountry").innerHTML = selectedCntries.length;
-            document.getElementById("path-sentence").style["visibility"] = "visible";
         });
     });
 });
