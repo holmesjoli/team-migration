@@ -17,25 +17,27 @@ function countryPosition(data, nCol, nRow) {
 function showCountries(dataFiltered, xScale, yScale, svg) {
 
     svg.selectAll(".cntry-shape").remove();
+    svg.selectAll(".cntry-name").remove();
 
     svg.selectAll("circle")
-            .data(dataFiltered, function(d) { return d.iso3; })
-            .enter()
-            .append("circle")
-                .attr("class", "cntry-shape")
-                .attr("cx", function(d) { return xScale(d.x); })
-                .attr("cy", function(d) { return yScale(d.y); })
-                .attr("r", 10)
-                .attr("fill", "black");
+        .data(dataFiltered, function(d) { return d.iso3; })
+        .enter()
+        .append("circle")
+            .attr("class", "cntry-shape")
+            .attr("cx", function(d) { return xScale(d.x); })
+            .attr("cy", function(d) { return yScale(d.y); })
+            .attr("r", 10)
+            .attr("fill", "black");
 
-    // svg.selectAll("text")
-    //     .data(dataFiltered)
-    //     .enter()
-    //     .append("text")
-    //         .attr("id", function(d) {return `name-${d.iso3}`;})
-    //         .attr("x", function(d) { return xScale(d.x); })
-    //         .attr("y", function(d) { return yScale(d.y) + 30; })
-    //         .style("text-anchor", "middle")
-    //         .text(function(d) {return d.region;})
-    //         .call(wrap, 40);
+    svg.selectAll("text")
+        .data(dataFiltered)
+        .enter()
+        .append("text")
+            .attr("class", "cntry-name")
+            .attr("id", function(d) {return `name-${d.iso3}`;})
+            .attr("x", function(d) { return xScale(d.x); })
+            .attr("y", function(d) { return yScale(d.y) + 30; })
+            .style("text-anchor", "middle")
+            .text(function(d) {return d.region;})
+            .call(wrap, 40);
 }
