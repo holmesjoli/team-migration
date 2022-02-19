@@ -9,6 +9,23 @@ function uniqueArray(data, variable) {
     return [...new Set(all)];
 }
 
+const width = 1200;
+const height = 300;
+const margin = {top: 50, left: 100, right: 100, bottom: 125};
+
+const svgCountry = d3.select("#countries")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+const xScale = d3.scaleLinear()
+    .domain([1, 1])
+    .range([margin.left, width-margin.right]);
+
+const yScale = d3.scaleLinear()
+    .domain([1, 1])
+    .range([height-margin.bottom, margin.top]);
+
 d3.csv("./data/cit_long.csv").then(function(citLong) {
     d3.csv("./data/xwalk_region.csv").then(function(xwalkRegion) {
 
@@ -18,23 +35,6 @@ d3.csv("./data/cit_long.csv").then(function(citLong) {
         autoLi(allSubregion, allSubregionCode, "region-input");
 
         dropdown()
-
-        const width = 1200;
-        const height = 300;
-        const margin = {top: 50, left: 100, right: 100, bottom: 125};
-
-        const svg = d3.select("#countries")
-            .append("svg")
-            .attr("width", width)
-            .attr("height", height);
-
-        const xScale = d3.scaleLinear()
-            .domain([1, 1])
-            .range([margin.left, width-margin.right]);
-
-        const yScale = d3.scaleLinear()
-            .domain([1, 1])
-            .range([height-margin.bottom, margin.top]);
 
         // Filter the data according to the users input
         d3.selectAll(".dropdown-menu li").on("click", function() {
@@ -49,17 +49,8 @@ d3.csv("./data/cit_long.csv").then(function(citLong) {
             const dim = generateMatrix(selectedCntries.length);
             const nCol = dim.nCol;
             const nRow = dim.nRow;
-            xScale.domain([1, nCol]);
-            yScale.domain([1, nRow]);
 
-            dataFiltered = countryPosition(dataFiltered, nCol, nRow);
-
-            dataFiltered.sort(function(x, y){
-                return d3.ascending(x.country, y.country);
-            });
-
-            showCountries(dataFiltered, xScale, yScale, svg)
-
+            showCountries(svgCountry, dataFiltered, xScale, yScale, nCol, nRow);
             // d3.selectAll(".selectRegion").on("click", function() {
 
             //     let selectedCntry = d3.select(this).property("id");
