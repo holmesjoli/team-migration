@@ -15,39 +15,48 @@ const yScale = d3.scaleLinear()
     .domain([1, 1])
     .range([height-margin.bottom, margin.top]);
 
-d3.csv("./data/cit_long.csv").then(function(citLong) {
-    d3.csv("./data/xwalk_region.csv").then(function(xwalkRegion) {
 
-        const allSubregion = uniqueArray(xwalkRegion, "subregion");
-        const allSubregionCode = uniqueArray(xwalkRegion, "subregion_code");
+const files = ["./data/cit_long.csv", "./data/xwalk_region.csv"];
 
-        autoLi(allSubregion, allSubregionCode, "region-input");
+const promises = [];
 
-        dropdown()
+files.forEach(function(url, index) {
+    promises.push(index ? d3.csv(url) : d3.csv(url))
+});
 
-        // Filter the data according to the users input
-        d3.selectAll(".dropdown-menu li").on("click", function() {
+Promise.all(promises).then(function(data) {
 
-            let selectedRegion = d3.select(this).property("id");
+    let citLong = data[0];
+    let xwalkRegion = data[1];
+    const allSubregion = uniqueArray(xwalkRegion, "subregion");
+    const allSubregionCode = uniqueArray(xwalkRegion, "subregion_code");
 
-            let dataFiltered = xwalkRegion.filter(function(d) {
-                return d.subregion_code === selectedRegion;
-            });
+    autoLi(allSubregion, allSubregionCode, "region-input");
 
-            showCountries(svgCountry, dataFiltered, xScale, yScale);
+    dropdown()
 
-            d3.selectAll(".cntry-shape").on("click", function() {
+    // Filter the data according to the users input
+    d3.selectAll(".dropdown-menu li").on("click", function() {
 
-                let selectedCntry = d3.select(this).property("id");
+        let selectedRegion = d3.select(this).property("id");
 
-                cntryFiltered = dataFiltered.filter(function(d) {
-                    return d.iso3 === selectedCntry;
-                })
-
-                document.getElementById("selectedCountry").innerHTML = cntryFiltered[0].region;
-                document.getElementById("path-sentence").style["visibility"] = "visible";
-
-            });
+        let dataFiltered = xwalkRegion.filter(function(d) {
+            return d.subregion_code === selectedRegion;
         });
+
+        showCountries(svgCountry, dataFiltered, xScale, yScale);
+
+        d3.selectAll(".cntry-shape").on("click", function() {
+
+            let selectedCntry = d3.select(this).property("id");
+
+            cntryFiltered = dataFiltered.filter(function(d) {
+                return d.iso3 === selectedCntry;
+            })
+
+            document.getElementById("selectedCountry").innerHTML = cntryFiltered[0].region;
+            document.getElementById("path-sentence").style["visibility"] = "visible";
+        });
+
     });
 });
