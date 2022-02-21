@@ -95,7 +95,7 @@ xwalk.iso <- function(url = "https://www.nationsonline.org/oneworld/country_code
 
 #' @title World shape file
 #' @return data.frame
-dm.geojson <- function(pth = "./data/shape/world-administrative-boundaries.shp") {
+dm.geojson <- function(pth) {
   
   sf::read_sf(pth) %>%
     select(iso3, geometry)
@@ -103,14 +103,15 @@ dm.geojson <- function(pth = "./data/shape/world-administrative-boundaries.shp")
 
 #' @title Region GEOJSON
 #' @return data.frame
-dm.region_geojson <- function(xwalk) {
+dm.region_geojson <- function(pth, xwalk, write_pth) {
   
-  dm.geojson() %>%
+  dm.geojson(pth) %>%
     inner_join(xwalk) %>%
     group_by(subregion_code, subregion) %>%
     summarise(geometry = sf::st_union(geometry)) %>%
     ungroup() %>%
     rmapshaper::ms_simplify(keep=.05) %>%
-    sf::st_as_sf()
+    sf::st_as_sf() %>% 
+    sf::write_sf(write_pth)
 }
 
