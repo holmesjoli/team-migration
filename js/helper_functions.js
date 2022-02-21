@@ -84,7 +84,7 @@ function read(pth, promises) {
     if (ext === "csv") {
         promises.push(d3.csv(pth))
     } else if (ext === "json") {
-        promises.push(d3.json(upthrl))
+        promises.push(d3.json(pth))
     } else {
         console.error("unknown file extension");
     }
