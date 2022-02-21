@@ -1,59 +1,53 @@
-// Title Unique Array
-// Returns the unique values of a variable in a dataset as an array
-function uniqueArray(data, variable) {
+const width = 1200;
+const height = 300;
+const margin = {top: 25, left: 100, right: 100, bottom: 125};
 
-    let all = data.map(function(d) {
-        return d[variable];
-    })
+const svgCountry = d3.select("#countries")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height);
 
-    return [...new Set(all)];
-}
+const xScale = d3.scaleLinear()
+    .domain([1, 1])
+    .range([margin.left, width-margin.right]);
 
-d3.csv("./data/cit_long.csv").then(function(data) {
+const yScale = d3.scaleLinear()
+    .domain([1, 1])
+    .range([height-margin.bottom, margin.top]);
 
-    console.log(data);
+d3.csv("./data/cit_long.csv").then(function(citLong) {
+    d3.csv("./data/xwalk_region.csv").then(function(xwalkRegion) {
 
-    let allCountry = uniqueArray(data, "country");
-    let allISO3 = uniqueArray(data, "iso3");
+        const allSubregion = uniqueArray(xwalkRegion, "subregion");
+        const allSubregionCode = uniqueArray(xwalkRegion, "subregion_code");
 
-    let text = "";
+        autoLi(allSubregion, allSubregionCode, "region-input");
 
-    for (let i = 0; i < allCountry.length; i++) {
-        text += `<li id="${allISO3[i]}">${allCountry[i]}</li>`;
-    }
+        dropdown()
 
-    // Auto-populate a set of radio buttons using the country data
-    document.getElementById("cntry-input").innerHTML = text;
+        // Filter the data according to the users input
+        d3.selectAll(".dropdown-menu li").on("click", function() {
 
-    //Dropdown Menu
-    $('.dropdown').click(function () {
-        $(this).attr('tabindex', 1).focus();
-        $(this).toggleClass('active');
-        $(this).find('.dropdown-menu').slideToggle(300);
-    });
-    $('.dropdown').focusout(function () {
-        $(this).removeClass('active');
-        $(this).find('.dropdown-menu').slideUp(300);
-    });
-    $('.dropdown .dropdown-menu li').click(function () {
-        $(this).parents('.dropdown').find('span').text($(this).text());
-        $(this).parents('.dropdown').find('input').attr('value', $(this).attr('id'));
-    });
+            let selectedRegion = d3.select(this).property("id");
 
-    //End Dropdown Menu
+            let dataFiltered = xwalkRegion.filter(function(d) {
+                return d.subregion_code === selectedRegion;
+            });
 
-    // // Filter the data according to the users input
-    d3.selectAll(".dropdown-menu li").on("click", function() {
+            showCountries(svgCountry, dataFiltered, xScale, yScale);
 
-        let selectedCntry = d3.select(this)["_groups"][0][0].innerHTML;
+            d3.selectAll(".cntry-shape").on("click", function() {
 
-        let dataFiltered = data.filter(function(d) {
-            return d.country === selectedCntry & d.bin ==="TRUE";
+                let selectedCntry = d3.select(this).property("id");
+
+                cntryFiltered = dataFiltered.filter(function(d) {
+                    return d.iso3 === selectedCntry;
+                })
+
+                document.getElementById("selectedCountry").innerHTML = cntryFiltered[0].region;
+                document.getElementById("path-sentence").style["visibility"] = "visible";
+
+            });
         });
-
-        // Set the number of paths to citizenship
-        document.getElementById("nPaths").innerHTML = uniqueArray(dataFiltered, "mode_id").length;
-        document.getElementById("path-sentence").style["visibility"] = "visible";
     });
-
 });
