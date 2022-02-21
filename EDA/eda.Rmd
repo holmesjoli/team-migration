@@ -12,6 +12,10 @@ library(tidyverse)
 
 source("../R/dm.R")
 
+lu_loc <- read_csv("../data/lu_code.csv")
+xwalk <- read_csv("../data/xwalk_region.csv")
+flow <- read_csv("../data/flow.csv")
+
 df <- readr::read_csv("../data/data_v1.0_country-year.csv") %>%
   select(-year)
 
@@ -21,13 +25,12 @@ df_acq <- readr::read_csv("../data/data_v1.0_country-year-mode_acq.csv",
   select(-year) %>% 
   mutate(cntry_mode_id = paste(iso3, mode_id, sep = "_"))
 
-df_acq_proc <- dm_procedure(df_acq)
-
 df_loss <- readr::read_csv("../data/data_v1.0_country-year-mode_loss.csv", na = c("n.a.", "n.a", "")) %>% 
   filter(article != "No provision") %>%
   select(-year) %>%
   mutate(cntry_mode_id = paste(iso3, mode_id, sep = "_"))
 
+df_acq_proc <- dm_procedure(df_acq)
 df_loss_proc <- dm_procedure(df_loss)
 
 df_long <- df %>%
@@ -47,10 +50,6 @@ df_long <- df %>%
 #  select(-acq)                   %>%
 #  readr::write_csv("../data/cit_long.csv")
 
-lu_loc <- read_csv("../data/lu_code.csv")
-xwalk <- read_csv("../data/xwalk_region.csv")
-flow <- read_csv("../data/flow.csv")
-
 cntry_code <- xwalk %>% 
   distinct(region, loc_code, iso3)
 
@@ -59,6 +58,10 @@ subregion_code <- xwalk %>%
 
 continent_code <- xwalk %>% 
   distinct(continent, continent_code)
+
+region_geo <- dm.region_geojson(pth = "../data/shape/world-administrative-boundaries.shp",
+                                xwalk,
+                                write_pth = "../data/region_geo.geojson")
 ```
 
 ## Number of unique modes
