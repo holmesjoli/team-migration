@@ -8,12 +8,6 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE, echo = FALSE)
 ```
 
 ```{r}
-library(magrittr)
-library(dplyr)
-library(tidyr)
-library(ggplot2)
-library(purrr)
-library(readxl)
 library(tidyverse)
 
 source("../R/dm.R")
