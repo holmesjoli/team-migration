@@ -19,9 +19,8 @@ const yScale = d3.scaleLinear()
 const files = ["./data/cit_long.csv", "./data/xwalk_region.csv"];
 
 const promises = [];
-
-files.forEach(function(url, index) {
-    promises.push(index ? d3.csv(url) : d3.csv(url))
+files.forEach(function(pth) {
+    read(pth, promises)
 });
 
 Promise.all(promises).then(function(data) {

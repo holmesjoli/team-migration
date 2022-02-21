@@ -74,3 +74,18 @@ function wrap(text, width) {
         }
     });
 }
+
+// Title Read path
+// param pth str. The path or url to read the data from
+// param promises array. Empty array
+function read(pth, promises) {
+    let ext = pth.split('.').pop();
+
+    if (ext === "csv") {
+        promises.push(d3.csv(pth))
+    } else if (ext === "json") {
+        promises.push(d3.json(upthrl))
+    } else {
+        console.error("unknown file extension");
+    }
+}
