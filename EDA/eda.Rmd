@@ -8,14 +8,13 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE, echo = FALSE)
 ```
 
 ```{r}
-library(magrittr)
-library(dplyr)
-library(tidyr)
-library(ggplot2)
-library(purrr)
-library(readxl)
+library(tidyverse)
 
 source("../R/dm.R")
+
+lu_loc <- read_csv("../data/lu_code.csv")
+xwalk <- read_csv("../data/xwalk_region.csv")
+flow <- read_csv("../data/flow.csv")
 
 df <- readr::read_csv("../data/data_v1.0_country-year.csv") %>%
   select(-year)
@@ -26,13 +25,12 @@ df_acq <- readr::read_csv("../data/data_v1.0_country-year-mode_acq.csv",
   select(-year) %>% 
   mutate(cntry_mode_id = paste(iso3, mode_id, sep = "_"))
 
-df_acq_proc <- dm_procedure(df_acq)
-
 df_loss <- readr::read_csv("../data/data_v1.0_country-year-mode_loss.csv", na = c("n.a.", "n.a", "")) %>% 
   filter(article != "No provision") %>%
   select(-year) %>%
   mutate(cntry_mode_id = paste(iso3, mode_id, sep = "_"))
 
+df_acq_proc <- dm_procedure(df_acq)
 df_loss_proc <- dm_procedure(df_loss)
 
 df_long <- df %>%
@@ -47,23 +45,32 @@ df_long <- df %>%
          cat = "cat" == type,
          cntry_mode_id = paste(iso3, mode_id, sep = "_"))
 
-#df_long %>%
-#  filter(acq & values > 0) %>% 
-#  select(-acq)                   %>%
-#  readr::write_csv("../data/cit_long.csv")
-
-lu_loc <- read_csv("../data/lu_code.csv")
-xwalk <- read_csv("../data/xwalk_region.csv")
-flow <- read_csv("../data/flow.csv")
-
-cntry_code <- xwalk %>% 
-  distinct(region, loc_code, iso3)
-
 subregion_code <- xwalk %>% 
   distinct(subregion, subregion_code)
 
-continent_code <- xwalk %>% 
-  distinct(continent, continent_code)
+codes <- subregion_code %>% 
+  distinct(subregion_code) %>% 
+  pull(subregion_code)
+
+```
+
+
+```{r write_data}
+
+flow %>%
+  filter(dest_loc %in% codes) %>%
+  filter(orig_loc %in% codes) %>%
+  select(-c(dest_notes, dest_dtype)) %>%
+  write_csv("../data/region_flows.csv")
+
+region_geo <- dm.region_geojson(pth = "../data/shape/world-administrative-boundaries.shp",
+                                xwalk,
+                                write_pth = "../data/region_geo.geojson")
+
+df_long %>%
+ filter(acq & values > 0) %>%
+ select(-acq) %>%
+ readr::write_csv("../data/cit_long.csv")
 ```
 
 ## Number of unique modes
@@ -301,21 +308,3 @@ ggplot(df %>%
 * There is a more uniform distribution across how many ways there are to lose citizenship
 * The procedure of acquisition can differ from country to country. For example, A01 isn't always automatic Attribution
 * There may be some overlap in acquisition laws depending on if the country was colonized
-
-#### Example of Flow
-
-South America flow of people to other subregions of the world
-
-```{r}
-sa_flow <- flow %>% 
-  filter(dest_loc %in% subregion_code$subregion_code) %>% 
-  filter(orig_loc %in% subregion_code$subregion_code) %>% 
-  right_join(subregion_code %>% 
-    filter(subregion == "South America"), 
-    by = c("orig_loc" = "subregion_code")) %>% 
-  rename(subregion_orig = subregion) %>% 
-  right_join(subregion_code, by = c("dest_loc" = "subregion_code")) %>% 
-  rename(subregion_dest = subregion) %>%
-  filter(!is.na(value)) %>%
-  mutate(points = round(value/1000))
-```

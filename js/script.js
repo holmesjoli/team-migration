@@ -16,17 +16,45 @@ const yScale = d3.scaleLinear()
     .range([height-margin.bottom, margin.top]);
 
 
-const files = ["./data/cit_long.csv", "./data/xwalk_region.csv"];
+const files = {citLong: {
+                        pth: "./data/cit_long.csv",
+                        parse: null
+                        }, 
+                xwalkRegion: {
+                        pth: "./data/xwalk_region.csv",
+                        parse: null
+                        }, 
+                regionFlow: {
+                        pth: "./data/region_flows.csv",
+                        parse: function (d) {
+                            return {
+                                dest_loc: d.dest_loc,
+                                orig_loc: d.orig_loc,
+                                value: +d.value
+                            }
+                        }
+                }, 
+                regionGeo: {
+                        pth: "./data/region_geo.geojson",
+                        parse: null
+                        }
+                };
 
 const promises = [];
-files.forEach(function(pth) {
-    read(pth, promises)
-});
+
+for (var key of Object.keys(files)) {
+
+    var fl = files[key]
+    read(fl.pth, fl.parse, promises);
+}
 
 Promise.all(promises).then(function(data) {
 
     let citLong = data[0];
     let xwalkRegion = data[1];
+    let regionFlow = data[2];
+    let regionGeo = data[3];
+
     const allSubregion = uniqueArray(xwalkRegion, "subregion");
     const allSubregionCode = uniqueArray(xwalkRegion, "subregion_code");
 

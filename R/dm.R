@@ -77,4 +77,41 @@ lu.loc <- function(pth) {
     readr::write_csv("./data/lu_code.csv")
 }
 
+#' @title ISO Crosswalk
+#' @description Extracts a table of ISO values from the web
+#' @return data.frame
+xwalk.iso <- function(url = "https://www.nationsonline.org/oneworld/country_code_list.htm") {
+  
+  url %>%
+    xml2::read_html(url) %>%
+    rvest::html_elements("table") %>% 
+    rvest::html_table() %>%
+    bind_rows() %>%
+    select(-X1) %>%
+    filter(!(X2 %in% LETTERS)) %>%i
+    filter(X2 != "") %>%
+    rename(name = X2, iso2 = X3, iso3 = X4, un_code = X5)
+}
+
+#' @title World shape file
+#' @return data.frame
+dm.geojson <- function(pth) {
+  
+  sf::read_sf(pth) %>%
+    select(iso3, geometry)
+}
+
+#' @title Region GEOJSON
+#' @return data.frame
+dm.region_geojson <- function(pth, xwalk, write_pth) {
+  
+  dm.geojson(pth) %>%
+    inner_join(xwalk) %>%
+    group_by(subregion_code, subregion) %>%
+    summarise(geometry = sf::st_union(geometry)) %>%
+    ungroup() %>%
+    rmapshaper::ms_simplify(keep=.05) %>%
+    sf::st_as_sf() %>% 
+    sf::write_sf(write_pth)
+}
 
