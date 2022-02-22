@@ -57,7 +57,7 @@ codes <- subregion_code %>%
 
 ```{r write_data}
 
-sa_flow <- flow %>%
+flow %>%
   filter(dest_loc %in% codes) %>%
   filter(orig_loc %in% codes) %>%
   select(-c(dest_notes, dest_dtype)) %>%
