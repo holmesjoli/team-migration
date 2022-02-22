@@ -40,7 +40,7 @@ Sao Tome and Principe,678,STP,Middle Africa,911,Africa,903
 Botswana,72,BWA,Southern Africa,913,Africa,903
 Eswatini,748,SWZ,Southern Africa,913,Africa,903
 Lesotho,426,LSO,Southern Africa,913,Africa,903
-Namibia,516,NAM,Southern Africa,913,Africa,903
+Namibia,516,"NAM",Southern Africa,913,Africa,903
 South Africa,710,ZAF,Southern Africa,913,Africa,903
 Benin,204,BEN,Western Africa,914,Africa,903
 Burkina Faso,854,BFA,Western Africa,914,Africa,903
@@ -116,7 +116,6 @@ Canada,124,CAN,Northern America,905,Northern America,905
 Greenland,304,GRL,Northern America,905,Northern America,905
 Saint Pierre and Miquelon,666,SPM,Northern America,905,Northern America,905
 United States of America,840,USA,Northern America,905,Northern America,905
-Antarctica,10,ATA,,,,
 Kazakhstan,398,KAZ,Central Asia,5500,Asia,935
 Kyrgyzstan,417,KGZ,Central Asia,5500,Asia,935
 Tajikistan,762,TJK,Central Asia,5500,Asia,935
@@ -167,7 +166,7 @@ Syrian Arab Republic,760,SYR,Western Asia,922,Asia,935
 Turkey,792,TUR,Western Asia,922,Asia,935
 United Arab Emirates,784,ARE,Western Asia,922,Asia,935
 Yemen,887,YEM,Western Asia,922,Asia,935
-Eastern Europe,151,,Eastern Europe,923,Europe,908
+Eastern Europe,151,NA,Eastern Europe,923,Europe,908
 Belarus,112,BLR,Eastern Europe,923,Europe,908
 Bulgaria,100,BGR,Eastern Europe,923,Europe,908
 Czechia,203,CZE,Eastern Europe,923,Europe,908
@@ -179,10 +178,10 @@ Russian Federation,643,RUS,Eastern Europe,923,Europe,908
 Slovakia,703,SVK,Eastern Europe,923,Europe,908
 Ukraine,804,UKR,Eastern Europe,923,Europe,908
 Åland Islands,248,ALA,Northern Europe,924,Europe,908
-Channel Islands,830,,Northern Europe,924,Europe,908
+Channel Islands,830,NA,Northern Europe,924,Europe,908
 Guernsey,831,GGY,Northern Europe,924,Europe,908
 Jersey,832,JEY,Northern Europe,924,Europe,908
-Sark,680,,Northern Europe,924,Europe,908
+Sark,680,NA,Northern Europe,924,Europe,908
 Denmark,208,DNK,Northern Europe,924,Europe,908
 Estonia,233,EST,Northern Europe,924,Europe,908
 Faroe Islands,234,FRO,Northern Europe,924,Europe,908
@@ -232,7 +231,7 @@ New Caledonia,540,NCL,Melanesia,928,Oceania,909
 Papua New Guinea,598,PNG,Melanesia,928,Oceania,909
 Solomon Islands,90,SLB,Melanesia,928,Oceania,909
 Vanuatu,548,VUT,Melanesia,928,Oceania,909
-Micronesia,57,,Melanesia,928,Oceania,909
+Micronesia,57,NA,Melanesia,928,Oceania,909
 Guam,316,GUM,Melanesia,928,Oceania,909
 Kiribati,296,KIR,Melanesia,928,Oceania,909
 Marshall Islands,584,MHL,Melanesia,928,Oceania,909

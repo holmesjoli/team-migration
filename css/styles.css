@@ -8,21 +8,28 @@ html, body {
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
-}
-
-body {
-    background-color: #fafafa;
+    background-color: #333333;
+    color: #FFFFFF;
 }
 
 .container {
     width: 500px;
-    text-align: center
 }
 
-.container p {
+#path-sentence {
     visibility: hidden;
 }
 
 #nPaths {
     font-weight: bold;
+}
+
+.viz {
+    border: 1px #FFFFFF solid;
+    height: 70vh;
+}
+
+/*Once we make the map we can delete the property: height: 10vh or make it larger */
+#map {
+    height: 25vh;
 }
