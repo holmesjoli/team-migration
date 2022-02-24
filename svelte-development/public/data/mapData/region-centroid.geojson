@@ -1,9 +1,9 @@
 {
 "type": "FeatureCollection",
-"name": "region-centroids",
+"name": "region-centroid",
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
 "features": [
-{ "type": "Feature", "properties": { "CONTINENT": "Asia", "SUBREGION": "South-Eastern Asia", "VALUE": 2317450 }, "geometry": { "type": "Point", "coordinates": [ 109.911700451423073, 7.941772088857937 ] } },
+{ "type": "Feature", "properties": { "CONTINENT": "Asia", "SUBREGION": "South-eastern Asia", "VALUE": 2317450 }, "geometry": { "type": "Point", "coordinates": [ 109.911700451423073, 7.941772088857937 ] } },
 { "type": "Feature", "properties": { "CONTINENT": "Europe", "SUBREGION": "Western Europe", "VALUE": 10276265 }, "geometry": { "type": "Point", "coordinates": [ 3.58443058201481, 46.212324679990147 ] } },
 { "type": "Feature", "properties": { "CONTINENT": "Europe", "SUBREGION": "Northern Europe", "VALUE": 4171664 }, "geometry": { "type": "Point", "coordinates": [ 13.810953941136779, 63.053731182550543 ] } },
 { "type": "Feature", "properties": { "CONTINENT": "South America", "SUBREGION": "South America", "VALUE": 2033382 }, "geometry": { "type": "Point", "coordinates": [ -60.824576059790076, -15.245040436401197 ] } },

@@ -14,3 +14,9 @@ body {
 * {
   box-sizing: border-box;
 }
+
+section {
+  width: 90%;
+  margin: 3rem auto;
+  text-align: center;
+}
