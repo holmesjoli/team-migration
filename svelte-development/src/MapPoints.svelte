@@ -66,6 +66,7 @@
       container.selectAll('.country-card').style("background", "white")
       container.selectAll("use").attr("fill", color).attr("stroke", color)
       container.selectAll(".country-card__country-name").style("color", "black")
+      selectedCountry = ""
     }
   }
 
