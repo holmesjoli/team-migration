@@ -62,7 +62,10 @@
   - Path is TRUE if Q13 == "yes"
 
 3. If a particular mode for a particular country returns TRUE
-  - Check to see if warning is NA in modes_acq.csv
-  - If warning is not NA, print the specification from modes_acq.csv
-
-  
+  a. 
+    - Check to see if warning is NA in warnings.csv
+    - Use warnings.csv to look up the warning and print the warning to the user
+    - If warning is not NA, print the specification from modes_acq.csv
+  b. If a particular mode for a particular country returns TRUE
+    - Check to see if definitions is NA in definitions.csv
+    - Use definitions.csv to look up the definition and print the definition to the user
