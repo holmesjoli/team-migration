@@ -1,6 +1,6 @@
 # Question Logic
 
-1. Filter citizenship long to only accepted acquisition methods
+1. Filter modes_acq.csv to only accepted acquisition methods
 
 2. Filter citizenship long to specific user inputs
 * A01a
@@ -17,10 +17,11 @@
   - Path is TRUE if Q22 == "yes" & Q24 == "yes"
 * A06c
   - Path is TRUE if Q22 == "yes" & Q25 == "yes"
+  - Warning if dualcit_comb == 0; this country does not accept dual citizens
 * A06d
   - Path is TRUE if Q22 == "yes" & Q26 == "yes"
 * A06e
-  - Path is TRUE if Q22 == "yes" & Q27 == "yes"
+  - Path is TRUE if Q22 == "yes" & Q27 == "no"
 * A06f
   - Path is TRUE if Q22 == "yes" & Q28 == "yes"
 * A07
@@ -59,3 +60,9 @@
   - Path is TRUE if Q12 == "yes"
 * A26
   - Path is TRUE if Q13 == "yes"
+
+3. If a particular mode for a particular country returns TRUE
+  - Check to see if warning is NA in modes_acq.csv
+  - If warning is not NA, print the specification from modes_acq.csv
+
+  
