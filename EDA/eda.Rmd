@@ -11,6 +11,7 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE, echo = FALSE)
 library(tidyverse)
 
 source("../R/dm.R")
+source("../R/question_coding.R")
 
 lu_loc <- read_csv("../data/lu_code.csv")
 xwalk <- read_csv("../data/xwalk_region.csv")
@@ -43,7 +44,10 @@ df_long <- df %>%
          loss = grepl("L", mode_id),
          bin = "bin" == type,
          cat = "cat" == type,
-         cntry_mode_id = paste(iso3, mode_id, sep = "_"))
+         yrs = "yrs" == type,
+         cntry_mode_id = paste(iso3, mode_id, sep = "_")) %>%
+ filter(acq & c(cat | yrs) & values > 0) %>%
+ select(-c(acq, type, loss, par_mode_id, cntry_mode_id))
 
 subregion_code <- xwalk %>% 
   distinct(subregion, subregion_code)
@@ -51,6 +55,8 @@ subregion_code <- xwalk %>%
 codes <- subregion_code %>% 
   distinct(subregion_code) %>% 
   pull(subregion_code)
+
+# modes <- dm.combine_questions(df_long, df_acq)
 
 ```
 
@@ -67,9 +73,10 @@ region_geo <- dm.region_geojson(pth = "../data/shape/world-administrative-bounda
                                 xwalk,
                                 write_pth = "../data/region_geo.geojson")
 
+dm.combine_questions(df_long, df_acq) %>%
+  write_csv("../data/modes_acq.csv")
+
 df_long %>%
- filter(acq & values > 0) %>%
- select(-acq) %>%
  readr::write_csv("../data/cit_long.csv")
 ```
 
