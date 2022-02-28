@@ -108,6 +108,63 @@ dm.A06b_questions <- function(df_long, df_acq) {
     select(-values)
 }
 
+dm.A06c_questions <- function(df_long, df_acq) {
+  
+  df_long %>%
+    filter(mode_id == "A06c") %>% 
+    inner_join(df_acq) %>%
+    select(iso3, mode_id, specification, values) %>% 
+    mutate(definition = NA,
+           restriction_warning = case_when(values == 2 ~ "language-requirement-no-test",
+                                           values == 3 ~ "language-requirement-test",
+                                           values == 99 ~ "no-provision"),
+           wing = "residence") %>%
+    select(-values)
+}
+
+dm.A06d_questions <- function(df_long, df_acq) {
+  
+  df_long %>%
+    filter(mode_id == "A06d") %>% 
+    inner_join(df_acq) %>%
+    select(iso3, mode_id, specification, values) %>% 
+    mutate(definition = NA,
+           restriction_warning = case_when(values == 2 ~ "civic-requirement-no-test",
+                                           values == 3 ~ "civic-requirement-test",
+                                           values == 99 ~ "no-provision"),
+           wing = "residence") %>%
+    select(-values)
+}
+
+dm.A06e_questions <- function(df_long, df_acq) {
+  
+  df_long %>%
+    filter(mode_id == "A06e") %>% 
+    inner_join(df_acq) %>%
+    select(iso3, mode_id, specification, values) %>% 
+    mutate(definition = NA,
+           restriction_warning = case_when(values == 1 ~ "crimes",
+                                           values == 2 ~ "crimes-general-moral-character",
+                                           values == 3 ~ "moral-character",
+                                           values == 99 ~ "no-provision"),
+           wing = "residence") %>%
+    select(-values)
+}
+
+dm.A06f_questions <- function(df_long, df_acq) {
+  
+  df_long %>%
+    filter(mode_id == "A06f") %>% 
+    inner_join(df_acq) %>%
+    select(iso3, mode_id, specification, values) %>% 
+    mutate(definition = NA,
+           restriction_warning = case_when(values == 1 ~ "economic-resources",
+                                           values == 99 ~ "no-provision"),
+           wing = "residence") %>%
+    select(-values)
+}
+
+
 dm.A07_questions <- function(df_long, df_acq) {
   
   df_long %>%
@@ -128,7 +185,7 @@ dm.A08_questions <- function(df_long, df_acq) {
     inner_join(df_acq) %>%
     select(iso3, mode_id, specification, values) %>%
     mutate(definition = NA,
-           restriction_warning = case_when(values == 2 ~ "residence"
+           restriction_warning = case_when(values == 2 ~ "residence",
                                            values == 3 ~ "spouse-female",
                                            values == 4 ~ "spouse-female-residence",
                                            values == 5 ~ "spouse-male",
@@ -207,7 +264,7 @@ dm.A13_questions <- function(df_long, df_acq) {
     inner_join(df_acq) %>%
     select(iso3, mode_id, specification, values) %>%
     mutate(definition = NA,
-           restriction_warning = case_when(values == 2 ~ "residence"
+           restriction_warning = case_when(values == 2 ~ "residence",
                                            values == 3 ~ "spouse-female",
                                            values == 4 ~ "spouse-female-residence"),
            wing = "family") %>%
@@ -292,7 +349,7 @@ dm.A23_questions <- function(df_long, df_acq) {
   df_long %>%
     filter(mode_id == "A23") %>% 
     inner_join(df_acq) %>%
-    select(iso3, mode_id, specification, values) %>t%
+    select(iso3, mode_id, specification, values) %>%
     mutate(definition = "stateless",
            restriction_warning = ifelse(values == 2, "general", NA),
            wing = "other") %>%
@@ -338,18 +395,18 @@ dm.A26_questions <- function(df_long, df_acq) {
 
 dm.combine_questions <- function(df_long, df_acq) {
   
-  df <- data.frame(mode_id = c("A01a", "A01a", "A01b", "A02a", "A02b", "A02b",
-                               "A09", "A09", "A10", "A10", "A14", "A14", "A14", 
-                               "A16", "A1t8", "A22", "A23", "A24", "A25", "A26", 
-                               "A08", "A08", "A13", "A13", "A13", "A12a", "A12b",
-                               "A12b", "A07", "A21"),
-                   wing = c(rep("parentage", 13), rep("other", 7), 
-                            rep("family", 8), rep("residence", 2)),
-                   question = c("Q2", "Q3", "Q3", "Q2", "Q1", "Q1", "Q1", 
-                                "Q3", "Q5", "Q3", "Q3", "Q4", "Q6", "Q7", "Q8", 
-                                "Q9", "Q10", "Q11", "Q12", "Q13", "Q14", "Q15", 
-                                "Q14", "Q15", "Q16", "Q17", "Q17", "Q18", "Q19",
-                                "Q20", "Q21"))
+  # df <- data.frame(mode_id = c("A01a", "A01a", "A01b", "A02a", "A02b", "A02b",
+  #                              "A09", "A09", "A10", "A10", "A14", "A14", "A14", 
+  #                              "A16", "A1t8", "A22", "A23", "A24", "A25", "A26", 
+  #                              "A08", "A08", "A13", "A13", "A13", "A12a", "A12b",
+  #                              "A12b", "A07", "A21"),
+  #                  wing = c(rep("parentage", 13), rep("other", 7), 
+  #                           rep("family", 8), rep("residence", 2)),
+  #                  question = c("Q2", "Q3", "Q3", "Q2", "Q1", "Q1", "Q1", 
+  #                               "Q3", "Q5", "Q3", "Q3", "Q4", "Q6", "Q7", "Q8", 
+  #                               "Q9", "Q10", "Q11", "Q12", "Q13", "Q14", "Q15", 
+  #                               "Q14", "Q15", "Q16", "Q17", "Q17", "Q18", "Q19",
+  #                               "Q20", "Q21"))
   
   A01a <- dm.A01a_questions(df_long, df_acq)
   A01b <- dm.A01b_questions(df_long, df_acq)
@@ -357,12 +414,12 @@ dm.combine_questions <- function(df_long, df_acq) {
   A02b <- dm.A02b_questions(df_long, df_acq)
   A03b <- dm.A03b_questions(df_long, df_acq)
   A06 <- dm.A06_questions(df_long, df_acq)
-  # A06a <- dm.A06a_questions(df_long, df_acq)
-  # A06b <- dm.A06b_questions(df_long, df_acq)
-  # A06c <- dm.A06c_questions(df_long, df_acq)
-  # A06d <- dm.A06d_questions(df_long, df_acq)
-  # A06e <- dm.A06e_questions(df_long, df_acq)
-  # A06f <- dm.A06f_questions(df_long, df_acq)
+  A06a <- dm.A06a_questions(df_long, df_acq)
+  A06b <- dm.A06b_questions(df_long, df_acq)
+  A06c <- dm.A06c_questions(df_long, df_acq)
+  A06d <- dm.A06d_questions(df_long, df_acq)
+  A06e <- dm.A06e_questions(df_long, df_acq)
+  A06f <- dm.A06f_questions(df_long, df_acq)
   A07 <- dm.A07_questions(df_long, df_acq)
   A08 <- dm.A08_questions(df_long, df_acq)
   A09 <- dm.A09_questions(df_long, df_acq)
