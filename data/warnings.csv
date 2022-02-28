@@ -22,3 +22,14 @@ generational,{cntry} restricts acquisition of citizenship only to children or gr
 spousal,{cntry} restricts acquisition of citizenship only to the spouse. Please see country-specific notes.
 schooling-period,{cntry} restricts acquisition of citizenship to those who have schooled in {cntry} for a period of time. Please see country-specific notes.
 residence-period,{cntry} restricts acquisition of citizenship to those who have resided in {cntry} for a period of time. Please see country-specific notes.
+major-exceptio'ns,Please see country-specific notes.
+no-major-exceptions,Please see country-specific notes.
+no-provision,Please see country-specific notes.
+language-requirement-no-test,{cntry} restricts acquisition of citizenship to those who can speak and read the national language. Please see country-specific notes.
+language-requirement-test,{cntry} restricts acquisition of citizenship to those who can pass a test to prove they can speak and read the national language. Please see country-specific notes.
+civic-requirement-no-test,{cntry} restricts acquisition of citizenship to those who can have civic knowledge of {cntry}. Please see-country-specific notes.
+civic-requirement-test,{cntry} restricts acquisition of citizenship to those who can pass a test of the civic knowledge of {cntry}. Please see-country-specific notes.
+crimes,"{cntry} bars citizenship for specificed crimes, offences, or character queries. Please see country-specific notes."
+crimes-general-moral-character,"{cntry} bars citizenship for specificed crimes, offences, or character queries. Good moral character is required. Please see country-specific notes."
+moral-character,{cntry} restricts acquisition of citizenship to those with good moral character. Please see country-specific notes.
+economic-resources,{cntry} restricts acquisition of citizenship to those with economic resources. Please see country-specific notes.
