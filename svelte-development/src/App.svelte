@@ -24,7 +24,12 @@
     let butterflySvg2 = await text(butterflies[1])
     let butterflySvgs = [butterflySvg1, butterflySvg2]
     let byCountryD = await csv("data/acq_by_country.csv")
-    datasets = [mapCentroidsD, mapOutlineD, butterflySvgs, byCountryD];
+    let warnings = await csv("data/warnings.csv")
+    let definitions = await csv("data/definitions.csv")
+    let questions = await csv("data/questions.csv")
+    let acqMode = await csv("data/mode_acq.csv")
+    datasets = [mapCentroidsD, mapOutlineD, butterflySvgs, byCountryD, warnings,
+    definitions, questions, acqMode];
     parseData(datasets);
   }
 
