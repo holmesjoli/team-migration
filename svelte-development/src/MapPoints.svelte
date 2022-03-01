@@ -1,7 +1,7 @@
 <script>
   import { spring } from "svelte/motion";
-  import { scaleLinear, extent, min, max, select, selectAll } from 'd3';
-  import { forceSimulation, forceCollide, forceX, forceY } from "d3-force"
+  import { scaleLinear, extent, min, max, select, selectAll, groups, line } from 'd3';
+  import { forceSimulation, forceCollide, forceLink, forceX, forceY } from "d3-force"
 
   import regions from './regions.js';
 
@@ -44,6 +44,9 @@
       .force("collide", forceCollide().radius(d => sScale(d.properties.VALUE) * 55))
       .force("x", forceX().x(d => projection(d.geometry.coordinates)[0]))
       .force("y", forceY().y(d => projection(d.geometry.coordinates)[1]))
+      .force("link", forceLink()
+                    .id(function(d) {
+                        return d.CODE;}))
       .stop()
       .tick(100)
 
@@ -58,21 +61,21 @@
   }
 
   function handleMouseOver() {
-    select(this).attr('fill-opacity', 1)
+    select(this).attr('fill-opacity', 1);
+
+    let hoverRegionIndex = select(this).attr('data-region-index');
+    hoverRegionCode = regions[hoverRegionIndex].code;
+
+    let links = regionFlow.filter(function(d) {
+        return d.CODE === hoverRegionCode;
+    });
+
   }
 
   function handleMouseOut() {
     if (select(this).attr('data-region-index') != findRegionIndex(selectedRegion)) {
       select(this).attr('fill-opacity', 0.5)
     }
-
-    let hoverRegionIndex = select(this).attr('data-region-index');
-    hoverRegionCode = regions[hoverRegionIndex].code;
-
-    let regionFlowFiltered = regionFlow.filter(function(d) {
-      return d.orig_loc === hoverRegionCode;
-    })
-
   }
 
   function handleClick() {
@@ -82,13 +85,12 @@
     selectedRegion = regions[selectedRegionIndex].name;
 
     if (selectedCountry !== "") {
-      console.log(selectedCountry);
-      let container = select(".country-cards__container")
-      let color = select(this).attr("fill")
-      container.selectAll('.country-card').style("background", "white")
-      container.selectAll("use").attr("fill", color).attr("stroke", color)
-      container.selectAll(".country-card__country-name").style("color", "black")
-      selectedCountry = ""
+      let container = select(".country-cards__container");
+      let color = select(this).attr("fill");
+      container.selectAll('.country-card').style("background", "white");
+      container.selectAll("use").attr("fill", color).attr("stroke", color);
+      container.selectAll(".country-card__country-name").style("color", "black");
+      selectedCountry = "";
     }
   }
 
