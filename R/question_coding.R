@@ -443,12 +443,25 @@ dm.combine_questions <- function(df_long, df_acq) {
     bind_rows(A01b) %>%
     bind_rows(A02a) %>%
     bind_rows(A02b) %>%
-    bind_rows(A03b) %>%
+    bind_rows(A06a) %>%
+    bind_rows(A06b) %>%
+    bind_rows(A06c) %>%
+    bind_rows(A06d) %>%
+    bind_rows(A06e) %>%
+    bind_rows(A06f) %>%
+    bind_rows(A07) %>%
+    bind_rows(A08) %>%
     bind_rows(A09) %>%
     bind_rows(A10) %>%
+    bind_rows(A11) %>%
+    bind_rows(A12a) %>%
+    bind_rows(A12b) %>%
+    bind_rows(A13) %>%
     bind_rows(A14) %>%
     bind_rows(A16) %>%
     bind_rows(A18) %>%
+    bind_rows(A19) %>%
+    bind_rows(A21) %>%
     bind_rows(A22) %>%
     bind_rows(A23) %>%
     bind_rows(A24) %>%

@@ -45,8 +45,15 @@ df_long <- df %>%
          bin = "bin" == type,
          cat = "cat" == type,
          yrs = "yrs" == type,
-         cntry_mode_id = paste(iso3, mode_id, sep = "_")) %>%
- filter(acq & c(cat | yrs) & values > 0) %>%
+         cntry_mode_id = paste(iso3, mode_id, sep = "_"))
+
+bin <- df_long %>%
+  filter(acq & bin & values == 1) %>%
+  select(-c(acq, type, loss, cat, yrs, bin, par_mode_id, cntry_mode_id)) %>%
+  filter(mode_id %in% unique(modes$mode_id))
+
+df_long <- df_long %>% 
+  filter(acq & c(cat | yrs) & values > 0) %>%
  select(-c(acq, type, loss, par_mode_id, cntry_mode_id))
 
 subregion_code <- xwalk %>% 
@@ -56,7 +63,7 @@ codes <- subregion_code %>%
   distinct(subregion_code) %>% 
   pull(subregion_code)
 
-# modes <- dm.combine_questions(df_long, df_acq)
+modes <- dm.combine_questions(df_long, df_acq)
 
 ```
 
@@ -73,11 +80,17 @@ region_geo <- dm.region_geojson(pth = "../data/shape/world-administrative-bounda
                                 xwalk,
                                 write_pth = "../data/region_geo.geojson")
 
-dm.combine_questions(df_long, df_acq) %>%
+modes %>%
   write_csv("../data/modes_acq.csv")
 
 df_long %>%
  readr::write_csv("../data/cit_long.csv")
+
+df_long %>%
+  filter(mode_id %in% unique(modes$mode_id)) %>% 
+  readr::write_csv("../data/allCountriesAllPaths.csv")
+
+
 ```
 
 ## Number of unique modes
