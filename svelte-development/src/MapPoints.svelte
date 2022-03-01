@@ -10,6 +10,7 @@
   export let projection;
   export let butterflies;
   export let selectedRegion;
+  export let selectedRegionCode;
   export let selectedCountry;
 
   let minMax = {
@@ -64,15 +65,20 @@
     if (select(this).attr('data-region-index') != findRegionIndex(selectedRegion)) {
       select(this).attr('fill-opacity', 0.5)
     }
+
+    let selectedRegionIndex = select(this).attr('data-region-index');
+    selectedRegionCode = regions[selectedRegionIndex].code;
+    console.log(selectedRegionCode);
   }
 
   function handleClick() {
-    select(".map-points").selectAll("use").attr('fill-opacity', 0.5)
-    select(this).attr('fill-opacity', 1)
-    let selectedRegionIndex = select(this).attr('data-region-index')
-    selectedRegion = regions[selectedRegionIndex].name
+    select(".map-points").selectAll("use").attr('fill-opacity', 0.5);
+    select(this).attr('fill-opacity', 1);
+    let selectedRegionIndex = select(this).attr('data-region-index');
+    selectedRegion = regions[selectedRegionIndex].name;
 
     if (selectedCountry !== "") {
+      console.log(selectedCountry);
       let container = select(".country-cards__container")
       let color = select(this).attr("fill")
       container.selectAll('.country-card').style("background", "white")

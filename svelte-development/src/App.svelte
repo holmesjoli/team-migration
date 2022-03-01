@@ -11,6 +11,7 @@
   export let datasets = [];
 
   let selectedRegion = "";
+  let selectedRegionCode = "";
   let selectedCountry = "";
   
   const butterflies = ["asset/butterfly1.svg", "asset/butterfly2.svg"]
@@ -56,7 +57,7 @@
       Loading...
     </div>
   {:then dataset}
-    <MapContainer dataset={datasets} bind:selectedRegion={selectedRegion} bind:selectedCountry={selectedCountry}/>
+    <MapContainer dataset={datasets} bind:selectedRegion={selectedRegion} bind:selectedRegionCode={selectedRegionCode} bind:selectedCountry={selectedCountry}/>
     <CountryCardContainer bind:selectedRegion={selectedRegion} bind:selectedCountry={selectedCountry} data={datasets[3]}/>
     <BigButterflyContainer bind:selectedCountry={selectedCountry} />
   {/await}
