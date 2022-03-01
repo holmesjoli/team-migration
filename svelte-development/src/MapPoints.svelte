@@ -69,8 +69,10 @@
     let hoverRegionIndex = select(this).attr('data-region-index');
     hoverRegionCode = regions[hoverRegionIndex].code;
 
+    let regionFlowFiltered = regionFlow.filter(function(d) {
+      return d.orig_loc === hoverRegionCode;
+    })
 
-    console.log(hoverRegionCode);
   }
 
   function handleClick() {

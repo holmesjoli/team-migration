@@ -7211,7 +7211,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (122:2) {#each $butterflyPoints as {x, y, value, regionIndex, regionShape}}
+    // (124:2) {#each $butterflyPoints as {x, y, value, regionIndex, regionShape}}
     function create_each_block$1(ctx) {
     	let g1;
     	let g0;
@@ -7239,13 +7239,13 @@ var app = (function () {
     			attr_dev(use, "fill-opacity", "0.5");
     			attr_dev(use, "data-region-index", use_data_region_index_value = /*regionIndex*/ ctx[20]);
     			attr_dev(use, "class", "svelte-17cpre8");
-    			add_location(use, file$5, 131, 6, 3780);
+    			add_location(use, file$5, 133, 6, 3861);
     			attr_dev(g0, "class", "butterfly");
     			attr_dev(g0, "transform", g0_transform_value = "translate(" + /*x*/ ctx[17] + ", " + /*y*/ ctx[18] + ") rotate(" + (Math.random() * 60 - 30) + ")");
-    			add_location(g0, file$5, 126, 6, 3601);
+    			add_location(g0, file$5, 128, 6, 3682);
     			attr_dev(g1, "class", "butterfly-container");
     			attr_dev(g1, "transform", g1_transform_value = "translate(" + /*sScale*/ ctx[2](/*value*/ ctx[19]) * -50 + ", " + /*sScale*/ ctx[2](/*value*/ ctx[19]) * -50 + ")");
-    			add_location(g1, file$5, 122, 4, 3474);
+    			add_location(g1, file$5, 124, 4, 3555);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, g1, anchor);
@@ -7302,7 +7302,7 @@ var app = (function () {
     		block,
     		id: create_each_block$1.name,
     		type: "each",
-    		source: "(122:2) {#each $butterflyPoints as {x, y, value, regionIndex, regionShape}}",
+    		source: "(124:2) {#each $butterflyPoints as {x, y, value, regionIndex, regionShape}}",
     		ctx
     	});
 
@@ -7338,13 +7338,13 @@ var app = (function () {
     			}
 
     			attr_dev(g0, "id", "butterfly-0");
-    			add_location(g0, file$5, 112, 4, 3239);
-    			add_location(defs0, file$5, 111, 2, 3227);
+    			add_location(g0, file$5, 114, 4, 3320);
+    			add_location(defs0, file$5, 113, 2, 3308);
     			attr_dev(g1, "id", "butterfly-1");
-    			add_location(g1, file$5, 117, 4, 3326);
-    			add_location(defs1, file$5, 116, 2, 3314);
+    			add_location(g1, file$5, 119, 4, 3407);
+    			add_location(defs1, file$5, 118, 2, 3395);
     			attr_dev(g2, "class", "map-points");
-    			add_location(g2, file$5, 103, 0, 3062);
+    			add_location(g2, file$5, 105, 0, 3143);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -7456,7 +7456,10 @@ var app = (function () {
 
     		let hoverRegionIndex = select(this).attr('data-region-index');
     		$$invalidate(8, hoverRegionCode = regions[hoverRegionIndex].code);
-    		console.log(hoverRegionCode);
+
+    		regionFlow.filter(function (d) {
+    			return d.orig_loc === hoverRegionCode;
+    		});
     	}
 
     	function handleClick() {
