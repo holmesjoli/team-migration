@@ -45,7 +45,7 @@
 * A16
   - Path is TRUE if Q7 == "yes"
 * A18
-  - Path is TRUE if Q18 == "yes"
+  - Path is TRUE if Q08 == "yes"
 * A19
   - Path is TRUE if Q29 == "yes"
 * A21
