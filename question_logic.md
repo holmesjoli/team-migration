@@ -31,7 +31,7 @@
 * A09
   - Path is TRUE if Q3 == "yes" & Q4 == "yes" & Q6 == "yes"
 * A10
-  - Path is TRYE if Q3 == "yes" & Q5 == "yes"
+  - Path is TRUE if Q3 == "yes" & Q5 == "yes"
 * A11
   - Path is TRUE if Q17 == "yes" & Q18 == "no"
 * A12a
