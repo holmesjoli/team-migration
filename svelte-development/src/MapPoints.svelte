@@ -3,8 +3,6 @@
   import { scaleLinear, extent, select, selectAll } from 'd3';
   import { forceSimulation, forceCollide, forceX, forceY } from "d3-force"
 
-  import regions from './regions.js';
-
   export let data;
   export let projection;
   export let butterflies;
@@ -15,9 +13,14 @@
     .domain(extent(data.features, d => d.properties.VALUE))
     .range([0.25, 1]);
 
+  let minMax = {
+          max: d3.max(regionFlow, function(d) {return d.value;}),
+          min: d3.min(regionFlow, function(d) {return d.value;})
+      };
+
   const pathScale = scaleLinear()
-    .domain(extent(data.features, d => d.properties.VALUE))
-    .range([0.25, 1]);
+    .domain([minMax.min, minMax.max])
+    .range([1, 10]);
 
   let butterflyPoints = spring(data.features.map(d => ({
     x: 0,

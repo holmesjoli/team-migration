@@ -4,6 +4,7 @@
   export let selectedRegion;
   export let selectedCountry;
   export let data;
+  export let regionFlow;
 
 </script>
 
@@ -11,5 +12,5 @@
   <h1>
     {selectedRegion}
   </h1>
-  <CountryCards bind:selectedRegion={selectedRegion} bind:selectedCountry={selectedCountry} data={data} />
+  <CountryCards bind:selectedRegion={selectedRegion} bind:selectedCountry={selectedCountry} data={data} regionFlow={regionFlow}/>
 </section>
