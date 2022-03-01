@@ -407,12 +407,6 @@ var app = (function () {
         info.block.p(child_ctx, dirty);
     }
 
-    const globals = (typeof window !== 'undefined'
-        ? window
-        : typeof globalThis !== 'undefined'
-            ? globalThis
-            : global);
-
     function bind(component, name, callback) {
         const index = component.$$.props[name];
         if (index !== undefined) {
@@ -755,6 +749,78 @@ var app = (function () {
       }
     }
 
+    class InternMap extends Map {
+      constructor(entries, key = keyof) {
+        super();
+        Object.defineProperties(this, {_intern: {value: new Map()}, _key: {value: key}});
+        if (entries != null) for (const [key, value] of entries) this.set(key, value);
+      }
+      get(key) {
+        return super.get(intern_get(this, key));
+      }
+      has(key) {
+        return super.has(intern_get(this, key));
+      }
+      set(key, value) {
+        return super.set(intern_set(this, key), value);
+      }
+      delete(key) {
+        return super.delete(intern_delete(this, key));
+      }
+    }
+
+    function intern_get({_intern, _key}, value) {
+      const key = _key(value);
+      return _intern.has(key) ? _intern.get(key) : value;
+    }
+
+    function intern_set({_intern, _key}, value) {
+      const key = _key(value);
+      if (_intern.has(key)) return _intern.get(key);
+      _intern.set(key, value);
+      return value;
+    }
+
+    function intern_delete({_intern, _key}, value) {
+      const key = _key(value);
+      if (_intern.has(key)) {
+        value = _intern.get(key);
+        _intern.delete(key);
+      }
+      return value;
+    }
+
+    function keyof(value) {
+      return value !== null && typeof value === "object" ? value.valueOf() : value;
+    }
+
+    function identity$4(x) {
+      return x;
+    }
+
+    function groups(values, ...keys) {
+      return nest(values, Array.from, identity$4, keys);
+    }
+
+    function nest(values, map, reduce, keys) {
+      return (function regroup(values, i) {
+        if (i >= keys.length) return reduce(values);
+        const groups = new InternMap();
+        const keyof = keys[i++];
+        let index = -1;
+        for (const value of values) {
+          const key = keyof(value, ++index, values);
+          const group = groups.get(key);
+          if (group) group.push(value);
+          else groups.set(key, [value]);
+        }
+        for (const [key, values] of groups) {
+          groups.set(key, regroup(values, i));
+        }
+        return map(groups);
+      })(values, 0);
+    }
+
     var e10 = Math.sqrt(50),
         e5 = Math.sqrt(10),
         e2 = Math.sqrt(2);
@@ -1013,7 +1079,7 @@ var app = (function () {
     // selection; we don’t ever want to create a selection backed by a live
     // HTMLCollection or NodeList. However, note that selection.selectAll will use a
     // static NodeList as a group, since it safely derived from querySelectorAll.
-    function array(x) {
+    function array$1(x) {
       return x == null ? [] : Array.isArray(x) ? x : Array.from(x);
     }
 
@@ -1029,7 +1095,7 @@ var app = (function () {
 
     function arrayAll(select) {
       return function() {
-        return array(select.apply(this, arguments));
+        return array$1(select.apply(this, arguments));
       };
     }
 
@@ -1061,11 +1127,11 @@ var app = (function () {
       };
     }
 
-    var find = Array.prototype.find;
+    var find$1 = Array.prototype.find;
 
     function childFind(match) {
       return function() {
-        return find.call(this.children, match);
+        return find$1.call(this.children, match);
       };
     }
 
@@ -1133,7 +1199,7 @@ var app = (function () {
       querySelectorAll: function(selector) { return this._parent.querySelectorAll(selector); }
     };
 
-    function constant$2(x) {
+    function constant$3(x) {
       return function() {
         return x;
       };
@@ -1220,7 +1286,7 @@ var app = (function () {
           parents = this._parents,
           groups = this._groups;
 
-      if (typeof value !== "function") value = constant$2(value);
+      if (typeof value !== "function") value = constant$3(value);
 
       for (var m = groups.length, update = new Array(m), enter = new Array(m), exit = new Array(m), j = 0; j < m; ++j) {
         var parent = parents[j],
@@ -1872,7 +1938,7 @@ var app = (function () {
     function selectAll(selector) {
       return typeof selector === "string"
           ? new Selection$1([document.querySelectorAll(selector)], [document.documentElement])
-          : new Selection$1([array(selector)], root);
+          : new Selection$1([array$1(selector)], root);
     }
 
     function define(constructor, factory, prototype) {
@@ -2256,7 +2322,7 @@ var app = (function () {
           : m1) * 255;
     }
 
-    var constant$1 = x => () => x;
+    var constant$2 = x => () => x;
 
     function linear$1(a, d) {
       return function(t) {
@@ -2272,13 +2338,13 @@ var app = (function () {
 
     function gamma(y) {
       return (y = +y) === 1 ? nogamma : function(a, b) {
-        return b - a ? exponential(a, b, y) : constant$1(isNaN(a) ? b : a);
+        return b - a ? exponential(a, b, y) : constant$2(isNaN(a) ? b : a);
       };
     }
 
     function nogamma(a, b) {
       var d = b - a;
-      return d ? linear$1(a, d) : constant$1(isNaN(a) ? b : a);
+      return d ? linear$1(a, d) : constant$2(isNaN(a) ? b : a);
     }
 
     var interpolateRgb = (function rgbGamma(y) {
@@ -2434,7 +2500,7 @@ var app = (function () {
 
     function interpolate$1(a, b) {
       var t = typeof b, c;
-      return b == null || t === "boolean" ? constant$1(b)
+      return b == null || t === "boolean" ? constant$2(b)
           : (t === "number" ? interpolateNumber
           : t === "string" ? ((c = color(b)) ? (b = c, interpolateRgb) : interpolateString)
           : b instanceof color ? interpolateRgb
@@ -3544,6 +3610,135 @@ var app = (function () {
     selection.prototype.interrupt = selection_interrupt;
     selection.prototype.transition = selection_transition;
 
+    const pi$1 = Math.PI,
+        tau$1 = 2 * pi$1,
+        epsilon$1 = 1e-6,
+        tauEpsilon = tau$1 - epsilon$1;
+
+    function Path() {
+      this._x0 = this._y0 = // start of current subpath
+      this._x1 = this._y1 = null; // end of current subpath
+      this._ = "";
+    }
+
+    function path() {
+      return new Path;
+    }
+
+    Path.prototype = path.prototype = {
+      constructor: Path,
+      moveTo: function(x, y) {
+        this._ += "M" + (this._x0 = this._x1 = +x) + "," + (this._y0 = this._y1 = +y);
+      },
+      closePath: function() {
+        if (this._x1 !== null) {
+          this._x1 = this._x0, this._y1 = this._y0;
+          this._ += "Z";
+        }
+      },
+      lineTo: function(x, y) {
+        this._ += "L" + (this._x1 = +x) + "," + (this._y1 = +y);
+      },
+      quadraticCurveTo: function(x1, y1, x, y) {
+        this._ += "Q" + (+x1) + "," + (+y1) + "," + (this._x1 = +x) + "," + (this._y1 = +y);
+      },
+      bezierCurveTo: function(x1, y1, x2, y2, x, y) {
+        this._ += "C" + (+x1) + "," + (+y1) + "," + (+x2) + "," + (+y2) + "," + (this._x1 = +x) + "," + (this._y1 = +y);
+      },
+      arcTo: function(x1, y1, x2, y2, r) {
+        x1 = +x1, y1 = +y1, x2 = +x2, y2 = +y2, r = +r;
+        var x0 = this._x1,
+            y0 = this._y1,
+            x21 = x2 - x1,
+            y21 = y2 - y1,
+            x01 = x0 - x1,
+            y01 = y0 - y1,
+            l01_2 = x01 * x01 + y01 * y01;
+
+        // Is the radius negative? Error.
+        if (r < 0) throw new Error("negative radius: " + r);
+
+        // Is this path empty? Move to (x1,y1).
+        if (this._x1 === null) {
+          this._ += "M" + (this._x1 = x1) + "," + (this._y1 = y1);
+        }
+
+        // Or, is (x1,y1) coincident with (x0,y0)? Do nothing.
+        else if (!(l01_2 > epsilon$1));
+
+        // Or, are (x0,y0), (x1,y1) and (x2,y2) collinear?
+        // Equivalently, is (x1,y1) coincident with (x2,y2)?
+        // Or, is the radius zero? Line to (x1,y1).
+        else if (!(Math.abs(y01 * x21 - y21 * x01) > epsilon$1) || !r) {
+          this._ += "L" + (this._x1 = x1) + "," + (this._y1 = y1);
+        }
+
+        // Otherwise, draw an arc!
+        else {
+          var x20 = x2 - x0,
+              y20 = y2 - y0,
+              l21_2 = x21 * x21 + y21 * y21,
+              l20_2 = x20 * x20 + y20 * y20,
+              l21 = Math.sqrt(l21_2),
+              l01 = Math.sqrt(l01_2),
+              l = r * Math.tan((pi$1 - Math.acos((l21_2 + l01_2 - l20_2) / (2 * l21 * l01))) / 2),
+              t01 = l / l01,
+              t21 = l / l21;
+
+          // If the start tangent is not coincident with (x0,y0), line to.
+          if (Math.abs(t01 - 1) > epsilon$1) {
+            this._ += "L" + (x1 + t01 * x01) + "," + (y1 + t01 * y01);
+          }
+
+          this._ += "A" + r + "," + r + ",0,0," + (+(y01 * x20 > x01 * y20)) + "," + (this._x1 = x1 + t21 * x21) + "," + (this._y1 = y1 + t21 * y21);
+        }
+      },
+      arc: function(x, y, r, a0, a1, ccw) {
+        x = +x, y = +y, r = +r, ccw = !!ccw;
+        var dx = r * Math.cos(a0),
+            dy = r * Math.sin(a0),
+            x0 = x + dx,
+            y0 = y + dy,
+            cw = 1 ^ ccw,
+            da = ccw ? a0 - a1 : a1 - a0;
+
+        // Is the radius negative? Error.
+        if (r < 0) throw new Error("negative radius: " + r);
+
+        // Is this path empty? Move to (x0,y0).
+        if (this._x1 === null) {
+          this._ += "M" + x0 + "," + y0;
+        }
+
+        // Or, is (x0,y0) not coincident with the previous point? Line to (x0,y0).
+        else if (Math.abs(this._x1 - x0) > epsilon$1 || Math.abs(this._y1 - y0) > epsilon$1) {
+          this._ += "L" + x0 + "," + y0;
+        }
+
+        // Is this arc empty? We’re done.
+        if (!r) return;
+
+        // Does the angle go the wrong way? Flip the direction.
+        if (da < 0) da = da % tau$1 + tau$1;
+
+        // Is this a complete circle? Draw two arcs to complete the circle.
+        if (da > tauEpsilon) {
+          this._ += "A" + r + "," + r + ",0,1," + cw + "," + (x - dx) + "," + (y - dy) + "A" + r + "," + r + ",0,1," + cw + "," + (this._x1 = x0) + "," + (this._y1 = y0);
+        }
+
+        // Is this arc non-empty? Draw an arc!
+        else if (da > epsilon$1) {
+          this._ += "A" + r + "," + r + ",0," + (+(da >= pi$1)) + "," + cw + "," + (this._x1 = x + r * Math.cos(a1)) + "," + (this._y1 = y + r * Math.sin(a1));
+        }
+      },
+      rect: function(x, y, w, h) {
+        this._ += "M" + (this._x0 = this._x1 = +x) + "," + (this._y0 = this._y1 = +y) + "h" + (+w) + "v" + (+h) + "h" + (-w) + "Z";
+      },
+      toString: function() {
+        return this._;
+      }
+    };
+
     var EOL = {},
         EOF = {},
         QUOTE = 34,
@@ -4150,7 +4345,7 @@ var app = (function () {
     treeProto.x = tree_x;
     treeProto.y = tree_y;
 
-    function constant(x) {
+    function constant$1(x) {
       return function() {
         return x;
       };
@@ -4160,11 +4355,11 @@ var app = (function () {
       return (random() - 0.5) * 1e-6;
     }
 
-    function x(d) {
+    function x$1(d) {
       return d.x + d.vx;
     }
 
-    function y(d) {
+    function y$1(d) {
       return d.y + d.vy;
     }
 
@@ -4175,7 +4370,7 @@ var app = (function () {
           strength = 1,
           iterations = 1;
 
-      if (typeof radius !== "function") radius = constant(radius == null ? 1 : +radius);
+      if (typeof radius !== "function") radius = constant$1(radius == null ? 1 : +radius);
 
       function force() {
         var i, n = nodes.length,
@@ -4187,7 +4382,7 @@ var app = (function () {
             ri2;
 
         for (var k = 0; k < iterations; ++k) {
-          tree = quadtree(nodes, x, y).visitAfter(prepare);
+          tree = quadtree(nodes, x$1, y$1).visitAfter(prepare);
           for (i = 0; i < n; ++i) {
             node = nodes[i];
             ri = radii[node.index], ri2 = ri * ri;
@@ -4251,7 +4446,122 @@ var app = (function () {
       };
 
       force.radius = function(_) {
-        return arguments.length ? (radius = typeof _ === "function" ? _ : constant(+_), initialize(), force) : radius;
+        return arguments.length ? (radius = typeof _ === "function" ? _ : constant$1(+_), initialize(), force) : radius;
+      };
+
+      return force;
+    }
+
+    function index(d) {
+      return d.index;
+    }
+
+    function find(nodeById, nodeId) {
+      var node = nodeById.get(nodeId);
+      if (!node) throw new Error("node not found: " + nodeId);
+      return node;
+    }
+
+    function forceLink(links) {
+      var id = index,
+          strength = defaultStrength,
+          strengths,
+          distance = constant$1(30),
+          distances,
+          nodes,
+          count,
+          bias,
+          random,
+          iterations = 1;
+
+      if (links == null) links = [];
+
+      function defaultStrength(link) {
+        return 1 / Math.min(count[link.source.index], count[link.target.index]);
+      }
+
+      function force(alpha) {
+        for (var k = 0, n = links.length; k < iterations; ++k) {
+          for (var i = 0, link, source, target, x, y, l, b; i < n; ++i) {
+            link = links[i], source = link.source, target = link.target;
+            x = target.x + target.vx - source.x - source.vx || jiggle(random);
+            y = target.y + target.vy - source.y - source.vy || jiggle(random);
+            l = Math.sqrt(x * x + y * y);
+            l = (l - distances[i]) / l * alpha * strengths[i];
+            x *= l, y *= l;
+            target.vx -= x * (b = bias[i]);
+            target.vy -= y * b;
+            source.vx += x * (b = 1 - b);
+            source.vy += y * b;
+          }
+        }
+      }
+
+      function initialize() {
+        if (!nodes) return;
+
+        var i,
+            n = nodes.length,
+            m = links.length,
+            nodeById = new Map(nodes.map((d, i) => [id(d, i, nodes), d])),
+            link;
+
+        for (i = 0, count = new Array(n); i < m; ++i) {
+          link = links[i], link.index = i;
+          if (typeof link.source !== "object") link.source = find(nodeById, link.source);
+          if (typeof link.target !== "object") link.target = find(nodeById, link.target);
+          count[link.source.index] = (count[link.source.index] || 0) + 1;
+          count[link.target.index] = (count[link.target.index] || 0) + 1;
+        }
+
+        for (i = 0, bias = new Array(m); i < m; ++i) {
+          link = links[i], bias[i] = count[link.source.index] / (count[link.source.index] + count[link.target.index]);
+        }
+
+        strengths = new Array(m), initializeStrength();
+        distances = new Array(m), initializeDistance();
+      }
+
+      function initializeStrength() {
+        if (!nodes) return;
+
+        for (var i = 0, n = links.length; i < n; ++i) {
+          strengths[i] = +strength(links[i], i, links);
+        }
+      }
+
+      function initializeDistance() {
+        if (!nodes) return;
+
+        for (var i = 0, n = links.length; i < n; ++i) {
+          distances[i] = +distance(links[i], i, links);
+        }
+      }
+
+      force.initialize = function(_nodes, _random) {
+        nodes = _nodes;
+        random = _random;
+        initialize();
+      };
+
+      force.links = function(_) {
+        return arguments.length ? (links = _, initialize(), force) : links;
+      };
+
+      force.id = function(_) {
+        return arguments.length ? (id = _, force) : id;
+      };
+
+      force.iterations = function(_) {
+        return arguments.length ? (iterations = +_, force) : iterations;
+      };
+
+      force.strength = function(_) {
+        return arguments.length ? (strength = typeof _ === "function" ? _ : constant$1(+_), initializeStrength(), force) : strength;
+      };
+
+      force.distance = function(_) {
+        return arguments.length ? (distance = typeof _ === "function" ? _ : constant$1(+_), initializeDistance(), force) : distance;
       };
 
       return force;
@@ -4413,12 +4723,12 @@ var app = (function () {
     }
 
     function forceX(x) {
-      var strength = constant(0.1),
+      var strength = constant$1(0.1),
           nodes,
           strengths,
           xz;
 
-      if (typeof x !== "function") x = constant(x == null ? 0 : +x);
+      if (typeof x !== "function") x = constant$1(x == null ? 0 : +x);
 
       function force(alpha) {
         for (var i = 0, n = nodes.length, node; i < n; ++i) {
@@ -4442,23 +4752,23 @@ var app = (function () {
       };
 
       force.strength = function(_) {
-        return arguments.length ? (strength = typeof _ === "function" ? _ : constant(+_), initialize(), force) : strength;
+        return arguments.length ? (strength = typeof _ === "function" ? _ : constant$1(+_), initialize(), force) : strength;
       };
 
       force.x = function(_) {
-        return arguments.length ? (x = typeof _ === "function" ? _ : constant(+_), initialize(), force) : x;
+        return arguments.length ? (x = typeof _ === "function" ? _ : constant$1(+_), initialize(), force) : x;
       };
 
       return force;
     }
 
     function forceY(y) {
-      var strength = constant(0.1),
+      var strength = constant$1(0.1),
           nodes,
           strengths,
           yz;
 
-      if (typeof y !== "function") y = constant(y == null ? 0 : +y);
+      if (typeof y !== "function") y = constant$1(y == null ? 0 : +y);
 
       function force(alpha) {
         for (var i = 0, n = nodes.length, node; i < n; ++i) {
@@ -4482,11 +4792,11 @@ var app = (function () {
       };
 
       force.strength = function(_) {
-        return arguments.length ? (strength = typeof _ === "function" ? _ : constant(+_), initialize(), force) : strength;
+        return arguments.length ? (strength = typeof _ === "function" ? _ : constant$1(+_), initialize(), force) : strength;
       };
 
       force.y = function(_) {
-        return arguments.length ? (y = typeof _ === "function" ? _ : constant(+_), initialize(), force) : y;
+        return arguments.length ? (y = typeof _ === "function" ? _ : constant$1(+_), initialize(), force) : y;
       };
 
       return force;
@@ -6822,6 +7132,110 @@ var app = (function () {
       return linearish(scale);
     }
 
+    function constant(x) {
+      return function constant() {
+        return x;
+      };
+    }
+
+    function array(x) {
+      return typeof x === "object" && "length" in x
+        ? x // Array, TypedArray, NodeList, array-like
+        : Array.from(x); // Map, Set, iterable, string, or anything else
+    }
+
+    function Linear(context) {
+      this._context = context;
+    }
+
+    Linear.prototype = {
+      areaStart: function() {
+        this._line = 0;
+      },
+      areaEnd: function() {
+        this._line = NaN;
+      },
+      lineStart: function() {
+        this._point = 0;
+      },
+      lineEnd: function() {
+        if (this._line || (this._line !== 0 && this._point === 1)) this._context.closePath();
+        this._line = 1 - this._line;
+      },
+      point: function(x, y) {
+        x = +x, y = +y;
+        switch (this._point) {
+          case 0: this._point = 1; this._line ? this._context.lineTo(x, y) : this._context.moveTo(x, y); break;
+          case 1: this._point = 2; // falls through
+          default: this._context.lineTo(x, y); break;
+        }
+      }
+    };
+
+    function curveLinear(context) {
+      return new Linear(context);
+    }
+
+    function x(p) {
+      return p[0];
+    }
+
+    function y(p) {
+      return p[1];
+    }
+
+    function line(x$1, y$1) {
+      var defined = constant(true),
+          context = null,
+          curve = curveLinear,
+          output = null;
+
+      x$1 = typeof x$1 === "function" ? x$1 : (x$1 === undefined) ? x : constant(x$1);
+      y$1 = typeof y$1 === "function" ? y$1 : (y$1 === undefined) ? y : constant(y$1);
+
+      function line(data) {
+        var i,
+            n = (data = array(data)).length,
+            d,
+            defined0 = false,
+            buffer;
+
+        if (context == null) output = curve(buffer = path());
+
+        for (i = 0; i <= n; ++i) {
+          if (!(i < n && defined(d = data[i], i, data)) === defined0) {
+            if (defined0 = !defined0) output.lineStart();
+            else output.lineEnd();
+          }
+          if (defined0) output.point(+x$1(d, i, data), +y$1(d, i, data));
+        }
+
+        if (buffer) return output = null, buffer + "" || null;
+      }
+
+      line.x = function(_) {
+        return arguments.length ? (x$1 = typeof _ === "function" ? _ : constant(+_), line) : x$1;
+      };
+
+      line.y = function(_) {
+        return arguments.length ? (y$1 = typeof _ === "function" ? _ : constant(+_), line) : y$1;
+      };
+
+      line.defined = function(_) {
+        return arguments.length ? (defined = typeof _ === "function" ? _ : constant(!!_), line) : defined;
+      };
+
+      line.curve = function(_) {
+        return arguments.length ? (curve = _, context != null && (output = curve(context)), line) : curve;
+      };
+
+      line.context = function(_) {
+        return arguments.length ? (_ == null ? context = output = null : output = curve(context = _), line) : context;
+      };
+
+      return line;
+    }
+
     /* src\TItle.svelte generated by Svelte v3.46.4 */
 
     const file$7 = "src\\TItle.svelte";
@@ -7197,8 +7611,6 @@ var app = (function () {
     ];
 
     /* src\MapPoints.svelte generated by Svelte v3.46.4 */
-
-    const { console: console_1 } = globals;
     const file$5 = "src\\MapPoints.svelte";
 
     function get_each_context$1(ctx, list, i) {
@@ -7211,7 +7623,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (124:2) {#each $butterflyPoints as {x, y, value, regionIndex, regionShape}}
+    // (126:2) {#each $butterflyPoints as {x, y, value, regionIndex, regionShape}}
     function create_each_block$1(ctx) {
     	let g1;
     	let g0;
@@ -7239,13 +7651,13 @@ var app = (function () {
     			attr_dev(use, "fill-opacity", "0.5");
     			attr_dev(use, "data-region-index", use_data_region_index_value = /*regionIndex*/ ctx[20]);
     			attr_dev(use, "class", "svelte-17cpre8");
-    			add_location(use, file$5, 133, 6, 3861);
+    			add_location(use, file$5, 135, 6, 3958);
     			attr_dev(g0, "class", "butterfly");
     			attr_dev(g0, "transform", g0_transform_value = "translate(" + /*x*/ ctx[17] + ", " + /*y*/ ctx[18] + ") rotate(" + (Math.random() * 60 - 30) + ")");
-    			add_location(g0, file$5, 128, 6, 3682);
+    			add_location(g0, file$5, 130, 6, 3779);
     			attr_dev(g1, "class", "butterfly-container");
     			attr_dev(g1, "transform", g1_transform_value = "translate(" + /*sScale*/ ctx[2](/*value*/ ctx[19]) * -50 + ", " + /*sScale*/ ctx[2](/*value*/ ctx[19]) * -50 + ")");
-    			add_location(g1, file$5, 124, 4, 3555);
+    			add_location(g1, file$5, 126, 4, 3652);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, g1, anchor);
@@ -7302,7 +7714,7 @@ var app = (function () {
     		block,
     		id: create_each_block$1.name,
     		type: "each",
-    		source: "(124:2) {#each $butterflyPoints as {x, y, value, regionIndex, regionShape}}",
+    		source: "(126:2) {#each $butterflyPoints as {x, y, value, regionIndex, regionShape}}",
     		ctx
     	});
 
@@ -7338,13 +7750,13 @@ var app = (function () {
     			}
 
     			attr_dev(g0, "id", "butterfly-0");
-    			add_location(g0, file$5, 114, 4, 3320);
-    			add_location(defs0, file$5, 113, 2, 3308);
+    			add_location(g0, file$5, 116, 4, 3417);
+    			add_location(defs0, file$5, 115, 2, 3405);
     			attr_dev(g1, "id", "butterfly-1");
-    			add_location(g1, file$5, 119, 4, 3407);
-    			add_location(defs1, file$5, 118, 2, 3395);
+    			add_location(g1, file$5, 121, 4, 3504);
+    			add_location(defs1, file$5, 120, 2, 3492);
     			attr_dev(g2, "class", "map-points");
-    			add_location(g2, file$5, 105, 0, 3143);
+    			add_location(g2, file$5, 107, 0, 3240);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -7447,19 +7859,18 @@ var app = (function () {
 
     	function handleMouseOver() {
     		select(this).attr('fill-opacity', 1);
+    		let hoverRegionIndex = select(this).attr('data-region-index');
+    		$$invalidate(8, hoverRegionCode = regions[hoverRegionIndex].code);
+
+    		regionFlow.filter(function (d) {
+    			return d.CODE === hoverRegionCode;
+    		});
     	}
 
     	function handleMouseOut() {
     		if (select(this).attr('data-region-index') != findRegionIndex(selectedRegion)) {
     			select(this).attr('fill-opacity', 0.5);
     		}
-
-    		let hoverRegionIndex = select(this).attr('data-region-index');
-    		$$invalidate(8, hoverRegionCode = regions[hoverRegionIndex].code);
-
-    		regionFlow.filter(function (d) {
-    			return d.orig_loc === hoverRegionCode;
-    		});
     	}
 
     	function handleClick() {
@@ -7469,7 +7880,6 @@ var app = (function () {
     		$$invalidate(7, selectedRegion = regions[selectedRegionIndex].name);
 
     		if (selectedCountry !== "") {
-    			console.log(selectedCountry);
     			let container = select(".country-cards__container");
     			let color = select(this).attr("fill");
     			container.selectAll('.country-card').style("background", "white");
@@ -7499,7 +7909,7 @@ var app = (function () {
     	];
 
     	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1.warn(`<MapPoints> was created with unknown prop '${key}'`);
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<MapPoints> was created with unknown prop '${key}'`);
     	});
 
     	$$self.$$set = $$props => {
@@ -7520,8 +7930,11 @@ var app = (function () {
     		max,
     		select,
     		selectAll,
+    		groups,
+    		line,
     		forceSimulation,
     		forceCollide,
+    		forceLink,
     		forceX,
     		forceY,
     		regions,
@@ -7563,7 +7976,9 @@ var app = (function () {
     	$$self.$$.update = () => {
     		if ($$self.$$.dirty & /*data, projection*/ 6144) {
     			{
-    				forceSimulation(data.features).force("collide", forceCollide().radius(d => sScale(d.properties.VALUE) * 55)).force("x", forceX().x(d => projection(d.geometry.coordinates)[0])).force("y", forceY().y(d => projection(d.geometry.coordinates)[1])).stop().tick(100);
+    				forceSimulation(data.features).force("collide", forceCollide().radius(d => sScale(d.properties.VALUE) * 55)).force("x", forceX().x(d => projection(d.geometry.coordinates)[0])).force("y", forceY().y(d => projection(d.geometry.coordinates)[1])).force("link", forceLink().id(function (d) {
+    					return d.CODE;
+    				})).stop().tick(100);
 
     				let newButterflyPoints = data.features.map(d => ({
     					x: d.x,
@@ -7620,31 +8035,31 @@ var app = (function () {
     		const props = options.props || {};
 
     		if (/*regionFlow*/ ctx[10] === undefined && !('regionFlow' in props)) {
-    			console_1.warn("<MapPoints> was created without expected prop 'regionFlow'");
+    			console.warn("<MapPoints> was created without expected prop 'regionFlow'");
     		}
 
     		if (/*data*/ ctx[11] === undefined && !('data' in props)) {
-    			console_1.warn("<MapPoints> was created without expected prop 'data'");
+    			console.warn("<MapPoints> was created without expected prop 'data'");
     		}
 
     		if (/*projection*/ ctx[12] === undefined && !('projection' in props)) {
-    			console_1.warn("<MapPoints> was created without expected prop 'projection'");
+    			console.warn("<MapPoints> was created without expected prop 'projection'");
     		}
 
     		if (/*butterflies*/ ctx[0] === undefined && !('butterflies' in props)) {
-    			console_1.warn("<MapPoints> was created without expected prop 'butterflies'");
+    			console.warn("<MapPoints> was created without expected prop 'butterflies'");
     		}
 
     		if (/*selectedRegion*/ ctx[7] === undefined && !('selectedRegion' in props)) {
-    			console_1.warn("<MapPoints> was created without expected prop 'selectedRegion'");
+    			console.warn("<MapPoints> was created without expected prop 'selectedRegion'");
     		}
 
     		if (/*hoverRegionCode*/ ctx[8] === undefined && !('hoverRegionCode' in props)) {
-    			console_1.warn("<MapPoints> was created without expected prop 'hoverRegionCode'");
+    			console.warn("<MapPoints> was created without expected prop 'hoverRegionCode'");
     		}
 
     		if (/*selectedCountry*/ ctx[9] === undefined && !('selectedCountry' in props)) {
-    			console_1.warn("<MapPoints> was created without expected prop 'selectedCountry'");
+    			console.warn("<MapPoints> was created without expected prop 'selectedCountry'");
     		}
     	}
 
