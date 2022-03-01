@@ -26,7 +26,7 @@
   {#if w !== undefined}
     <svg width={w} height={h}>
       <MapPath data={outlineD} path={path}/>
-      <MapPoints data={centroidsD} regions={regions} regionFlow ={regionFlow} projection={projection} butterflies={butterflies} bind:selectedRegion={selectedRegion} bind:selectedCountry={selectedCountry}/>
+      <MapPoints data={centroidsD} regionFlow ={regionFlow} projection={projection} butterflies={butterflies} bind:selectedRegion={selectedRegion} bind:selectedCountry={selectedCountry}/>
     </svg>
   {/if}
 </section>

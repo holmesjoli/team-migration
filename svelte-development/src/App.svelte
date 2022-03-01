@@ -27,7 +27,7 @@
     let warnings = await csv("data/warnings.csv")
     let definitions = await csv("data/definitions.csv")
     let questions = await csv("data/questions.csv")
-    let acqMode = await csv("data/mode_acq.csv")
+    let acqMode = await csv("data/modes_acq.csv")
     let regions = await csv("data/regions.csv")
     let regionFlow = await csv("data/region_flows.csv")
     datasets = [mapCentroidsD, mapOutlineD, butterflySvgs, byCountryD, warnings,

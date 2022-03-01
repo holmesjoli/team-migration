@@ -1,8 +1,11 @@
 <script>
   import { spring } from "svelte/motion";
-  import { scaleLinear, extent, select, selectAll } from 'd3';
+  import { scaleLinear, extent, min, max, select, selectAll } from 'd3';
   import { forceSimulation, forceCollide, forceX, forceY } from "d3-force"
 
+  import regions from './regions.js';
+
+  export let regionFlow;
   export let data;
   export let projection;
   export let butterflies;
@@ -10,8 +13,8 @@
   export let selectedCountry;
 
   let minMax = {
-          max: d3.max(regionFlow, function(d) {return d.value;}),
-          min: d3.min(regionFlow, function(d) {return d.value;})
+          max: max(regionFlow, function(d) {return d.value;}),
+          min: min(regionFlow, function(d) {return d.value;})
       };
 
   const sScale = scaleLinear()
