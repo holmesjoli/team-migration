@@ -9,14 +9,14 @@
   export let selectedRegion;
   export let selectedCountry;
 
-  const sScale = scaleLinear()
-    .domain(extent(data.features, d => d.properties.VALUE))
-    .range([0.25, 1]);
-
   let minMax = {
           max: d3.max(regionFlow, function(d) {return d.value;}),
           min: d3.min(regionFlow, function(d) {return d.value;})
       };
+
+  const sScale = scaleLinear()
+    .domain(extent(data.features, d => d.properties.VALUE))
+    .range([0.25, 1]);
 
   const pathScale = scaleLinear()
     .domain([minMax.min, minMax.max])
