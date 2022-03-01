@@ -40,6 +40,11 @@
     datasets[3].map(d => {
       d.n_acq_modes = +d.n_acq_modes;
     })
+
+    // parse by regionFlow
+    datasets[9].map(d => {
+      d.value = +d.value;
+    })
   }
 
 </script>
