@@ -7211,7 +7211,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (120:2) {#each $butterflyPoints as {x, y, value, regionIndex, regionShape}}
+    // (122:2) {#each $butterflyPoints as {x, y, value, regionIndex, regionShape}}
     function create_each_block$1(ctx) {
     	let g1;
     	let g0;
@@ -7239,13 +7239,13 @@ var app = (function () {
     			attr_dev(use, "fill-opacity", "0.5");
     			attr_dev(use, "data-region-index", use_data_region_index_value = /*regionIndex*/ ctx[20]);
     			attr_dev(use, "class", "svelte-17cpre8");
-    			add_location(use, file$5, 129, 6, 3791);
+    			add_location(use, file$5, 131, 6, 3780);
     			attr_dev(g0, "class", "butterfly");
     			attr_dev(g0, "transform", g0_transform_value = "translate(" + /*x*/ ctx[17] + ", " + /*y*/ ctx[18] + ") rotate(" + (Math.random() * 60 - 30) + ")");
-    			add_location(g0, file$5, 124, 6, 3612);
+    			add_location(g0, file$5, 126, 6, 3601);
     			attr_dev(g1, "class", "butterfly-container");
     			attr_dev(g1, "transform", g1_transform_value = "translate(" + /*sScale*/ ctx[2](/*value*/ ctx[19]) * -50 + ", " + /*sScale*/ ctx[2](/*value*/ ctx[19]) * -50 + ")");
-    			add_location(g1, file$5, 120, 4, 3485);
+    			add_location(g1, file$5, 122, 4, 3474);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, g1, anchor);
@@ -7302,7 +7302,7 @@ var app = (function () {
     		block,
     		id: create_each_block$1.name,
     		type: "each",
-    		source: "(120:2) {#each $butterflyPoints as {x, y, value, regionIndex, regionShape}}",
+    		source: "(122:2) {#each $butterflyPoints as {x, y, value, regionIndex, regionShape}}",
     		ctx
     	});
 
@@ -7338,13 +7338,13 @@ var app = (function () {
     			}
 
     			attr_dev(g0, "id", "butterfly-0");
-    			add_location(g0, file$5, 110, 4, 3250);
-    			add_location(defs0, file$5, 109, 2, 3238);
+    			add_location(g0, file$5, 112, 4, 3239);
+    			add_location(defs0, file$5, 111, 2, 3227);
     			attr_dev(g1, "id", "butterfly-1");
-    			add_location(g1, file$5, 115, 4, 3337);
-    			add_location(defs1, file$5, 114, 2, 3325);
+    			add_location(g1, file$5, 117, 4, 3326);
+    			add_location(defs1, file$5, 116, 2, 3314);
     			attr_dev(g2, "class", "map-points");
-    			add_location(g2, file$5, 101, 0, 3073);
+    			add_location(g2, file$5, 103, 0, 3062);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -7416,7 +7416,7 @@ var app = (function () {
     	let { projection } = $$props;
     	let { butterflies } = $$props;
     	let { selectedRegion } = $$props;
-    	let { selectedRegionCode } = $$props;
+    	let { hoverRegionCode } = $$props;
     	let { selectedCountry } = $$props;
 
     	let minMax = {
@@ -7454,9 +7454,9 @@ var app = (function () {
     			select(this).attr('fill-opacity', 0.5);
     		}
 
-    		let selectedRegionIndex = select(this).attr('data-region-index');
-    		$$invalidate(8, selectedRegionCode = regions[selectedRegionIndex].code);
-    		console.log(selectedRegionCode);
+    		let hoverRegionIndex = select(this).attr('data-region-index');
+    		$$invalidate(8, hoverRegionCode = regions[hoverRegionIndex].code);
+    		console.log(hoverRegionCode);
     	}
 
     	function handleClick() {
@@ -7491,7 +7491,7 @@ var app = (function () {
     		'projection',
     		'butterflies',
     		'selectedRegion',
-    		'selectedRegionCode',
+    		'hoverRegionCode',
     		'selectedCountry'
     	];
 
@@ -7505,7 +7505,7 @@ var app = (function () {
     		if ('projection' in $$props) $$invalidate(12, projection = $$props.projection);
     		if ('butterflies' in $$props) $$invalidate(0, butterflies = $$props.butterflies);
     		if ('selectedRegion' in $$props) $$invalidate(7, selectedRegion = $$props.selectedRegion);
-    		if ('selectedRegionCode' in $$props) $$invalidate(8, selectedRegionCode = $$props.selectedRegionCode);
+    		if ('hoverRegionCode' in $$props) $$invalidate(8, hoverRegionCode = $$props.hoverRegionCode);
     		if ('selectedCountry' in $$props) $$invalidate(9, selectedCountry = $$props.selectedCountry);
     	};
 
@@ -7527,7 +7527,7 @@ var app = (function () {
     		projection,
     		butterflies,
     		selectedRegion,
-    		selectedRegionCode,
+    		hoverRegionCode,
     		selectedCountry,
     		minMax,
     		sScale,
@@ -7547,7 +7547,7 @@ var app = (function () {
     		if ('projection' in $$props) $$invalidate(12, projection = $$props.projection);
     		if ('butterflies' in $$props) $$invalidate(0, butterflies = $$props.butterflies);
     		if ('selectedRegion' in $$props) $$invalidate(7, selectedRegion = $$props.selectedRegion);
-    		if ('selectedRegionCode' in $$props) $$invalidate(8, selectedRegionCode = $$props.selectedRegionCode);
+    		if ('hoverRegionCode' in $$props) $$invalidate(8, hoverRegionCode = $$props.hoverRegionCode);
     		if ('selectedCountry' in $$props) $$invalidate(9, selectedCountry = $$props.selectedCountry);
     		if ('minMax' in $$props) minMax = $$props.minMax;
     		if ('butterflyPoints' in $$props) $$invalidate(3, butterflyPoints = $$props.butterflyPoints);
@@ -7584,7 +7584,7 @@ var app = (function () {
     		handleMouseOut,
     		handleClick,
     		selectedRegion,
-    		selectedRegionCode,
+    		hoverRegionCode,
     		selectedCountry,
     		regionFlow,
     		data,
@@ -7602,7 +7602,7 @@ var app = (function () {
     			projection: 12,
     			butterflies: 0,
     			selectedRegion: 7,
-    			selectedRegionCode: 8,
+    			hoverRegionCode: 8,
     			selectedCountry: 9
     		});
 
@@ -7636,8 +7636,8 @@ var app = (function () {
     			console_1.warn("<MapPoints> was created without expected prop 'selectedRegion'");
     		}
 
-    		if (/*selectedRegionCode*/ ctx[8] === undefined && !('selectedRegionCode' in props)) {
-    			console_1.warn("<MapPoints> was created without expected prop 'selectedRegionCode'");
+    		if (/*hoverRegionCode*/ ctx[8] === undefined && !('hoverRegionCode' in props)) {
+    			console_1.warn("<MapPoints> was created without expected prop 'hoverRegionCode'");
     		}
 
     		if (/*selectedCountry*/ ctx[9] === undefined && !('selectedCountry' in props)) {
@@ -7685,11 +7685,11 @@ var app = (function () {
     		throw new Error("<MapPoints>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
-    	get selectedRegionCode() {
+    	get hoverRegionCode() {
     		throw new Error("<MapPoints>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
-    	set selectedRegionCode(value) {
+    	set hoverRegionCode(value) {
     		throw new Error("<MapPoints>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
@@ -7711,7 +7711,7 @@ var app = (function () {
     	let mappath;
     	let mappoints;
     	let updating_selectedRegion;
-    	let updating_selectedRegionCode;
+    	let updating_hoverRegionCode;
     	let updating_selectedCountry;
     	let current;
 
@@ -7727,8 +7727,8 @@ var app = (function () {
     		/*mappoints_selectedRegion_binding*/ ctx[12](value);
     	}
 
-    	function mappoints_selectedRegionCode_binding(value) {
-    		/*mappoints_selectedRegionCode_binding*/ ctx[13](value);
+    	function mappoints_hoverRegionCode_binding(value) {
+    		/*mappoints_hoverRegionCode_binding*/ ctx[13](value);
     	}
 
     	function mappoints_selectedCountry_binding(value) {
@@ -7746,8 +7746,8 @@ var app = (function () {
     		mappoints_props.selectedRegion = /*selectedRegion*/ ctx[0];
     	}
 
-    	if (/*selectedRegionCode*/ ctx[1] !== void 0) {
-    		mappoints_props.selectedRegionCode = /*selectedRegionCode*/ ctx[1];
+    	if (/*hoverRegionCode*/ ctx[1] !== void 0) {
+    		mappoints_props.hoverRegionCode = /*hoverRegionCode*/ ctx[1];
     	}
 
     	if (/*selectedCountry*/ ctx[2] !== void 0) {
@@ -7756,7 +7756,7 @@ var app = (function () {
 
     	mappoints = new MapPoints({ props: mappoints_props, $$inline: true });
     	binding_callbacks.push(() => bind(mappoints, 'selectedRegion', mappoints_selectedRegion_binding));
-    	binding_callbacks.push(() => bind(mappoints, 'selectedRegionCode', mappoints_selectedRegionCode_binding));
+    	binding_callbacks.push(() => bind(mappoints, 'hoverRegionCode', mappoints_hoverRegionCode_binding));
     	binding_callbacks.push(() => bind(mappoints, 'selectedCountry', mappoints_selectedCountry_binding));
 
     	const block = {
@@ -7766,7 +7766,7 @@ var app = (function () {
     			create_component(mappoints.$$.fragment);
     			attr_dev(svg, "width", /*w*/ ctx[3]);
     			attr_dev(svg, "height", /*h*/ ctx[5]);
-    			add_location(svg, file$4, 27, 4, 666);
+    			add_location(svg, file$4, 27, 4, 663);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, svg, anchor);
@@ -7787,10 +7787,10 @@ var app = (function () {
     				add_flush_callback(() => updating_selectedRegion = false);
     			}
 
-    			if (!updating_selectedRegionCode && dirty & /*selectedRegionCode*/ 2) {
-    				updating_selectedRegionCode = true;
-    				mappoints_changes.selectedRegionCode = /*selectedRegionCode*/ ctx[1];
-    				add_flush_callback(() => updating_selectedRegionCode = false);
+    			if (!updating_hoverRegionCode && dirty & /*hoverRegionCode*/ 2) {
+    				updating_hoverRegionCode = true;
+    				mappoints_changes.hoverRegionCode = /*hoverRegionCode*/ ctx[1];
+    				add_flush_callback(() => updating_hoverRegionCode = false);
     			}
 
     			if (!updating_selectedCountry && dirty & /*selectedCountry*/ 4) {
@@ -7850,7 +7850,7 @@ var app = (function () {
     			if (if_block) if_block.c();
     			attr_dev(section, "class", "map__container");
     			add_render_callback(() => /*section_elementresize_handler*/ ctx[15].call(section));
-    			add_location(section, file$4, 25, 0, 582);
+    			add_location(section, file$4, 25, 0, 579);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -7920,7 +7920,7 @@ var app = (function () {
     	validate_slots('MapContainer', slots, []);
     	let { dataset } = $$props;
     	let { selectedRegion } = $$props;
-    	let { selectedRegionCode } = $$props;
+    	let { hoverRegionCode } = $$props;
     	let { selectedCountry } = $$props;
     	let centroidsD = dataset[0];
     	let outlineD = dataset[1];
@@ -7928,7 +7928,7 @@ var app = (function () {
     	let regions = dataset[8];
     	let regionFlow = dataset[9];
     	let w;
-    	const writable_props = ['dataset', 'selectedRegion', 'selectedRegionCode', 'selectedCountry'];
+    	const writable_props = ['dataset', 'selectedRegion', 'hoverRegionCode', 'selectedCountry'];
 
     	Object.keys($$props).forEach(key => {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<MapContainer> was created with unknown prop '${key}'`);
@@ -7939,9 +7939,9 @@ var app = (function () {
     		$$invalidate(0, selectedRegion);
     	}
 
-    	function mappoints_selectedRegionCode_binding(value) {
-    		selectedRegionCode = value;
-    		$$invalidate(1, selectedRegionCode);
+    	function mappoints_hoverRegionCode_binding(value) {
+    		hoverRegionCode = value;
+    		$$invalidate(1, hoverRegionCode);
     	}
 
     	function mappoints_selectedCountry_binding(value) {
@@ -7957,7 +7957,7 @@ var app = (function () {
     	$$self.$$set = $$props => {
     		if ('dataset' in $$props) $$invalidate(11, dataset = $$props.dataset);
     		if ('selectedRegion' in $$props) $$invalidate(0, selectedRegion = $$props.selectedRegion);
-    		if ('selectedRegionCode' in $$props) $$invalidate(1, selectedRegionCode = $$props.selectedRegionCode);
+    		if ('hoverRegionCode' in $$props) $$invalidate(1, hoverRegionCode = $$props.hoverRegionCode);
     		if ('selectedCountry' in $$props) $$invalidate(2, selectedCountry = $$props.selectedCountry);
     	};
 
@@ -7968,7 +7968,7 @@ var app = (function () {
     		MapPoints,
     		dataset,
     		selectedRegion,
-    		selectedRegionCode,
+    		hoverRegionCode,
     		selectedCountry,
     		centroidsD,
     		outlineD,
@@ -7984,7 +7984,7 @@ var app = (function () {
     	$$self.$inject_state = $$props => {
     		if ('dataset' in $$props) $$invalidate(11, dataset = $$props.dataset);
     		if ('selectedRegion' in $$props) $$invalidate(0, selectedRegion = $$props.selectedRegion);
-    		if ('selectedRegionCode' in $$props) $$invalidate(1, selectedRegionCode = $$props.selectedRegionCode);
+    		if ('hoverRegionCode' in $$props) $$invalidate(1, hoverRegionCode = $$props.hoverRegionCode);
     		if ('selectedCountry' in $$props) $$invalidate(2, selectedCountry = $$props.selectedCountry);
     		if ('centroidsD' in $$props) $$invalidate(7, centroidsD = $$props.centroidsD);
     		if ('outlineD' in $$props) $$invalidate(8, outlineD = $$props.outlineD);
@@ -8017,7 +8017,7 @@ var app = (function () {
 
     	return [
     		selectedRegion,
-    		selectedRegionCode,
+    		hoverRegionCode,
     		selectedCountry,
     		w,
     		projection,
@@ -8029,7 +8029,7 @@ var app = (function () {
     		regionFlow,
     		dataset,
     		mappoints_selectedRegion_binding,
-    		mappoints_selectedRegionCode_binding,
+    		mappoints_hoverRegionCode_binding,
     		mappoints_selectedCountry_binding,
     		section_elementresize_handler
     	];
@@ -8042,7 +8042,7 @@ var app = (function () {
     		init$1(this, options, instance$6, create_fragment$6, safe_not_equal, {
     			dataset: 11,
     			selectedRegion: 0,
-    			selectedRegionCode: 1,
+    			hoverRegionCode: 1,
     			selectedCountry: 2
     		});
 
@@ -8064,8 +8064,8 @@ var app = (function () {
     			console.warn("<MapContainer> was created without expected prop 'selectedRegion'");
     		}
 
-    		if (/*selectedRegionCode*/ ctx[1] === undefined && !('selectedRegionCode' in props)) {
-    			console.warn("<MapContainer> was created without expected prop 'selectedRegionCode'");
+    		if (/*hoverRegionCode*/ ctx[1] === undefined && !('hoverRegionCode' in props)) {
+    			console.warn("<MapContainer> was created without expected prop 'hoverRegionCode'");
     		}
 
     		if (/*selectedCountry*/ ctx[2] === undefined && !('selectedCountry' in props)) {
@@ -8089,11 +8089,11 @@ var app = (function () {
     		throw new Error("<MapContainer>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
-    	get selectedRegionCode() {
+    	get hoverRegionCode() {
     		throw new Error("<MapContainer>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
-    	set selectedRegionCode(value) {
+    	set hoverRegionCode(value) {
     		throw new Error("<MapContainer>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
@@ -9033,7 +9033,7 @@ var app = (function () {
     function create_then_block(ctx) {
     	let mapcontainer;
     	let updating_selectedRegion;
-    	let updating_selectedRegionCode;
+    	let updating_hoverRegionCode;
     	let updating_selectedCountry;
     	let t0;
     	let countrycardcontainer;
@@ -9048,8 +9048,8 @@ var app = (function () {
     		/*mapcontainer_selectedRegion_binding*/ ctx[5](value);
     	}
 
-    	function mapcontainer_selectedRegionCode_binding(value) {
-    		/*mapcontainer_selectedRegionCode_binding*/ ctx[6](value);
+    	function mapcontainer_hoverRegionCode_binding(value) {
+    		/*mapcontainer_hoverRegionCode_binding*/ ctx[6](value);
     	}
 
     	function mapcontainer_selectedCountry_binding(value) {
@@ -9062,8 +9062,8 @@ var app = (function () {
     		mapcontainer_props.selectedRegion = /*selectedRegion*/ ctx[1];
     	}
 
-    	if (/*selectedRegionCode*/ ctx[2] !== void 0) {
-    		mapcontainer_props.selectedRegionCode = /*selectedRegionCode*/ ctx[2];
+    	if (/*hoverRegionCode*/ ctx[2] !== void 0) {
+    		mapcontainer_props.hoverRegionCode = /*hoverRegionCode*/ ctx[2];
     	}
 
     	if (/*selectedCountry*/ ctx[3] !== void 0) {
@@ -9076,7 +9076,7 @@ var app = (function () {
     		});
 
     	binding_callbacks.push(() => bind(mapcontainer, 'selectedRegion', mapcontainer_selectedRegion_binding));
-    	binding_callbacks.push(() => bind(mapcontainer, 'selectedRegionCode', mapcontainer_selectedRegionCode_binding));
+    	binding_callbacks.push(() => bind(mapcontainer, 'hoverRegionCode', mapcontainer_hoverRegionCode_binding));
     	binding_callbacks.push(() => bind(mapcontainer, 'selectedCountry', mapcontainer_selectedCountry_binding));
 
     	function countrycardcontainer_selectedRegion_binding(value) {
@@ -9148,10 +9148,10 @@ var app = (function () {
     				add_flush_callback(() => updating_selectedRegion = false);
     			}
 
-    			if (!updating_selectedRegionCode && dirty & /*selectedRegionCode*/ 4) {
-    				updating_selectedRegionCode = true;
-    				mapcontainer_changes.selectedRegionCode = /*selectedRegionCode*/ ctx[2];
-    				add_flush_callback(() => updating_selectedRegionCode = false);
+    			if (!updating_hoverRegionCode && dirty & /*hoverRegionCode*/ 4) {
+    				updating_hoverRegionCode = true;
+    				mapcontainer_changes.hoverRegionCode = /*hoverRegionCode*/ ctx[2];
+    				add_flush_callback(() => updating_hoverRegionCode = false);
     			}
 
     			if (!updating_selectedCountry && dirty & /*selectedCountry*/ 8) {
@@ -9229,7 +9229,7 @@ var app = (function () {
     			div = element("div");
     			div.textContent = "Loading...";
     			attr_dev(div, "class", "svelte-1brbny8");
-    			add_location(div, file, 55, 4, 1777);
+    			add_location(div, file, 55, 4, 1774);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -9280,7 +9280,7 @@ var app = (function () {
     			create_component(title.$$.fragment);
     			t = space();
     			info.block.c();
-    			add_location(main, file, 52, 0, 1732);
+    			add_location(main, file, 52, 0, 1729);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -9351,7 +9351,7 @@ var app = (function () {
     	validate_slots('App', slots, []);
     	let { datasets = [] } = $$props;
     	let selectedRegion = "";
-    	let selectedRegionCode = "";
+    	let hoverRegionCode = "";
     	let selectedCountry = "";
     	const butterflies = ["asset/butterfly1.svg", "asset/butterfly2.svg"];
     	let promise = getData();
@@ -9397,9 +9397,9 @@ var app = (function () {
     		$$invalidate(1, selectedRegion);
     	}
 
-    	function mapcontainer_selectedRegionCode_binding(value) {
-    		selectedRegionCode = value;
-    		$$invalidate(2, selectedRegionCode);
+    	function mapcontainer_hoverRegionCode_binding(value) {
+    		hoverRegionCode = value;
+    		$$invalidate(2, hoverRegionCode);
     	}
 
     	function mapcontainer_selectedCountry_binding(value) {
@@ -9438,7 +9438,7 @@ var app = (function () {
     		Footer,
     		datasets,
     		selectedRegion,
-    		selectedRegionCode,
+    		hoverRegionCode,
     		selectedCountry,
     		butterflies,
     		promise,
@@ -9449,7 +9449,7 @@ var app = (function () {
     	$$self.$inject_state = $$props => {
     		if ('datasets' in $$props) $$invalidate(0, datasets = $$props.datasets);
     		if ('selectedRegion' in $$props) $$invalidate(1, selectedRegion = $$props.selectedRegion);
-    		if ('selectedRegionCode' in $$props) $$invalidate(2, selectedRegionCode = $$props.selectedRegionCode);
+    		if ('hoverRegionCode' in $$props) $$invalidate(2, hoverRegionCode = $$props.hoverRegionCode);
     		if ('selectedCountry' in $$props) $$invalidate(3, selectedCountry = $$props.selectedCountry);
     		if ('promise' in $$props) $$invalidate(4, promise = $$props.promise);
     	};
@@ -9461,11 +9461,11 @@ var app = (function () {
     	return [
     		datasets,
     		selectedRegion,
-    		selectedRegionCode,
+    		hoverRegionCode,
     		selectedCountry,
     		promise,
     		mapcontainer_selectedRegion_binding,
-    		mapcontainer_selectedRegionCode_binding,
+    		mapcontainer_hoverRegionCode_binding,
     		mapcontainer_selectedCountry_binding,
     		countrycardcontainer_selectedRegion_binding,
     		countrycardcontainer_selectedCountry_binding,

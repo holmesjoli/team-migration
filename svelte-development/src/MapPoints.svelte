@@ -10,7 +10,7 @@
   export let projection;
   export let butterflies;
   export let selectedRegion;
-  export let selectedRegionCode;
+  export let hoverRegionCode;
   export let selectedCountry;
 
   let minMax = {
@@ -66,9 +66,11 @@
       select(this).attr('fill-opacity', 0.5)
     }
 
-    let selectedRegionIndex = select(this).attr('data-region-index');
-    selectedRegionCode = regions[selectedRegionIndex].code;
-    console.log(selectedRegionCode);
+    let hoverRegionIndex = select(this).attr('data-region-index');
+    hoverRegionCode = regions[hoverRegionIndex].code;
+
+
+    console.log(hoverRegionCode);
   }
 
   function handleClick() {
