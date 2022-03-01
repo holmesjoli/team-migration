@@ -29,8 +29,9 @@
     let questions = await csv("data/questions.csv")
     let acqMode = await csv("data/mode_acq.csv")
     let regions = await csv("data/regions.csv")
+    let regionFlow = await csv("data/region_flows.csv")
     datasets = [mapCentroidsD, mapOutlineD, butterflySvgs, byCountryD, warnings,
-    definitions, questions, acqMode, regions];
+    definitions, questions, acqMode, regions, regionFlow];
     parseData(datasets);
   }
 

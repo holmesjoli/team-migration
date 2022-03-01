@@ -11,7 +11,13 @@
   export let selectedRegion;
   export let selectedCountry;
 
-  const sScale = scaleLinear().domain(extent(data.features, d => d.properties.VALUE)).range([0.25, 1])
+  const sScale = scaleLinear()
+    .domain(extent(data.features, d => d.properties.VALUE))
+    .range([0.25, 1]);
+
+  const pathScale = scaleLinear()
+    .domain(extent(data.features, d => d.properties.VALUE))
+    .range([0.25, 1]);
 
   let butterflyPoints = spring(data.features.map(d => ({
     x: 0,
