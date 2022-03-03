@@ -11,7 +11,7 @@
     </h1>
     <div>
       <h1>
-        More stuff coming...
+        <svg></svg>
       </h1>
     </div>
   </section>

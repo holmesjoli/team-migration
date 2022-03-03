@@ -14,7 +14,7 @@
   let hoveredRegionCode = "";
   let selectedCountry = "";
   
-  const butterflies = ["asset/butterfly1.svg", "asset/butterfly2.svg"]
+  const butterflies = ["asset/butterfly1.svg", "asset/butterfly2.svg", "asset/butterfly-paths.svg"]
 
   let promise = getData();
 
@@ -23,6 +23,7 @@
     let mapOutlineD = await json("data/mapData/world.geojson");
     let butterflySvg1 = await text(butterflies[0])
     let butterflySvg2 = await text(butterflies[1])
+    let butterflyPaths = await text(butterflies[2]);
     let butterflySvgs = [butterflySvg1, butterflySvg2]
     let byCountryD = await csv("data/acq_by_country.csv")
     let warnings = await csv("data/warnings.csv")
