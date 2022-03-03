@@ -1,0 +1,22 @@
+subregion,subregion_code,shape,color
+Northern Africa,912,0,#E08F56
+Eastern Africa,910,0,#E08F56
+Middle Africa,911,0,#E08F56
+Southern Africa,913,0,#E08F56
+Western Africa,914,0,#E08F56
+Caribbean,915,0,#B6050F
+Central America,916,0,#B6050F
+South America,931,0,#AF70A5
+Northern America,905,0,#AF70A5
+Central Asia,5500,1,#F6CC52
+Eastern Asia,906,1,#F6CC52
+South-eastern Asia,920,1,#F6CC52
+Southern Asia,5501,1,#F6CC52
+Western Asia,922,1,#F6CC52
+Eastern Europe,923,1,#78B2EB
+Northern Europe,924,1,#78B2EB
+Southern Europe,925,1,#78B2EB
+Western Europe,926,1,#78B2EB
+Australia and New Zealand,927,0,#AFD164
+Melanesia,928,0,#5A20A3
+Polynesia,957,0,#676767

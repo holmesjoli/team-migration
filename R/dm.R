@@ -114,4 +114,3 @@ dm.region_geojson <- function(pth, xwalk, write_pth) {
     sf::st_as_sf() %>% 
     sf::write_sf(write_pth)
 }
-

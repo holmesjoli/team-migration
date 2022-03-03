@@ -11,5 +11,5 @@
   <h1>
     {selectedRegion}
   </h1>
-  <CountryCards bind:selectedRegion={selectedRegion} bind:selectedCountry={selectedCountry} data={data} />
+  <CountryCards bind:selectedRegion={selectedRegion} bind:selectedCountry={selectedCountry} data={data}/>
 </section>

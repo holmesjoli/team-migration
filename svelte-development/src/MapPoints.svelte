@@ -1,17 +1,30 @@
 <script>
   import { spring } from "svelte/motion";
-  import { scaleLinear, extent, select, selectAll } from 'd3';
-  import { forceSimulation, forceCollide, forceX, forceY } from "d3-force"
+  import { scaleLinear, extent, min, max, select, selectAll, groups, line } from 'd3';
+  import { forceSimulation, forceCollide, forceLink, forceX, forceY } from "d3-force"
 
   import regions from './regions.js';
 
+  export let regionFlow;
   export let data;
   export let projection;
   export let butterflies;
   export let selectedRegion;
+  export let hoverRegionCode;
   export let selectedCountry;
 
-  const sScale = scaleLinear().domain(extent(data.features, d => d.properties.VALUE)).range([0.25, 1])
+  let minMax = {
+          max: max(regionFlow, function(d) {return d.value;}),
+          min: min(regionFlow, function(d) {return d.value;})
+      };
+
+  const sScale = scaleLinear()
+    .domain(extent(data.features, d => d.properties.VALUE))
+    .range([0.25, 1]);
+
+  const pathScale = scaleLinear()
+    .domain([minMax.min, minMax.max])
+    .range([1, 10]);
 
   let butterflyPoints = spring(data.features.map(d => ({
     x: 0,
@@ -31,6 +44,9 @@
       .force("collide", forceCollide().radius(d => sScale(d.properties.VALUE) * 55))
       .force("x", forceX().x(d => projection(d.geometry.coordinates)[0]))
       .force("y", forceY().y(d => projection(d.geometry.coordinates)[1]))
+      .force("link", forceLink()
+                    .id(function(d) {
+                        return d.CODE;}))
       .stop()
       .tick(100)
 
@@ -45,7 +61,15 @@
   }
 
   function handleMouseOver() {
-    select(this).attr('fill-opacity', 1)
+    select(this).attr('fill-opacity', 1);
+
+    let hoverRegionIndex = select(this).attr('data-region-index');
+    hoverRegionCode = regions[hoverRegionIndex].code;
+
+    let links = regionFlow.filter(function(d) {
+        return d.CODE === hoverRegionCode;
+    });
+
   }
 
   function handleMouseOut() {
@@ -55,18 +79,18 @@
   }
 
   function handleClick() {
-    select(".map-points").selectAll("use").attr('fill-opacity', 0.5)
-    select(this).attr('fill-opacity', 1)
-    let selectedRegionIndex = select(this).attr('data-region-index')
-    selectedRegion = regions[selectedRegionIndex].name
+    select(".map-points").selectAll("use").attr('fill-opacity', 0.5);
+    select(this).attr('fill-opacity', 1);
+    let selectedRegionIndex = select(this).attr('data-region-index');
+    selectedRegion = regions[selectedRegionIndex].name;
 
     if (selectedCountry !== "") {
-      let container = select(".country-cards__container")
-      let color = select(this).attr("fill")
-      container.selectAll('.country-card').style("background", "white")
-      container.selectAll("use").attr("fill", color).attr("stroke", color)
-      container.selectAll(".country-card__country-name").style("color", "black")
-      selectedCountry = ""
+      let container = select(".country-cards__container");
+      let color = select(this).attr("fill");
+      container.selectAll('.country-card').style("background", "white");
+      container.selectAll("use").attr("fill", color).attr("stroke", color);
+      container.selectAll(".country-card__country-name").style("color", "black");
+      selectedCountry = "";
     }
   }
 

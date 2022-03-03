@@ -6,11 +6,14 @@
 
   export let dataset;
   export let selectedRegion;
+  export let hoverRegionCode;
   export let selectedCountry;
 
   let centroidsD = dataset[0];
   let outlineD = dataset[1];
   let butterflies = dataset[2];
+  let regions = dataset[8];
+  let regionFlow = dataset[9];
 
   let w;
 
@@ -24,7 +27,7 @@
   {#if w !== undefined}
     <svg width={w} height={h}>
       <MapPath data={outlineD} path={path}/>
-      <MapPoints data={centroidsD} projection={projection} butterflies={butterflies} bind:selectedRegion={selectedRegion} bind:selectedCountry={selectedCountry}/>
+      <MapPoints data={centroidsD} regionFlow ={regionFlow} projection={projection} butterflies={butterflies} bind:selectedRegion={selectedRegion} bind:hoverRegionCode={hoverRegionCode} bind:selectedCountry={selectedCountry}/>
     </svg>
   {/if}
 </section>
