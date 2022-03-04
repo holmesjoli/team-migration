@@ -1222,48 +1222,6 @@ var app = (function () {
       return stop < start ? -step1 : step1;
     }
 
-    function max(values, valueof) {
-      let max;
-      if (valueof === undefined) {
-        for (const value of values) {
-          if (value != null
-              && (max < value || (max === undefined && value >= value))) {
-            max = value;
-          }
-        }
-      } else {
-        let index = -1;
-        for (let value of values) {
-          if ((value = valueof(value, ++index, values)) != null
-              && (max < value || (max === undefined && value >= value))) {
-            max = value;
-          }
-        }
-      }
-      return max;
-    }
-
-    function min(values, valueof) {
-      let min;
-      if (valueof === undefined) {
-        for (const value of values) {
-          if (value != null
-              && (min > value || (min === undefined && value >= value))) {
-            min = value;
-          }
-        }
-      } else {
-        let index = -1;
-        for (let value of values) {
-          if ((value = valueof(value, ++index, values)) != null
-              && (min > value || (min === undefined && value >= value))) {
-            min = value;
-          }
-        }
-      }
-      return min;
-    }
-
     function* flatten(arrays) {
       for (const array of arrays) {
         yield* array;
@@ -1272,6 +1230,12 @@ var app = (function () {
 
     function merge(arrays) {
       return Array.from(flatten(arrays));
+    }
+
+    function map$1(values, mapper) {
+      if (typeof values[Symbol.iterator] !== "function") throw new TypeError("values is not iterable");
+      if (typeof mapper !== "function") throw new TypeError("mapper is not a function");
+      return Array.from(values, (value, index) => mapper(value, index, values));
     }
 
     var noop$1 = {value: () => {}};
@@ -7982,7 +7946,7 @@ var app = (function () {
     }
 
     // (63:2) {#if selectedRegion !== ""}
-    function create_if_block$4(ctx) {
+    function create_if_block$3(ctx) {
     	let each_1_anchor;
     	let each_value = /*selectedRegionD*/ ctx[1];
     	validate_each_argument(each_value);
@@ -8040,7 +8004,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block$4.name,
+    		id: create_if_block$3.name,
     		type: "if",
     		source: "(63:2) {#if selectedRegion !== \\\"\\\"}",
     		ctx
@@ -8166,7 +8130,7 @@ var app = (function () {
 
     function create_fragment$9(ctx) {
     	let div;
-    	let if_block = /*selectedRegion*/ ctx[0] !== "" && create_if_block$4(ctx);
+    	let if_block = /*selectedRegion*/ ctx[0] !== "" && create_if_block$3(ctx);
 
     	const block = {
     		c: function create() {
@@ -8187,7 +8151,7 @@ var app = (function () {
     				if (if_block) {
     					if_block.p(ctx, dirty);
     				} else {
-    					if_block = create_if_block$4(ctx);
+    					if_block = create_if_block$3(ctx);
     					if_block.c();
     					if_block.m(div, null);
     				}
@@ -8610,7 +8574,7 @@ var app = (function () {
     const file$5 = "src\\BigButterflyContainer.svelte";
 
     // (7:0) {#if selectedCountry !== ""}
-    function create_if_block$3(ctx) {
+    function create_if_block$2(ctx) {
     	let section;
     	let h10;
     	let t0;
@@ -8658,7 +8622,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block$3.name,
+    		id: create_if_block$2.name,
     		type: "if",
     		source: "(7:0) {#if selectedCountry !== \\\"\\\"}",
     		ctx
@@ -8669,7 +8633,7 @@ var app = (function () {
 
     function create_fragment$7(ctx) {
     	let if_block_anchor;
-    	let if_block = /*selectedCountry*/ ctx[0] !== "" && create_if_block$3(ctx);
+    	let if_block = /*selectedCountry*/ ctx[0] !== "" && create_if_block$2(ctx);
 
     	const block = {
     		c: function create() {
@@ -8688,7 +8652,7 @@ var app = (function () {
     				if (if_block) {
     					if_block.p(ctx, dirty);
     				} else {
-    					if_block = create_if_block$3(ctx);
+    					if_block = create_if_block$2(ctx);
     					if_block.c();
     					if_block.m(if_block_anchor.parentNode, if_block_anchor);
     				}
@@ -9023,195 +8987,16 @@ var app = (function () {
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[24] = list[i].x;
-    	child_ctx[25] = list[i].y;
-    	child_ctx[26] = list[i].value;
-    	child_ctx[27] = list[i].regionIndex;
-    	child_ctx[28] = list[i].regionShape;
-    	child_ctx[29] = list[i].regionCode;
+    	child_ctx[21] = list[i].x;
+    	child_ctx[22] = list[i].y;
+    	child_ctx[23] = list[i].value;
+    	child_ctx[24] = list[i].regionIndex;
+    	child_ctx[25] = list[i].regionShape;
+    	child_ctx[26] = list[i].regionCode;
     	return child_ctx;
     }
 
-    function get_each_context_1(ctx, list, i) {
-    	const child_ctx = ctx.slice();
-    	child_ctx[32] = list[i].CODE;
-    	child_ctx[33] = list[i].ORIG;
-    	child_ctx[26] = list[i].value;
-    	return child_ctx;
-    }
-
-    // (146:4) {#if links !== undefined}
-    function create_if_block$2(ctx) {
-    	let each_1_anchor;
-    	let each_value_1 = /*links*/ ctx[1];
-    	validate_each_argument(each_value_1);
-    	let each_blocks = [];
-
-    	for (let i = 0; i < each_value_1.length; i += 1) {
-    		each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
-    	}
-
-    	const block = {
-    		c: function create() {
-    			for (let i = 0; i < each_blocks.length; i += 1) {
-    				each_blocks[i].c();
-    			}
-
-    			each_1_anchor = empty$1();
-    		},
-    		m: function mount(target, anchor) {
-    			for (let i = 0; i < each_blocks.length; i += 1) {
-    				each_blocks[i].m(target, anchor);
-    			}
-
-    			insert_dev(target, each_1_anchor, anchor);
-    		},
-    		p: function update(ctx, dirty) {
-    			if (dirty[0] & /*$butterflyPoints, links, pathScale*/ 22) {
-    				each_value_1 = /*links*/ ctx[1];
-    				validate_each_argument(each_value_1);
-    				let i;
-
-    				for (i = 0; i < each_value_1.length; i += 1) {
-    					const child_ctx = get_each_context_1(ctx, each_value_1, i);
-
-    					if (each_blocks[i]) {
-    						each_blocks[i].p(child_ctx, dirty);
-    					} else {
-    						each_blocks[i] = create_each_block_1(child_ctx);
-    						each_blocks[i].c();
-    						each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
-    					}
-    				}
-
-    				for (; i < each_blocks.length; i += 1) {
-    					each_blocks[i].d(1);
-    				}
-
-    				each_blocks.length = each_value_1.length;
-    			}
-    		},
-    		d: function destroy(detaching) {
-    			destroy_each(each_blocks, detaching);
-    			if (detaching) detach_dev(each_1_anchor);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_if_block$2.name,
-    		type: "if",
-    		source: "(146:4) {#if links !== undefined}",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (147:6) {#each links as {CODE, ORIG, value}}
-    function create_each_block_1(ctx) {
-    	let line_1;
-    	let line_1_x__value;
-    	let line_1_y__value;
-    	let line_1_x__value_1;
-    	let line_1_y__value_1;
-    	let line_1_data_orig_value;
-    	let line_1_data_code_value;
-    	let line_1_data_value_value;
-    	let line_1_stroke_width_value;
-    	let line_1_stroke_dasharray_value;
-
-    	function func(...args) {
-    		return /*func*/ ctx[16](/*ORIG*/ ctx[33], ...args);
-    	}
-
-    	function func_1(...args) {
-    		return /*func_1*/ ctx[17](/*ORIG*/ ctx[33], ...args);
-    	}
-
-    	function func_2(...args) {
-    		return /*func_2*/ ctx[18](/*CODE*/ ctx[32], ...args);
-    	}
-
-    	function func_3(...args) {
-    		return /*func_3*/ ctx[19](/*CODE*/ ctx[32], ...args);
-    	}
-
-    	const block = {
-    		c: function create() {
-    			line_1 = svg_element("line");
-    			attr_dev(line_1, "x1", line_1_x__value = /*$butterflyPoints*/ ctx[2].filter(func)[0].x);
-    			attr_dev(line_1, "y1", line_1_y__value = /*$butterflyPoints*/ ctx[2].filter(func_1)[0].y);
-    			attr_dev(line_1, "x2", line_1_x__value_1 = /*$butterflyPoints*/ ctx[2].filter(func_2)[0].x);
-    			attr_dev(line_1, "y2", line_1_y__value_1 = /*$butterflyPoints*/ ctx[2].filter(func_3)[0].y);
-    			attr_dev(line_1, "data-orig", line_1_data_orig_value = /*ORIG*/ ctx[33]);
-    			attr_dev(line_1, "data-code", line_1_data_code_value = /*CODE*/ ctx[32]);
-    			attr_dev(line_1, "data-value", line_1_data_value_value = /*value*/ ctx[26]);
-    			attr_dev(line_1, "stroke", "gray");
-    			attr_dev(line_1, "stroke-width", line_1_stroke_width_value = /*pathScale*/ ctx[4](/*value*/ ctx[26]));
-    			attr_dev(line_1, "stroke-dasharray", line_1_stroke_dasharray_value = "1 " + /*pathScale*/ ctx[4](/*value*/ ctx[26]) * 2);
-    			attr_dev(line_1, "stroke-linecap", "round");
-    			add_location(line_1, file$4, 148, 8, 4415);
-    		},
-    		m: function mount(target, anchor) {
-    			insert_dev(target, line_1, anchor);
-    		},
-    		p: function update(new_ctx, dirty) {
-    			ctx = new_ctx;
-
-    			if (dirty[0] & /*$butterflyPoints, links*/ 6 && line_1_x__value !== (line_1_x__value = /*$butterflyPoints*/ ctx[2].filter(func)[0].x)) {
-    				attr_dev(line_1, "x1", line_1_x__value);
-    			}
-
-    			if (dirty[0] & /*$butterflyPoints, links*/ 6 && line_1_y__value !== (line_1_y__value = /*$butterflyPoints*/ ctx[2].filter(func_1)[0].y)) {
-    				attr_dev(line_1, "y1", line_1_y__value);
-    			}
-
-    			if (dirty[0] & /*$butterflyPoints, links*/ 6 && line_1_x__value_1 !== (line_1_x__value_1 = /*$butterflyPoints*/ ctx[2].filter(func_2)[0].x)) {
-    				attr_dev(line_1, "x2", line_1_x__value_1);
-    			}
-
-    			if (dirty[0] & /*$butterflyPoints, links*/ 6 && line_1_y__value_1 !== (line_1_y__value_1 = /*$butterflyPoints*/ ctx[2].filter(func_3)[0].y)) {
-    				attr_dev(line_1, "y2", line_1_y__value_1);
-    			}
-
-    			if (dirty[0] & /*links*/ 2 && line_1_data_orig_value !== (line_1_data_orig_value = /*ORIG*/ ctx[33])) {
-    				attr_dev(line_1, "data-orig", line_1_data_orig_value);
-    			}
-
-    			if (dirty[0] & /*links*/ 2 && line_1_data_code_value !== (line_1_data_code_value = /*CODE*/ ctx[32])) {
-    				attr_dev(line_1, "data-code", line_1_data_code_value);
-    			}
-
-    			if (dirty[0] & /*links*/ 2 && line_1_data_value_value !== (line_1_data_value_value = /*value*/ ctx[26])) {
-    				attr_dev(line_1, "data-value", line_1_data_value_value);
-    			}
-
-    			if (dirty[0] & /*links*/ 2 && line_1_stroke_width_value !== (line_1_stroke_width_value = /*pathScale*/ ctx[4](/*value*/ ctx[26]))) {
-    				attr_dev(line_1, "stroke-width", line_1_stroke_width_value);
-    			}
-
-    			if (dirty[0] & /*links*/ 2 && line_1_stroke_dasharray_value !== (line_1_stroke_dasharray_value = "1 " + /*pathScale*/ ctx[4](/*value*/ ctx[26]) * 2)) {
-    				attr_dev(line_1, "stroke-dasharray", line_1_stroke_dasharray_value);
-    			}
-    		},
-    		d: function destroy(detaching) {
-    			if (detaching) detach_dev(line_1);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_each_block_1.name,
-    		type: "each",
-    		source: "(147:6) {#each links as {CODE, ORIG, value}}",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (166:2) {#each $butterflyPoints as {x, y, value, regionIndex, regionShape, regionCode}}
+    // (177:2) {#each $butterflyPoints as {x, y, value, regionIndex, regionShape, regionCode}}
     function create_each_block(ctx) {
     	let g1;
     	let g0;
@@ -9232,22 +9017,22 @@ var app = (function () {
     			g1 = svg_element("g");
     			g0 = svg_element("g");
     			use = svg_element("use");
-    			xlink_attr(use, "xlink:href", use_xlink_href_value = "#butterfly-" + /*regionShape*/ ctx[28]);
-    			attr_dev(use, "transform", use_transform_value = "scale(" + /*sScale*/ ctx[3](/*value*/ ctx[26]) + ")");
-    			attr_dev(use, "stroke", use_stroke_value = regions[/*regionIndex*/ ctx[27]].color);
+    			xlink_attr(use, "xlink:href", use_xlink_href_value = "#butterfly-" + /*regionShape*/ ctx[25]);
+    			attr_dev(use, "transform", use_transform_value = "scale(" + /*sScale*/ ctx[2](/*value*/ ctx[23]) + ")");
+    			attr_dev(use, "stroke", use_stroke_value = regions[/*regionIndex*/ ctx[24]].color);
     			attr_dev(use, "stroke-width", "1");
-    			attr_dev(use, "fill", use_fill_value = regions[/*regionIndex*/ ctx[27]].color);
+    			attr_dev(use, "fill", use_fill_value = regions[/*regionIndex*/ ctx[24]].color);
     			attr_dev(use, "fill-opacity", "0.5");
-    			attr_dev(use, "data-region-index", use_data_region_index_value = /*regionIndex*/ ctx[27]);
-    			attr_dev(use, "data-region-code", use_data_region_code_value = /*regionCode*/ ctx[29]);
+    			attr_dev(use, "data-region-index", use_data_region_index_value = /*regionIndex*/ ctx[24]);
+    			attr_dev(use, "data-region-code", use_data_region_code_value = /*regionCode*/ ctx[26]);
     			attr_dev(use, "class", "svelte-rmrozh");
-    			add_location(use, file$4, 175, 8, 5410);
+    			add_location(use, file$4, 186, 8, 5514);
     			attr_dev(g0, "class", "butterfly svelte-rmrozh");
-    			attr_dev(g0, "transform", g0_transform_value = "translate(" + /*x*/ ctx[24] + ", " + /*y*/ ctx[25] + ") rotate(" + (Math.random() * 60 - 30) + ")");
-    			add_location(g0, file$4, 170, 6, 5221);
+    			attr_dev(g0, "transform", g0_transform_value = "translate(" + /*x*/ ctx[21] + ", " + /*y*/ ctx[22] + ") rotate(" + (Math.random() * 60 - 30) + ")");
+    			add_location(g0, file$4, 181, 6, 5325);
     			attr_dev(g1, "class", "butterfly-container");
-    			attr_dev(g1, "transform", g1_transform_value = "translate(" + /*sScale*/ ctx[3](/*value*/ ctx[26]) * -50 + ", " + /*sScale*/ ctx[3](/*value*/ ctx[26]) * -50 + ")");
-    			add_location(g1, file$4, 166, 4, 5094);
+    			attr_dev(g1, "transform", g1_transform_value = "translate(" + /*sScale*/ ctx[2](/*value*/ ctx[23]) * -50 + ", " + /*sScale*/ ctx[2](/*value*/ ctx[23]) * -50 + ")");
+    			add_location(g1, file$4, 177, 4, 5198);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, g1, anchor);
@@ -9256,44 +9041,44 @@ var app = (function () {
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(use, "mouseover", /*handleMouseOver*/ ctx[6], false, false, false),
-    					listen_dev(use, "mouseout", /*handleMouseOut*/ ctx[7], false, false, false),
-    					listen_dev(use, "click", /*handleClick*/ ctx[8], false, false, false)
+    					listen_dev(use, "mouseover", /*handleMouseOver*/ ctx[4], false, false, false),
+    					listen_dev(use, "mouseout", /*handleMouseOut*/ ctx[5], false, false, false),
+    					listen_dev(use, "click", /*handleClick*/ ctx[6], false, false, false)
     				];
 
     				mounted = true;
     			}
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty[0] & /*$butterflyPoints*/ 4 && use_xlink_href_value !== (use_xlink_href_value = "#butterfly-" + /*regionShape*/ ctx[28])) {
+    			if (dirty & /*$butterflyPoints*/ 2 && use_xlink_href_value !== (use_xlink_href_value = "#butterfly-" + /*regionShape*/ ctx[25])) {
     				xlink_attr(use, "xlink:href", use_xlink_href_value);
     			}
 
-    			if (dirty[0] & /*$butterflyPoints*/ 4 && use_transform_value !== (use_transform_value = "scale(" + /*sScale*/ ctx[3](/*value*/ ctx[26]) + ")")) {
+    			if (dirty & /*$butterflyPoints*/ 2 && use_transform_value !== (use_transform_value = "scale(" + /*sScale*/ ctx[2](/*value*/ ctx[23]) + ")")) {
     				attr_dev(use, "transform", use_transform_value);
     			}
 
-    			if (dirty[0] & /*$butterflyPoints*/ 4 && use_stroke_value !== (use_stroke_value = regions[/*regionIndex*/ ctx[27]].color)) {
+    			if (dirty & /*$butterflyPoints*/ 2 && use_stroke_value !== (use_stroke_value = regions[/*regionIndex*/ ctx[24]].color)) {
     				attr_dev(use, "stroke", use_stroke_value);
     			}
 
-    			if (dirty[0] & /*$butterflyPoints*/ 4 && use_fill_value !== (use_fill_value = regions[/*regionIndex*/ ctx[27]].color)) {
+    			if (dirty & /*$butterflyPoints*/ 2 && use_fill_value !== (use_fill_value = regions[/*regionIndex*/ ctx[24]].color)) {
     				attr_dev(use, "fill", use_fill_value);
     			}
 
-    			if (dirty[0] & /*$butterflyPoints*/ 4 && use_data_region_index_value !== (use_data_region_index_value = /*regionIndex*/ ctx[27])) {
+    			if (dirty & /*$butterflyPoints*/ 2 && use_data_region_index_value !== (use_data_region_index_value = /*regionIndex*/ ctx[24])) {
     				attr_dev(use, "data-region-index", use_data_region_index_value);
     			}
 
-    			if (dirty[0] & /*$butterflyPoints*/ 4 && use_data_region_code_value !== (use_data_region_code_value = /*regionCode*/ ctx[29])) {
+    			if (dirty & /*$butterflyPoints*/ 2 && use_data_region_code_value !== (use_data_region_code_value = /*regionCode*/ ctx[26])) {
     				attr_dev(use, "data-region-code", use_data_region_code_value);
     			}
 
-    			if (dirty[0] & /*$butterflyPoints*/ 4 && g0_transform_value !== (g0_transform_value = "translate(" + /*x*/ ctx[24] + ", " + /*y*/ ctx[25] + ") rotate(" + (Math.random() * 60 - 30) + ")")) {
+    			if (dirty & /*$butterflyPoints*/ 2 && g0_transform_value !== (g0_transform_value = "translate(" + /*x*/ ctx[21] + ", " + /*y*/ ctx[22] + ") rotate(" + (Math.random() * 60 - 30) + ")")) {
     				attr_dev(g0, "transform", g0_transform_value);
     			}
 
-    			if (dirty[0] & /*$butterflyPoints*/ 4 && g1_transform_value !== (g1_transform_value = "translate(" + /*sScale*/ ctx[3](/*value*/ ctx[26]) * -50 + ", " + /*sScale*/ ctx[3](/*value*/ ctx[26]) * -50 + ")")) {
+    			if (dirty & /*$butterflyPoints*/ 2 && g1_transform_value !== (g1_transform_value = "translate(" + /*sScale*/ ctx[2](/*value*/ ctx[23]) * -50 + ", " + /*sScale*/ ctx[2](/*value*/ ctx[23]) * -50 + ")")) {
     				attr_dev(g1, "transform", g1_transform_value);
     			}
     		},
@@ -9308,7 +9093,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(166:2) {#each $butterflyPoints as {x, y, value, regionIndex, regionShape, regionCode}}",
+    		source: "(177:2) {#each $butterflyPoints as {x, y, value, regionIndex, regionShape, regionCode}}",
     		ctx
     	});
 
@@ -9316,16 +9101,14 @@ var app = (function () {
     }
 
     function create_fragment$5(ctx) {
-    	let g3;
+    	let g2;
     	let defs0;
     	let g0;
     	let raw0_value = /*butterflies*/ ctx[0][0] + "";
     	let defs1;
     	let g1;
     	let raw1_value = /*butterflies*/ ctx[0][1] + "";
-    	let g2;
-    	let if_block = /*links*/ ctx[1] !== undefined && create_if_block$2(ctx);
-    	let each_value = /*$butterflyPoints*/ ctx[2];
+    	let each_value = /*$butterflyPoints*/ ctx[1];
     	validate_each_argument(each_value);
     	let each_blocks = [];
 
@@ -9335,64 +9118,45 @@ var app = (function () {
 
     	const block = {
     		c: function create() {
-    			g3 = svg_element("g");
+    			g2 = svg_element("g");
     			defs0 = svg_element("defs");
     			g0 = svg_element("g");
     			defs1 = svg_element("defs");
     			g1 = svg_element("g");
-    			g2 = svg_element("g");
-    			if (if_block) if_block.c();
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
 
     			attr_dev(g0, "id", "butterfly-0");
-    			add_location(g0, file$4, 134, 4, 4089);
-    			add_location(defs0, file$4, 133, 2, 4077);
+    			add_location(g0, file$4, 166, 4, 4949);
+    			add_location(defs0, file$4, 165, 2, 4937);
     			attr_dev(g1, "id", "butterfly-1");
-    			add_location(g1, file$4, 139, 4, 4176);
-    			add_location(defs1, file$4, 138, 2, 4164);
-    			attr_dev(g2, "class", "link-lines");
-    			add_location(g2, file$4, 144, 2, 4253);
-    			attr_dev(g3, "class", "map-points");
-    			add_location(g3, file$4, 125, 0, 3912);
+    			add_location(g1, file$4, 171, 4, 5036);
+    			add_location(defs1, file$4, 170, 2, 5024);
+    			attr_dev(g2, "class", "map-points");
+    			add_location(g2, file$4, 157, 0, 4772);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, g3, anchor);
-    			append_dev(g3, defs0);
+    			insert_dev(target, g2, anchor);
+    			append_dev(g2, defs0);
     			append_dev(defs0, g0);
     			g0.innerHTML = raw0_value;
-    			append_dev(g3, defs1);
+    			append_dev(g2, defs1);
     			append_dev(defs1, g1);
     			g1.innerHTML = raw1_value;
-    			append_dev(g3, g2);
-    			if (if_block) if_block.m(g2, null);
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
-    				each_blocks[i].m(g3, null);
+    				each_blocks[i].m(g2, null);
     			}
     		},
-    		p: function update(ctx, dirty) {
-    			if (dirty[0] & /*butterflies*/ 1 && raw0_value !== (raw0_value = /*butterflies*/ ctx[0][0] + "")) g0.innerHTML = raw0_value;			if (dirty[0] & /*butterflies*/ 1 && raw1_value !== (raw1_value = /*butterflies*/ ctx[0][1] + "")) g1.innerHTML = raw1_value;
-    			if (/*links*/ ctx[1] !== undefined) {
-    				if (if_block) {
-    					if_block.p(ctx, dirty);
-    				} else {
-    					if_block = create_if_block$2(ctx);
-    					if_block.c();
-    					if_block.m(g2, null);
-    				}
-    			} else if (if_block) {
-    				if_block.d(1);
-    				if_block = null;
-    			}
-
-    			if (dirty[0] & /*sScale, $butterflyPoints, handleMouseOver, handleMouseOut, handleClick*/ 460) {
-    				each_value = /*$butterflyPoints*/ ctx[2];
+    		p: function update(ctx, [dirty]) {
+    			if (dirty & /*butterflies*/ 1 && raw0_value !== (raw0_value = /*butterflies*/ ctx[0][0] + "")) g0.innerHTML = raw0_value;			if (dirty & /*butterflies*/ 1 && raw1_value !== (raw1_value = /*butterflies*/ ctx[0][1] + "")) g1.innerHTML = raw1_value;
+    			if (dirty & /*sScale, $butterflyPoints, Math, regions, handleMouseOver, handleMouseOut, handleClick*/ 118) {
+    				each_value = /*$butterflyPoints*/ ctx[1];
     				validate_each_argument(each_value);
     				let i;
 
@@ -9404,7 +9168,7 @@ var app = (function () {
     					} else {
     						each_blocks[i] = create_each_block(child_ctx);
     						each_blocks[i].c();
-    						each_blocks[i].m(g3, null);
+    						each_blocks[i].m(g2, null);
     					}
     				}
 
@@ -9418,8 +9182,7 @@ var app = (function () {
     		i: noop$2,
     		o: noop$2,
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(g3);
-    			if (if_block) if_block.d();
+    			if (detaching) detach_dev(g2);
     			destroy_each(each_blocks, detaching);
     		}
     	};
@@ -9446,6 +9209,7 @@ var app = (function () {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('MapPoints', slots, []);
     	let { regionFlow } = $$props;
+    	let { regionFlowGeo } = $$props;
     	let { datasets } = $$props;
     	let { data } = $$props;
     	let { projection } = $$props;
@@ -9453,7 +9217,7 @@ var app = (function () {
     	let { selectedRegion } = $$props;
     	let { hoveredRegionCode } = $$props;
     	let { selectedCountry } = $$props;
-    	let links = [];
+    	let svg = select("#world-map");
     	const { open } = getContext('simple-modal');
     	const sScale = linear().domain(extent(data.features, d => d.properties.VALUE)).range([0.25, 1]);
     	const pathScale = linear().domain(extent(regionFlow, d => d.value)).range([1, 10]);
@@ -9471,14 +9235,44 @@ var app = (function () {
     	);
 
     	validate_store(butterflyPoints, 'butterflyPoints');
-    	component_subscribe($$self, butterflyPoints, value => $$invalidate(2, $butterflyPoints = value));
+    	component_subscribe($$self, butterflyPoints, value => $$invalidate(1, $butterflyPoints = value));
 
     	function handleMouseOver() {
     		select(this).attr('fill-opacity', 1);
     		let hoverRegionIndex = select(this).attr('data-region-index');
-    		$$invalidate(10, hoveredRegionCode = regions[hoverRegionIndex].code);
-    		$$invalidate(1, links = regionFlow.filter(d => d.CODE === hoveredRegionCode).filter(d => d.CODE !== d.ORIG)); // Why are there some duplicates???
-    		$$invalidate(1, links = [...new Map(links.map(link => [link.ORIG, link])).values()]);
+    		$$invalidate(8, hoveredRegionCode = regions[hoverRegionIndex].code);
+    		let values = regionFlow.filter(d => d.DEST === hoveredRegionCode).filter(d => d.DEST !== d.ORIG); // Why are there some duplicates???
+
+    		// .filter(d => d.value > 0);
+    		let ids = map$1(values, function (d) {
+    			return d.id;
+    		});
+
+    		let flow = [];
+
+    		ids.forEach(function (i) {
+    			let t = regionFlowGeo.filter(d => d.id === i);
+
+    			for (let i in t) {
+    				flow.push(t[i]);
+    			}
+    		});
+
+    		console.log(flow);
+    		const lineGroup = groups(flow, d => d.id);
+    		console.log(lineGroup);
+
+    		let newLine = line().x(function (d) {
+    			return projection(d.x);
+    		}).y(function (d) {
+    			return projection(d.y);
+    		});
+
+    		svg.selectAll(".line").data(lineGroup).join("path").attr("fill", "none").attr("stroke", "black").attr("stroke", 2).// .attr("stroke", function(d){ return geoColorScale(d[0]);})
+    		// .attr("stroke-width", function(d) {return pathScale(d.value); })
+    		attr("d", function (d) {
+    			return newLine(d[1]);
+    		});
     	}
 
     	function handleMouseOut() {
@@ -9486,14 +9280,14 @@ var app = (function () {
     			select(this).attr('fill-opacity', 0.5);
     		}
 
-    		$$invalidate(1, links = undefined);
+    		links = undefined;
     	}
 
     	function handleClick() {
     		select(".map-points").selectAll("use").attr('fill-opacity', 0.5);
     		select(this).attr('fill-opacity', 1);
     		let selectedRegionIndex = select(this).attr('data-region-index');
-    		$$invalidate(9, selectedRegion = regions[selectedRegionIndex].name);
+    		$$invalidate(7, selectedRegion = regions[selectedRegionIndex].name);
 
     		open(Popup, {
     			selectedRegion,
@@ -9507,7 +9301,7 @@ var app = (function () {
     			container.selectAll('.country-card').style("background", "white");
     			container.selectAll("use").attr("fill", color).attr("stroke", color);
     			container.selectAll(".country-card__country-name").style("color", "black");
-    			$$invalidate(11, selectedCountry = "");
+    			$$invalidate(9, selectedCountry = "");
     		}
     	}
 
@@ -9527,6 +9321,7 @@ var app = (function () {
 
     	const writable_props = [
     		'regionFlow',
+    		'regionFlowGeo',
     		'datasets',
     		'data',
     		'projection',
@@ -9540,20 +9335,16 @@ var app = (function () {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1.warn(`<MapPoints> was created with unknown prop '${key}'`);
     	});
 
-    	const func = (ORIG, d) => d.regionCode == ORIG;
-    	const func_1 = (ORIG, d) => d.regionCode == ORIG;
-    	const func_2 = (CODE, d) => d.regionCode == CODE;
-    	const func_3 = (CODE, d) => d.regionCode == CODE;
-
     	$$self.$$set = $$props => {
-    		if ('regionFlow' in $$props) $$invalidate(12, regionFlow = $$props.regionFlow);
-    		if ('datasets' in $$props) $$invalidate(13, datasets = $$props.datasets);
-    		if ('data' in $$props) $$invalidate(14, data = $$props.data);
-    		if ('projection' in $$props) $$invalidate(15, projection = $$props.projection);
+    		if ('regionFlow' in $$props) $$invalidate(10, regionFlow = $$props.regionFlow);
+    		if ('regionFlowGeo' in $$props) $$invalidate(11, regionFlowGeo = $$props.regionFlowGeo);
+    		if ('datasets' in $$props) $$invalidate(12, datasets = $$props.datasets);
+    		if ('data' in $$props) $$invalidate(13, data = $$props.data);
+    		if ('projection' in $$props) $$invalidate(14, projection = $$props.projection);
     		if ('butterflies' in $$props) $$invalidate(0, butterflies = $$props.butterflies);
-    		if ('selectedRegion' in $$props) $$invalidate(9, selectedRegion = $$props.selectedRegion);
-    		if ('hoveredRegionCode' in $$props) $$invalidate(10, hoveredRegionCode = $$props.hoveredRegionCode);
-    		if ('selectedCountry' in $$props) $$invalidate(11, selectedCountry = $$props.selectedCountry);
+    		if ('selectedRegion' in $$props) $$invalidate(7, selectedRegion = $$props.selectedRegion);
+    		if ('hoveredRegionCode' in $$props) $$invalidate(8, hoveredRegionCode = $$props.hoveredRegionCode);
+    		if ('selectedCountry' in $$props) $$invalidate(9, selectedCountry = $$props.selectedCountry);
     	};
 
     	$$self.$capture_state = () => ({
@@ -9561,12 +9352,11 @@ var app = (function () {
     		getContext,
     		scaleLinear: linear,
     		extent,
-    		min,
-    		max,
     		select,
     		selectAll,
     		groups,
     		line,
+    		map: map$1,
     		forceSimulation,
     		forceCollide,
     		forceLink,
@@ -9575,6 +9365,7 @@ var app = (function () {
     		Popup,
     		regions,
     		regionFlow,
+    		regionFlowGeo,
     		datasets,
     		data,
     		projection,
@@ -9582,7 +9373,7 @@ var app = (function () {
     		selectedRegion,
     		hoveredRegionCode,
     		selectedCountry,
-    		links,
+    		svg,
     		open,
     		sScale,
     		pathScale,
@@ -9598,16 +9389,17 @@ var app = (function () {
     	});
 
     	$$self.$inject_state = $$props => {
-    		if ('regionFlow' in $$props) $$invalidate(12, regionFlow = $$props.regionFlow);
-    		if ('datasets' in $$props) $$invalidate(13, datasets = $$props.datasets);
-    		if ('data' in $$props) $$invalidate(14, data = $$props.data);
-    		if ('projection' in $$props) $$invalidate(15, projection = $$props.projection);
+    		if ('regionFlow' in $$props) $$invalidate(10, regionFlow = $$props.regionFlow);
+    		if ('regionFlowGeo' in $$props) $$invalidate(11, regionFlowGeo = $$props.regionFlowGeo);
+    		if ('datasets' in $$props) $$invalidate(12, datasets = $$props.datasets);
+    		if ('data' in $$props) $$invalidate(13, data = $$props.data);
+    		if ('projection' in $$props) $$invalidate(14, projection = $$props.projection);
     		if ('butterflies' in $$props) $$invalidate(0, butterflies = $$props.butterflies);
-    		if ('selectedRegion' in $$props) $$invalidate(9, selectedRegion = $$props.selectedRegion);
-    		if ('hoveredRegionCode' in $$props) $$invalidate(10, hoveredRegionCode = $$props.hoveredRegionCode);
-    		if ('selectedCountry' in $$props) $$invalidate(11, selectedCountry = $$props.selectedCountry);
-    		if ('links' in $$props) $$invalidate(1, links = $$props.links);
-    		if ('butterflyPoints' in $$props) $$invalidate(5, butterflyPoints = $$props.butterflyPoints);
+    		if ('selectedRegion' in $$props) $$invalidate(7, selectedRegion = $$props.selectedRegion);
+    		if ('hoveredRegionCode' in $$props) $$invalidate(8, hoveredRegionCode = $$props.hoveredRegionCode);
+    		if ('selectedCountry' in $$props) $$invalidate(9, selectedCountry = $$props.selectedCountry);
+    		if ('svg' in $$props) svg = $$props.svg;
+    		if ('butterflyPoints' in $$props) $$invalidate(3, butterflyPoints = $$props.butterflyPoints);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -9615,10 +9407,10 @@ var app = (function () {
     	}
 
     	$$self.$$.update = () => {
-    		if ($$self.$$.dirty[0] & /*data, projection*/ 49152) {
+    		if ($$self.$$.dirty & /*data, projection*/ 24576) {
     			{
     				forceSimulation(data.features).force("collide", forceCollide().radius(d => sScale(d.properties.VALUE) * 55)).force("x", forceX().x(d => projection(d.geometry.coordinates)[0])).force("y", forceY().y(d => projection(d.geometry.coordinates)[1])).force("link", forceLink().id(function (d) {
-    					return d.CODE;
+    					return d.DEST;
     				})).stop().tick(100);
 
     				let newButterflyPoints = data.features.map(d => ({
@@ -9637,10 +9429,8 @@ var app = (function () {
 
     	return [
     		butterflies,
-    		links,
     		$butterflyPoints,
     		sScale,
-    		pathScale,
     		butterflyPoints,
     		handleMouseOver,
     		handleMouseOut,
@@ -9649,13 +9439,10 @@ var app = (function () {
     		hoveredRegionCode,
     		selectedCountry,
     		regionFlow,
+    		regionFlowGeo,
     		datasets,
     		data,
-    		projection,
-    		func,
-    		func_1,
-    		func_2,
-    		func_3
+    		projection
     	];
     }
 
@@ -9663,25 +9450,17 @@ var app = (function () {
     	constructor(options) {
     		super(options);
 
-    		init$1(
-    			this,
-    			options,
-    			instance$5,
-    			create_fragment$5,
-    			safe_not_equal,
-    			{
-    				regionFlow: 12,
-    				datasets: 13,
-    				data: 14,
-    				projection: 15,
-    				butterflies: 0,
-    				selectedRegion: 9,
-    				hoveredRegionCode: 10,
-    				selectedCountry: 11
-    			},
-    			null,
-    			[-1, -1]
-    		);
+    		init$1(this, options, instance$5, create_fragment$5, safe_not_equal, {
+    			regionFlow: 10,
+    			regionFlowGeo: 11,
+    			datasets: 12,
+    			data: 13,
+    			projection: 14,
+    			butterflies: 0,
+    			selectedRegion: 7,
+    			hoveredRegionCode: 8,
+    			selectedCountry: 9
+    		});
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
@@ -9693,19 +9472,23 @@ var app = (function () {
     		const { ctx } = this.$$;
     		const props = options.props || {};
 
-    		if (/*regionFlow*/ ctx[12] === undefined && !('regionFlow' in props)) {
+    		if (/*regionFlow*/ ctx[10] === undefined && !('regionFlow' in props)) {
     			console_1.warn("<MapPoints> was created without expected prop 'regionFlow'");
     		}
 
-    		if (/*datasets*/ ctx[13] === undefined && !('datasets' in props)) {
+    		if (/*regionFlowGeo*/ ctx[11] === undefined && !('regionFlowGeo' in props)) {
+    			console_1.warn("<MapPoints> was created without expected prop 'regionFlowGeo'");
+    		}
+
+    		if (/*datasets*/ ctx[12] === undefined && !('datasets' in props)) {
     			console_1.warn("<MapPoints> was created without expected prop 'datasets'");
     		}
 
-    		if (/*data*/ ctx[14] === undefined && !('data' in props)) {
+    		if (/*data*/ ctx[13] === undefined && !('data' in props)) {
     			console_1.warn("<MapPoints> was created without expected prop 'data'");
     		}
 
-    		if (/*projection*/ ctx[15] === undefined && !('projection' in props)) {
+    		if (/*projection*/ ctx[14] === undefined && !('projection' in props)) {
     			console_1.warn("<MapPoints> was created without expected prop 'projection'");
     		}
 
@@ -9713,15 +9496,15 @@ var app = (function () {
     			console_1.warn("<MapPoints> was created without expected prop 'butterflies'");
     		}
 
-    		if (/*selectedRegion*/ ctx[9] === undefined && !('selectedRegion' in props)) {
+    		if (/*selectedRegion*/ ctx[7] === undefined && !('selectedRegion' in props)) {
     			console_1.warn("<MapPoints> was created without expected prop 'selectedRegion'");
     		}
 
-    		if (/*hoveredRegionCode*/ ctx[10] === undefined && !('hoveredRegionCode' in props)) {
+    		if (/*hoveredRegionCode*/ ctx[8] === undefined && !('hoveredRegionCode' in props)) {
     			console_1.warn("<MapPoints> was created without expected prop 'hoveredRegionCode'");
     		}
 
-    		if (/*selectedCountry*/ ctx[11] === undefined && !('selectedCountry' in props)) {
+    		if (/*selectedCountry*/ ctx[9] === undefined && !('selectedCountry' in props)) {
     			console_1.warn("<MapPoints> was created without expected prop 'selectedCountry'");
     		}
     	}
@@ -9731,6 +9514,14 @@ var app = (function () {
     	}
 
     	set regionFlow(value) {
+    		throw new Error("<MapPoints>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get regionFlowGeo() {
+    		throw new Error("<MapPoints>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set regionFlowGeo(value) {
     		throw new Error("<MapPoints>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
@@ -11177,7 +10968,7 @@ var app = (function () {
     /* src\MapContainer.svelte generated by Svelte v3.46.4 */
     const file$2 = "src\\MapContainer.svelte";
 
-    // (31:2) {#if w !== undefined}
+    // (32:2) {#if w !== undefined}
     function create_if_block(ctx) {
     	let modal_1;
     	let current;
@@ -11205,7 +10996,7 @@ var app = (function () {
     			const modal_1_changes = {};
     			if (dirty & /*$modal*/ 256) modal_1_changes.show = /*$modal*/ ctx[8];
 
-    			if (dirty & /*$$scope, w, h, projection, dataset, selectedRegion, hoveredRegionCode, selectedCountry, path*/ 262399) {
+    			if (dirty & /*$$scope, w, h, projection, dataset, selectedRegion, hoveredRegionCode, selectedCountry, path*/ 524543) {
     				modal_1_changes.$$scope = { dirty, ctx };
     			}
 
@@ -11229,14 +11020,14 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(31:2) {#if w !== undefined}",
+    		source: "(32:2) {#if w !== undefined}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (32:4) <Modal show={$modal} transitionBgProps={{ duration: 0 }} styleCloseButton={{cursor: "pointer"}}>
+    // (33:4) <Modal show={$modal} transitionBgProps={{ duration: 0 }} styleCloseButton={{cursor: "pointer"}}>
     function create_default_slot(ctx) {
     	let svg;
     	let mappath;
@@ -11255,20 +11046,21 @@ var app = (function () {
     		});
 
     	function mappoints_selectedRegion_binding(value) {
-    		/*mappoints_selectedRegion_binding*/ ctx[13](value);
+    		/*mappoints_selectedRegion_binding*/ ctx[14](value);
     	}
 
     	function mappoints_hoveredRegionCode_binding(value) {
-    		/*mappoints_hoveredRegionCode_binding*/ ctx[14](value);
+    		/*mappoints_hoveredRegionCode_binding*/ ctx[15](value);
     	}
 
     	function mappoints_selectedCountry_binding(value) {
-    		/*mappoints_selectedCountry_binding*/ ctx[15](value);
+    		/*mappoints_selectedCountry_binding*/ ctx[16](value);
     	}
 
     	let mappoints_props = {
     		data: /*centroidsD*/ ctx[9],
     		regionFlow: /*regionFlow*/ ctx[12],
+    		regionFlowGeo: /*regionFlowGeo*/ ctx[13],
     		projection: /*projection*/ ctx[5],
     		butterflies: /*butterflies*/ ctx[11],
     		datasets: /*dataset*/ ctx[3]
@@ -11296,9 +11088,10 @@ var app = (function () {
     			svg = svg_element("svg");
     			create_component(mappath.$$.fragment);
     			create_component(mappoints.$$.fragment);
+    			attr_dev(svg, "id", "world-map");
     			attr_dev(svg, "width", /*w*/ ctx[4]);
     			attr_dev(svg, "height", /*h*/ ctx[6]);
-    			add_location(svg, file$2, 32, 6, 983);
+    			add_location(svg, file$2, 33, 6, 1019);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, svg, anchor);
@@ -11364,7 +11157,7 @@ var app = (function () {
     		block,
     		id: create_default_slot.name,
     		type: "slot",
-    		source: "(32:4) <Modal show={$modal} transitionBgProps={{ duration: 0 }} styleCloseButton={{cursor: \\\"pointer\\\"}}>",
+    		source: "(33:4) <Modal show={$modal} transitionBgProps={{ duration: 0 }} styleCloseButton={{cursor: \\\"pointer\\\"}}>",
     		ctx
     	});
 
@@ -11382,8 +11175,8 @@ var app = (function () {
     			section = element("section");
     			if (if_block) if_block.c();
     			attr_dev(section, "class", "map__container");
-    			add_render_callback(() => /*section_elementresize_handler*/ ctx[16].call(section));
-    			add_location(section, file$2, 29, 0, 795);
+    			add_render_callback(() => /*section_elementresize_handler*/ ctx[17].call(section));
+    			add_location(section, file$2, 30, 0, 831);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -11391,7 +11184,7 @@ var app = (function () {
     		m: function mount(target, anchor) {
     			insert_dev(target, section, anchor);
     			if (if_block) if_block.m(section, null);
-    			section_resize_listener = add_resize_listener(section, /*section_elementresize_handler*/ ctx[16].bind(section));
+    			section_resize_listener = add_resize_listener(section, /*section_elementresize_handler*/ ctx[17].bind(section));
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
@@ -11463,6 +11256,7 @@ var app = (function () {
     	let butterflies = dataset[2];
     	let regions = dataset[8];
     	let regionFlow = dataset[9];
+    	let regionFlowGeo = dataset[10];
     	let w;
     	const writable_props = ['dataset', 'selectedRegion', 'hoveredRegionCode', 'selectedCountry'];
 
@@ -11513,6 +11307,7 @@ var app = (function () {
     		butterflies,
     		regions,
     		regionFlow,
+    		regionFlowGeo,
     		w,
     		projection,
     		path,
@@ -11530,6 +11325,7 @@ var app = (function () {
     		if ('butterflies' in $$props) $$invalidate(11, butterflies = $$props.butterflies);
     		if ('regions' in $$props) regions = $$props.regions;
     		if ('regionFlow' in $$props) $$invalidate(12, regionFlow = $$props.regionFlow);
+    		if ('regionFlowGeo' in $$props) $$invalidate(13, regionFlowGeo = $$props.regionFlowGeo);
     		if ('w' in $$props) $$invalidate(4, w = $$props.w);
     		if ('projection' in $$props) $$invalidate(5, projection = $$props.projection);
     		if ('path' in $$props) $$invalidate(7, path = $$props.path);
@@ -11568,6 +11364,7 @@ var app = (function () {
     		outlineD,
     		butterflies,
     		regionFlow,
+    		regionFlowGeo,
     		mappoints_selectedRegion_binding,
     		mappoints_hoveredRegionCode_binding,
     		mappoints_selectedCountry_binding,
@@ -11788,7 +11585,7 @@ var app = (function () {
     	return block;
     }
 
-    // (60:2) {:then dataset}
+    // (67:2) {:then dataset}
     function create_then_block(ctx) {
     	let mapcontainer;
     	let updating_selectedRegion;
@@ -11892,14 +11689,14 @@ var app = (function () {
     		block,
     		id: create_then_block.name,
     		type: "then",
-    		source: "(60:2) {:then dataset}",
+    		source: "(67:2) {:then dataset}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (56:18)       <div>        Loading...      </div>    {:then dataset}
+    // (63:18)       <div>        Loading...      </div>    {:then dataset}
     function create_pending_block(ctx) {
     	let div;
 
@@ -11908,7 +11705,7 @@ var app = (function () {
     			div = element("div");
     			div.textContent = "Loading...";
     			attr_dev(div, "class", "svelte-1brbny8");
-    			add_location(div, file, 56, 4, 1859);
+    			add_location(div, file, 63, 4, 2046);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -11925,7 +11722,7 @@ var app = (function () {
     		block,
     		id: create_pending_block.name,
     		type: "pending",
-    		source: "(56:18)       <div>        Loading...      </div>    {:then dataset}",
+    		source: "(63:18)       <div>        Loading...      </div>    {:then dataset}",
     		ctx
     	});
 
@@ -11959,7 +11756,7 @@ var app = (function () {
     			create_component(title.$$.fragment);
     			t = space();
     			info.block.c();
-    			add_location(main, file, 53, 0, 1814);
+    			add_location(main, file, 60, 0, 2001);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -12023,6 +11820,12 @@ var app = (function () {
     	datasets[9].map(d => {
     		d.value = +d.value;
     	});
+
+    	// parse by regionFlowGeo
+    	datasets[10].map(d => {
+    		d.x = +d.x;
+    		d.y = +d.y;
+    	});
     }
 
     function instance($$self, $$props, $$invalidate) {
@@ -12049,6 +11852,7 @@ var app = (function () {
     		let acqMode = await csv("data/modes_acq.csv");
     		let regions = await csv("data/regions.csv");
     		let regionFlow = await csv("data/region_flows.csv");
+    		let regionFlowGeo = await csv("data/region_flows_geo.csv");
 
     		$$invalidate(0, datasets = [
     			mapCentroidsD,
@@ -12060,7 +11864,8 @@ var app = (function () {
     			questions,
     			acqMode,
     			regions,
-    			regionFlow
+    			regionFlow,
+    			regionFlowGeo
     		]);
 
     		parseData(datasets);
