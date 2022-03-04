@@ -18,6 +18,7 @@
   let butterflies = dataset[2];
   let regions = dataset[8];
   let regionFlow = dataset[9];
+  let regionFlowGeo = dataset[10];
 
   let w;
 
@@ -32,7 +33,7 @@
     <Modal show={$modal} transitionBgProps={{ duration: 0 }} styleCloseButton={{cursor: "pointer"}}>
       <svg id="world-map" width={w} height={h}>
         <MapPath data={outlineD} path={path}/>
-        <MapPoints data={centroidsD} regionFlow ={regionFlow} projection={projection} butterflies={butterflies} bind:selectedRegion={selectedRegion} bind:hoveredRegionCode={hoveredRegionCode} bind:selectedCountry={selectedCountry} datasets={dataset}/>
+        <MapPoints data={centroidsD} regionFlow ={regionFlow} regionFlowGeo = {regionFlowGeo} projection={projection} butterflies={butterflies} bind:selectedRegion={selectedRegion} bind:hoveredRegionCode={hoveredRegionCode} bind:selectedCountry={selectedCountry} datasets={dataset}/>
       </svg>
     </Modal>
   {/if}

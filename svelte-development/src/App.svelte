@@ -32,8 +32,9 @@
     let acqMode = await csv("data/modes_acq.csv")
     let regions = await csv("data/regions.csv")
     let regionFlow = await csv("data/region_flows.csv")
+    let regionFlowGeo = await csv("data/region_flows_geo.csv")
     datasets = [mapCentroidsD, mapOutlineD, butterflySvgs, byCountryD, warnings,
-    definitions, questions, acqMode, regions, regionFlow];
+    definitions, questions, acqMode, regions, regionFlow, regionFlowGeo];
     parseData(datasets);
   }
 
@@ -46,6 +47,12 @@
     // parse by regionFlow
     datasets[9].map(d => {
       d.value = +d.value;
+    })
+
+    // parse by regionFlowGeo
+    datasets[10].map(d => {
+      d.x = +d.x;
+      d.y = +d.y;
     })
   }
 

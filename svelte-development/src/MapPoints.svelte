@@ -1,13 +1,14 @@
 <script>
   import { spring } from "svelte/motion";
   import { getContext } from 'svelte';
-  import { scaleLinear, extent, min, max, select, selectAll, groups, line } from 'd3';
+  import { scaleLinear, extent, select, selectAll, groups, line, map } from 'd3';
   import { forceSimulation, forceCollide, forceLink, forceX, forceY } from "d3-force";
   
   import Popup from './Popup.svelte';
   import regions from './regions.js';
 
   export let regionFlow;
+  export let regionFlowGeo;
   export let datasets;
   export let data;
   export let projection;
@@ -16,7 +17,7 @@
   export let hoveredRegionCode;
   export let selectedCountry;
 
-  let links = [];
+  let svg = select("#world-map");
 
   const { open } = getContext('simple-modal');
 
@@ -49,7 +50,7 @@
       .force("y", forceY().y(d => projection(d.geometry.coordinates)[1]))
       .force("link", forceLink()
                     .id(function(d) {
-                        return d.CODE;}))
+                        return d.DEST;}))
       .stop()
       .tick(100)
 
@@ -70,13 +71,44 @@
     let hoverRegionIndex = select(this).attr('data-region-index');
     hoveredRegionCode = regions[hoverRegionIndex].code;
 
-    links = regionFlow
-      .filter(d => d.CODE === hoveredRegionCode)
-      .filter(d => d.CODE !== d.ORIG); // Why are there some duplicates???
-    links = [
-      ...new Map(links.map((link) => [link.ORIG, link])).values(),
-    ];
-  }
+    let values = regionFlow
+      .filter(d => d.DEST === hoveredRegionCode)
+      .filter(d => d.DEST !== d.ORIG); // Why are there some duplicates???
+      // .filter(d => d.value > 0);
+
+    let ids = map(values, function(d) {return d.id;})
+
+    let flow = [];
+
+    ids.forEach(function(i) {
+
+      let t = regionFlowGeo
+      .filter(d => d.id === i)
+
+      for (let i in t) {
+        flow.push(t[i]);
+      }
+    });
+
+    console.log(flow);
+
+    const lineGroup = groups(flow, d => d.id);
+    console.log(lineGroup);
+
+    let newLine = line()
+      .x(function(d) { return projection(d.x); })
+      .y(function(d) { return projection(d.y); });
+
+    svg.selectAll(".line")
+      .data(lineGroup)
+      .join("path")
+          .attr("fill", "none")
+          .attr("stroke", "black")
+          .attr("stroke", 2)
+          // .attr("stroke", function(d){ return geoColorScale(d[0]);})
+          // .attr("stroke-width", function(d) {return pathScale(d.value); })
+          .attr("d", function(d) { return newLine(d[1]); });
+}
 
   function handleMouseOut() {
     if (select(this).attr('data-region-index') != findRegionIndex(selectedRegion)) {
@@ -141,27 +173,6 @@
       {@html butterflies[1]}
     </g>
   </defs>
-
-  <g class="link-lines">
-    {#if links !== undefined}
-      {#each links as {CODE, ORIG, value}}
-      <!-- svelte-ignore component-name-lowercase -->
-        <line
-          x1={$butterflyPoints.filter(d => d.regionCode == ORIG)[0].x}
-          y1={$butterflyPoints.filter(d => d.regionCode == ORIG)[0].y}
-          x2={$butterflyPoints.filter(d => d.regionCode == CODE)[0].x}
-          y2={$butterflyPoints.filter(d => d.regionCode == CODE)[0].y}
-          data-orig={ORIG}
-          data-code={CODE}
-          data-value={value}
-          stroke="gray"
-          stroke-width={pathScale(value)}
-          stroke-dasharray="1 {pathScale(value) * 2}"
-          stroke-linecap="round"
-        ></line>
-      {/each}
-    {/if}
-  </g>
 
   {#each $butterflyPoints as {x, y, value, regionIndex, regionShape, regionCode}}
     <g
