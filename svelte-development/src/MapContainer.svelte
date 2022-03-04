@@ -4,9 +4,13 @@
   import MapPath from './MapPath.svelte';
   import MapPoints from './MapPoints.svelte';
 
+  // Modal from https://svelte.dev/repl/033e824fad0a4e34907666e7196caec4?version=3.20.1
+  import Modal from './Modal.svelte';
+  import { modal } from './stores.js';
+
   export let dataset;
   export let selectedRegion;
-  export let hoverRegionCode;
+  export let hoveredRegionCode;
   export let selectedCountry;
 
   let centroidsD = dataset[0];
@@ -18,17 +22,19 @@
   let w;
 
   $: h = 5 * w / 9;
-  $: projection = geoNaturalEarth1().fitSize([w, h], outlineD)
+  $: projection = geoNaturalEarth1().fitSize([w, h], outlineD) // .rotate([45, 0, 0]) would cut out Alaska
   $: path = geoPath(projection)
 
 </script>
 
 <section class="map__container" bind:clientWidth={w}>
   {#if w !== undefined}
-    <svg width={w} height={h}>
-      <MapPath data={outlineD} path={path}/>
-      <MapPoints data={centroidsD} regionFlow ={regionFlow} projection={projection} butterflies={butterflies} bind:selectedRegion={selectedRegion} bind:hoverRegionCode={hoverRegionCode} bind:selectedCountry={selectedCountry}/>
-    </svg>
+    <Modal show={$modal} transitionBgProps={{ duration: 0 }} styleCloseButton={{cursor: "pointer"}}>
+      <svg width={w} height={h}>
+        <MapPath data={outlineD} path={path}/>
+        <MapPoints data={centroidsD} regionFlow ={regionFlow} projection={projection} butterflies={butterflies} bind:selectedRegion={selectedRegion} bind:hoveredRegionCode={hoveredRegionCode} bind:selectedCountry={selectedCountry} datasets={dataset}/>
+      </svg>
+    </Modal>
   {/if}
 </section>
 
