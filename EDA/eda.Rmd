@@ -70,11 +70,26 @@ modes <- dm.combine_questions(df_long, df_acq)
 
 ```{r write_data}
 
-flow %>%
+z <- flow %>%
   filter(dest_loc %in% codes) %>%
   filter(orig_loc %in% codes) %>%
   select(-c(dest_notes, dest_dtype)) %>%
-  write_csv("../data/region_flows.csv")
+  dplyr::group_by(dest_loc, orig_loc) %>%
+  summarize(value = sum(value)) %>%
+  rename(DEST = dest_loc,
+         ORIG = orig_loc) %>%
+  filter(DEST != ORIG) %>%
+  ungroup() %>%
+  mutate(id = 1:n()) 
+
+z %>%
+  write_csv("../svelte-development/public/data/region_flows.csv")
+
+z %>%
+  select(-value) %>%
+  pivot_longer(names_to = "PLACE", values_to = "CODE", -c(id)) %>% 
+  left_join(centroids) %>% 
+  write_csv("../svelte-development/public/data/region_flows_geo.csv")
 
 region_geo <- dm.region_geojson(pth = "../data/shape/world-administrative-boundaries.shp",
                                 xwalk,
