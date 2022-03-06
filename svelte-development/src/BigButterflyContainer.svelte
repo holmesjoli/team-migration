@@ -9,27 +9,28 @@
   export let questions;
   export let acqMode;
 
-  
-
   $: {
-    
     acqMode = acqMode.filter(function(d) {
       d.country === selectedCountry;
     });
 
-    let def = uniqueArray(acqMode, "definition")[0];
-    let warn = uniqueArray(acqMode, "restriction_warning")[0];
+    let showDef = uniqueArray(acqMode, "definition")[0];
+    let showWarn = uniqueArray(acqMode, "restriction_warning")[0];
 
-    if (def !== "NA") {
+    if (showDef !== "NA") {
       definitions = definitions.filter(function(d) {
         d.definition_id === def;
       });
+
+      let def = definitions.definition[0];
     }
 
-    if (warn !== "NA") {
+    if (showWarn !== "NA") {
       warnings = warnings.filter(function(d) {
         d.restriction_warning === warn;
       });
+
+      let warn = warnings.message[0];
     }
 
     console.log(selectedCountry);
