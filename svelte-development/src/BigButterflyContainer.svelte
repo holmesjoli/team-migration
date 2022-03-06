@@ -9,16 +9,19 @@
   export let questions;
   export let acqMode;
 
+  
+
   $: {
+    
     acqMode = acqMode.filter(function(d) {
       d.country === selectedCountry;
     });
 
-    let def = uniqueArrary(acqMode, "definition")[0];
-    let warn = uniqueArrary(acqMode, "restriction_warning")[0];
+    let def = uniqueArray(acqMode, "definition")[0];
+    let warn = uniqueArray(acqMode, "restriction_warning")[0];
 
     if (def !== "NA") {
-      definition = definition.filter(function(d) {
+      definitions = definitions.filter(function(d) {
         d.definition_id === def;
       });
     }
