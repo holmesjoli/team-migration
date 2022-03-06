@@ -8,6 +8,7 @@
   export let warnings;
   export let questions;
   export let acqMode;
+  export let butterflies;
 
   $: {
     if (selectedCountry !== "") {
@@ -30,7 +31,8 @@
         warnings = warnings.filter(function(d) {
           d.restriction_warning === showWarn;
         });
-
+        console.log(questions);
+        console.log(butterflies[2])
         // let warn = warnings.message[0];
       }
     }
@@ -43,21 +45,19 @@
       Paths to citizenship in {selectedCountry}
     </h1>
     <div id="citizenship-paths">
-      <div id="citizenship-paths"></div>
-      <div id="documentation">
-        <div id="warnings"></div>
-        <div id="specification"></div>
-        <div id="definitions"></div>
-      </div>
+        {@html butterflies[2]}
     </div>
+    <div id="documentation">
+      <div id="warnings"></div>
+      <div id="specification"></div>
+      <div id="definitions"></div>
+  </div>
   </section>
 {/if}
 
 <style>
-  div {
+  #container-paths {
     height: 50vh;
-    background: gray;
-    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
