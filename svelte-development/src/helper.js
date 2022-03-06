@@ -1,3 +1,4 @@
+import { scaleOrdinal } from "d3";
 
 // Title Unique Array
 // Returns the unique values of a variable in a dataset as an array
@@ -7,4 +8,18 @@ export function uniqueArray(data, variable) {
     });
 
     return [...new Set(all)];
+}
+
+// Title Region Color
+// Param region object containing a mapping between region and color
+export function regionColor(regions) {
+
+    let reg = uniqueArray(regions, "name");
+    let color = uniqueArray(regions, "color");
+
+    let scale = scaleOrdinal()
+        .domain(reg)
+        .range(color);
+
+    return scale;
 }

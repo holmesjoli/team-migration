@@ -1,14 +1,18 @@
 <script>
 
-  import { select } from "d3";
-  import {uniqueArray} from "./helper.js"
+  // import { select } from "d3";
+  import {uniqueArray, regionColor} from "./helper.js"
+  import regions from './regions.js'
 
+  export let selectedRegion;
   export let selectedCountry;
   export let definitions;
   export let warnings;
   export let questions;
   export let acqMode;
   export let butterflies;
+
+  let colorScale = regionColor(regions);
 
   $: {
     if (selectedCountry !== "") {
@@ -34,6 +38,10 @@
         console.log(questions);
         // let warn = warnings.message[0];
       }
+    }
+
+    if (selectedRegion !== "") {
+      console.log(selectedRegion);
     }
   }
 </script>
