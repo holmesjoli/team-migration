@@ -8726,18 +8726,18 @@ var app = (function () {
     			attr_dev(div0, "id", "citizenship-paths");
     			add_location(div0, file$4, 53, 4, 1352);
     			attr_dev(div1, "id", "warnings");
-    			attr_dev(div1, "class", "svelte-1mt2l5u");
+    			attr_dev(div1, "class", "svelte-w8ul7u");
     			add_location(div1, file$4, 57, 6, 1462);
     			attr_dev(div2, "id", "specification");
-    			attr_dev(div2, "class", "svelte-1mt2l5u");
+    			attr_dev(div2, "class", "svelte-w8ul7u");
     			add_location(div2, file$4, 58, 6, 1495);
     			attr_dev(div3, "id", "definitions");
-    			attr_dev(div3, "class", "svelte-1mt2l5u");
+    			attr_dev(div3, "class", "svelte-w8ul7u");
     			add_location(div3, file$4, 59, 6, 1533);
     			attr_dev(div4, "id", "documentation");
-    			attr_dev(div4, "class", "svelte-1mt2l5u");
+    			attr_dev(div4, "class", "svelte-w8ul7u");
     			add_location(div4, file$4, 56, 4, 1430);
-    			attr_dev(section, "class", "big-butterfly__container svelte-1mt2l5u");
+    			attr_dev(section, "class", "big-butterfly__container");
     			add_location(section, file$4, 49, 2, 1234);
     		},
     		m: function mount(target, anchor) {
