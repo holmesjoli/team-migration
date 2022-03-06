@@ -29,4 +29,6 @@ h1 {
 h2 {
   font-size: 20pt;
   font-style: italic;
+  margin-bottom: 5px;
+  margin-top: 10px;
 }
