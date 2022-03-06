@@ -41,7 +41,7 @@
     }
 
     if (selectedRegion !== "") {
-      console.log(selectedRegion);
+      let color = colorScale(selectedRegion);
     }
   }
 </script>
@@ -63,7 +63,7 @@
 {/if}
 
 <style>
-  #container-paths {
+  .big-butterfly__container {
     height: 50vh;
     display: flex;
     justify-content: center;
