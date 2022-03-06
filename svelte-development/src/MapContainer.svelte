@@ -3,6 +3,7 @@
 
   import MapPath from './MapPath.svelte';
   import MapPoints from './MapPoints.svelte';
+  import Legend from "./legend.svelte";
 
   // Modal from https://svelte.dev/repl/033e824fad0a4e34907666e7196caec4?version=3.20.1
   import Modal from './Modal.svelte';
@@ -30,34 +31,29 @@
 <section class="map__container" bind:clientWidth={w}>
   {#if w !== undefined}
     <Modal show={$modal} transitionBgProps={{ duration: 0 }} styleCloseButton={{cursor: "pointer"}}>
-      <svg id="legend"></svg>
+      <svg id="legend">
+      </svg>
       <svg id="world-map" width={w} height={h}>
         <MapPath data={outlineD} path={path}/>
         <MapPoints data={centroidsD} regionFlow ={regionFlow} projection={projection} butterflies={butterflies} bind:selectedRegion={selectedRegion} bind:hoveredRegionCode={hoveredRegionCode} bind:selectedCountry={selectedCountry} datasets={dataset}/>
+        <Legend></Legend>
       </svg>
-
-      <script>
-        let svg = document.querySelector("#world-map");
-
-
-      </script>
     </Modal>
   {/if}
 </section>
 
 <style>
+  .map__container {
+    display: flex;
+    flex-direction: row;
+  }
 
-.map__container {
-  display: flex;
-  flex-direction: row;
-}
+  #legend {
+    max-width: 10%
+  }
 
-#legend {
-  max-width: 10%
-}
-
-#world-map {
-  max-width: 90%
-}
+  #world-map {
+    max-width: 90%
+  }
 
 </style>
