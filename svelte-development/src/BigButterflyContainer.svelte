@@ -32,7 +32,6 @@
           d.restriction_warning === showWarn;
         });
         console.log(questions);
-        console.log(butterflies[2])
         // let warn = warnings.message[0];
       }
     }
