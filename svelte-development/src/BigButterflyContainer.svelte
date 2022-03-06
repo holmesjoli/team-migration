@@ -1,5 +1,23 @@
 <script>
+import { select } from "d3";
+
   export let selectedCountry;
+  export let definitions;
+  export let warnings;
+  export let questions;
+  export let acqMode;
+
+
+  // acqMode = acqMode.filter(function(d) {
+  //   d.country === selectedCountry;
+  // });
+
+  console.log(selectedCountry);
+  console.log(definitions);
+  console.log(warnings);
+  console.log(questions);
+  console.log(acqMode);
+
   $: {
   }
 </script>
