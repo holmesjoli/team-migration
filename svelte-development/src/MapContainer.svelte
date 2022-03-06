@@ -53,7 +53,7 @@
   }
 
   #legend {
-    max-width: 10%;
+    max-width: 15%;
     display: flex; 
     flex-direction: column; 
     text-align: center;
@@ -61,7 +61,7 @@
   }
 
   #world-map {
-    max-width: 90%
+    max-width: 85%
   }
 
 </style>

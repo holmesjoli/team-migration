@@ -1,8 +1,10 @@
-export function sizeScale(data) {
+import { scaleOrdinal } from 'd3';
 
-    const sScale = scaleLinear()
-        .domain(extent(data.features, d => d.properties.VALUE))
-        .range([0.25, 1]);
+export function sScale() {
+
+    const sScale = scaleOrdinal()
+        .domain(["< 1 million", "< 2 million", "< 5 million", "> 5 million"])
+        .range([1, 2, 5, 10]);
 
     return sScale;
 }

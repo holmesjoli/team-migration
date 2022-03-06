@@ -1,20 +1,17 @@
 <script>
-    import {select, scaleLinear} from "d3";
+    import {select, scaleOrdinal} from "d3";
+    // import {sScale} from './helper.js';
+    
     export let totalMigrants;
 
-    console.log(totalMigrants);
+    const sScale = scaleOrdinal()
+        .domain(["< 1 million", "< 2 million", "< 5 million", "> 5 million"])
+        .range([.2, .4, 1, 2]);
 
-    // import regions from './regions.js';
-    // let svg = select("#legend");
-
-    const sScale = scaleLinear()
-    .domain([1, 2, 3, 4])
-    .range([0.25, 1]);
-
-    let data = [{value: 1, x: 50, y: 50},
-                {value: 2, x: 50, y: 150},
-                {value: 3, x: 50, y: 300},
-                {value: 4, x: 50, y: 500}];
+    let data = [{value: "< 1 million", x: 100, y: 50},
+                {value: "< 2 million", x: 100, y: 150},
+                {value: "< 5 million", x: 100, y: 300},
+                {value: "> 5 million", x: 100, y: 500}];
 
 </script>
 
@@ -26,6 +23,8 @@
     <g
     class="butterfly"
     transform="translate({x}, {y})">
+    <text class="label" transform="translate({x}, {y} - 100)">{value}
+    </text>
 
     <use
         xlink:href="#butterfly-0"
