@@ -7,7 +7,7 @@
 {#if selectedCountry !== ""}
   <section class="big-butterfly__container">
     <h1>
-      Ways to become a citizen of {selectedCountry}
+      Paths to citizenship in {selectedCountry}
     </h1>
     <div>
       <h1>
