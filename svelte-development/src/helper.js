@@ -8,3 +8,5 @@ function uniqueArray(data, variable) {
 
     return [...new Set(all)];
 }
+
+export default uniqueArray;
