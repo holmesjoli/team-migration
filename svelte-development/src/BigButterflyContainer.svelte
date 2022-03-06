@@ -7,16 +7,16 @@ import { select } from "d3";
   export let questions;
   export let acqMode;
 
+  acqMode = acqMode.filter(function(d) {
+    d.country === selectedCountry;
+  });
 
-  // acqMode = acqMode.filter(function(d) {
-  //   d.country === selectedCountry;
-  // });
-
-  console.log(selectedCountry);
+    console.log(selectedCountry);
   console.log(definitions);
   console.log(warnings);
   console.log(questions);
   console.log(acqMode);
+
 
   $: {
   }
