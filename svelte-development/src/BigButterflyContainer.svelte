@@ -1,5 +1,7 @@
 <script>
-import { select } from "d3";
+
+  import { select } from "d3";
+  import {uniqueArray} from "./helper.js"
 
   export let selectedCountry;
   export let definitions;
@@ -7,18 +9,31 @@ import { select } from "d3";
   export let questions;
   export let acqMode;
 
-  acqMode = acqMode.filter(function(d) {
-    d.country === selectedCountry;
-  });
+  $: {
+    acqMode = acqMode.filter(function(d) {
+      d.country === selectedCountry;
+    });
+
+    let def = uniqueArrary(acqMode, "definition")[0];
+    let warn = uniqueArrary(acqMode, "restriction_warning")[0];
+
+    if (def !== "NA") {
+      definition = definition.filter(function(d) {
+        d.definition_id === def;
+      });
+    }
+
+    if (warn !== "NA") {
+      warnings = warnings.filter(function(d) {
+        d.restriction_warning === warn;
+      });
+    }
 
     console.log(selectedCountry);
-  console.log(definitions);
-  console.log(warnings);
-  console.log(questions);
-  console.log(acqMode);
-
-
-  $: {
+    console.log(definitions);
+    console.log(warnings);
+    console.log(questions);
+    console.log(acqMode);
   }
 </script>
 
