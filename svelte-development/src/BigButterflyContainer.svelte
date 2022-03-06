@@ -9,10 +9,13 @@
     <h1>
       Paths to citizenship in {selectedCountry}
     </h1>
-    <div>
-      <h1>
-        More stuff coming...
-      </h1>
+    <div id="citizenship-paths">
+      <div id="citizenship-paths"></div>
+      <div id="documentation">
+        <div id="warnings"></div>
+        <div id="specification"></div>
+        <div id="definitions"></div>
+      </div>
     </div>
   </section>
 {/if}
@@ -25,5 +28,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  #documentation {
+    display: flex;
+    flex-direction: row;
+  }
+
+  #documentation div {
+    background: rgb(211, 211, 211);
+    max-height: 75px;
   }
 </style>
