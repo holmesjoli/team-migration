@@ -19,18 +19,18 @@
 
     if (showDef !== "NA") {
       definitions = definitions.filter(function(d) {
-        d.definition_id === def;
+        d.definition_id === showDef;
       });
 
-      let def = definitions.definition[0];
+      // let def = definitions.definition[0];
     }
 
     if (showWarn !== "NA") {
       warnings = warnings.filter(function(d) {
-        d.restriction_warning === warn;
+        d.restriction_warning === showWarn;
       });
 
-      let warn = warnings.message[0];
+      // let warn = warnings.message[0];
     }
 
     console.log(selectedCountry);
