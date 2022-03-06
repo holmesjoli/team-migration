@@ -10,34 +10,36 @@
   export let acqMode;
 
   $: {
-    acqMode = acqMode.filter(function(d) {
-      d.country === selectedCountry;
-    });
-
-    let showDef = uniqueArray(acqMode, "definition")[0];
-    let showWarn = uniqueArray(acqMode, "restriction_warning")[0];
-
-    if (showDef !== "NA") {
-      definitions = definitions.filter(function(d) {
-        d.definition_id === showDef;
+    if (selectedCountry !== "") {
+      acqMode = acqMode.filter(function(d) {
+        return d.country === selectedCountry;
       });
 
-      // let def = definitions.definition[0];
+      let showDef = uniqueArray(acqMode, "definition")[0];
+      let showWarn = uniqueArray(acqMode, "restriction_warning")[0];
+
+      if (showDef !== "NA") {
+        definitions = definitions.filter(function(d) {
+          d.definition_id === showDef;
+        });
+
+        // let def = definitions.definition[0];
+      }
+
+      if (showWarn !== "NA") {
+        warnings = warnings.filter(function(d) {
+          d.restriction_warning === showWarn;
+        });
+
+        // let warn = warnings.message[0];
+      }
+
+    // console.log(selectedCountry);
+    // console.log(definitions);
+    // console.log(warnings);
+    // console.log(questions);
+    // console.log(acqMode);
     }
-
-    if (showWarn !== "NA") {
-      warnings = warnings.filter(function(d) {
-        d.restriction_warning === showWarn;
-      });
-
-      // let warn = warnings.message[0];
-    }
-
-    console.log(selectedCountry);
-    console.log(definitions);
-    console.log(warnings);
-    console.log(questions);
-    console.log(acqMode);
   }
 </script>
 
