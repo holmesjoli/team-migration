@@ -33,12 +33,6 @@
 
         // let warn = warnings.message[0];
       }
-
-    // console.log(selectedCountry);
-    // console.log(definitions);
-    // console.log(warnings);
-    // console.log(questions);
-    // console.log(acqMode);
     }
   }
 </script>
