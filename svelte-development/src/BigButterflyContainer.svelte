@@ -63,12 +63,6 @@
 {/if}
 
 <style>
-  .big-butterfly__container {
-    height: 50vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 
   #documentation {
     display: flex;
