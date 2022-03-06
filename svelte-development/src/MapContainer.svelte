@@ -31,12 +31,15 @@
 <section class="map__container" bind:clientWidth={w}>
   {#if w !== undefined}
     <Modal show={$modal} transitionBgProps={{ duration: 0 }} styleCloseButton={{cursor: "pointer"}}>
-      <svg id="legend">
-      </svg>
+      <div id="legend">
+        <h2>Total # of migrants</h2>
+        <svg height={h}>
+          <Legend></Legend>
+        </svg>
+      </div>
       <svg id="world-map" width={w} height={h}>
         <MapPath data={outlineD} path={path}/>
         <MapPoints data={centroidsD} regionFlow ={regionFlow} projection={projection} butterflies={butterflies} bind:selectedRegion={selectedRegion} bind:hoveredRegionCode={hoveredRegionCode} bind:selectedCountry={selectedCountry} datasets={dataset}/>
-        <Legend></Legend>
       </svg>
     </Modal>
   {/if}
@@ -49,7 +52,11 @@
   }
 
   #legend {
-    max-width: 10%
+    max-width: 10%;
+    display: flex; 
+    flex-direction: column; 
+    text-align: center;
+    padding: 10px;
   }
 
   #world-map {
