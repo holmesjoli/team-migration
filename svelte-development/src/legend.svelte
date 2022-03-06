@@ -1,5 +1,8 @@
 <script>
     import {select, scaleLinear} from "d3";
+    export let totalMigrants;
+
+    console.log(totalMigrants);
 
     // import regions from './regions.js';
     // let svg = select("#legend");

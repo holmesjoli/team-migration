@@ -19,6 +19,7 @@
   let butterflies = dataset[2];
   let regions = dataset[8];
   let regionFlow = dataset[9];
+  let totalMigrants = dataset[10];
 
   let w;
 
@@ -34,7 +35,7 @@
       <div id="legend">
         <h2>Total # of migrants</h2>
         <svg height={h}>
-          <Legend></Legend>
+          <Legend totalMigrants = {totalMigrants}></Legend>
         </svg>
       </div>
       <svg id="world-map" width={w} height={h}>
