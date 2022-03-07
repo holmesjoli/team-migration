@@ -1,21 +1,18 @@
 <script>
-    import {select, scaleOrdinal} from "d3";
-    // import {sScale} from './helper.js';
-    
-    export let totalMigrants;
+    import {select, scaleSqrt, scaleOrdinal} from "d3";
 
-    const sScale = scaleOrdinal()
-        .domain(["< 1 million", "< 2 million", "< 5 million", "> 5 million"])
-        .range([.2, .4, 1, 2]);
+    const sScale =  scaleSqrt()
+        .domain([5E5, 1E6, 5E6, 1E7])
+        .range([.1, .35]);
 
-    let data = [{value: "< 1 million", x: 100, y: 50},
-                {value: "< 2 million", x: 100, y: 150},
-                {value: "< 5 million", x: 100, y: 300},
-                {value: "> 5 million", x: 100, y: 500}];
+    let data = [{value: 5E5, text: "< 500,000", x: 100, y: 50},
+                {value: 1E6, text: "< 1 million", x: 100, y: 150},
+                {value: 5E6, text: "< 5 million", x: 100, y: 300},
+                {value: 1E7, text: "> 5 million", x: 100, y: 500}];
 
 </script>
 
-{#each data as {x, y, value}}
+{#each data as {x, y, value, text}}
 <g
     class="legend-container"
   transform="translate({sScale(value) * -50}, {sScale(value) * -50})">
@@ -23,7 +20,7 @@
     <g
     class="butterfly"
     transform="translate({x}, {y})">
-    <text class="label">{value}</text>
+    <text class="label">{text}</text>
 
     <use
         xlink:href="#butterfly-0"
@@ -34,3 +31,14 @@
 </g>
 {/each}
 
+<style>
+
+.butterfly {
+    text-align: center
+}
+
+/* text{
+    text-anchor: middle;
+} */
+
+</style>

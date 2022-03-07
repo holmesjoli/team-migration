@@ -24,7 +24,7 @@
   let w;
 
   $: h = 5 * w / 9;
-  $: projection = geoNaturalEarth1().fitSize([w, h], outlineD) // .rotate([45, 0, 0]) would cut out Alaska
+  $: projection = geoNaturalEarth1().fitSize([w*.85, h], outlineD) // .rotate([45, 0, 0]) would cut out Alaska
   $: path = geoPath(projection)
 
 </script>
@@ -35,7 +35,7 @@
       <div id="legend">
         <h2>Total # of migrants</h2>
         <svg height={h}>
-          <Legend totalMigrants = {totalMigrants}></Legend>
+          <Legend></Legend>
         </svg>
       </div>
       <svg id="world-map" width={w} height={h}>

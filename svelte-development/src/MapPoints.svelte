@@ -1,7 +1,7 @@
 <script>
   import { spring } from "svelte/motion";
   import { getContext } from 'svelte';
-  import { scaleLinear, extent, min, max, select, selectAll, groups, line } from 'd3';
+  import { scaleSqrt, scaleLinear, extent, select, selectAll, groups, line } from 'd3';
   import { forceSimulation, forceCollide, forceLink, forceX, forceY } from "d3-force";
   
   import Popup from './Popup.svelte';
@@ -20,9 +20,9 @@
 
   const { open } = getContext('simple-modal');
 
-  const sScale = scaleLinear()
-    .domain(extent(data.features, d => d.properties.VALUE))
-    .range([0.25, 1]);
+  const sScale = scaleSqrt()
+        .domain([5E5, 1E6, 5E6, 1E7])
+        .range([.1, .35]);
 
   const pathScale = scaleLinear()
     .domain(extent(regionFlow, d => d.value))

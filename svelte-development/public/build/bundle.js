@@ -1222,48 +1222,6 @@ var app = (function () {
       return stop < start ? -step1 : step1;
     }
 
-    function max(values, valueof) {
-      let max;
-      if (valueof === undefined) {
-        for (const value of values) {
-          if (value != null
-              && (max < value || (max === undefined && value >= value))) {
-            max = value;
-          }
-        }
-      } else {
-        let index = -1;
-        for (let value of values) {
-          if ((value = valueof(value, ++index, values)) != null
-              && (max < value || (max === undefined && value >= value))) {
-            max = value;
-          }
-        }
-      }
-      return max;
-    }
-
-    function min(values, valueof) {
-      let min;
-      if (valueof === undefined) {
-        for (const value of values) {
-          if (value != null
-              && (min > value || (min === undefined && value >= value))) {
-            min = value;
-          }
-        }
-      } else {
-        let index = -1;
-        for (let value of values) {
-          if ((value = valueof(value, ++index, values)) != null
-              && (min > value || (min === undefined && value >= value))) {
-            min = value;
-          }
-        }
-      }
-      return min;
-    }
-
     function* flatten(arrays) {
       for (const array of arrays) {
         yield* array;
@@ -5491,7 +5449,7 @@ var app = (function () {
     var cos = Math.cos;
     var sin = Math.sin;
     var sign = Math.sign || function(x) { return x > 0 ? 1 : x < 0 ? -1 : 0; };
-    var sqrt = Math.sqrt;
+    var sqrt$1 = Math.sqrt;
 
     function acos(x) {
       return x > 1 ? 0 : x < -1 ? pi : Math.acos(x);
@@ -5601,7 +5559,7 @@ var app = (function () {
 
     // TODO return d
     function cartesianNormalizeInPlace(d) {
-      var l = sqrt(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]);
+      var l = sqrt$1(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]);
       d[0] /= l, d[1] /= l, d[2] /= l;
     }
 
@@ -6242,7 +6200,7 @@ var app = (function () {
 
         if (t2 < 0) return;
 
-        var t = sqrt(t2),
+        var t = sqrt$1(t2),
             q = cartesianScale(u, (-w - t) / uu);
         cartesianAddInPlace(q, A);
         q = spherical(q);
@@ -6647,7 +6605,7 @@ var app = (function () {
     }
 
     function centroidPointLine(x, y) {
-      var dx = x - x0$1, dy = y - y0$1, z = sqrt(dx * dx + dy * dy);
+      var dx = x - x0$1, dy = y - y0$1, z = sqrt$1(dx * dx + dy * dy);
       X1 += z * (x0$1 + x) / 2;
       Y1 += z * (y0$1 + y) / 2;
       Z1 += z;
@@ -6674,7 +6632,7 @@ var app = (function () {
     function centroidPointRing(x, y) {
       var dx = x - x0$1,
           dy = y - y0$1,
-          z = sqrt(dx * dx + dy * dy);
+          z = sqrt$1(dx * dx + dy * dy);
 
       X1 += z * (x0$1 + x) / 2;
       Y1 += z * (y0$1 + y) / 2;
@@ -6768,7 +6726,7 @@ var app = (function () {
 
     function lengthPoint(x, y) {
       x0 -= x, y0 -= y;
-      lengthSum.add(sqrt(x0 * x0 + y0 * y0));
+      lengthSum.add(sqrt$1(x0 * x0 + y0 * y0));
       x0 = x, y0 = y;
     }
 
@@ -6979,7 +6937,7 @@ var app = (function () {
           var a = a0 + a1,
               b = b0 + b1,
               c = c0 + c1,
-              m = sqrt(a * a + b * b + c * c),
+              m = sqrt$1(a * a + b * b + c * c),
               phi2 = asin(c /= m),
               lambda2 = abs(abs(c) - 1) < epsilon || abs(lambda0 - lambda1) < epsilon ? (lambda0 + lambda1) / 2 : atan2(b, a),
               p = project(lambda2, phi2),
@@ -7178,7 +7136,7 @@ var app = (function () {
       };
 
       projection.precision = function(_) {
-        return arguments.length ? (projectResample = resample(projectTransform, delta2 = _ * _), reset()) : sqrt(delta2);
+        return arguments.length ? (projectResample = resample(projectTransform, delta2 = _ * _), reset()) : sqrt$1(delta2);
       };
 
       projection.fitExtent = function(extent, object) {
@@ -7520,6 +7478,53 @@ var app = (function () {
       initRange.apply(scale, arguments);
 
       return linearish(scale);
+    }
+
+    function transformPow(exponent) {
+      return function(x) {
+        return x < 0 ? -Math.pow(-x, exponent) : Math.pow(x, exponent);
+      };
+    }
+
+    function transformSqrt(x) {
+      return x < 0 ? -Math.sqrt(-x) : Math.sqrt(x);
+    }
+
+    function transformSquare(x) {
+      return x < 0 ? -x * x : x * x;
+    }
+
+    function powish(transform) {
+      var scale = transform(identity, identity),
+          exponent = 1;
+
+      function rescale() {
+        return exponent === 1 ? transform(identity, identity)
+            : exponent === 0.5 ? transform(transformSqrt, transformSquare)
+            : transform(transformPow(exponent), transformPow(1 / exponent));
+      }
+
+      scale.exponent = function(_) {
+        return arguments.length ? (exponent = +_, rescale()) : exponent;
+      };
+
+      return linearish(scale);
+    }
+
+    function pow() {
+      var scale = powish(transformer());
+
+      scale.copy = function() {
+        return copy(scale, pow()).exponent(scale.exponent());
+      };
+
+      initRange.apply(scale, arguments);
+
+      return scale;
+    }
+
+    function sqrt() {
+      return pow.apply(null, arguments).exponent(0.5);
     }
 
     function constant(x) {
@@ -9192,7 +9197,7 @@ var app = (function () {
     			attr_dev(line_1, "stroke-width", line_1_stroke_width_value = /*pathScale*/ ctx[4](/*value*/ ctx[26]));
     			attr_dev(line_1, "stroke-dasharray", line_1_stroke_dasharray_value = "1 " + /*pathScale*/ ctx[4](/*value*/ ctx[26]) * 2);
     			attr_dev(line_1, "stroke-linecap", "round");
-    			add_location(line_1, file$5, 148, 8, 4415);
+    			add_location(line_1, file$5, 148, 8, 4396);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, line_1, anchor);
@@ -9282,13 +9287,13 @@ var app = (function () {
     			attr_dev(use, "data-region-index", use_data_region_index_value = /*regionIndex*/ ctx[27]);
     			attr_dev(use, "data-region-code", use_data_region_code_value = /*regionCode*/ ctx[29]);
     			attr_dev(use, "class", "svelte-rmrozh");
-    			add_location(use, file$5, 175, 8, 5410);
+    			add_location(use, file$5, 175, 8, 5391);
     			attr_dev(g0, "class", "butterfly svelte-rmrozh");
     			attr_dev(g0, "transform", g0_transform_value = "translate(" + /*x*/ ctx[24] + ", " + /*y*/ ctx[25] + ") rotate(" + (Math.random() * 60 - 30) + ")");
-    			add_location(g0, file$5, 170, 6, 5221);
+    			add_location(g0, file$5, 170, 6, 5202);
     			attr_dev(g1, "class", "butterfly-container");
     			attr_dev(g1, "transform", g1_transform_value = "translate(" + /*sScale*/ ctx[3](/*value*/ ctx[26]) * -50 + ", " + /*sScale*/ ctx[3](/*value*/ ctx[26]) * -50 + ")");
-    			add_location(g1, file$5, 166, 4, 5094);
+    			add_location(g1, file$5, 166, 4, 5075);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, g1, anchor);
@@ -9389,15 +9394,15 @@ var app = (function () {
     			}
 
     			attr_dev(g0, "id", "butterfly-0");
-    			add_location(g0, file$5, 134, 4, 4089);
-    			add_location(defs0, file$5, 133, 2, 4077);
+    			add_location(g0, file$5, 134, 4, 4070);
+    			add_location(defs0, file$5, 133, 2, 4058);
     			attr_dev(g1, "id", "butterfly-1");
-    			add_location(g1, file$5, 139, 4, 4176);
-    			add_location(defs1, file$5, 138, 2, 4164);
+    			add_location(g1, file$5, 139, 4, 4157);
+    			add_location(defs1, file$5, 138, 2, 4145);
     			attr_dev(g2, "class", "link-lines");
-    			add_location(g2, file$5, 144, 2, 4253);
+    			add_location(g2, file$5, 144, 2, 4234);
     			attr_dev(g3, "class", "map-points");
-    			add_location(g3, file$5, 125, 0, 3912);
+    			add_location(g3, file$5, 125, 0, 3893);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -9496,7 +9501,7 @@ var app = (function () {
     	let { selectedCountry } = $$props;
     	let links = [];
     	const { open } = getContext('simple-modal');
-    	const sScale = linear().domain(extent(data.features, d => d.properties.VALUE)).range([0.25, 1]);
+    	const sScale = sqrt().domain([5E5, 1E6, 5E6, 1E7]).range([.1, .35]);
     	const pathScale = linear().domain(extent(regionFlow, d => d.value)).range([1, 10]);
 
     	let butterflyPoints = spring(
@@ -9600,10 +9605,9 @@ var app = (function () {
     	$$self.$capture_state = () => ({
     		spring,
     		getContext,
+    		scaleSqrt: sqrt,
     		scaleLinear: linear,
     		extent,
-    		min,
-    		max,
     		select,
     		selectAll,
     		groups,
@@ -9837,18 +9841,19 @@ var app = (function () {
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[3] = list[i].x;
-    	child_ctx[4] = list[i].y;
-    	child_ctx[5] = list[i].value;
+    	child_ctx[2] = list[i].x;
+    	child_ctx[3] = list[i].y;
+    	child_ctx[4] = list[i].value;
+    	child_ctx[5] = list[i].text;
     	return child_ctx;
     }
 
-    // (18:0) {#each data as {x, y, value}}
+    // (15:0) {#each data as {x, y, value, text}}
     function create_each_block(ctx) {
     	let g1;
     	let g0;
     	let text_1;
-    	let t_value = /*value*/ ctx[5] + "";
+    	let t_value = /*text*/ ctx[5] + "";
     	let t;
     	let use;
 
@@ -9860,17 +9865,17 @@ var app = (function () {
     			t = text$1(t_value);
     			use = svg_element("use");
     			attr_dev(text_1, "class", "label");
-    			add_location(text_1, file$4, 25, 4, 743);
+    			add_location(text_1, file$4, 22, 4, 674);
     			xlink_attr(use, "xlink:href", "#butterfly-0");
-    			attr_dev(use, "transform", "scale(" + /*sScale*/ ctx[0](/*value*/ ctx[5]) + ")");
+    			attr_dev(use, "transform", "scale(" + /*sScale*/ ctx[0](/*value*/ ctx[4]) + ")");
     			attr_dev(use, "fill", "grey");
-    			add_location(use, file$4, 27, 4, 785);
-    			attr_dev(g0, "class", "butterfly");
-    			attr_dev(g0, "transform", "translate(" + /*x*/ ctx[3] + ", " + /*y*/ ctx[4] + ")");
-    			add_location(g0, file$4, 22, 4, 674);
+    			add_location(use, file$4, 24, 4, 715);
+    			attr_dev(g0, "class", "butterfly svelte-1dqqwgy");
+    			attr_dev(g0, "transform", "translate(" + /*x*/ ctx[2] + ", " + /*y*/ ctx[3] + ")");
+    			add_location(g0, file$4, 19, 4, 605);
     			attr_dev(g1, "class", "legend-container");
-    			attr_dev(g1, "transform", "translate(" + /*sScale*/ ctx[0](/*value*/ ctx[5]) * -50 + ", " + /*sScale*/ ctx[0](/*value*/ ctx[5]) * -50 + ")");
-    			add_location(g1, file$4, 18, 0, 562);
+    			attr_dev(g1, "transform", "translate(" + /*sScale*/ ctx[0](/*value*/ ctx[4]) * -50 + ", " + /*sScale*/ ctx[0](/*value*/ ctx[4]) * -50 + ")");
+    			add_location(g1, file$4, 15, 0, 493);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, g1, anchor);
@@ -9889,7 +9894,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(18:0) {#each data as {x, y, value}}",
+    		source: "(15:0) {#each data as {x, y, value, text}}",
     		ctx
     	});
 
@@ -9971,36 +9976,50 @@ var app = (function () {
     function instance$5($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Legend', slots, []);
-    	let { totalMigrants } = $$props;
-    	const sScale = ordinal().domain(["< 1 million", "< 2 million", "< 5 million", "> 5 million"]).range([.2, .4, 1, 2]);
+    	const sScale = sqrt().domain([5E5, 1E6, 5E6, 1E7]).range([.1, .35]);
 
     	let data = [
-    		{ value: "< 1 million", x: 100, y: 50 },
-    		{ value: "< 2 million", x: 100, y: 150 },
-    		{ value: "< 5 million", x: 100, y: 300 },
-    		{ value: "> 5 million", x: 100, y: 500 }
+    		{
+    			value: 5E5,
+    			text: "< 500,000",
+    			x: 100,
+    			y: 50
+    		},
+    		{
+    			value: 1E6,
+    			text: "< 1 million",
+    			x: 100,
+    			y: 150
+    		},
+    		{
+    			value: 5E6,
+    			text: "< 5 million",
+    			x: 100,
+    			y: 300
+    		},
+    		{
+    			value: 1E7,
+    			text: "> 5 million",
+    			x: 100,
+    			y: 500
+    		}
     	];
 
-    	const writable_props = ['totalMigrants'];
+    	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<Legend> was created with unknown prop '${key}'`);
     	});
 
-    	$$self.$$set = $$props => {
-    		if ('totalMigrants' in $$props) $$invalidate(2, totalMigrants = $$props.totalMigrants);
-    	};
-
     	$$self.$capture_state = () => ({
     		select,
+    		scaleSqrt: sqrt,
     		scaleOrdinal: ordinal,
-    		totalMigrants,
     		sScale,
     		data
     	});
 
     	$$self.$inject_state = $$props => {
-    		if ('totalMigrants' in $$props) $$invalidate(2, totalMigrants = $$props.totalMigrants);
     		if ('data' in $$props) $$invalidate(1, data = $$props.data);
     	};
 
@@ -10008,13 +10027,13 @@ var app = (function () {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [sScale, data, totalMigrants];
+    	return [sScale, data];
     }
 
     class Legend extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init$1(this, options, instance$5, create_fragment$5, safe_not_equal, { totalMigrants: 2 });
+    		init$1(this, options, instance$5, create_fragment$5, safe_not_equal, {});
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
@@ -10022,21 +10041,6 @@ var app = (function () {
     			options,
     			id: create_fragment$5.name
     		});
-
-    		const { ctx } = this.$$;
-    		const props = options.props || {};
-
-    		if (/*totalMigrants*/ ctx[2] === undefined && !('totalMigrants' in props)) {
-    			console.warn("<Legend> was created without expected prop 'totalMigrants'");
-    		}
-    	}
-
-    	get totalMigrants() {
-    		throw new Error("<Legend>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
-    	}
-
-    	set totalMigrants(value) {
-    		throw new Error("<Legend>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
     }
 
@@ -11500,11 +11504,7 @@ var app = (function () {
     	let updating_hoveredRegionCode;
     	let updating_selectedCountry;
     	let current;
-
-    	legend = new Legend({
-    			props: { totalMigrants: /*totalMigrants*/ ctx[13] },
-    			$$inline: true
-    		});
+    	legend = new Legend({ $$inline: true });
 
     	mappath = new MapPath({
     			props: {
@@ -11515,15 +11515,15 @@ var app = (function () {
     		});
 
     	function mappoints_selectedRegion_binding(value) {
-    		/*mappoints_selectedRegion_binding*/ ctx[14](value);
+    		/*mappoints_selectedRegion_binding*/ ctx[13](value);
     	}
 
     	function mappoints_hoveredRegionCode_binding(value) {
-    		/*mappoints_hoveredRegionCode_binding*/ ctx[15](value);
+    		/*mappoints_hoveredRegionCode_binding*/ ctx[14](value);
     	}
 
     	function mappoints_selectedCountry_binding(value) {
-    		/*mappoints_selectedCountry_binding*/ ctx[16](value);
+    		/*mappoints_selectedCountry_binding*/ ctx[15](value);
     	}
 
     	let mappoints_props = {
@@ -11563,17 +11563,17 @@ var app = (function () {
     			svg1 = svg_element("svg");
     			create_component(mappath.$$.fragment);
     			create_component(mappoints.$$.fragment);
-    			add_location(h2, file$2, 35, 8, 1087);
+    			add_location(h2, file$2, 35, 8, 1091);
     			attr_dev(svg0, "height", /*h*/ ctx[6]);
-    			add_location(svg0, file$2, 36, 8, 1125);
+    			add_location(svg0, file$2, 36, 8, 1129);
     			attr_dev(div, "id", "legend");
     			attr_dev(div, "class", "svelte-1wukwk0");
-    			add_location(div, file$2, 34, 6, 1060);
+    			add_location(div, file$2, 34, 6, 1064);
     			attr_dev(svg1, "id", "world-map");
     			attr_dev(svg1, "width", /*w*/ ctx[4]);
     			attr_dev(svg1, "height", /*h*/ ctx[6]);
     			attr_dev(svg1, "class", "svelte-1wukwk0");
-    			add_location(svg1, file$2, 40, 6, 1240);
+    			add_location(svg1, file$2, 40, 6, 1212);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -11672,8 +11672,8 @@ var app = (function () {
     			section = element("section");
     			if (if_block) if_block.c();
     			attr_dev(section, "class", "map__container svelte-1wukwk0");
-    			add_render_callback(() => /*section_elementresize_handler*/ ctx[17].call(section));
-    			add_location(section, file$2, 31, 0, 872);
+    			add_render_callback(() => /*section_elementresize_handler*/ ctx[16].call(section));
+    			add_location(section, file$2, 31, 0, 876);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -11681,7 +11681,7 @@ var app = (function () {
     		m: function mount(target, anchor) {
     			insert_dev(target, section, anchor);
     			if (if_block) if_block.m(section, null);
-    			section_resize_listener = add_resize_listener(section, /*section_elementresize_handler*/ ctx[17].bind(section));
+    			section_resize_listener = add_resize_listener(section, /*section_elementresize_handler*/ ctx[16].bind(section));
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
@@ -11823,7 +11823,7 @@ var app = (function () {
     		if ('butterflies' in $$props) $$invalidate(11, butterflies = $$props.butterflies);
     		if ('regions' in $$props) regions = $$props.regions;
     		if ('regionFlow' in $$props) $$invalidate(12, regionFlow = $$props.regionFlow);
-    		if ('totalMigrants' in $$props) $$invalidate(13, totalMigrants = $$props.totalMigrants);
+    		if ('totalMigrants' in $$props) totalMigrants = $$props.totalMigrants;
     		if ('w' in $$props) $$invalidate(4, w = $$props.w);
     		if ('projection' in $$props) $$invalidate(5, projection = $$props.projection);
     		if ('path' in $$props) $$invalidate(7, path = $$props.path);
@@ -11840,7 +11840,7 @@ var app = (function () {
     		}
 
     		if ($$self.$$.dirty & /*w, h*/ 80) {
-    			$$invalidate(5, projection = geoNaturalEarth1().fitSize([w, h], outlineD)); // .rotate([45, 0, 0]) would cut out Alaska
+    			$$invalidate(5, projection = geoNaturalEarth1().fitSize([w * .85, h], outlineD)); // .rotate([45, 0, 0]) would cut out Alaska
     		}
 
     		if ($$self.$$.dirty & /*projection*/ 32) {
@@ -11862,7 +11862,6 @@ var app = (function () {
     		outlineD,
     		butterflies,
     		regionFlow,
-    		totalMigrants,
     		mappoints_selectedRegion_binding,
     		mappoints_hoveredRegionCode_binding,
     		mappoints_selectedCountry_binding,
