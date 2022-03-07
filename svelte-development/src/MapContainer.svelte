@@ -23,8 +23,10 @@
 
   let w;
 
-  $: h = 5 * w / 9;
-  $: projection = geoNaturalEarth1().fitSize([w*.85, h], outlineD) // .rotate([45, 0, 0]) would cut out Alaska
+  $: w_map = w*.85;
+  $: w_legend = w*.15;
+  $: h = 5 * w_map / 9;
+  $: projection = geoNaturalEarth1().fitSize([w_map, h], outlineD) // .rotate([45, 0, 0]) would cut out Alaska
   $: path = geoPath(projection)
 
 </script>
@@ -34,11 +36,11 @@
     <Modal show={$modal} transitionBgProps={{ duration: 0 }} styleCloseButton={{cursor: "pointer"}}>
       <div id="legend">
         <h2>Total # of migrants to region</h2>
-        <svg height={h}>
+        <svg width={w_legend} height={h}>
           <Legend></Legend>
         </svg>
       </div>
-      <svg id="world-map" width={w} height={h}>
+      <svg id="world-map" width={w_map} height={h}>
         <MapPath data={outlineD} path={path}/>
         <MapPoints data={centroidsD} regionFlow ={regionFlow} projection={projection} butterflies={butterflies} bind:selectedRegion={selectedRegion} bind:hoveredRegionCode={hoveredRegionCode} bind:selectedCountry={selectedCountry} datasets={dataset}/>
       </svg>

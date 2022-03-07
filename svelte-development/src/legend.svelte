@@ -1,14 +1,16 @@
 <script>
     import {select, scaleSqrt, scaleOrdinal} from "d3";
 
+    let w = 200;
+
     const sScale =  scaleSqrt()
         .domain([5E5, 1E6, 5E6, 1E7])
         .range([.1, .35]);
 
-    let data = [{value: 5E5, text: "< 500,000", x: 100, y: 50},
-                {value: 1E6, text: "< 1 million", x: 100, y: 150},
-                {value: 5E6, text: "< 5 million", x: 100, y: 300},
-                {value: 1E7, text: "> 5 million", x: 100, y: 500}];
+    let data = [{value: 5E5, text: "< 500,000", x: w/2, y: 50},
+                {value: 1E6, text: "< 1 million", x: w/2, y: 100},
+                {value: 5E6, text: "< 5 million", x: w/2, y: 175},
+                {value: 1E7, text: "> 5 million", x: w/2, y: 325}];
 
 </script>
 
@@ -34,8 +36,6 @@
 
 <style>
 
-/* text{
-    text-anchor: middle;
-} */
-
 </style>
+
+<!-- .attr("transform", `translate(${width / 2},${height / 2})`) -->
