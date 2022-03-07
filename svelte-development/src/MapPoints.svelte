@@ -22,7 +22,7 @@
 
   const sScale = scaleSqrt()
         .domain([5E5, 1E6, 5E6, 1E7])
-        .range([.1, .35]);
+        .range([.05, .3]);
 
   const pathScale = scaleLinear()
     .domain(extent(regionFlow, d => d.value))

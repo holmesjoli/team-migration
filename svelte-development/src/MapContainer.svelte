@@ -37,7 +37,7 @@
       <div id="legend">
         <h2>Total # of migrants to region</h2>
         <svg width={w_legend} height={h}>
-          <Legend></Legend>
+          <Legend width={w_legend}></Legend>
         </svg>
       </div>
       <svg id="world-map" width={w_map} height={h}>
