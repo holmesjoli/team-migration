@@ -9865,16 +9865,17 @@ var app = (function () {
     			t = text$1(t_value);
     			use = svg_element("use");
     			attr_dev(text_1, "class", "label");
-    			add_location(text_1, file$4, 22, 4, 674);
+    			add_location(text_1, file$4, 23, 4, 691);
     			xlink_attr(use, "xlink:href", "#butterfly-0");
     			attr_dev(use, "transform", "scale(" + /*sScale*/ ctx[0](/*value*/ ctx[4]) + ")");
     			attr_dev(use, "fill", "grey");
-    			add_location(use, file$4, 24, 4, 715);
-    			attr_dev(g0, "class", "butterfly svelte-1dqqwgy");
+    			add_location(use, file$4, 25, 4, 732);
+    			attr_dev(g0, "class", "butterfly");
     			attr_dev(g0, "transform", "translate(" + /*x*/ ctx[2] + ", " + /*y*/ ctx[3] + ")");
-    			add_location(g0, file$4, 19, 4, 605);
+    			attr_dev(g0, "text-anchor", "middle");
+    			add_location(g0, file$4, 19, 4, 595);
     			attr_dev(g1, "class", "legend-container");
-    			attr_dev(g1, "transform", "translate(" + /*sScale*/ ctx[0](/*value*/ ctx[4]) * -50 + ", " + /*sScale*/ ctx[0](/*value*/ ctx[4]) * -50 + ")");
+    			attr_dev(g1, "transform", "translate(" + /*sScale*/ ctx[0](/*value*/ ctx[4]) + ", " + /*sScale*/ ctx[0](/*value*/ ctx[4]) + ")");
     			add_location(g1, file$4, 15, 0, 493);
     		},
     		m: function mount(target, anchor) {
@@ -11555,7 +11556,7 @@ var app = (function () {
     		c: function create() {
     			div = element("div");
     			h2 = element("h2");
-    			h2.textContent = "Total # of migrants";
+    			h2.textContent = "Total # of migrants to region";
     			t1 = space();
     			svg0 = svg_element("svg");
     			create_component(legend.$$.fragment);
@@ -11565,7 +11566,7 @@ var app = (function () {
     			create_component(mappoints.$$.fragment);
     			add_location(h2, file$2, 35, 8, 1091);
     			attr_dev(svg0, "height", /*h*/ ctx[6]);
-    			add_location(svg0, file$2, 36, 8, 1129);
+    			add_location(svg0, file$2, 36, 8, 1139);
     			attr_dev(div, "id", "legend");
     			attr_dev(div, "class", "svelte-1wukwk0");
     			add_location(div, file$2, 34, 6, 1064);
@@ -11573,7 +11574,7 @@ var app = (function () {
     			attr_dev(svg1, "width", /*w*/ ctx[4]);
     			attr_dev(svg1, "height", /*h*/ ctx[6]);
     			attr_dev(svg1, "class", "svelte-1wukwk0");
-    			add_location(svg1, file$2, 40, 6, 1212);
+    			add_location(svg1, file$2, 40, 6, 1222);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);

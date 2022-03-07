@@ -33,7 +33,7 @@
   {#if w !== undefined}
     <Modal show={$modal} transitionBgProps={{ duration: 0 }} styleCloseButton={{cursor: "pointer"}}>
       <div id="legend">
-        <h2>Total # of migrants</h2>
+        <h2>Total # of migrants to region</h2>
         <svg height={h}>
           <Legend></Legend>
         </svg>

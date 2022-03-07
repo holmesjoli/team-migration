@@ -15,11 +15,12 @@
 {#each data as {x, y, value, text}}
 <g
     class="legend-container"
-  transform="translate({sScale(value) * -50}, {sScale(value) * -50})">
+    transform="translate({sScale(value)}, {sScale(value)})">
 
     <g
     class="butterfly"
-    transform="translate({x}, {y})">
+    transform="translate({x}, {y})"
+    text-anchor= "middle">
     <text class="label">{text}</text>
 
     <use
@@ -32,10 +33,6 @@
 {/each}
 
 <style>
-
-.butterfly {
-    text-align: center
-}
 
 /* text{
     text-anchor: middle;
