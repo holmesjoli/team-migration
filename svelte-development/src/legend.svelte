@@ -23,8 +23,7 @@
     <g
     class="butterfly"
     transform="translate({x}, {y})">
-    <text class="label" transform="translate({x}, {y} - 100)">{value}
-    </text>
+    <text class="label">{value}</text>
 
     <use
         xlink:href="#butterfly-0"

@@ -9860,12 +9860,11 @@ var app = (function () {
     			t = text$1(t_value);
     			use = svg_element("use");
     			attr_dev(text_1, "class", "label");
-    			attr_dev(text_1, "transform", "translate(" + /*x*/ ctx[3] + ", " + /*y*/ ctx[4] + " - 100)");
     			add_location(text_1, file$4, 25, 4, 743);
     			xlink_attr(use, "xlink:href", "#butterfly-0");
     			attr_dev(use, "transform", "scale(" + /*sScale*/ ctx[0](/*value*/ ctx[5]) + ")");
     			attr_dev(use, "fill", "grey");
-    			add_location(use, file$4, 28, 4, 829);
+    			add_location(use, file$4, 27, 4, 785);
     			attr_dev(g0, "class", "butterfly");
     			attr_dev(g0, "transform", "translate(" + /*x*/ ctx[3] + ", " + /*y*/ ctx[4] + ")");
     			add_location(g0, file$4, 22, 4, 674);
