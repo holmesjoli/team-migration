@@ -44,6 +44,8 @@
   )
 
   $: {
+    sScale.range([0.25, width / 1200]);
+
     const simulation = forceSimulation(data.features)
       .force("collide", forceCollide().radius(d => sScale(d.properties.VALUE) * 55))
       .force("x", forceX().x(d => projection(d.geometry.coordinates)[0]))

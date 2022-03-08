@@ -9047,7 +9047,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (147:4) {#if links !== undefined}
+    // (149:4) {#if links !== undefined}
     function create_if_block$3(ctx) {
     	let each_1_anchor;
     	let each_value_1 = /*links*/ ctx[1];
@@ -9108,14 +9108,14 @@ var app = (function () {
     		block,
     		id: create_if_block$3.name,
     		type: "if",
-    		source: "(147:4) {#if links !== undefined}",
+    		source: "(149:4) {#if links !== undefined}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (148:6) {#each links as {CODE, ORIG, value}}
+    // (150:6) {#each links as {CODE, ORIG, value}}
     function create_each_block_1$1(ctx) {
     	let line_1;
     	let line_1_x__value;
@@ -9158,7 +9158,7 @@ var app = (function () {
     			attr_dev(line_1, "stroke-width", line_1_stroke_width_value = /*pathScale*/ ctx[4](/*value*/ ctx[27]));
     			attr_dev(line_1, "stroke-dasharray", line_1_stroke_dasharray_value = "1 " + /*pathScale*/ ctx[4](/*value*/ ctx[27]) * 2);
     			attr_dev(line_1, "stroke-linecap", "round");
-    			add_location(line_1, file$5, 149, 8, 4299);
+    			add_location(line_1, file$5, 151, 8, 4340);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, line_1, anchor);
@@ -9211,14 +9211,14 @@ var app = (function () {
     		block,
     		id: create_each_block_1$1.name,
     		type: "each",
-    		source: "(148:6) {#each links as {CODE, ORIG, value}}",
+    		source: "(150:6) {#each links as {CODE, ORIG, value}}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (167:2) {#each $butterflyPoints as {x, y, value, regionIndex, regionShape, regionCode}}
+    // (169:2) {#each $butterflyPoints as {x, y, value, regionIndex, regionShape, regionCode}}
     function create_each_block$1(ctx) {
     	let g1;
     	let g0;
@@ -9250,13 +9250,13 @@ var app = (function () {
     			attr_dev(use, "data-region-code", use_data_region_code_value = /*regionCode*/ ctx[30]);
     			attr_dev(use, "data-value", use_data_value_value = /*value*/ ctx[27]);
     			attr_dev(use, "class", "svelte-rmrozh");
-    			add_location(use, file$5, 176, 8, 5267);
+    			add_location(use, file$5, 178, 8, 5308);
     			attr_dev(g0, "class", "butterfly svelte-rmrozh");
     			attr_dev(g0, "transform", g0_transform_value = "translate(" + /*x*/ ctx[25] + ", " + /*y*/ ctx[26] + ") rotate(" + (Math.random() * 60 - 30) + ")");
-    			add_location(g0, file$5, 171, 6, 5083);
+    			add_location(g0, file$5, 173, 6, 5124);
     			attr_dev(g1, "class", "butterfly-container");
     			attr_dev(g1, "transform", g1_transform_value = "translate(" + /*sScale*/ ctx[3](/*value*/ ctx[27]) * -50 + ", " + /*sScale*/ ctx[3](/*value*/ ctx[27]) * -50 + ")");
-    			add_location(g1, file$5, 167, 4, 4960);
+    			add_location(g1, file$5, 169, 4, 5001);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, g1, anchor);
@@ -9321,7 +9321,7 @@ var app = (function () {
     		block,
     		id: create_each_block$1.name,
     		type: "each",
-    		source: "(167:2) {#each $butterflyPoints as {x, y, value, regionIndex, regionShape, regionCode}}",
+    		source: "(169:2) {#each $butterflyPoints as {x, y, value, regionIndex, regionShape, regionCode}}",
     		ctx
     	});
 
@@ -9361,15 +9361,15 @@ var app = (function () {
     			}
 
     			attr_dev(g0, "id", "butterfly-0");
-    			add_location(g0, file$5, 135, 4, 3987);
-    			add_location(defs0, file$5, 134, 2, 3976);
+    			add_location(g0, file$5, 137, 4, 4028);
+    			add_location(defs0, file$5, 136, 2, 4017);
     			attr_dev(g1, "id", "butterfly-1");
-    			add_location(g1, file$5, 140, 4, 4069);
-    			add_location(defs1, file$5, 139, 2, 4058);
+    			add_location(g1, file$5, 142, 4, 4110);
+    			add_location(defs1, file$5, 141, 2, 4099);
     			attr_dev(g2, "class", "link-lines");
-    			add_location(g2, file$5, 145, 2, 4141);
+    			add_location(g2, file$5, 147, 2, 4182);
     			attr_dev(g3, "class", "map-points");
-    			add_location(g3, file$5, 126, 0, 3819);
+    			add_location(g3, file$5, 128, 0, 3860);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -9632,8 +9632,10 @@ var app = (function () {
     	}
 
     	$$self.$$.update = () => {
-    		if ($$self.$$.dirty[0] & /*data, projection*/ 98304) {
+    		if ($$self.$$.dirty[0] & /*width, data, projection*/ 102400) {
     			{
+    				sScale.range([0.25, width / 1200]);
+
     				forceSimulation(data.features).force("collide", forceCollide().radius(d => sScale(d.properties.VALUE) * 55)).force("x", forceX().x(d => projection(d.geometry.coordinates)[0])).force("y", forceY().y(d => projection(d.geometry.coordinates)[1])).force("link", forceLink().id(function (d) {
     					return d.CODE;
     				})).stop().tick(100);
@@ -9845,7 +9847,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (26:0) {#if height !== undefined}
+    // (30:0) {#if height !== undefined}
     function create_if_block$2(ctx) {
     	let div;
     	let t1;
@@ -9867,7 +9869,7 @@ var app = (function () {
     			if_block.c();
     			if_block_anchor = empty$1();
     			attr_dev(div, "class", "svelte-a56aip");
-    			add_location(div, file$4, 26, 2, 614);
+    			add_location(div, file$4, 30, 2, 672);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -9900,14 +9902,14 @@ var app = (function () {
     		block,
     		id: create_if_block$2.name,
     		type: "if",
-    		source: "(26:0) {#if height !== undefined}",
+    		source: "(30:0) {#if height !== undefined}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (55:4) {:else}
+    // (59:4) {:else}
     function create_else_block$1(ctx) {
     	let svg;
     	let g;
@@ -9929,10 +9931,10 @@ var app = (function () {
     				each_blocks[i].c();
     			}
 
-    			add_location(g, file$4, 59, 6, 1376);
+    			add_location(g, file$4, 63, 6, 1440);
     			attr_dev(svg, "width", svg_width_value = /*width*/ ctx[0] - 200);
     			attr_dev(svg, "height", 100);
-    			add_location(svg, file$4, 55, 4, 1320);
+    			add_location(svg, file$4, 59, 4, 1384);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, svg, anchor);
@@ -9981,14 +9983,14 @@ var app = (function () {
     		block,
     		id: create_else_block$1.name,
     		type: "else",
-    		source: "(55:4) {:else}",
+    		source: "(59:4) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (30:4) {#if width > 1220 * 0.9}
+    // (34:4) {#if width > 1220 * 0.9}
     function create_if_block_1$1(ctx) {
     	let svg;
     	let g;
@@ -10009,10 +10011,10 @@ var app = (function () {
     				each_blocks[i].c();
     			}
 
-    			add_location(g, file$4, 34, 6, 748);
+    			add_location(g, file$4, 38, 6, 812);
     			attr_dev(svg, "width", "200");
     			attr_dev(svg, "height", /*legendH*/ ctx[3]);
-    			add_location(svg, file$4, 30, 4, 698);
+    			add_location(svg, file$4, 34, 4, 756);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, svg, anchor);
@@ -10057,14 +10059,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1$1.name,
     		type: "if",
-    		source: "(30:4) {#if width > 1220 * 0.9}",
+    		source: "(34:4) {#if width > 1220 * 0.9}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (61:8) {#each legendD as {width, height, value, text}
+    // (65:8) {#each legendD as {width, height, value, text}
     function create_each_block_1(ctx) {
     	let use;
     	let text_1;
@@ -10082,11 +10084,11 @@ var app = (function () {
     			attr_dev(use, "stroke-width", "1");
     			attr_dev(use, "fill", "black");
     			attr_dev(use, "fill-opacity", "0.5");
-    			add_location(use, file$4, 61, 10, 1449);
+    			add_location(use, file$4, 65, 10, 1513);
     			attr_dev(text_1, "x", 50 + 85 * /*i*/ ctx[9] + /*width*/ ctx[0] / 2);
     			attr_dev(text_1, "y", 60 - /*height*/ ctx[1] / 2);
     			attr_dev(text_1, "text-anchor", "middle");
-    			add_location(text_1, file$4, 69, 10, 1745);
+    			add_location(text_1, file$4, 73, 10, 1809);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, use, anchor);
@@ -10104,14 +10106,14 @@ var app = (function () {
     		block,
     		id: create_each_block_1.name,
     		type: "each",
-    		source: "(61:8) {#each legendD as {width, height, value, text}",
+    		source: "(65:8) {#each legendD as {width, height, value, text}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (36:8) {#each legendD as {width, height, value, text}
+    // (40:8) {#each legendD as {width, height, value, text}
     function create_each_block(ctx) {
     	let use;
     	let text_1;
@@ -10129,11 +10131,11 @@ var app = (function () {
     			attr_dev(use, "stroke-width", "1");
     			attr_dev(use, "fill", "black");
     			attr_dev(use, "fill-opacity", "0.5");
-    			add_location(use, file$4, 36, 10, 821);
+    			add_location(use, file$4, 40, 10, 885);
     			attr_dev(text_1, "x", "100");
     			attr_dev(text_1, "y", 5 + /*i*/ ctx[9] * 65 + /*height*/ ctx[1] / 2);
     			attr_dev(text_1, "text-anchor", "middle");
-    			add_location(text_1, file$4, 44, 10, 1118);
+    			add_location(text_1, file$4, 48, 10, 1182);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, use, anchor);
@@ -10151,7 +10153,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(36:8) {#each legendD as {width, height, value, text}",
+    		source: "(40:8) {#each legendD as {width, height, value, text}",
     		ctx
     	});
 
@@ -10262,6 +10264,14 @@ var app = (function () {
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
+
+    	$$self.$$.update = () => {
+    		if ($$self.$$.dirty & /*width*/ 1) {
+    			{
+    				sScale.range([0.25, width / 1200]);
+    			}
+    		}
+    	};
 
     	return [width, height, sScale, legendH, legendD, data];
     }

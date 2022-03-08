@@ -21,6 +21,10 @@
       d.height = sScale(d.value) * 74;
       return d;
     })
+
+    $: {
+      sScale.range([0.25, width / 1200]);
+    }
 </script>
 
 {#if height !== undefined}
@@ -29,9 +33,9 @@
   </div>
     {#if width > 1220 * 0.9}
     <svg
-    width=200
-    height={legendH}
-  >
+      width=200
+      height={legendH}
+    >
       <g>
         {#each legendD as {width, height, value, text}, i}
           <use
