@@ -5,6 +5,7 @@
   import regions from './regions.js'
 
   export let selectedRegion;
+  import BigButterfly from './BigButterfly.svelte';
   export let selectedCountry;
   export let definitions;
   export let warnings;
@@ -53,6 +54,12 @@
     </h1>
     <div id="citizenship-paths">
         {@html butterflies[2]}
+    <div class="container">
+      <BigButterfly />
+      <div class="definitions-warnings__container">
+        <div class="definitions"></div>
+        <div class="warnings"></div>
+      </div>
     </div>
     <div id="documentation">
       <div id="warnings"></div>
@@ -73,4 +80,19 @@
     background: rgb(211, 211, 211);
     max-height: 75px;
   }
+
+  .definitions-warnings__container {
+    display: flex;
+    gap: 1rem;
+    height: 30vh;
+    width: 100%;
+  }
+
+  .definitions-warnings__container > div {
+    width: 100%;
+    height: 100%;
+    background: #F5F5F5;
+    border-radius: 8px;
+  }
+
 </style>

@@ -117,7 +117,6 @@
   }
 
   function setDasharray() {
-    console.log("1 second");
     dasharray = "1 3" ? "1 1" : "1 3"
     setTimeout(setDasharray, 1000);
   }
