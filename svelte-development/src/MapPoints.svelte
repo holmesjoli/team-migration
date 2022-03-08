@@ -7,6 +7,7 @@
   import Popup from './Popup.svelte';
   import regions from './regions.js';
 
+  export let width;
   export let regionFlow;
   export let datasets;
   export let data;
@@ -20,9 +21,9 @@
 
   const { open } = getContext('simple-modal');
 
-  const sScale = scaleSqrt()
-        .domain([5E5, 1E6, 5E6, 1E7])
-        .range([.05, .3]);
+  const sScale = scaleLinear()
+    .domain(extent(data.features, d => d.properties.VALUE))
+    .range([0.25, width / 1200]);
 
   const pathScale = scaleLinear()
     .domain(extent(regionFlow, d => d.value))
@@ -178,13 +179,14 @@
           on:mouseout={handleMouseOut}
           on:click={handleClick}
           xlink:href="#butterfly-{regionShape}"
-          transform='scale({sScale(value)})'
+          transform='scale({sScale(value)}, {sScale(value)})'
           stroke="{regions[regionIndex].color}"
           stroke-width=1
           fill="{regions[regionIndex].color}"
           fill-opacity="0.5"
           data-region-index="{regionIndex}"
           data-region-code="{regionCode}"
+          data-value="{value}"
         />
       </g>
     </g>

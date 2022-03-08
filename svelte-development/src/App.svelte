@@ -19,7 +19,7 @@
   let promise = getData();
 
   async function getData() {
-    let mapCentroidsD = await json("data/mapData/region-centroid.geojson");
+    let mapCentroidsD = await json("data/mapData/region-centroids.geojson");
     let mapOutlineD = await json("data/mapData/world.geojson");
     let butterflySvg1 = await text(butterflies[0])
     let butterflySvg2 = await text(butterflies[1])
@@ -35,6 +35,7 @@
     datasets = [mapCentroidsD, mapOutlineD, butterflySvgs, byCountryD, warnings,
     definitions, questions, acqMode, regions, regionFlow, totalMigrants];
     parseData(datasets);
+    console.log(datasets)
   }
 
   function parseData(datasets) {
