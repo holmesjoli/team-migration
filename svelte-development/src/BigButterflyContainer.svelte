@@ -33,15 +33,7 @@
 
     let possibleQuestions = createPossibleQuestions(possibleModes, questionToMode);
     let unnecessaryQuestions = createUnnecessaryQuestions(allQuestions, possibleQuestions);
-    // let unnecessaryQuestions = []
 
-    // for (let i in allQuestions) {
-    //   let p = allQuestions[i]
-
-    //   if (!containsObject(p, possibleQuestions)) {
-    //     unnecessaryQuestions.push(p)
-    //   }
-    // }
     console.log("allQuestions", allQuestions);
     console.log("possibleQuestions", possibleQuestions);
     console.log("unnecessaryQuestions", unnecessaryQuestions);
