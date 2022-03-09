@@ -146,8 +146,16 @@
 
       // circles on click event
       butterflyCirclesG.selectAll("circle").on("mouseover", function() {
-        select(this).transition(200).attr("r", 10).attr("stroke-width", 7.8)
-        let id = select(this).attr("id")
+
+        let id = select(this).attr("id");
+
+        if (!unnecessaryQuestions.includes(id)) {
+          select(this)
+          .transition(200)
+          .attr("r", 10)
+          .attr("stroke-width", 7.8)
+        }
+
         select(`foreignObject[data-question-id=${id}]`).style("font-weight", "bold")
       })
 
