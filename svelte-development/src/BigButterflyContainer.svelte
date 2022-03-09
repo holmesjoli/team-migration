@@ -1,7 +1,7 @@
 <script>
   import { afterUpdate } from 'svelte';
   import { select, selectAll } from "d3";
-  import {uniqueArray, findRegionColor, getQuestionWithCountryName, containsObject} from "./helper.js"
+  import {uniqueArray, findRegionColor, getQuestionWithCountryName, createPossibleQuestions, createUnnecessaryQuestions} from "./helper.js"
   import Documentation from './Documentation.svelte'
   import regions from './regions.js'
   import { each } from 'svelte/internal';
@@ -31,30 +31,17 @@
     let acqModeFiltered = acqMode.filter(d => d.country == selectedCountry);
     let possibleModes = uniqueArray(acqModeFiltered, "mode_id");
 
-    let possibleQuestions = [];
-    let unnecessaryQuestions = []
+    let possibleQuestions = createPossibleQuestions(possibleModes, questionToMode);
+    let unnecessaryQuestions = createUnnecessaryQuestions(allQuestions, possibleQuestions);
+    // let unnecessaryQuestions = []
 
-    for (let i in possibleModes) {
+    // for (let i in allQuestions) {
+    //   let p = allQuestions[i]
 
-      let m = possibleModes[i];
-      console.log(m)
-      questionToMode.filter(function(d) {
-
-        if (d.mode_id === m) {
-          possibleQuestions.push(d.question)
-        }
-      });
-    }
-
-    possibleQuestions = [...new Set(possibleQuestions)];
-
-    for (let i in allQuestions) {
-      let p = allQuestions[i]
-
-      if (!containsObject(p, possibleQuestions)) {
-        unnecessaryQuestions.push(p)
-      }
-    }
+    //   if (!containsObject(p, possibleQuestions)) {
+    //     unnecessaryQuestions.push(p)
+    //   }
+    // }
     console.log("allQuestions", allQuestions);
     console.log("possibleQuestions", possibleQuestions);
     console.log("unnecessaryQuestions", unnecessaryQuestions);
@@ -62,12 +49,6 @@
     // filter and see what modes are available
     let filteredAvailableMode = availableMode.filter(m => possibleModes.includes(m));
     console.log("filteredAvailableMode", filteredAvailableMode);
-
-    // let necessaryQuestion = questionToMode.filter(q => possibleModes.includes(q.mode_id));
-    // console.log(necessaryQuestion);
-    // necessaryQuestion = uniqueArray(necessaryQuestion, "question");
-
-    // unnecessaryQuestion = unnecessaryQuestion.filter(q => necessaryQuestion.indexOf(q) == -1);
 
     afterUpdate(() => {
       // set default colors of the big butterfly

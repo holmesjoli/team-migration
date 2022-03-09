@@ -44,3 +44,39 @@ export function containsObject(obj, list) {
 
   return false;
 }
+
+// Title Create Possible Questions
+// Filters based on mode id to create a unique list of possible questions
+export function createPossibleQuestions(possibleModes, questionToMode) {
+
+  let possibleQuestions = [];
+  for (let i in possibleModes) {
+    questionToMode.filter(function(d) {
+
+      if (d.mode_id === possibleModes[i]) {
+        possibleQuestions.push(d.question)
+      }
+    });
+  }
+
+  possibleQuestions = [...new Set(possibleQuestions)];
+
+  return possibleQuestions;
+}
+
+// Title Create Unnecessary Questions
+// Difference between all questions and possible questions
+export function createUnnecessaryQuestions(allQuestions, possibleQuestions) {
+
+  let unnecessaryQuestions = []
+
+  for (let i in allQuestions) {
+    let p = allQuestions[i]
+
+    if (!containsObject(p, possibleQuestions)) {
+      unnecessaryQuestions.push(p)
+    }
+  }
+
+  return unnecessaryQuestions;
+}
