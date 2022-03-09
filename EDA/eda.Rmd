@@ -1,0 +1,393 @@
+---
+title: EDA
+output: md_document
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, echo = FALSE)
+```
+
+```{r}
+library(tidyverse)
+
+source("../R/dm.R")
+source("../R/question_coding.R")
+
+lu_loc <- read_csv("../data/lu_code.csv")
+xwalk <- read_csv("../data/xwalk_region.csv")
+flow <- read_csv("../data/flow.csv")
+
+df <- readr::read_csv("../data/data_v1.0_country-year.csv") %>%
+  select(-year)
+
+df_acq <- readr::read_csv("../data/data_v1.0_country-year-mode_acq.csv", 
+                          na = c("n.a.", "n.a", "")) %>%
+  filter(article != "No provision") %>%
+  select(-year) %>% 
+  mutate(cntry_mode_id = paste(iso3, mode_id, sep = "_"))
+
+df_loss <- readr::read_csv("../data/data_v1.0_country-year-mode_loss.csv", na = c("n.a.", "n.a", "")) %>% 
+  filter(article != "No provision") %>%
+  select(-year) %>%
+  mutate(cntry_mode_id = paste(iso3, mode_id, sep = "_"))
+
+df_acq_proc <- dm_procedure(df_acq)
+df_loss_proc <- dm_procedure(df_loss)
+
+df_long <- df %>%
+  tidyr::pivot_longer(names_to = "mode_id", values_to = "values", -c(iso3, country, region)) %>% 
+  tidyr::separate(mode_id,
+                  into = c("mode_id", "type"),
+                  sep = "([(_)])") %>%
+  mutate(par_mode_id = substr(mode_id, 1, 3),
+         acq = grepl("A", mode_id),
+         loss = grepl("L", mode_id),
+         bin = "bin" == type,
+         cat = "cat" == type,
+         yrs = "yrs" == type,
+         cntry_mode_id = paste(iso3, mode_id, sep = "_"))
+
+bin <- df_long %>%
+  filter(acq & bin & values == 1) %>%
+  select(-c(acq, type, loss, cat, yrs, bin, par_mode_id, cntry_mode_id)) %>%
+  filter(mode_id %in% unique(modes$mode_id))
+
+df_long <- df_long %>% 
+  filter(acq & c(cat | yrs) & values > 0) %>%
+ select(-c(acq, type, loss, par_mode_id, cntry_mode_id))
+
+subregion_code <- xwalk %>% 
+  distinct(subregion, subregion_code)
+
+codes <- subregion_code %>% 
+  distinct(subregion_code) %>% 
+  pull(subregion_code)
+
+modes <- dm.combine_questions(df_long, df_acq) %>%
+  inner_join(df %>% select(iso3, country))
+
+```
+
+
+```{r write_data}
+
+z <- flow %>%
+  filter(dest_loc %in% codes) %>%
+  filter(orig_loc %in% codes) %>%
+  select(-c(dest_notes, dest_dtype)) %>%
+  dplyr::group_by(dest_loc, orig_loc) %>%
+  summarize(value = sum(value)) %>%
+  rename(DEST = dest_loc,
+         ORIG = orig_loc) %>%
+  filter(DEST != ORIG) %>%
+  ungroup() %>%
+  mutate(id = 1:n(),
+         value_bins = case_when(value < 1000 ~ "< 1000",
+                                value >= 1000 & value < 10000 ~ "< 10000",
+                                value >= 10000 & value < 100000 ~ "< 100000",
+                                value >= 100000 & value < 1000000 ~ "< 1000000",
+                                value >= 1000000 ~ "1000000+"))
+
+z %>%
+  write_csv("../svelte-development/public/data/region_flows.csv")
+
+z %>%
+  select(-value) %>%
+  pivot_longer(names_to = "PLACE", values_to = "CODE", -c(id)) %>% 
+  left_join(centroids) %>% 
+  write_csv("../svelte-development/public/data/region_flows_geo.csv")
+  
+
+total_migrants <- flow %>%
+  filter(dest_loc %in% codes) %>%
+  filter(orig_loc %in% codes) %>%
+  group_by(orig_loc) %>%
+  summarize(TOTAL_MIGRANTS = sum(value)) %>%
+  inner_join(subregion_code, by = c("orig_loc" = "subregion_code")) %>%
+  mutate(TOTAL_MIGRANTS_BINS = case_when(TOTAL_MIGRANTS < 1000000 ~ "< 1 million",
+                              TOTAL_MIGRANTS >= 1000000 & TOTAL_MIGRANTS < 2000000 ~ "< 2 million",
+                              TOTAL_MIGRANTS >= 2000000 & TOTAL_MIGRANTS < 5000000 ~ "< 5 million",
+                              TOTAL_MIGRANTS > 5000000 ~ "> 5 million"))
+
+centroid <- geojsonR::FROM_GeoJson("../svelte-development/public/data/mapData/region-centroid.geojson")
+
+centroid$features <- lapply(centroid$features, function(x) {
+  x2 <- x$properties
+  
+  ttl <- total_migrants %>%
+    filter(orig_loc == x2$CODE)
+  
+  x2$TOTAL_MIGRANTS <- ttl %>%
+    pull(TOTAL_MIGRANTS)
+  
+  x2$TOTAL_MIGRANTS_BIN <- ttl %>%
+    pull(TOTAL_MIGRANTS_BINS)
+  
+  return(x2)
+  
+})
+
+library(sf)
+meuse_sf = sf::st_as_sf(centroid, coords = c("x", "y"), crs = 28992, agr = "constant")
+st_write(meuse, "meuse.geojson")
+
+"../svelte-development/public/data/mapData/region-centroid.geojson"
+
+region_geo <- dm.region_geojson(pth = "../data/shape/world-administrative-boundaries.shp",
+                                xwalk,
+                                write_pth = "../data/region_geo.geojson")
+
+modes %>%
+  write_csv("../data/modes_acq.csv")
+
+df_long %>%
+ readr::write_csv("../data/cit_long.csv")
+
+df_long %>%
+  filter(mode_id %in% unique(modes$mode_id)) %>% 
+  readr::write_csv("../data/allCountriesAllPaths.csv")
+
+
+```
+
+```{r}
+ggplot(z %>% filter(value <= 100000), aes(x = value)) +
+  geom_histogram(bins = 100, color = "white")
+
+```
+
+## Number of unique modes
+
+```{r}
+acq_mode <- df_long %>% filter(acq) %>% distinct(par_mode_id) %>% pull()
+n_acq <- length(acq_mode)
+
+loss_mode <- df_long %>% filter(loss) %>% distinct(par_mode_id) %>% pull()
+n_loss <- length(loss_mode)
+
+n_cntry <- df %>% distinct(country) %>% pull() %>% length()
+```
+
+* Number **acquisition** variables: `r n_acq`
+* **Acquisition** variables: `r acq_mode`
+
+* Number **loss** variables: `r n_loss`
+* **Loss** variables: `r loss_mode`
+
+* Number of countries: `r n_cntry`
+
+## Countries with 99 in A06 mode
+
+```{r}
+df_long %>%
+  filter(bin) %>%
+  filter(acq) %>%
+  filter(values == 99) %>% 
+  distinct(country)
+```
+
+## Most common acq modes
+
+```{r}
+acq_mode_common <- df_long %>%
+  filter(bin) %>%
+  filter(acq) %>%
+  filter(values == 1) %>%
+  distinct(par_mode_id, country, region) %>% 
+  group_by(par_mode_id, region) %>% 
+  tally() %>% 
+  arrange(desc(n))
+
+ggplot(acq_mode_common, aes(x = reorder(par_mode_id, -n), y = n, fill = reorder(region, n))) +
+  geom_bar(stat="identity") +
+  labs(y = "N",
+       x = "Mode",
+       title = "Number of countries where a citizen can gain citizenship by mode") +
+  ylim(0, n_cntry)
+```
+
+```{r}
+loss_mode_common <- df_long %>%
+  filter(bin) %>%
+  filter(loss) %>%
+  filter(values == 1) %>%
+  distinct(par_mode_id, country, region) %>% 
+  group_by(par_mode_id, region) %>% 
+  tally() %>% 
+  arrange(desc(n))
+
+ggplot(loss_mode_common, aes(x = reorder(par_mode_id, -n), y = n, fill = reorder(region, n))) +
+  geom_bar(stat="identity") +
+  labs(y = "N",
+       x = "Mode",
+       title = "Number of countries where a citizen can lose citizenship by mode") +
+  ylim(0, n_cntry)
+```
+
+## Acquiring citizenship by country
+
+```{r}
+acq_top_10 <- df_long %>%
+    filter(bin) %>%
+    filter(acq) %>%
+    filter(values == 1) %>% 
+    group_by(country, region) %>% 
+    tally() %>% 
+    arrange(n) %>%
+    ungroup()
+
+ggplot(acq_top_10 %>% 
+    slice(1:10), 
+       aes(x = reorder(country, n), y = n)) +
+  geom_bar(stat="identity") +
+  labs(y = "N",
+       x = "Country",
+       title = "Top ten countries with the fewest ways to acquire citizenship") +
+   theme(axis.text.x = element_text(angle = 65, vjust = 0.5, hjust=1))
+```
+
+```{r}
+ggplot(acq_top_10,
+       aes(x = n, fill = region, color = region)) +
+  geom_density(alpha = .5) +
+  labs(y = "Density",
+       x = "Number",
+       title = "Number of ways to acquire citizenship by country") +
+   theme(axis.text.x = element_text(angle = 65, hjust=1))
+```
+
+* Median number of ways to acquire citizenship: `r median(acq_top_10$n)`
+
+## Procedure of acquisition
+
+```{r}
+ggplot(df_acq_proc %>% 
+         group_by(procedure) %>% 
+         tally(), 
+       aes(x = reorder(procedure, -n), y = n)) +
+  geom_bar(stat="identity") +
+  labs(y = "N",
+       x = "Procedure",
+       title = "Procedure to acquire citizenship",
+       caption = "There may be more than one procedure per acquisition mode") +
+   theme(axis.text.x = element_text(angle = 65, hjust=1))
+
+```
+
+## Losing citizenship by country
+
+```{r}
+loss_top_10 <- df_long %>%
+    filter(bin) %>%
+    filter(loss) %>%
+    filter(values == 1) %>% 
+    group_by(country, region) %>% 
+    tally() %>% 
+    arrange(desc(n)) %>%
+    ungroup()
+
+ggplot(loss_top_10 %>% 
+    slice(1:10), 
+       aes(x = reorder(country, -n), y = n)) +
+  geom_bar(stat="identity") +
+  labs(y = "N",
+       x = "Country",
+       title = "Top ten countries with the most ways to lose citizenship") +
+   theme(axis.text.x = element_text(angle = 65, vjust = 0.5, hjust=1))
+```
+
+```{r}
+ggplot(loss_top_10,
+       aes(x = n, fill = region, color = region)) +
+  geom_density(alpha = .5) +
+  labs(y = "Density",
+       x = "Number",
+       title = "Number of ways to lose citizenship by country") +
+   theme(axis.text.x = element_text(angle = 65, hjust=1))
+```
+
+* Median number of ways to lose citizenship: `r median(loss_top_10$n)`
+
+## Procedure of acquisition
+
+```{r}
+ggplot(df_loss_proc %>% 
+         group_by(procedure) %>% 
+         tally(), 
+       aes(x = reorder(procedure, -n), y = n)) +
+  geom_bar(stat="identity") +
+  labs(y = "N",
+       x = "Procedure",
+       title = "Procedure to loss citizenship",
+       caption = "There may be more than one procedure per loss mode") +
+   theme(axis.text.x = element_text(angle = 65, hjust=1)) + 
+  theme_minimal()
+
+```
+
+
+## Visualizing similarity in countries aquisitions spacially
+
+```{r}
+ggplot(df %>%
+         select(country, region, contains("bin")) %>%
+         select(country, region, starts_with("A")) %>%
+         pivot_longer(values_to = "values", 
+                      names_to = "mode_id", 
+                      -c(country, region)) %>%
+        mutate(mode_id = gsub("_cat", "", mode_id),
+               mode_id = gsub("_bin", "", mode_id)) %>% 
+         filter(values != "99") %>%
+         dplyr::group_by(mode_id) %>% 
+         slice(1:14),
+       aes(x = mode_id, y = values, fill = region, color = region, group = factor(country))) +
+  geom_area(position = "identity") +
+  geom_point() +
+  facet_wrap(vars(country)) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust=1, size = 8),
+        panel.grid.minor = element_blank(),
+        panel.grid.major = element_blank(),
+        axis.text.y = element_blank()) +
+  labs(x = "",
+       y = "") +
+  coord_polar()
+```
+
+### Comparing colonized countries with their colonizer
+
+```{r}
+ggplot(df %>%
+         select(country, iso3, region, contains("bin")) %>%
+         select(country, iso3, region, starts_with("A")) %>%
+         pivot_longer(values_to = "values", 
+                      names_to = "mode_id", 
+                      -c(country, iso3, region)) %>%
+        mutate(mode_id = gsub("_cat", "", mode_id),
+               mode_id = gsub("_bin", "", mode_id)) %>% 
+         filter(values != "99") %>%
+         dplyr::group_by(mode_id) %>% 
+         filter(iso3 %in% c("GBR", "AUS", "NZL", "IND", "ZAF", "USA")),
+       aes(x = mode_id, y = values, fill = region, color = region, group = factor(country))) +
+  geom_area(position = "identity", alpha = .5) +
+  geom_point() +
+  facet_wrap(vars(country)) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust=1, size = 8),
+        panel.grid.minor = element_blank(),
+        panel.grid.major = element_blank(),
+        axis.text.y = element_blank()) +
+  labs(x = "",
+       y = "") +
+  coord_polar()
+```
+
+## Initial Observations
+
+* All countries share at one way to gain citizenship (A01)
+* There isn't one universal way citizens can lose citizenship
+* L13 doesn't apply to any countries in Africa, Oceania, or the Americas
+* The average European country has more ways to acquire citizenship than the average country from another region of the world
+* There is a more uniform distribution across how many ways there are to lose citizenship
+* The procedure of acquisition can differ from country to country. For example, A01 isn't always automatic Attribution
+* There may be some overlap in acquisition laws depending on if the country was colonized

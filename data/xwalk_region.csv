@@ -1,0 +1,252 @@
+region,loc_code,iso3,subregion,subregion_code,continent,continent_code
+Algeria,12,DZA,Northern Africa,912,Africa,903
+Egypt,818,EGY,Northern Africa,912,Africa,903
+Libya,434,LBY,Northern Africa,912,Africa,903
+Morocco,504,MAR,Northern Africa,912,Africa,903
+Sudan,729,SDN,Northern Africa,912,Africa,903
+Tunisia,788,TUN,Northern Africa,912,Africa,903
+Western Sahara,732,ESH,Northern Africa,912,Africa,903
+British Indian Ocean Territory,86,IOT,Eastern Africa,910,Africa,903
+Burundi,108,BDI,Eastern Africa,910,Africa,903
+Comoros,174,COM,Eastern Africa,910,Africa,903
+Djibouti,262,DJI,Eastern Africa,910,Africa,903
+Eritrea,232,ERI,Eastern Africa,910,Africa,903
+Ethiopia,231,ETH,Eastern Africa,910,Africa,903
+French Southern Territories,260,ATF,Eastern Africa,910,Africa,903
+Kenya,404,KEN,Eastern Africa,910,Africa,903
+Madagascar,450,MDG,Eastern Africa,910,Africa,903
+Malawi,454,MWI,Eastern Africa,910,Africa,903
+Mauritius,480,MUS,Eastern Africa,910,Africa,903
+Mayotte,175,MYT,Eastern Africa,910,Africa,903
+Mozambique,508,MOZ,Eastern Africa,910,Africa,903
+Réunion,638,REU,Eastern Africa,910,Africa,903
+Rwanda,646,RWA,Eastern Africa,910,Africa,903
+Seychelles,690,SYC,Eastern Africa,910,Africa,903
+Somalia,706,SOM,Eastern Africa,910,Africa,903
+South Sudan,728,SSD,Eastern Africa,910,Africa,903
+Uganda,800,UGA,Eastern Africa,910,Africa,903
+United Republic of Tanzania,834,TZA,Eastern Africa,910,Africa,903
+Zambia,894,ZMB,Eastern Africa,910,Africa,903
+Zimbabwe,716,ZWE,Eastern Africa,910,Africa,903
+Angola,24,AGO,Middle Africa,911,Africa,903
+Cameroon,120,CMR,Middle Africa,911,Africa,903
+Central African Republic,140,CAF,Middle Africa,911,Africa,903
+Chad,148,TCD,Middle Africa,911,Africa,903
+Congo,178,COG,Middle Africa,911,Africa,903
+Democratic Republic of the Congo,180,COD,Middle Africa,911,Africa,903
+Equatorial Guinea,226,GNQ,Middle Africa,911,Africa,903
+Gabon,266,GAB,Middle Africa,911,Africa,903
+Sao Tome and Principe,678,STP,Middle Africa,911,Africa,903
+Botswana,72,BWA,Southern Africa,913,Africa,903
+Eswatini,748,SWZ,Southern Africa,913,Africa,903
+Lesotho,426,LSO,Southern Africa,913,Africa,903
+Namibia,516,"NAM",Southern Africa,913,Africa,903
+South Africa,710,ZAF,Southern Africa,913,Africa,903
+Benin,204,BEN,Western Africa,914,Africa,903
+Burkina Faso,854,BFA,Western Africa,914,Africa,903
+Cabo Verde,132,CPV,Western Africa,914,Africa,903
+Côte d’Ivoire,384,CIV,Western Africa,914,Africa,903
+Gambia,270,GMB,Western Africa,914,Africa,903
+Ghana,288,GHA,Western Africa,914,Africa,903
+Guinea,324,GIN,Western Africa,914,Africa,903
+Guinea-Bissau,624,GNB,Western Africa,914,Africa,903
+Liberia,430,LBR,Western Africa,914,Africa,903
+Mali,466,MLI,Western Africa,914,Africa,903
+Mauritania,478,MRT,Western Africa,914,Africa,903
+Niger,562,NER,Western Africa,914,Africa,903
+Nigeria,566,NGA,Western Africa,914,Africa,903
+Saint Helena,654,SHN,Western Africa,914,Africa,903
+Senegal,686,SEN,Western Africa,914,Africa,903
+Sierra Leone,694,SLE,Western Africa,914,Africa,903
+Togo,768,TGO,Western Africa,914,Africa,903
+Anguilla,660,AIA,Caribbean,915,America,904
+Antigua and Barbuda,28,ATG,Caribbean,915,Latin America and the Caribbean,904
+Aruba,533,ABW,Caribbean,915,Latin America and the Caribbean,904
+Bahamas,44,BHS,Caribbean,915,Latin America and the Caribbean,904
+Barbados,52,BRB,Caribbean,915,Latin America and the Caribbean,904
+"Bonaire, Sint Eustatius and Saba",535,BES,Caribbean,915,Latin America and the Caribbean,904
+British Virgin Islands,92,VGB,Caribbean,915,Latin America and the Caribbean,904
+Cayman Islands,136,CYM,Caribbean,915,Latin America and the Caribbean,904
+Cuba,192,CUB,Caribbean,915,Latin America and the Caribbean,904
+Curaçao,531,CUW,Caribbean,915,Latin America and the Caribbean,904
+Dominica,212,DMA,Caribbean,915,Latin America and the Caribbean,904
+Dominican Republic,214,DOM,Caribbean,915,Latin America and the Caribbean,904
+Grenada,308,GRD,Caribbean,915,Latin America and the Caribbean,904
+Guadeloupe,312,GLP,Caribbean,915,Latin America and the Caribbean,904
+Haiti,332,HTI,Caribbean,915,Latin America and the Caribbean,904
+Jamaica,388,JAM,Caribbean,915,Latin America and the Caribbean,904
+Martinique,474,MTQ,Caribbean,915,Latin America and the Caribbean,904
+Montserrat,500,MSR,Caribbean,915,Latin America and the Caribbean,904
+Puerto Rico,630,PRI,Caribbean,915,Latin America and the Caribbean,904
+Saint Barthélemy,652,BLM,Caribbean,915,Latin America and the Caribbean,904
+Saint Kitts and Nevis,659,KNA,Caribbean,915,Latin America and the Caribbean,904
+Saint Lucia,662,LCA,Caribbean,915,Latin America and the Caribbean,904
+Saint Martin (French Part),663,MAF,Caribbean,915,Latin America and the Caribbean,904
+Saint Vincent and the Grenadines,670,VCT,Caribbean,915,Latin America and the Caribbean,904
+Sint Maarten (Dutch part),534,SXM,Caribbean,915,Latin America and the Caribbean,904
+Trinidad and Tobago,780,TTO,Caribbean,915,Latin America and the Caribbean,904
+Turks and Caicos Islands,796,TCA,Caribbean,915,Latin America and the Caribbean,904
+United States Virgin Islands,850,VIR,Caribbean,915,Latin America and the Caribbean,904
+Belize,84,BLZ,Central America,916,Latin America and the Caribbean,904
+Costa Rica,188,CRI,Central America,916,Latin America and the Caribbean,904
+El Salvador,222,SLV,Central America,916,Latin America and the Caribbean,904
+Guatemala,320,GTM,Central America,916,Latin America and the Caribbean,904
+Honduras,340,HND,Central America,916,Latin America and the Caribbean,904
+Mexico,484,MEX,Central America,916,Latin America and the Caribbean,904
+Nicaragua,558,NIC,Central America,916,Latin America and the Caribbean,904
+Panama,591,PAN,Central America,916,Latin America and the Caribbean,904
+Argentina,32,ARG,South America,931,Latin America and the Caribbean,904
+Bolivia (Plurinational State of),68,BOL,South America,931,Latin America and the Caribbean,904
+Bouvet Island,74,BVT,South America,931,Latin America and the Caribbean,904
+Brazil,76,BRA,South America,931,Latin America and the Caribbean,904
+Chile,152,CHL,South America,931,Latin America and the Caribbean,904
+Colombia,170,COL,South America,931,Latin America and the Caribbean,904
+Ecuador,218,ECU,South America,931,Latin America and the Caribbean,904
+Falkland Islands (Malvinas),238,FLK,South America,931,Latin America and the Caribbean,904
+French Guiana,254,GUF,South America,931,Latin America and the Caribbean,904
+Guyana,328,GUY,South America,931,Latin America and the Caribbean,904
+Paraguay,600,PRY,South America,931,Latin America and the Caribbean,904
+Peru,604,PER,South America,931,Latin America and the Caribbean,904
+South Georgia and the South Sandwich Islands,239,SGS,South America,931,Latin America and the Caribbean,904
+Suriname,740,SUR,South America,931,Latin America and the Caribbean,904
+Uruguay,858,URY,South America,931,Latin America and the Caribbean,904
+Venezuela (Bolivarian Republic of),862,VEN,South America,931,Latin America and the Caribbean,904
+Bermuda,60,BMU,Northern America,905,Northern America,905
+Canada,124,CAN,Northern America,905,Northern America,905
+Greenland,304,GRL,Northern America,905,Northern America,905
+Saint Pierre and Miquelon,666,SPM,Northern America,905,Northern America,905
+United States of America,840,USA,Northern America,905,Northern America,905
+Kazakhstan,398,KAZ,Central Asia,5500,Asia,935
+Kyrgyzstan,417,KGZ,Central Asia,5500,Asia,935
+Tajikistan,762,TJK,Central Asia,5500,Asia,935
+Turkmenistan,795,TKM,Central Asia,5500,Asia,935
+Uzbekistan,860,UZB,Central Asia,5500,Asia,935
+China,156,CHN,Eastern Asia,906,Asia,935
+"China, Hong Kong Special Administrative Region",344,HKG,Eastern Asia,906,Asia,935
+"China, Macao Special Administrative Region",446,MAC,Eastern Asia,906,Asia,935
+Democratic People's Republic of Korea,408,PRK,Eastern Asia,906,Asia,935
+Japan,392,JPN,Eastern Asia,906,Asia,935
+Mongolia,496,MNG,Eastern Asia,906,Asia,935
+Republic of Korea,410,KOR,Eastern Asia,906,Asia,935
+Brunei Darussalam,96,BRN,South-eastern Asia,920,Asia,935
+Cambodia,116,KHM,South-eastern Asia,920,Asia,935
+Indonesia,360,IDN,South-eastern Asia,920,Asia,935
+Lao People's Democratic Republic,418,LAO,South-eastern Asia,920,Asia,935
+Malaysia,458,MYS,South-eastern Asia,920,Asia,935
+Myanmar,104,MMR,South-eastern Asia,920,Asia,935
+Philippines,608,PHL,South-eastern Asia,920,Asia,935
+Singapore,702,SGP,South-eastern Asia,920,Asia,935
+Thailand,764,THA,South-eastern Asia,920,Asia,935
+Timor-Leste,626,TLS,South-eastern Asia,920,Asia,935
+Viet Nam,704,VNM,South-eastern Asia,920,Asia,935
+Afghanistan,4,AFG,Southern Asia,5501,Asia,935
+Bangladesh,50,BGD,Southern Asia,5501,Asia,935
+Bhutan,64,BTN,Southern Asia,5501,Asia,935
+India,356,IND,Southern Asia,5501,Asia,935
+Iran (Islamic Republic of),364,IRN,Southern Asia,5501,Asia,935
+Maldives,462,MDV,Southern Asia,5501,Asia,935
+Nepal,524,NPL,Southern Asia,5501,Asia,935
+Pakistan,586,PAK,Southern Asia,5501,Asia,935
+Sri Lanka,144,LKA,Southern Asia,5501,Asia,935
+Armenia,51,ARM,Western Asia,922,Asia,935
+Azerbaijan,31,AZE,Western Asia,922,Asia,935
+Bahrain,48,BHR,Western Asia,922,Asia,935
+Cyprus,196,CYP,Western Asia,922,Asia,935
+Georgia,268,GEO,Western Asia,922,Asia,935
+Iraq,368,IRQ,Western Asia,922,Asia,935
+Israel,376,ISR,Western Asia,922,Asia,935
+Jordan,400,JOR,Western Asia,922,Asia,935
+Kuwait,414,KWT,Western Asia,922,Asia,935
+Lebanon,422,LBN,Western Asia,922,Asia,935
+Oman,512,OMN,Western Asia,922,Asia,935
+Qatar,634,QAT,Western Asia,922,Asia,935
+Saudi Arabia,682,SAU,Western Asia,922,Asia,935
+State of Palestine,275,PSE,Western Asia,922,Asia,935
+Syrian Arab Republic,760,SYR,Western Asia,922,Asia,935
+Turkey,792,TUR,Western Asia,922,Asia,935
+United Arab Emirates,784,ARE,Western Asia,922,Asia,935
+Yemen,887,YEM,Western Asia,922,Asia,935
+Eastern Europe,151,NA,Eastern Europe,923,Europe,908
+Belarus,112,BLR,Eastern Europe,923,Europe,908
+Bulgaria,100,BGR,Eastern Europe,923,Europe,908
+Czechia,203,CZE,Eastern Europe,923,Europe,908
+Hungary,348,HUN,Eastern Europe,923,Europe,908
+Poland,616,POL,Eastern Europe,923,Europe,908
+Republic of Moldova,498,MDA,Eastern Europe,923,Europe,908
+Romania,642,ROU,Eastern Europe,923,Europe,908
+Russian Federation,643,RUS,Eastern Europe,923,Europe,908
+Slovakia,703,SVK,Eastern Europe,923,Europe,908
+Ukraine,804,UKR,Eastern Europe,923,Europe,908
+Åland Islands,248,ALA,Northern Europe,924,Europe,908
+Channel Islands,830,NA,Northern Europe,924,Europe,908
+Guernsey,831,GGY,Northern Europe,924,Europe,908
+Jersey,832,JEY,Northern Europe,924,Europe,908
+Sark,680,NA,Northern Europe,924,Europe,908
+Denmark,208,DNK,Northern Europe,924,Europe,908
+Estonia,233,EST,Northern Europe,924,Europe,908
+Faroe Islands,234,FRO,Northern Europe,924,Europe,908
+Finland,246,FIN,Northern Europe,924,Europe,908
+Iceland,352,ISL,Northern Europe,924,Europe,908
+Ireland,372,IRL,Northern Europe,924,Europe,908
+Isle of Man,833,IMN,Northern Europe,924,Europe,908
+Latvia,428,LVA,Northern Europe,924,Europe,908
+Lithuania,440,LTU,Northern Europe,924,Europe,908
+Norway,578,NOR,Northern Europe,924,Europe,908
+Svalbard and Jan Mayen Islands,744,SJM,Northern Europe,924,Europe,908
+Sweden,752,SWE,Northern Europe,924,Europe,908
+United Kingdom of Great Britain and Northern Ireland,826,GBR,Northern Europe,924,Europe,908
+Albania,8,ALB,Southern Europe,925,Europe,908
+Andorra,20,AND,Southern Europe,925,Europe,908
+Bosnia and Herzegovina,70,BIH,Southern Europe,925,Europe,908
+Croatia,191,HRV,Southern Europe,925,Europe,908
+Gibraltar,292,GIB,Southern Europe,925,Europe,908
+Greece,300,GRC,Southern Europe,925,Europe,908
+Holy See,336,VAT,Southern Europe,925,Europe,908
+Italy,380,ITA,Southern Europe,925,Europe,908
+Malta,470,MLT,Southern Europe,925,Europe,908
+Montenegro,499,MNE,Southern Europe,925,Europe,908
+North Macedonia,807,MKD,Southern Europe,925,Europe,908
+Portugal,620,PRT,Southern Europe,925,Europe,908
+San Marino,674,SMR,Southern Europe,925,Europe,908
+Serbia,688,SRB,Southern Europe,925,Europe,908
+Slovenia,705,SVN,Southern Europe,925,Europe,908
+Spain,724,ESP,Southern Europe,925,Europe,908
+Austria,40,AUT,Western Europe,926,Europe,908
+Belgium,56,BEL,Western Europe,926,Europe,908
+France,250,FRA,Western Europe,926,Europe,908
+Germany,276,DEU,Western Europe,926,Europe,908
+Liechtenstein,438,LIE,Western Europe,926,Europe,908
+Luxembourg,442,LUX,Western Europe,926,Europe,908
+Monaco,492,MCO,Western Europe,926,Europe,908
+Netherlands,528,NLD,Western Europe,926,Europe,908
+Switzerland,756,CHE,Western Europe,926,Europe,908
+Australia,36,AUS,Australia and New Zealand,927,Oceania,909
+Christmas Island,162,CXR,Australia and New Zealand,927,Oceania,909
+Cocos (Keeling) Islands,166,CCK,Australia and New Zealand,927,Oceania,909
+Heard Island and McDonald Islands,334,HMD,Australia and New Zealand,927,Oceania,909
+New Zealand,554,NZL,Australia and New Zealand,927,Oceania,909
+Norfolk Island,574,NFK,Australia and New Zealand,927,Oceania,909
+Fiji,242,FJI,Melanesia,928,Oceania,909
+New Caledonia,540,NCL,Melanesia,928,Oceania,909
+Papua New Guinea,598,PNG,Melanesia,928,Oceania,909
+Solomon Islands,90,SLB,Melanesia,928,Oceania,909
+Vanuatu,548,VUT,Melanesia,928,Oceania,909
+Micronesia,57,NA,Melanesia,928,Oceania,909
+Guam,316,GUM,Melanesia,928,Oceania,909
+Kiribati,296,KIR,Melanesia,928,Oceania,909
+Marshall Islands,584,MHL,Melanesia,928,Oceania,909
+Micronesia (Federated States of),583,FSM,Melanesia,928,Oceania,909
+Nauru,520,NRU,Melanesia,928,Oceania,909
+Northern Mariana Islands,580,MNP,Melanesia,928,Oceania,909
+Palau,585,PLW,Melanesia,928,Oceania,909
+United States Minor Outlying Islands,581,UMI,Melanesia,928,Oceania,909
+American Samoa,16,ASM,Polynesia,957,Oceania,909
+Cook Islands,184,COK,Polynesia,957,Oceania,909
+French Polynesia,258,PYF,Polynesia,957,Oceania,909
+Niue,570,NIU,Polynesia,957,Oceania,909
+Pitcairn,612,PCN,Polynesia,957,Oceania,909
+Samoa,882,WSM,Polynesia,957,Oceania,909
+Tokelau,772,TKL,Polynesia,957,Oceania,909
+Tonga,776,TON,Polynesia,957,Oceania,909
+Tuvalu,798,TUV,Polynesia,957,Oceania,909
+Wallis and Futuna Islands,876,WLF,Polynesia,957,Oceania,909
