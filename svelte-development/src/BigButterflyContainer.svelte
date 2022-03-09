@@ -25,8 +25,6 @@
 
   let allQuestions = uniqueArray(questionToMode, "question");
 
-  let clicks = new clickContainer();
-  console.log(clicks);
   $: h = w * 74 / 91;
 
   $: if (selectedCountry !== "") {
@@ -36,6 +34,9 @@
 
     let possibleQuestions = createPossibleQuestions(possibleModes, questionToMode);
     let unnecessaryQuestions = createUnnecessaryQuestions(allQuestions, possibleQuestions);
+
+    let clicks = new clickContainer(possibleQuestions, possibleModes);
+    console.log(clicks);
 
     // console.log("allQuestions", allQuestions);
     // console.log("possibleQuestions", possibleQuestions);

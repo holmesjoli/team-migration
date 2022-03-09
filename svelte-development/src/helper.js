@@ -87,69 +87,21 @@ export class clickContainer {
   pathFalse = "#FFFFFF";
   pathNA = "#";
 
-  constructor() {
-    this.Q03 = false;
-    this.Q02 = false;
-    this.Q01 = false;
-    this.Q22 = false;
-    this.Q20 = false;
-    this.Q14 = false;
-    this.Q17 = false;
-    this.Q07 = false;
-    this.Q08 = false;
-    this.Q29 = false;
-    this.Q21 = false;
-    this.Q09 = false;
-    this.Q10 = false;
-    this.Q11 = false;
-    this.Q12 = false;
-    this.Q13 = false;
-    this.Q23 = false;
-    this.Q24 = false;
-    this.Q25 = false;
-    this.Q26 = false;
-    this.Q27 = false;
-    this.Q28 = false;
-    this.Q15 = false;
-    this.Q04 = false;
-    this.Q05 = false;
-    this.Q18 = false;
-    this.Q06 = false;
-    this.Q19 = false
-    this.Q16 = false;
+  constructor(possibleQuestions, possibleModes) {
+    this.questions = this.createMap(possibleQuestions);
+    this.modes = this.createMap(possibleModes);
+  }
 
-    this.A01a = false;
-    this.A01b = false;
-    this.A02a = false;
-    this.A02b = false;
-    this.A06a = false;
-    this.A06b = false;
-    this.A06c = false;
-    this.A06d = false;
-    this.A06e = false;
-    this.A06f = false;
-    this.A07 = false;
-    this.A08 = false;
-    this.A09 = false;
-    this.A10 = false;
-    this.A11 = false;
-    this.A12a = false;
-    this.A12b = false;
-    this.A13 = false;
-    this.A14 = false;
-    this.A16 = false;
-    this.A18 = false;
-    this.A19 = false;
-    this.A21 = false;
-    this.A22 = false;
-    this.A23 = false;
-    this.A24 = false;
-    this.A25 = false;
-    this.A26 = false;
+  createMap(array) {
+    let newMap = new Map();
+    for (let i of array) {
+      newMap.set(i, false);
+    }
+    return newMap
   }
 
   updateClick(id, status) {
-    this[id] = status;
+    this.questions.set(id, status);
     this.highlightPaths();
   }
 
