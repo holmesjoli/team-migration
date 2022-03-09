@@ -185,14 +185,12 @@ import { each } from 'svelte/internal';
 
 <section id="big-butterfly__container" bind:clientWidth="{w}">
   {#if selectedCountry !== ""}
-    <h1>
+    <h1 class="title">
       Paths to acquire citizenship in <span class="country-highlight" style="background-color: {selectedColor.vivid}">{selectedCountry}</span>
     </h1>
-      Click nodes
-        <svg
-          width=18
-          height=18
-        >
+    <div class="instructions">
+      Click
+        <svg width=27 height=18>
           <circle
             cx=9
             cy=9
@@ -203,7 +201,7 @@ import { each } from 'svelte/internal';
           >
           </circle>
         </svg>
-      to answer questions, see if there's a law that allows you to aquire citizenship with your condition.
+      to answer questions. Nodes will light up if there is a country-specific law that allows you to aquire citizenship with your condition.</div>
     {#if w !== undefined}
       <div id="citizenship-paths" style="height: {h}">
         <div id="butterfly__graphic">
