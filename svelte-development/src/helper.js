@@ -154,8 +154,8 @@ export class clickContainer {
 
     //A06b
     if (this.questions.get("Q22") && this.questions.get("Q24")) {
-      if(this.modes.get("A0b6") !== undefined) {
-        this.modes.set("A0b6", true);
+      if(this.modes.get("A06b") !== undefined) {
+        this.modes.set("A06b", true);
       }
     }
 
@@ -258,15 +258,15 @@ export class clickContainer {
 
     //A18
     if (this.questions.get("Q08")) {
-      if(this.modes.get("A07") !== undefined) {
-        this.modes.set("A07", true);
+      if(this.modes.get("A18") !== undefined) {
+        this.modes.set("A18", true);
       }
     }
 
     //A19
     if (this.questions.get("Q29")) {
-      if(this.modes.get("A07") !== undefined) {
-        this.modes.set("A07", true);
+      if(this.modes.get("A19") !== undefined) {
+        this.modes.set("A19", true);
       }
     }
 

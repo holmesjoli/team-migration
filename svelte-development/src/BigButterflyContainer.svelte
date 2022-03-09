@@ -77,7 +77,7 @@
         .selectAll("path")
         .each(function() {
           let id = select(this).attr("id")
-          if (!possibleModes.includes(id)) {
+          if (!filteredAvailableMode.includes(id)) {
             select(this)
               .attr("data-available", "false")
               .style("opacity", 0.1);
