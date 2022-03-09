@@ -14,16 +14,17 @@
   let hoveredRegionCode = "";
   let selectedCountry = "";
   
-  const butterflies = ["asset/butterfly1.svg", "asset/butterfly2.svg"]
+  const butterflies = ["asset/butterfly1.svg", "asset/butterfly2.svg", "asset/butterflyPath.svg"]
 
   let promise = getData();
 
   async function getData() {
-    let mapCentroidsD = await json("data/mapData/region-centroid.geojson");
+    let mapCentroidsD = await json("data/mapData/region-centroids.geojson");
     let mapOutlineD = await json("data/mapData/world.geojson");
     let butterflySvg1 = await text(butterflies[0])
     let butterflySvg2 = await text(butterflies[1])
-    let butterflySvgs = [butterflySvg1, butterflySvg2]
+    let butterflySvg3 = await text(butterflies[2])
+    let butterflySvgs = [butterflySvg1, butterflySvg2, butterflySvg3]
     let byCountryD = await csv("data/acq_by_country.csv")
     let warnings = await csv("data/warnings.csv")
     let definitions = await csv("data/definitions.csv")
@@ -31,8 +32,9 @@
     let acqMode = await csv("data/modes_acq.csv")
     let regions = await csv("data/regions.csv")
     let regionFlow = await csv("data/region_flows.csv")
+    let questionsToMode = await csv("data/questions_modes.csv")
     datasets = [mapCentroidsD, mapOutlineD, butterflySvgs, byCountryD, warnings,
-    definitions, questions, acqMode, regions, regionFlow];
+    definitions, questions, acqMode, regions, regionFlow, questionsToMode];
     parseData(datasets);
   }
 

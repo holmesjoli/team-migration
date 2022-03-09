@@ -7,6 +7,7 @@
   import Popup from './Popup.svelte';
   import regions from './regions.js';
 
+  export let width;
   export let regionFlow;
   export let datasets;
   export let data;
@@ -16,13 +17,15 @@
   export let hoveredRegionCode;
   export let selectedCountry;
 
+  let dataset = [datasets[3], datasets[4], datasets[5], datasets[6], datasets[7], datasets[10]]
+
   let links = [];
 
   const { open } = getContext('simple-modal');
 
   const sScale = scaleLinear()
     .domain(extent(data.features, d => d.properties.VALUE))
-    .range([0.25, 1]);
+    .range([0.25, width / 1200]);
 
   const pathScale = scaleLinear()
     .domain(extent(regionFlow, d => d.value))
@@ -43,6 +46,8 @@
   )
 
   $: {
+    sScale.range([0.25, width / 1200]);
+
     const simulation = forceSimulation(data.features)
       .force("collide", forceCollide().radius(d => sScale(d.properties.VALUE) * 55))
       .force("x", forceX().x(d => projection(d.geometry.coordinates)[0]))
@@ -90,7 +95,7 @@
     select(this).attr('fill-opacity', 1);
     let selectedRegionIndex = select(this).attr('data-region-index');
     selectedRegion = regions[selectedRegionIndex].name;
-    open(Popup, { selectedRegion: selectedRegion, selectedCountry: selectedCountry, datasets: datasets });
+    open(Popup, { selectedRegion: selectedRegion, selectedCountry: selectedCountry, datasets: dataset, butterflies: butterflies});
 
     if (selectedCountry !== "") {
       let container = select(".country-cards__container");
@@ -117,6 +122,7 @@
   }
 
   function setDasharray() {
+    console.log("1 second");
     dasharray = "1 3" ? "1 1" : "1 3"
     setTimeout(setDasharray, 1000);
   }
@@ -176,7 +182,7 @@
           on:mouseover={handleMouseOver}
           on:mouseout={handleMouseOut}
           on:click={handleClick}
-          xlink:href="#butterfly-{regionShape}"
+          xlink:href="#butterfly-0"
           transform='scale({sScale(value)})'
           stroke="{regions[regionIndex].color}"
           stroke-width=1

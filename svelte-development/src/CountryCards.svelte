@@ -53,7 +53,11 @@
     select(this).style("background", color)
     use.attr('fill', "white").attr('stroke', "white")
     select(this).select(".country-card__country-name").style("color", "white")
-    selectedCountry = use.attr("data-country")
+    selectedCountry = use.attr("data-country");
+
+    setTimeout(() => {
+      select("#big-butterfly__container").select("h1").node().scrollIntoView({behavior: "smooth", block: "start"});
+    }, 10);
   }
 
 
@@ -74,7 +78,7 @@
           <svg width=100 height=100>
             <use
               transform="translate({selectedRegionInfo.shape == 0 ? 4.5 : 1.5}, {selectedRegionInfo.shape == 0 ? 13 : 6.5})"
-              xlink:href="#butterfly-{selectedRegionInfo.shape}"
+              xlink:href="#butterfly-0"
               stroke="{selectedRegionInfo.color}"
               stroke-width=1
               fill="{selectedRegionInfo.color}"

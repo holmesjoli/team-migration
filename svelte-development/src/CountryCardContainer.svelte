@@ -4,9 +4,6 @@
   export let selectedRegion;
   export let selectedCountry;
   export let data;
-
-  console.log(data);
-
 </script>
 
 <section>
