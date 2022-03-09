@@ -1,4 +1,14 @@
-import { scaleOrdinal } from "d3";
+import { scaleSqrt, scaleOrdinal } from 'd3';
+
+//Title size scale
+export function sScale() {
+
+    const sScale =  scaleSqrt()
+        .domain([5E5, 1E6, 5E6, 1E7])
+        .range([.15, .4]);
+
+    return sScale;
+}
 
 // Title Unique Array
 // Returns the unique values of a variable in a dataset as an array
