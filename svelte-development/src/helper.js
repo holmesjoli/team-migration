@@ -1,4 +1,5 @@
 import regions from "./regions";
+import { select } from "d3";
 
 // Title Unique Array
 // Returns the unique values of a variable in a dataset as an array
@@ -310,5 +311,24 @@ export class clickContainer {
         this.modes.set("A26", true);
       }
     }
+  }
+}
+
+export function highlightPath(clicks, butterflyPathsG, bodyColor = "orange", pathColor = "red") {
+
+  for (let i of clicks.modes) {
+
+    let color;
+    if (i[1]) {
+      select("#butterfly__head")
+        .attr("fill", bodyColor)
+      color = pathColor
+    } else {
+      color = "#FFFFFF"
+    }
+
+    butterflyPathsG
+      .select("#"+i[0])
+      .attr("stroke", color)
   }
 }

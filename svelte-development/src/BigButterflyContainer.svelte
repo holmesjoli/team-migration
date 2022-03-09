@@ -1,7 +1,7 @@
 <script>
   import { afterUpdate } from 'svelte';
   import { select, selectAll, scaleOrdinal } from "d3";
-  import {uniqueArray, findRegionColor, getQuestionWithCountryName, createPossibleQuestions, createUnnecessaryQuestions, clickContainer} from "./helper.js"
+  import {uniqueArray, findRegionColor, getQuestionWithCountryName, createPossibleQuestions, createUnnecessaryQuestions, clickContainer, highlightPath} from "./helper.js"
   import Documentation from './Documentation.svelte'
   import regions from './regions.js'
   import { each } from 'svelte/internal';
@@ -24,10 +24,6 @@
     "A19", "A18", "A16"] 
 
   let allQuestions = uniqueArray(questionToMode, "question");
-
-  let fillScale = scaleOrdinal()
-      .domain([true, false])
-      .range(["red", "purple"]);
 
   $: h = w * 74 / 91;
 
@@ -166,43 +162,10 @@
         let id = select(this).property("id");
         let status = true;
         clicks.updateClick(id, status);
-        console.log(clicks);
-        console.log(clicks.modes)
 
-        if (status) {
-
-
-          for (let i of clicks.modes) {
-
-            let color;
-            if (i[1]) {
-              console.log(i[1])
-              color = "red"
-              select("#butterfly__head")
-                .attr("fill", "orange")
-            } else {
-              color = "#FFFFFF"
-            }
-            console.log(i[1])
-            console.log(i[0])
-            console.log(color);
-
-            butterflyPathsG
-              .select("#"+i[0])
-              .attr("stroke", color)
-          }
-          // let blah = Array.from(clicks.modes.values());
-          // console.log(clicks.modes.keys[blah]);
-          // console.log(blah);
-
-          // for (let i in clicks.modes) {
-          //   console.log(i)
-          //   // butterflyPathsG
-          //   //   .select("#A01a")
-          //   //   .attr("stroke", "red")
-          // }
-
-        }
+        // if (status) {
+          highlightPath(clicks, butterflyPathsG);
+        // }
 
         // if (answerStatus == "no") {
         //   status = false;
@@ -211,7 +174,6 @@
         //   status = true;
         //   select(this).attr("data-answer", "no").attr("fill", "white")
         // }
-        // console.log(status);
 
         // console.log(select(this))
       })
