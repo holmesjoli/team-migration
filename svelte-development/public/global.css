@@ -20,3 +20,8 @@ section {
   margin: 3rem auto;
   text-align: center;
 }
+
+
+#legend {
+  top: 0;
+}
