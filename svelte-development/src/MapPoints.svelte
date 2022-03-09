@@ -1,12 +1,13 @@
 <script>
   import { spring } from "svelte/motion";
   import { getContext } from 'svelte';
-  import { scaleLinear, extent, min, max, select, selectAll, groups, line } from 'd3';
+  import { scaleSqrt, scaleLinear, extent, select, selectAll, groups, line } from 'd3';
   import { forceSimulation, forceCollide, forceLink, forceX, forceY } from "d3-force";
   
   import Popup from './Popup.svelte';
   import regions from './regions.js';
 
+  export let width;
   export let regionFlow;
   export let datasets;
   export let data;
@@ -22,7 +23,7 @@
 
   const sScale = scaleLinear()
     .domain(extent(data.features, d => d.properties.VALUE))
-    .range([0.25, 1]);
+    .range([0.25, width / 1200]);
 
   const pathScale = scaleLinear()
     .domain(extent(regionFlow, d => d.value))
@@ -43,6 +44,8 @@
   )
 
   $: {
+    sScale.range([0.25, width / 1200]);
+
     const simulation = forceSimulation(data.features)
       .force("collide", forceCollide().radius(d => sScale(d.properties.VALUE) * 55))
       .force("x", forceX().x(d => projection(d.geometry.coordinates)[0]))
@@ -178,13 +181,14 @@
           on:mouseout={handleMouseOut}
           on:click={handleClick}
           xlink:href="#butterfly-{regionShape}"
-          transform='scale({sScale(value)})'
+          transform='scale({sScale(value)}, {sScale(value)})'
           stroke="{regions[regionIndex].color}"
           stroke-width=1
           fill="{regions[regionIndex].color}"
           fill-opacity="0.5"
           data-region-index="{regionIndex}"
           data-region-code="{regionCode}"
+          data-value="{value}"
         />
       </g>
     </g>

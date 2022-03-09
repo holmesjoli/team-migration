@@ -14,7 +14,12 @@ const regions = [
   { name: "Central Asia", shape: 1, color: "#F6CC52", code: "5500" },
   { name: "Southern Europe", shape: 1, color: "#78B2EB", code: "925" },
   { name: "Northern Europe", shape: 1, color: "#78B2EB", code: "924" },
-  { name: "Australia and New Zealand", shape: 0, color: "#AFD164", code: "927" },
+  {
+    name: "Australia and New Zealand",
+    shape: 0,
+    color: "#AFD164",
+    code: "927",
+  },
   { name: "Western Asia", shape: 1, color: "#F6CC52", code: "922" },
   { name: "Southern Asia", shape: 1, color: "#F6CC52", code: "5501" },
   { name: "Western Europe", shape: 1, color: "#78B2EB", code: "926" },

@@ -19,7 +19,7 @@
   let promise = getData();
 
   async function getData() {
-    let mapCentroidsD = await json("data/mapData/region-centroid.geojson");
+    let mapCentroidsD = await json("data/mapData/region-centroids.geojson");
     let mapOutlineD = await json("data/mapData/world.geojson");
     let butterflySvg1 = await text(butterflies[0])
     let butterflySvg2 = await text(butterflies[1])
@@ -32,9 +32,11 @@
     let acqMode = await csv("data/modes_acq.csv")
     let regions = await csv("data/regions.csv")
     let regionFlow = await csv("data/region_flows.csv")
+    let totalMigrants = await csv("data/total_migrants.csv")
     datasets = [mapCentroidsD, mapOutlineD, butterflySvgs, byCountryD, warnings,
-    definitions, questions, acqMode, regions, regionFlow];
+    definitions, questions, acqMode, regions, regionFlow, totalMigrants];
     parseData(datasets);
+    console.log(datasets)
   }
 
   function parseData(datasets) {
@@ -46,6 +48,11 @@
     // parse by regionFlow
     datasets[9].map(d => {
       d.value = +d.value;
+    })
+
+    // parse totalMigrants
+    datasets[10].map(d => {
+      d.TOTAL_MIGRANTS = +d.TOTAL_MIGRANTS;
     })
   }
 
