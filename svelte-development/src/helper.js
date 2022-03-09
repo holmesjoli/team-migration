@@ -146,7 +146,7 @@ export class clickContainer {
     }
 
     //A06a //come back to requires extra coding
-    // if (this.questions.Q22 & this.questions.blah) {
+    // if (this.questions.Q22 & this.questions.get("Q23")) {
     //  if(this.modes.get("A06a") !== undefined) {
     //   this.mode.set("A06a", true);
     //  }
@@ -155,7 +155,7 @@ export class clickContainer {
     //A06b
     if (this.questions.get("Q22") && this.questions.get("Q24")) {
       if(this.modes.get("A0b6") !== undefined) {
-        this.modes.set("A06b", true);
+        this.modes.set("A0b6", true);
       }
     }
 

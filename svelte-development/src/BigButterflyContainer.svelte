@@ -46,6 +46,7 @@
     // filter and see what modes are available
     let filteredAvailableMode = availableMode.filter(m => possibleModes.includes(m));
     console.log("filteredAvailableMode", filteredAvailableMode);
+    console.log(filteredAvailableMode);
 
     afterUpdate(() => {
       // set default colors of the big butterfly
@@ -76,7 +77,7 @@
         .selectAll("path")
         .each(function() {
           let id = select(this).attr("id")
-          if (!filteredAvailableMode.includes(id)) {
+          if (!possibleModes.includes(id)) {
             select(this)
               .attr("data-available", "false")
               .style("opacity", 0.1);
