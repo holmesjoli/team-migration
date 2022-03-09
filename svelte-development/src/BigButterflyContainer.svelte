@@ -1,7 +1,7 @@
 <script>
   import { afterUpdate } from 'svelte';
   import { select, selectAll } from "d3";
-  import {uniqueArray, findRegionColor, getQuestionWithCountryName, createPossibleQuestions, createUnnecessaryQuestions} from "./helper.js"
+  import {uniqueArray, findRegionColor, getQuestionWithCountryName, createPossibleQuestions, createUnnecessaryQuestions, clickContainer} from "./helper.js"
   import Documentation from './Documentation.svelte'
   import regions from './regions.js'
   import { each } from 'svelte/internal';
@@ -24,6 +24,9 @@
     "A19", "A18", "A16"] 
 
   let allQuestions = uniqueArray(questionToMode, "question");
+
+  let clicks = new clickContainer();
+  console.log(clicks);
   $: h = w * 74 / 91;
 
   $: if (selectedCountry !== "") {
@@ -34,9 +37,9 @@
     let possibleQuestions = createPossibleQuestions(possibleModes, questionToMode);
     let unnecessaryQuestions = createUnnecessaryQuestions(allQuestions, possibleQuestions);
 
-    console.log("allQuestions", allQuestions);
-    console.log("possibleQuestions", possibleQuestions);
-    console.log("unnecessaryQuestions", unnecessaryQuestions);
+    // console.log("allQuestions", allQuestions);
+    // console.log("possibleQuestions", possibleQuestions);
+    // console.log("unnecessaryQuestions", unnecessaryQuestions);
 
     // filter and see what modes are available
     let filteredAvailableMode = availableMode.filter(m => possibleModes.includes(m));
@@ -151,13 +154,18 @@
       })
 
       butterflyCirclesG.selectAll("circle").on("click", function() {
+
+        let id = select(this).property("id");
+        clicks.updateClick(id);
+        console.log(clicks);
+
         let answerStatus = select(this).attr("data-answer")
         if (answerStatus == "no") {
           select(this).attr("data-answer", "yes").attr("fill", "black")
         } else {
           select(this).attr("data-answer", "no").attr("fill", "white")
         }
-        console.log(select(this))
+        // console.log(select(this))
       })
     })
 

@@ -80,3 +80,42 @@ export function createUnnecessaryQuestions(allQuestions, possibleQuestions) {
 
   return unnecessaryQuestions;
 }
+
+export class clickContainer {
+
+  constructor() {
+    this.Q3 = false;
+    this.Q2 = false;
+    this.Q1 = false;
+    this.Q22 = false;
+    this.Q20 = false;
+    this.Q14 = false;
+    this.Q17 = false;
+    this.Q7 = false;
+    this.Q08 = false;
+    this.Q29 = false;
+    this.Q21 = false;
+    this.Q9 = false;
+    this.Q10 = false;
+    this.Q11 = false;
+    this.Q12 = false;
+    this.Q13 = false;
+    this.Q23 = false;
+    this.Q24 = false;
+    this.Q25 = false;
+    this.Q26 = false;
+    this.Q27 = false;
+    this.Q28 = false;
+    this.Q15 = false;
+    this.Q4 = false;
+    this.Q5 = false;
+    this.Q18 =false;
+    this.Q6 = false;
+    this.Q19 = false
+    this.Q16 = false;
+  }
+
+  updateClick(id) {
+    this[id] = true;
+  }
+}
