@@ -224,12 +224,4 @@ import { each } from 'svelte/internal';
     padding: 0.3em 0.5em;
     border-radius: 8px;
   }
-  #documentation {
-    display: flex;
-    flex-direction: row;
-  }
-  #documentation div {
-    background: rgb(211, 211, 211);
-    max-height: 75px;
-  }
 </style>
