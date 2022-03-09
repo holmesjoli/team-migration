@@ -8,7 +8,7 @@
     const sScale = scaleLinear()
       .domain(extent(data.features, d => d.properties.VALUE))
       .range([0.25, width / 1200]);
-    let legendH = 300;
+    let legendH = 400;
 
     let legendD = [
       { value: 1000000, text: "< 1 million" },
