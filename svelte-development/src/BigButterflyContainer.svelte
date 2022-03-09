@@ -156,15 +156,21 @@
       butterflyCirclesG.selectAll("circle").on("click", function() {
 
         let id = select(this).property("id");
-        clicks.updateClick(id);
-        console.log(clicks);
-
-        let answerStatus = select(this).attr("data-answer")
+        let answerStatus = select(this).attr("data-answer");
+        let status;
+  
         if (answerStatus == "no") {
+          status = false;
           select(this).attr("data-answer", "yes").attr("fill", "black")
         } else {
+          status = true;
           select(this).attr("data-answer", "no").attr("fill", "white")
         }
+
+        clicks.updateClick(id, status);
+        console.log(status);
+        console.log(clicks);
+
         // console.log(select(this))
       })
     })

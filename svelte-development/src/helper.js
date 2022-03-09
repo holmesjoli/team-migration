@@ -148,8 +148,9 @@ export class clickContainer {
     this.A26 = false;
   }
 
-  updateClick(id) {
-    this[id] = true;
+  updateClick(id, status) {
+    this[id] = status;
+    this.highlightPaths();
   }
 
   highlightPaths() {
