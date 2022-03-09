@@ -102,10 +102,10 @@ export class clickContainer {
 
   updateClick(id, status) {
     this.questions.set(id, status);
-    this.highlightPaths();
+    this.updatePaths();
   }
 
-  highlightPaths() {
+  updatePaths() {
     //A01a
     if (this.questions.get("Q03") && this.questions.get("Q02")) {
       this.mode.set("A01a", true);
