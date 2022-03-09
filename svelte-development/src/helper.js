@@ -20,3 +20,15 @@ export function findRegionColor(region) {
   };
   return color;
 }
+
+// Title Get Questions With Country Name
+// Param Places country name into the question
+export function getQuestionWithCountryName(selectedCountry, question) {
+  let words = question.split(/[\s}]+/)
+  let index = words.findIndex(w => w == "{cntry")
+  if (index !== -1) {
+    words[index] = selectedCountry
+  }
+  words = words.join(" ").replace(/\s+(\W)/g, "$1")
+  return words
+}

@@ -1,10 +1,10 @@
 <script>
   import { afterUpdate } from 'svelte';
   import { select, selectAll } from "d3";
-  import {uniqueArray, findRegionColor} from "./helper.js"
+  import {uniqueArray, findRegionColor, getQuestionWithCountryName} from "./helper.js"
   import Documentation from './Documentation.svelte'
   import regions from './regions.js'
-import { each } from 'svelte/internal';
+  import { each } from 'svelte/internal';
 
   export let selectedRegion;
   export let selectedCountry;
@@ -64,8 +64,10 @@ import { each } from 'svelte/internal';
               .style("opacity", 0.1);
           }
         })
+
       let butterflyCirclesG = butterflySel
         .select("#butterfly__circles")
+
       butterflyCirclesG
         .selectAll("circle")
         .attr("fill", "white")
@@ -74,6 +76,7 @@ import { each } from 'svelte/internal';
         .attr("data-available", "true")
         .attr("data-answer", "no")
         .style("cursor", "pointer")
+
       butterflyCirclesG
         .selectAll("circle")
         .each(function() {
@@ -94,12 +97,14 @@ import { each } from 'svelte/internal';
               h: q.h_side,
               v: q.v_side
             };
+
             let node = butterflyCirclesG.select(`#${id}`);
             if (q.visibility == "hidden") {
               node
                 .attr("stroke", "lightgray")
                 .style("cursor", "default")
             }
+
             let position = [+node.attr("cx"), +node.attr("cy")]
 
             select("#butterfly__questions")
@@ -172,15 +177,6 @@ import { each } from 'svelte/internal';
     // }
   }
 
-  function getQuestionWithCountryName(selectedCountry, question) {
-    let words = question.split(/[\s}]+/)
-    let index = words.findIndex(w => w == "{cntry")
-    if (index !== -1) {
-      words[index] = selectedCountry
-    }
-    words = words.join(" ").replace(/\s+(\W)/g, "$1")
-    return words
-  }
 </script>
 
 <section id="big-butterfly__container" bind:clientWidth="{w}">
