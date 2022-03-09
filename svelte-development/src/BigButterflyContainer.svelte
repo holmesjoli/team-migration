@@ -1,6 +1,6 @@
 <script>
   import { afterUpdate } from 'svelte';
-  import { select, selectAll } from "d3";
+  import { select, selectAll, scaleOrdinal } from "d3";
   import {uniqueArray, findRegionColor, getQuestionWithCountryName, createPossibleQuestions, createUnnecessaryQuestions, clickContainer} from "./helper.js"
   import Documentation from './Documentation.svelte'
   import regions from './regions.js'
@@ -25,6 +25,10 @@
 
   let allQuestions = uniqueArray(questionToMode, "question");
 
+  let fillScale = scaleOrdinal()
+      .domain([true, false])
+      .range(["red", "purple"]);
+
   $: h = w * 74 / 91;
 
   $: if (selectedCountry !== "") {
@@ -38,9 +42,10 @@
     let clicks = new clickContainer(possibleQuestions, possibleModes);
     console.log(clicks);
 
-    // console.log("allQuestions", allQuestions);
-    // console.log("possibleQuestions", possibleQuestions);
-    // console.log("unnecessaryQuestions", unnecessaryQuestions);
+    console.log("possibleModes", possibleModes);
+    console.log("allQuestions", allQuestions);
+    console.log("possibleQuestions", possibleQuestions);
+    console.log("unnecessaryQuestions", unnecessaryQuestions);
 
     // filter and see what modes are available
     let filteredAvailableMode = availableMode.filter(m => possibleModes.includes(m));
@@ -68,6 +73,8 @@
         .attr("stroke-width", 5)
         .attr("data-available", "true")
         .attr("data-active", "false");
+
+      console.log(butterflyPathsG);
 
       butterflyPathsG
         .selectAll("path")
@@ -157,20 +164,54 @@
       butterflyCirclesG.selectAll("circle").on("click", function() {
 
         let id = select(this).property("id");
-        let answerStatus = select(this).attr("data-answer");
-        let status;
-  
-        if (answerStatus == "no") {
-          status = false;
-          select(this).attr("data-answer", "yes").attr("fill", "black")
-        } else {
-          status = true;
-          select(this).attr("data-answer", "no").attr("fill", "white")
+        let status = true;
+        clicks.updateClick(id, status);
+        console.log(clicks);
+        console.log(clicks.modes)
+
+        if (status) {
+
+
+          for (let i of clicks.modes) {
+
+            let color;
+            if (i[1]) {
+              console.log(i[1])
+              color = "red"
+              select("#butterfly__head")
+                .attr("fill", "orange")
+            } else {
+              color = "#FFFFFF"
+            }
+            console.log(i[1])
+            console.log(i[0])
+            console.log(color);
+
+            butterflyPathsG
+              .select("#"+i[0])
+              .attr("stroke", color)
+          }
+          // let blah = Array.from(clicks.modes.values());
+          // console.log(clicks.modes.keys[blah]);
+          // console.log(blah);
+
+          // for (let i in clicks.modes) {
+          //   console.log(i)
+          //   // butterflyPathsG
+          //   //   .select("#A01a")
+          //   //   .attr("stroke", "red")
+          // }
+
         }
 
-        clicks.updateClick(id, status);
-        console.log(status);
-        console.log(clicks);
+        // if (answerStatus == "no") {
+        //   status = false;
+        //   select(this).attr("data-answer", "yes").attr("fill", "black")
+        // } else {
+        //   status = true;
+        //   select(this).attr("data-answer", "no").attr("fill", "white")
+        // }
+        // console.log(status);
 
         // console.log(select(this))
       })

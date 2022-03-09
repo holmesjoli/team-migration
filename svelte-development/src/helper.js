@@ -105,144 +105,210 @@ export class clickContainer {
     this.updatePaths();
   }
 
+  highlightPaths() {
+
+    // d3.scaleOrdinal()
+    //   .domain([true, false])
+    //   .range(["red", "purple"])
+
+  //   let modes = Array.from(modes.values())
+  //   this.modes.filter(d => )
+  }
+
   updatePaths() {
     //A01a
     if (this.questions.get("Q03") && this.questions.get("Q02")) {
-      this.mode.set("A01a", true);
+      if(this.modes.get("A01a") !== undefined) {
+        this.modes.set("A01a", true);
+      }
     }
 
     //A01b
     if (this.questions.get("Q03") && !this.questions.get("Q02")) {
-      this.mode.set("A01b", true);
+      if(this.modes.get("A01b") !== undefined) {
+        this.modes.set("A01b", true);
+      }
     }
 
     //A02a
     if (this.questions.get("Q02")) {
-      this.mode.set("A02a", true);
+      if(this.modes.get("A02a") !== undefined) {
+        this.modes.set("A02a", true);
+      }
     }
 
     //A02b
     if (this.questions.get("Q01") & this.questions.get("Q02")) {
-      this.mode.set("A02b", true);
+      if(this.modes.get("A02b") !== undefined) {
+        this.modes.set("A02b", true);
+      }
     }
 
     //A06a //come back to requires extra coding
     // if (this.questions.Q22 & this.questions.blah) {
+    //  if(this.modes.get("A06a") !== undefined) {
     //   this.mode.set("A06a", true);
+    //  }
     // }
 
     //A06b
     if (this.questions.get("Q22") && this.questions.get("Q24")) {
-      this.mode.set("A06b", true);
+      if(this.modes.get("A0b6") !== undefined) {
+        this.modes.set("A06b", true);
+      }
     }
 
     //A06c
     if (this.questions.get("Q22") && this.questions.get("Q25")) {
-      this.mode.set("A06c", true);
+      if(this.modes.get("A06c") !== undefined) {
+        this.modes.set("A06c", true);
+      }
     }
 
     //A06d
     if (this.questions.get("Q22") && this.questions.get("Q26")) {
-      this.mode.set("A06d", true);
+      if(this.modes.get("A06d") !== undefined) {
+        this.modes.set("A06d", true);
+      }
     }
     //A06e
     if (this.questions.get("Q22") && this.questions.get("Q27")) {
-      this.mode.set("A06e", true);
+      if(this.modes.get("A06e") !== undefined) {
+        this.modes.set("A06e", true);
+      }
     }
 
     //A06f
     if (this.questions.get("Q22") && this.questions.get("Q28")) {
-      this.mode.set("A06f", true);
+      if(this.modes.get("A06f") !== undefined) {
+        this.modes.set("A06f", true);
+      }
     }
 
     //A07
     if (this.questions.get("Q20")) {
-      this.mode.set("A07", true);
+      if(this.modes.get("A07") !== undefined) {
+        this.modes.set("A07", true);
+      }
     }
 
     //A08
     if (this.questions.get("Q14") && this.questions.get("Q15")) {
-      this.mode.set("A08", true);
+      if(this.modes.get("A08") !== undefined) {
+        this.modes.set("A08", true);
+      }
     }
 
     //A09
     if (this.questions.get("Q23") && this.questions.get("Q04") && this.questions.get("Q6")) {
-      this.mode.set("A09", true);
+      if(this.modes.get("A09") !== undefined) {
+        this.modes.set("A09", true);
+      }
     }
 
     //A10
     if (this.questions.get("Q03") && this.questions.get("Q05")) {
-      this.mode.set("A10", true);
+      if(this.modes.get("A10") !== undefined) {
+        this.modes.set("A10", true);
+      }
     }
 
     //A11
     if (this.questions.get("Q17") && this.questions.get("Q18")) {
-      this.mode.set("A11", true);
+      if(this.modes.get("A11") !== undefined) {
+        this.modes.set("A11", true);
+      }
     }
 
     //A12a
     if (this.questions.get("Q17") && this.questions.get("Q18") && this.questions.get("Q19")) {
-      this.mode.set("A12a", true);
+      if(this.modes.get("A12a") !== undefined) {
+        this.modes.set("A12a", true);
+      }
     }
 
     //A12b
     if (this.questions.get("Q17") && this.questions.get("Q18") && !this.questions.get("Q19")) {
-      this.mode.set("A12b", true);
+      if(this.modes.get("A12b") !== undefined) {
+        this.modes.set("A12b", true);
+      }
     }
 
     //A13
     if (this.questions.get("Q14") && this.questions.get("Q15") && this.questions.get("Q16")) {
-      this.mode.set("A13", true);
+      if(this.modes.get("A13") !== undefined) {
+        this.modes.set("A13", true);
+      }
     }
 
     //A14
     if (this.questions.get("Q03") && this.questions.get("Q04") && this.questions.get("Q06")) {
-      this.mode.set("A14", true);
+      if(this.modes.get("A14") !== undefined) {
+        this.modes.set("A14", true);
+      }
     }
 
     //A16
     if (this.questions.get("Q07")) {
-      this.mode.set("A16", true);
+      if(this.modes.get("A16") !== undefined) {
+        this.modes.set("A16", true);
+      }
     }
 
     //A18
     if (this.questions.get("Q08")) {
-      this.mode.set("A18", true);
+      if(this.modes.get("A07") !== undefined) {
+        this.modes.set("A07", true);
+      }
     }
 
     //A19
     if (this.questions.get("Q29")) {
-      this.mode.set("A19", true);
+      if(this.modes.get("A07") !== undefined) {
+        this.modes.set("A07", true);
+      }
     }
 
     //A21
     if (this.questions.get("Q21")) {
-      this.mode.set("A21", true);
+      if(this.modes.get("A21") !== undefined) {
+        this.modes.set("A21", true);
+      }
     }
 
     //A22
     if (this.questions.get("Q09")) {
-      this.mode.set("A22", true);
+      if(this.modes.get("A22") !== undefined) {
+        this.modes.set("A22", true);
+      }
     }
 
     //A23
     if (this.questions.get("Q10")) {
-      this.mode.set("A23", true);
+      if(this.modes.get("A23") !== undefined) {
+        this.modes.set("A23", true);
+      }
     }
 
     //A24
     if (this.questions.get("Q11")) {
-      this.mode.set("A24", true);
+      if(this.modes.get("A24") !== undefined) {
+        this.modes.set("A24", true);
+      }
     }
 
     //A25
     if (this.questions.get("Q12")) {
-      this.mode.set("A25", true);
+      if(this.modes.get("A25") !== undefined) {
+        this.modes.set("A25", true);
+      }
     }
 
     //A26
     if (this.questions.get("Q13")) {
-      this.mode.set("A26", true);
+      if(this.modes.get("A26") !== undefined) {
+        this.modes.set("A26", true);
+      }
     }
   }
 }
