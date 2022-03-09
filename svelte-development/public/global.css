@@ -9,6 +9,7 @@ body {
   scroll-behavior: smooth;
   color: #222222;
   font-family: "Roboto", sans-serif;
+  text-align: center;
 }
 
 * {
@@ -17,6 +18,17 @@ body {
 
 section {
   width: 90%;
-  margin: 3rem auto;
-  text-align: center;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 30pt;
+  margin-bottom: 5px;
+}
+
+h2 {
+  font-size: 20pt;
+  font-style: italic;
+  margin-bottom: 5px;
+  margin-top: 10px;
 }

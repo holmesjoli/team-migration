@@ -56,7 +56,6 @@
     selectedCountry = use.attr("data-country")
   }
 
-
 </script>
 
 <div class="country-cards__container">
