@@ -107,142 +107,142 @@ export class clickContainer {
 
   highlightPaths() {
     //A01a
-    if (this.Q03 && this.Q02) {
-      this.A01a = true;
+    if (this.questions.get("Q03") && this.questions.get("Q02")) {
+      this.mode.set("A01a", true);
     }
 
     //A01b
-    if (this.Q03 && !this.Q02) {
-      this.A01b = true;
+    if (this.questions.get("Q03") && !this.questions.get("Q02")) {
+      this.mode.set("A01b", true);
     }
 
     //A02a
-    if (this.Q02) {
-      this.A02a = true;
+    if (this.questions.get("Q02")) {
+      this.mode.set("A02a", true);
     }
 
     //A02b
-    if (this.Q01 & this.Q02) {
-      this.A02b = true;
+    if (this.questions.get("Q01") & this.questions.get("Q02")) {
+      this.mode.set("A02b", true);
     }
 
     //A06a //come back to requires extra coding
-    // if (this.Q22 & blah) {
-    //   this.A06a = true;
+    // if (this.questions.Q22 & this.questions.blah) {
+    //   this.mode.set("A06a", true);
     // }
 
     //A06b
-    if (this.Q22 && this.Q24) {
-      this.A06b = true;
+    if (this.questions.get("Q22") && this.questions.get("Q24")) {
+      this.mode.set("A06b", true);
     }
 
     //A06c
-    if (this.Q22 && this.Q25) {
-      this.A06c = true;
+    if (this.questions.get("Q22") && this.questions.get("Q25")) {
+      this.mode.set("A06c", true);
     }
 
     //A06d
-    if (this.Q22 && this.Q25) {
-      this.A06d = true;
+    if (this.questions.get("Q22") && this.questions.get("Q26")) {
+      this.mode.set("A06d", true);
     }
     //A06e
-    if (this.Q22 && this.Q27) {
-      this.A06e = true;
+    if (this.questions.get("Q22") && this.questions.get("Q27")) {
+      this.mode.set("A06e", true);
     }
 
     //A06f
-    if (this.Q22 && this.Q28) {
-      this.A06f = true;
+    if (this.questions.get("Q22") && this.questions.get("Q28")) {
+      this.mode.set("A06f", true);
     }
 
     //A07
-    if (this.Q20) {
-      this.A07 = true;
+    if (this.questions.get("Q20")) {
+      this.mode.set("A07", true);
     }
 
     //A08
-    if (this.Q14 && this.Q15) {
-      this.A08 = true;
+    if (this.questions.get("Q14") && this.questions.get("Q15")) {
+      this.mode.set("A08", true);
     }
 
     //A09
-    if (this.Q23 && this.Q04 && this.Q06) {
-      this.A09 = true;
+    if (this.questions.get("Q23") && this.questions.get("Q04") && this.questions.get("Q6")) {
+      this.mode.set("A09", true);
     }
 
     //A10
-    if (this.Q03 && this.Q05) {
-      this.A10 = true;
+    if (this.questions.get("Q03") && this.questions.get("Q05")) {
+      this.mode.set("A10", true);
     }
 
     //A11
-    if (this.Q17 && this.Q18) {
-      this.A11 = true;
+    if (this.questions.get("Q17") && this.questions.get("Q18")) {
+      this.mode.set("A11", true);
     }
 
     //A12a
-    if (this.Q17 && this.Q18 && this.Q19) {
-      this.A12b = true;
+    if (this.questions.get("Q17") && this.questions.get("Q18") && this.questions.get("Q19")) {
+      this.mode.set("A12a", true);
     }
 
     //A12b
-    if (this.Q17 && this.Q18 && !this.Q19) {
-      this.A12a = true;
+    if (this.questions.get("Q17") && this.questions.get("Q18") && !this.questions.get("Q19")) {
+      this.mode.set("A12b", true);
     }
 
     //A13
-    if (this.Q14 && this.Q15 && this.Q16) {
-      this.A13 = true;
+    if (this.questions.get("Q14") && this.questions.get("Q15") && this.questions.get("Q16")) {
+      this.mode.set("A13", true);
     }
 
     //A14
-    if (this.Q03 && this.Q04 && this.Q06) {
-      this.A14 = true;
+    if (this.questions.get("Q03") && this.questions.get("Q04") && this.questions.get("Q06")) {
+      this.mode.set("A14", true);
     }
 
     //A16
-    if (this.Q07) {
-      this.A16 = true;
+    if (this.questions.get("Q07")) {
+      this.mode.set("A16", true);
     }
 
     //A18
-    if (this.Q08) {
-      this.A18 = true;
+    if (this.questions.get("Q08")) {
+      this.mode.set("A18", true);
     }
 
     //A19
-    if (this.Q29) {
-      this.A19 = true;
+    if (this.questions.get("Q29")) {
+      this.mode.set("A19", true);
     }
 
     //A21
-    if (this.Q21) {
-      this.A21 = true;
+    if (this.questions.get("Q21")) {
+      this.mode.set("A21", true);
     }
 
     //A22
-    if (this.Q09) {
-      this.A22 = true;
+    if (this.questions.get("Q09")) {
+      this.mode.set("A22", true);
     }
 
     //A23
-    if (this.Q10) {
-      this.A23 = true;
+    if (this.questions.get("Q10")) {
+      this.mode.set("A23", true);
     }
 
     //A24
-    if (this.Q11) {
-      this.A24 = true;
+    if (this.questions.get("Q11")) {
+      this.mode.set("A24", true);
     }
 
     //A25
-    if (this.Q12) {
-      this.A25 = true;
+    if (this.questions.get("Q12")) {
+      this.mode.set("A25", true);
     }
 
     //A26
-    if (this.Q13) {
-      this.A26= true;
+    if (this.questions.get("Q13")) {
+      this.mode.set("A26", true);
     }
   }
 }
