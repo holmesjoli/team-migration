@@ -32,3 +32,15 @@ export function getQuestionWithCountryName(selectedCountry, question) {
   words = words.join(" ").replace(/\s+(\W)/g, "$1")
   return words
 }
+
+// Title Contains Object
+export function containsObject(obj, list) {
+  var i;
+  for (i = 0; i < list.length; i++) {
+      if (list[i] === obj) {
+          return true;
+      }
+  }
+
+  return false;
+}

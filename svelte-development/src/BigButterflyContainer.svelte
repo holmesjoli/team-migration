@@ -1,7 +1,7 @@
 <script>
   import { afterUpdate } from 'svelte';
   import { select, selectAll } from "d3";
-  import {uniqueArray, findRegionColor, getQuestionWithCountryName} from "./helper.js"
+  import {uniqueArray, findRegionColor, getQuestionWithCountryName, containsObject} from "./helper.js"
   import Documentation from './Documentation.svelte'
   import regions from './regions.js'
   import { each } from 'svelte/internal';
@@ -23,37 +23,75 @@
     "A06d", "A06a", "A06b", "A06c", "A25", "A26", "A24", "A23", "A22",
     "A19", "A18", "A16"] 
 
+  let allQuestions = uniqueArray(questionToMode, "question");
   $: h = w * 74 / 91;
 
   $: if (selectedCountry !== "") {
+
+    let acqModeFiltered = acqMode.filter(d => d.country == selectedCountry);
+    let possibleModes = uniqueArray(acqModeFiltered, "mode_id");
+
+    let possibleQuestions = [];
+    let unnecessaryQuestions = []
+
+    for (let i in possibleModes) {
+
+      let m = possibleModes[i];
+      console.log(m)
+      questionToMode.filter(function(d) {
+
+        if (d.mode_id === m) {
+          possibleQuestions.push(d.question)
+        }
+      });
+    }
+
+    possibleQuestions = [...new Set(possibleQuestions)];
+
+    for (let i in allQuestions) {
+      let p = allQuestions[i]
+
+      if (!containsObject(p, possibleQuestions)) {
+        unnecessaryQuestions.push(p)
+      }
+    }
+    console.log("allQuestions", allQuestions);
+    console.log("possibleQuestions", possibleQuestions);
+    console.log("unnecessaryQuestions", unnecessaryQuestions);
+
     // filter and see what modes are available
-    let selectedAcqMode = acqMode.filter(d => d.country == selectedCountry)
-    selectedAcqMode = uniqueArray(selectedAcqMode, "mode_id")
-    let filteredAvailableMode = availableMode.filter(m => selectedAcqMode.includes(m));
-    let unnecessaryQuestion = questionToMode.filter(q => !selectedAcqMode.includes(q.mode_id))
-    unnecessaryQuestion = uniqueArray(unnecessaryQuestion, "question")
-    let necessaryQuestion = questionToMode.filter(q => selectedAcqMode.includes(q.mode_id))
-    necessaryQuestion = uniqueArray(necessaryQuestion, "question")
-    unnecessaryQuestion = unnecessaryQuestion.filter(q => necessaryQuestion.indexOf(q) == -1);
+    let filteredAvailableMode = availableMode.filter(m => possibleModes.includes(m));
+    console.log("filteredAvailableMode", filteredAvailableMode);
+
+    // let necessaryQuestion = questionToMode.filter(q => possibleModes.includes(q.mode_id));
+    // console.log(necessaryQuestion);
+    // necessaryQuestion = uniqueArray(necessaryQuestion, "question");
+
+    // unnecessaryQuestion = unnecessaryQuestion.filter(q => necessaryQuestion.indexOf(q) == -1);
 
     afterUpdate(() => {
       // set default colors of the big butterfly
       let butterflySel = select("#butterfly-path")
+
       butterflySel
         .select("#butterfly__wings")
-        .attr("fill", selectedColor.light)
+        .attr("fill", selectedColor.light);
+
       butterflySel
         .select("#butterfly__head")
-        .attr("fill", "#977B67")
+        .attr("fill", "#977B67");
+
       let butterflyPathsG = butterflySel
-        .select("#butterfly__paths")
+        .select("#butterfly__paths");
+
       butterflyPathsG
         .selectAll("path")
         .attr("fill", "none")
         .attr("stroke", "#ffffff")
         .attr("stroke-width", 5)
         .attr("data-available", "true")
-        .attr("data-active", "false")
+        .attr("data-active", "false");
+
       butterflyPathsG
         .selectAll("path")
         .each(function() {
@@ -63,10 +101,10 @@
               .attr("data-available", "false")
               .style("opacity", 0.1);
           }
-        })
+        });
 
       let butterflyCirclesG = butterflySel
-        .select("#butterfly__circles")
+        .select("#butterfly__circles");
 
       butterflyCirclesG
         .selectAll("circle")
@@ -75,23 +113,23 @@
         .attr("stroke-width", 4.5)
         .attr("data-available", "true")
         .attr("data-answer", "no")
-        .style("cursor", "pointer")
+        .style("cursor", "pointer");
 
       butterflyCirclesG
         .selectAll("circle")
         .each(function() {
           let id = select(this).attr("id")
-          if(unnecessaryQuestion.includes(id)) {
+          if(unnecessaryQuestions.includes(id)) {
             select(this).attr("data-available", "false").style("opacity", 0.1)
           }
-        })
+        });
 
       // populate questions
       if (!butterflyCirclesG.empty()) {
         selectAll(".butterfly__questions__question").remove();
         questions.forEach(q => {
           let id = q.question_id;
-          if (!unnecessaryQuestion.includes(id)) {
+          if (!unnecessaryQuestions.includes(id)) {
             let text = q.question;
             let side = {
               h: q.h_side,
@@ -150,10 +188,6 @@
       })
     })
 
-      acqMode = acqMode.filter(function(d) {
-        return d.country === selectedCountry;
-      });
-
       let showDef = uniqueArray(acqMode, "definition")[0];
       let showWarn = uniqueArray(acqMode, "restriction_warning")[0];
 
@@ -197,7 +231,7 @@
           >
           </circle>
         </svg>
-      to answer questions. Nodes will light up if there is a country-specific law that allows you to aquire citizenship with your condition.</div>
+      to answer questions. Paths will light up if there is a country-specific law that allows you to aquire citizenship with your condition.</div>
     {#if w !== undefined}
       <div id="citizenship-paths" style="height: {h}">
         <div id="butterfly__graphic">
