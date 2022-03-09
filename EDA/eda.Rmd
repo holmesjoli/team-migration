@@ -98,6 +98,19 @@ z %>%
   write_csv("../svelte-development/public/data/region_flows_geo.csv")
   
 
+b <- flow %>%
+  filter(dest_loc %in% xwalk$loc_code) %>%
+  filter(orig_loc %in% xwalk$loc_code) %>%
+  dplyr::group_by(dest_loc) %>%
+  summarize(value = sum(value)) %>%
+  rename(loc_code = dest_loc) %>%
+  # filter(DEST) %>%
+  ungroup() %>%
+  inner_join(xwalk) %>%
+  select(iso3, region, value) %>% 
+  rename(country = region) %>% 
+  write.csv("../svelte-development/public/data/country_flows.csv")
+
 total_migrants <- flow %>%
   filter(dest_loc %in% codes) %>%
   filter(orig_loc %in% codes) %>%
