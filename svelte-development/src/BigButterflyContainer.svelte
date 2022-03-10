@@ -170,6 +170,11 @@
 
         let id = select(this).property("id");
         let status = true;
+
+        if (id === "Q23") {
+          status = "blah";
+        }
+
         clicks.updateClick(id, status);
 
         // if (status) {
