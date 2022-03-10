@@ -106,16 +106,6 @@ export class clickContainer {
     this.updatePaths();
   }
 
-  highlightPaths() {
-
-    // d3.scaleOrdinal()
-    //   .domain([true, false])
-    //   .range(["red", "purple"])
-
-  //   let modes = Array.from(modes.values())
-  //   this.modes.filter(d => )
-  }
-
   updatePaths() {
     //A01a
     if (this.questions.get("Q03") && this.questions.get("Q02")) {
