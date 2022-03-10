@@ -14,6 +14,7 @@ import { each } from 'svelte/internal';
   export let acqMode;
   export let questionToMode;
   export let butterflies;
+  export let modeA06a;
 
   let w;
   let selectedColor = findRegionColor(selectedRegion)
