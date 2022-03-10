@@ -52,7 +52,7 @@ bin <- df_long %>%
   select(-c(acq, type, loss, cat, yrs, bin, par_mode_id, cntry_mode_id)) %>%
   filter(mode_id %in% unique(modes$mode_id))
 
-df_long <- df_long %>% 
+df_long <- df_long %>%
   filter(acq & c(cat | yrs) & values > 0) %>%
  select(-c(acq, type, loss, par_mode_id, cntry_mode_id))
 
@@ -90,6 +90,17 @@ df_long %>%
   filter(mode_id %in% unique(modes$mode_id)) %>% 
   readr::write_csv("../data/allCountriesAllPaths.csv")
 
+
+df_long %>%
+  filter(mode_id == "A06a" & cat) %>%
+  select(iso3, country, mode_id, values) %>%
+  mutate(time = case_when(values == 1 ~ "Fewer than 5 years",
+                          values == 2 ~ "Exactly 5 years",
+                          values == 3 ~ "Between 5 years and 10 years",
+                          values == 4 ~ "More than 10 years")) %>%
+  inner_join(modes) %>%
+  readr::write_csv("../svelte-development/public/data/modeA06a.csv")
+  
 
 ```
 
