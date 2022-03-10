@@ -108,27 +108,26 @@
       links.push(v)
     }
 
-    console.log(links);
-
-      select("#world-map")
-      .selectAll(".line")
-      .data(links)
-        .enter()
-        .append("line")
-        .attr("class", "link")
-        .attr("x1", function(d) { return d.x1 })
-        .attr("y1", function(d) { return d.y1 })
-        .attr("x2", function(d) { return d.x1 })
-        .attr("y2", function(d) { return d.y1 })
-        .attr("stroke", function(d) { return colorScale(d.subRegion); })
-        .attr("stroke-width", function(d) { return pathScale(d.value); })
-        .attr("stroke-opacity", .2)
-        .transition()
-        .duration(1000)
-        .attr("x1", function(d) { return d.x1 })
-        .attr("y1", function(d) { return d.y1 })
-        .attr("x2", function(d) { return d.x2 })
-        .attr("y2", function(d) { return d.y2 });
+    select("#world-map")
+    .selectAll(".line")
+    .data(links)
+      .enter()
+      .append("line")
+      .attr("class", "link")
+      .attr("x1", function(d) { return d.x1 })
+      .attr("y1", function(d) { return d.y1 })
+      .attr("x2", function(d) { return d.x1 })
+      .attr("y2", function(d) { return d.y1 })
+      .attr("stroke", function(d) { return colorScale(d.subRegion); })
+      .attr("stroke-width", function(d) { return pathScale(d.value); })
+      .attr("stroke-opacity", .5)
+      .transition()
+      .duration(2000)
+      .attr("x1", function(d) { return d.x1 })
+      .attr("y1", function(d) { return d.y1 })
+      .attr("x2", function(d) { return d.x2 })
+      .attr("y2", function(d) { return d.y2 })
+      .attr("stroke", function(d) { return colorScale(d.destRegion); });
 
     // const lineGroup = groups(links, d => d.DEST);
 
