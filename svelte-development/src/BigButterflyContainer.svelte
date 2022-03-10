@@ -177,10 +177,10 @@
           highlightPath(clicks, butterflyPathsG);
         // }
         
-        // if (answerStatus == "no") {
-        //   status = false;
-        //   select(this).attr("data-answer", "yes").attr("fill", "black")
-        // } else {
+        if (status) {
+          select(this).attr("data-answer", "yes").attr("fill", "black")
+        } 
+        // else {
         //   status = true;
         //   select(this).attr("data-answer", "no").attr("fill", "white")
         // }
