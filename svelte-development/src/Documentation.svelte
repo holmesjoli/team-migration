@@ -31,29 +31,6 @@
       ? ""
       : definitions.filter(d => d.definition_id == definitionType)[0].definition;
   }
-
-
-  // let showDef = uniqueArray(acqMode, "definition")[0];
-      // let showWarn = uniqueArray(acqMode, "restriction_warning")[0];
-
-      // if (showDef !== "NA") {
-      //   definitions = definitions.filter(function(d) {
-      //     d.definition_id === showDef;
-      //   });
-
-      //   // let def = definitions.definition[0];
-      // }
-
-      // if (showWarn !== "NA") {
-      //   warnings = warnings.filter(function(d) {
-      //     d.restriction_warning === showWarn;
-      //   });
-      //   // let warn = warnings.message[0];
-      // }
-
-    // if (selectedRegion !== "") {
-    //   let color = colorScale(selectedRegion);
-    // }
 </script>
 
 
