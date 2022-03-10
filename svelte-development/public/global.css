@@ -9,6 +9,7 @@ body {
   scroll-behavior: smooth;
   color: #222222;
   font-family: "Roboto", sans-serif;
+  text-align: center;
 }
 
 * {
@@ -17,11 +18,55 @@ body {
 
 section {
   width: 90%;
-  margin: 3rem auto;
-  text-align: center;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 26px;
+  margin-bottom: 5px;
+}
+
+h2 {
+  font-size: 20pt;
+  font-style: italic;
+  margin-bottom: 5px;
+  margin-top: 10px;
 }
 
 .title {
   padding: 20px;
   margin: 10px;
+  padding-top: 60px;
+}
+
+
+.svelte-yhjukw
+{
+  padding-top: 10px;
+}
+
+.svelte-1iw9sua
+{
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.country-highlight
+{
+  color: white;
+}
+
+#citizenship-paths
+{
+  padding-top: 40px;
+}
+
+.instructions
+{
+  font-size: 14px;
+}
+
+.country-card__country-name
+{
+  height: 40px;
 }

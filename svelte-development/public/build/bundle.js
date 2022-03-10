@@ -9998,27 +9998,27 @@ var app = (function () {
     			t3 = text$1("Click\n        ");
     			svg = svg_element("svg");
     			circle = svg_element("circle");
-    			t4 = text$1("\n      to answer questions. Paths will light up if there is a country-specific law that allows you to aquire citizenship with your condition.");
+    			t4 = text$1("\n      to answer questions. Paths will light up if there is a country-specific law that allows you to acquire citizenship with your condition.");
     			t5 = space();
     			if (if_block) if_block.c();
     			if_block_anchor = empty$1();
     			attr_dev(span, "class", "country-highlight svelte-1iw9sua");
     			set_style(span, "background-color", /*selectedColor*/ ctx[8].vivid);
-    			add_location(span, file$6, 198, 38, 7208);
+    			add_location(span, file$6, 198, 38, 7211);
     			attr_dev(h1, "class", "title");
-    			add_location(h1, file$6, 197, 4, 7151);
+    			add_location(h1, file$6, 197, 4, 7154);
     			attr_dev(circle, "cx", "9");
     			attr_dev(circle, "cy", "9");
     			attr_dev(circle, "r", "5");
     			attr_dev(circle, "stroke-width", "4");
     			attr_dev(circle, "stroke", "black");
     			attr_dev(circle, "fill", "white");
-    			add_location(circle, file$6, 203, 10, 7409);
+    			add_location(circle, file$6, 203, 10, 7412);
     			attr_dev(svg, "width", "27");
     			attr_dev(svg, "height", "18");
-    			add_location(svg, file$6, 202, 8, 7374);
+    			add_location(svg, file$6, 202, 8, 7377);
     			attr_dev(div, "class", "instructions svelte-1iw9sua");
-    			add_location(div, file$6, 200, 4, 7327);
+    			add_location(div, file$6, 200, 4, 7330);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h1, anchor);
@@ -10110,10 +10110,10 @@ var app = (function () {
     			if (if_block) if_block.c();
     			if_block_anchor = empty$1();
     			attr_dev(div0, "id", "butterfly__graphic");
-    			add_location(div0, file$6, 216, 8, 7829);
+    			add_location(div0, file$6, 216, 8, 7833);
     			attr_dev(div1, "id", "citizenship-paths");
     			set_style(div1, "height", /*h*/ ctx[7]);
-    			add_location(div1, file$6, 215, 6, 7772);
+    			add_location(div1, file$6, 215, 6, 7776);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div1, anchor);
@@ -10270,7 +10270,7 @@ var app = (function () {
     			attr_dev(section, "id", "big-butterfly__container");
     			attr_dev(section, "class", "svelte-1iw9sua");
     			add_render_callback(() => /*section_elementresize_handler*/ ctx[14].call(section));
-    			add_location(section, file$6, 195, 0, 7053);
+    			add_location(section, file$6, 195, 0, 7056);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -10399,7 +10399,7 @@ var app = (function () {
 
     	function documentation_trueMode_binding(value) {
     		trueMode = value;
-    		(((((((($$invalidate(6, trueMode), $$invalidate(0, selectedCountry)), $$invalidate(3, acqMode)), $$invalidate(11, questionToMode)), $$invalidate(16, allQuestions)), $$invalidate(12, modeA06a)), $$invalidate(15, availableMode)), $$invalidate(8, selectedColor)), $$invalidate(10, questions));
+    		$$invalidate(6, trueMode);
     	}
 
     	function section_elementresize_handler() {
@@ -10584,20 +10584,16 @@ var app = (function () {
 
     						// if (status) {
     						highlightPath(clicks, butterflyPathsG);
-
-    						// }
-    						// if (answerStatus == "no") {
-    						//   status = false;
-    						//   select(this).attr("data-answer", "yes").attr("fill", "black")
-    						// } else {
-    						//   status = true;
-    						//   select(this).attr("data-answer", "no").attr("fill", "white")
-    						// }
-    						// *NOTE* for now, to set up the Documentation.svelte, setting this variable to a mode that's related to the question, not the actual mode that turns to "true". needs updates here.
-    						$$invalidate(6, trueMode = [...clicks.modes].filter(m => m[1] == true)[0][0]);
-    					});
-    				});
-    			}
+    					}); // }
+    					// if (answerStatus == "no") {
+    					//   status = false;
+    					//   select(this).attr("data-answer", "yes").attr("fill", "black")
+    				}); // } else {
+    				//   status = true;
+    				//   select(this).attr("data-answer", "no").attr("fill", "white")
+    				// }
+    			} // *NOTE* for now, to set up the Documentation.svelte, setting this variable to a mode that's related to the question, not the actual mode that turns to "true". needs updates here.
+    			// trueMode = [...clicks.modes].filter(m => m[1] == true)[0][0]
     		}
     	};
 
