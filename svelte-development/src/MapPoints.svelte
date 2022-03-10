@@ -1,7 +1,7 @@
 <script>
   import { spring } from "svelte/motion";
   import { getContext } from 'svelte';
-  import { scaleLinear, extent, min, max, select, selectAll, groups, line, map } from 'd3';
+  import { scaleLinear, extent, min, max, select, selectAll, groups, line, map, scaleOrdinal } from 'd3';
   import { forceSimulation, forceCollide, forceLink, forceX, forceY } from "d3-force";
   
   import Popup from './Popup.svelte';
@@ -29,12 +29,18 @@
 
   const pathScale = scaleLinear()
     .domain(extent(regionFlow, d => d.value))
-    .range([1, 10]);
+    .range([1, 20]);
 
+  const colorScale = scaleOrdinal()
+    .domain(regions.map(function(d) {return d.name; }))
+    .range(regions.map(function(d) {return d.color; }))
+
+  console.log(data.features);
   let butterflyPoints = spring(data.features.map(d => ({
     x: 0,
     y: 0,
     value: 0,
+    subregion: 0,
     regionIndex: 0,
     regionShape: 0,
     regionCode: 0,
@@ -62,6 +68,7 @@
       x: d.x,
       y: d.y,
       value: d.properties.VALUE,
+      subregion: d.properties.SUBREGION,
       regionIndex: findRegionIndex(d.properties.SUBREGION),
       regionShape: findRegionShape(d.properties.SUBREGION),
       regionCode: findRegionCode(d.properties.SUBREGION)
@@ -77,12 +84,9 @@
     hoveredRegionCode = regions[hoverRegionIndex].code;
 
     console.log($butterflyPoints);
-    let x2=$butterflyPoints.filter(d => d.regionCode == hoveredRegionCode)[0].x;
-    let y2=$butterflyPoints.filter(d => d.regionCode == hoveredRegionCode)[0].y;
-    // let x2=$butterflyPoints.filter(d => d.regionCode == hoveredRegionCode)[0].x;
-    // let y2=$butterflyPoints.filter(d => d.regionCode == hoveredRegionCode)[0].y;
-
-    // console.log(x1, y1);
+    let x2 = $butterflyPoints.filter(d => d.regionCode == hoveredRegionCode)[0].x;
+    let y2 = $butterflyPoints.filter(d => d.regionCode == hoveredRegionCode)[0].y;
+    let destRegion = $butterflyPoints.filter(d => d.regionCode == hoveredRegionCode)[0].subregion;
 
     let values = regionFlow
       .filter(d => d.DEST === hoveredRegionCode)
@@ -98,23 +102,29 @@
       v.y1 = y1;
       v.x2 = x2;
       v.y2 = y2;
-
-      // console.log(v)
+      v.subRegion = $butterflyPoints.filter(d => d.regionCode == v.ORIG)[0].subregion;
+      v.destRegion = destRegion;
+  
       links.push(v)
     }
 
     console.log(links);
 
-    // let ids = map(values, function(d) {return d.id;})
-    // let flow = [];
-    // ids.forEach(function(i) {
-    //   let t = regionFlowGeo.filter(d => d.id === i)
-    //   for (let i in t) {
-    //     flow.push(t[i]);
-    //   }
-    // });
-    // console.log(flow);
-    // const lineGroup = groups(flow, d => d.id);
+      select("#world-map")
+      .selectAll(".line")
+      .data(links)
+        .enter()
+        .append("line")
+        .attr("class", "link")
+        .attr("x1", function(d) { return d.x1 })
+        .attr("y1", function(d) { return d.y1 })
+        .attr("x2", function(d) { return d.x2 })
+        .attr("y2", function(d) { return d.y2 })
+        .attr("stroke", function(d) { return colorScale(d.subRegion); })
+        .attr("stroke-width", function(d) { return pathScale(d.value); })
+        .attr("stroke-opacity", .5);
+
+    // const lineGroup = groups(links, d => d.DEST);
 
     // let newLine = line()
     //   .x(function(d) { return projection(d.x); })
@@ -128,18 +138,6 @@
     //       .attr("stroke", "black")
     //       .attr("stroke", 2)
     //       .attr("d", function(d) { return newLine(d[1]); });
-
-          // x1={$butterflyPoints.filter(d => d.regionCode == ORIG)[0].x}
-          // y1={$butterflyPoints.filter(d => d.regionCode == ORIG)[0].y}
-          // x2={$butterflyPoints.filter(d => d.regionCode == CODE)[0].x}
-          // y2={$butterflyPoints.filter(d => d.regionCode == CODE)[0].y}
-          // data-orig={ORIG}
-          // data-code={CODE}
-          // data-value={value}
-          // stroke="gray"
-          // stroke-width={pathScale(value)}
-          // stroke-dasharray="1 {pathScale(value) * 2}"
-
   }
 
   function handleMouseOut() {
@@ -147,6 +145,11 @@
       select(this).attr('fill-opacity', 0.5)
     }
     links = undefined;
+    console.log(links)
+
+    select("#world-map")
+      .selectAll(".link")
+      .remove()
   }
 
   function handleClick() {
