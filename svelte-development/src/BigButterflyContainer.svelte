@@ -211,7 +211,7 @@
           >
           </circle>
         </svg>
-      to answer questions. Paths will light up if there is a country-specific law that allows you to aquire citizenship with your condition.</div>
+      to answer questions. Paths will light up if there is a country-specific law that allows you to acquire citizenship with your condition.</div>
     {#if w !== undefined}
       <div id="citizenship-paths" style="height: {h}">
         <div id="butterfly__graphic">
