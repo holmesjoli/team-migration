@@ -14,6 +14,7 @@
   export let acqMode;
   export let questionToMode;
   export let butterflies;
+  export let modeA06a;
 
   let w;
   let selectedColor = findRegionColor(selectedRegion)
@@ -35,7 +36,11 @@
     let possibleQuestions = createPossibleQuestions(possibleModes, questionToMode);
     let unnecessaryQuestions = createUnnecessaryQuestions(allQuestions, possibleQuestions);
 
-    let clicks = new clickContainer(possibleQuestions, possibleModes);
+
+    // console.log(modeA06a);
+    let a06aValue = modeA06a.filter(d => d.country == selectedCountry)[0].values;
+
+    let clicks = new clickContainer(possibleQuestions, possibleModes, a06aValue);
     console.log(clicks);
 
     console.log("possibleModes", possibleModes);
@@ -171,6 +176,10 @@
         let id = select(this).property("id");
         let status = true;
         clicks.updateClick(id, status);
+
+        if (id === "Q23") {
+          status = "blah";
+        }
 
         // if (status) {
           highlightPath(clicks, butterflyPathsG);

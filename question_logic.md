@@ -12,7 +12,7 @@
 * A02b
   - Path is TRUE if Q1 == "yes" & Q2 == "yes"
 * A06a
-  - Path is TRUE if Q22 == "yes" & Q23 is great than the value A06a_yrs
+  - Path is TRUE if Q22 == "yes" & Q23 matches country value in modeA06a.csv
 * A06b
   - Path is TRUE if Q22 == "yes" & Q24 == "yes"
 * A06c

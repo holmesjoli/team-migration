@@ -88,9 +88,10 @@ export class clickContainer {
   pathFalse = "#FFFFFF";
   pathNA = "#";
 
-  constructor(possibleQuestions, possibleModes) {
+  constructor(possibleQuestions, possibleModes, a06aValue) {
     this.questions = this.createMap(possibleQuestions);
     this.modes = this.createMap(possibleModes);
+    this.a06aValue = a06aValue;
   }
 
   createMap(array) {
@@ -104,16 +105,6 @@ export class clickContainer {
   updateClick(id, status) {
     this.questions.set(id, status);
     this.updatePaths();
-  }
-
-  highlightPaths() {
-
-    // d3.scaleOrdinal()
-    //   .domain([true, false])
-    //   .range(["red", "purple"])
-
-  //   let modes = Array.from(modes.values())
-  //   this.modes.filter(d => )
   }
 
   updatePaths() {
@@ -139,18 +130,18 @@ export class clickContainer {
     }
 
     //A02b
-    if (this.questions.get("Q01") & this.questions.get("Q02")) {
+    if (this.questions.get("Q01") && this.questions.get("Q02")) {
       if(this.modes.get("A02b") !== undefined) {
         this.modes.set("A02b", true);
       }
     }
 
-    //A06a //come back to requires extra coding
-    // if (this.questions.Q22 & this.questions.get("Q23")) {
-    //  if(this.modes.get("A06a") !== undefined) {
-    //   this.mode.set("A06a", true);
-    //  }
-    // }
+    // A06a
+    if (this.questions.get("Q22") && this.questions.get("Q23") == this.a06aValue) {
+      if (this.modes.get("A06a") !== undefined) {
+        this.mode.set("A06a", true);
+      }
+    }
 
     //A06b
     if (this.questions.get("Q22") && this.questions.get("Q24")) {

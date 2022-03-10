@@ -1,0 +1,176 @@
+iso3,country,mode_id,values,time
+AFG,Afghanistan,A06a,2,Exactly 5 years
+AGO,Angola,A06a,3,Between 5 years and 10 years
+ALB,Albania,A06a,2,Exactly 5 years
+ARE,United Arab Emirates,A06a,4,More than 10 years
+ARG,Argentina,A06a,1,Fewer than 5 years
+ARM,Armenia,A06a,1,Fewer than 5 years
+ATG,Antigua and Barbuda,A06a,3,Between 5 years and 10 years
+AUS,Australia,A06a,1,Fewer than 5 years
+AUT,Austria,A06a,3,Between 5 years and 10 years
+AZE,Azerbaijan,A06a,2,Exactly 5 years
+BDI,Burundi,A06a,3,Between 5 years and 10 years
+BEL,Belgium,A06a,2,Exactly 5 years
+BEN,Benin,A06a,3,Between 5 years and 10 years
+BFA,Burkina Faso,A06a,3,Between 5 years and 10 years
+BGD,Bangladesh,A06a,2,Exactly 5 years
+BGR,Bulgaria,A06a,2,Exactly 5 years
+BHR,Bahrain,A06a,3,Between 5 years and 10 years
+BHS,Bahamas,A06a,3,Between 5 years and 10 years
+BIH,Bosnia and Herzegovina,A06a,1,Fewer than 5 years
+BLR,Belarus,A06a,3,Between 5 years and 10 years
+BLZ,Belize,A06a,2,Exactly 5 years
+BOL,Bolivia,A06a,1,Fewer than 5 years
+BRA,Brazil,A06a,1,Fewer than 5 years
+BRB,Barbados,A06a,3,Between 5 years and 10 years
+BRN,Brunei,A06a,4,More than 10 years
+BTN,Bhutan,A06a,4,More than 10 years
+BWA,Botswana,A06a,3,Between 5 years and 10 years
+CAF,Central African Republic,A06a,2,Exactly 5 years
+CAN,Canada,A06a,2,Exactly 5 years
+CHE,Switzerland,A06a,3,Between 5 years and 10 years
+CHL,Chile,A06a,2,Exactly 5 years
+CIV,Cote dIvoire,A06a,3,Between 5 years and 10 years
+CMR,Cameroon,A06a,2,Exactly 5 years
+COG,Congo Republic,A06a,3,Between 5 years and 10 years
+COL,Colombia,A06a,2,Exactly 5 years
+COM,Comoros,A06a,3,Between 5 years and 10 years
+CPV,Cape Verde,A06a,2,Exactly 5 years
+CRI,Costa Rica,A06a,3,Between 5 years and 10 years
+CUB,Cuba,A06a,2,Exactly 5 years
+CYP,Cyprus,A06a,2,Exactly 5 years
+CZE,Czech Republic,A06a,2,Exactly 5 years
+DEU,Germany,A06a,3,Between 5 years and 10 years
+DJI,Djibouti,A06a,3,Between 5 years and 10 years
+DMA,Dominica,A06a,3,Between 5 years and 10 years
+DNK,Denmark,A06a,3,Between 5 years and 10 years
+DOM,Dominican Republic,A06a,1,Fewer than 5 years
+DZA,Algeria,A06a,3,Between 5 years and 10 years
+ECU,Ecuador,A06a,1,Fewer than 5 years
+EGY,Egypt,A06a,3,Between 5 years and 10 years
+ERI,Eritrea,A06a,4,More than 10 years
+ESP,Spain,A06a,3,Between 5 years and 10 years
+EST,Estonia,A06a,3,Between 5 years and 10 years
+ETH,Ethiopia,A06a,1,Fewer than 5 years
+FIN,Finland,A06a,2,Exactly 5 years
+FJI,Fiji,A06a,2,Exactly 5 years
+FRA,France,A06a,2,Exactly 5 years
+GAB,Gabon,A06a,1,Fewer than 5 years
+GBR,United Kingdom,A06a,2,Exactly 5 years
+GEO,Georgia,A06a,3,Between 5 years and 10 years
+GHA,Ghana,A06a,2,Exactly 5 years
+GIN,Guinea,A06a,2,Exactly 5 years
+GMB,Gambia,A06a,4,More than 10 years
+GNB,Guinea Bissau,A06a,3,Between 5 years and 10 years
+GNQ,Equatorial Guinea,A06a,4,More than 10 years
+GRC,Greece,A06a,3,Between 5 years and 10 years
+GRD,Grenada,A06a,3,Between 5 years and 10 years
+GTM,Guatemala,A06a,2,Exactly 5 years
+GUY,Guyana,A06a,3,Between 5 years and 10 years
+HND,Honduras,A06a,1,Fewer than 5 years
+HRV,Croatia,A06a,3,Between 5 years and 10 years
+HTI,Haiti,A06a,2,Exactly 5 years
+HUN,Hungary,A06a,3,Between 5 years and 10 years
+IDN,Indonesia,A06a,2,Exactly 5 years
+IND,India,A06a,4,More than 10 years
+IRL,Ireland,A06a,2,Exactly 5 years
+IRN,Iran,A06a,2,Exactly 5 years
+IRQ,Iraq,A06a,3,Between 5 years and 10 years
+ISL,Iceland,A06a,3,Between 5 years and 10 years
+ISR,Israel,A06a,1,Fewer than 5 years
+ITA,Italy,A06a,3,Between 5 years and 10 years
+JAM,Jamaica,A06a,2,Exactly 5 years
+JOR,Jordan,A06a,1,Fewer than 5 years
+JPN,Japan,A06a,2,Exactly 5 years
+KAZ,Kazakhstan,A06a,2,Exactly 5 years
+KEN,Kenya,A06a,3,Between 5 years and 10 years
+KGZ,Kyrgyzstan,A06a,2,Exactly 5 years
+KHM,Cambodia,A06a,3,Between 5 years and 10 years
+KIR,Kiribati,A06a,3,Between 5 years and 10 years
+KNA,Saint Kitts and Nevis,A06a,4,More than 10 years
+KOR,South Korea,A06a,2,Exactly 5 years
+LAO,Laos,A06a,3,Between 5 years and 10 years
+LBY,Libya,A06a,3,Between 5 years and 10 years
+LCA,Saint Lucia,A06a,3,Between 5 years and 10 years
+LIE,Liechtenstein,A06a,3,Between 5 years and 10 years
+LSO,Lesotho,A06a,2,Exactly 5 years
+LTU,Lithuania,A06a,3,Between 5 years and 10 years
+LUX,Luxembourg,A06a,2,Exactly 5 years
+LVA,Latvia,A06a,2,Exactly 5 years
+MAR,Morocco,A06a,2,Exactly 5 years
+MDA,Moldova,A06a,3,Between 5 years and 10 years
+MDG,Madagascar,A06a,2,Exactly 5 years
+MEX,Mexico,A06a,2,Exactly 5 years
+MHL,Marshall Islands,A06a,3,Between 5 years and 10 years
+MKD,Macedonia,A06a,3,Between 5 years and 10 years
+MLI,Mali,A06a,3,Between 5 years and 10 years
+MLT,Malta,A06a,3,Between 5 years and 10 years
+MNE,Montenegro,A06a,3,Between 5 years and 10 years
+MNG,Mongolia,A06a,2,Exactly 5 years
+MOZ,Mozambique,A06a,3,Between 5 years and 10 years
+MRT,Mauritania,A06a,3,Between 5 years and 10 years
+MUS,Mauritius,A06a,2,Exactly 5 years
+MWI,Malawi,A06a,3,Between 5 years and 10 years
+MYS,Malaysia,A06a,3,Between 5 years and 10 years
+"NAM",Namibia,A06a,3,Between 5 years and 10 years
+NER,Niger,A06a,3,Between 5 years and 10 years
+NGA,Nigeria,A06a,4,More than 10 years
+NIC,Nicaragua,A06a,1,Fewer than 5 years
+NLD,Netherlands,A06a,2,Exactly 5 years
+NOR,Norway,A06a,3,Between 5 years and 10 years
+NZL,New Zealand,A06a,2,Exactly 5 years
+OMN,Oman,A06a,3,Between 5 years and 10 years
+PAK,Pakistan,A06a,2,Exactly 5 years
+PAN,Panama,A06a,2,Exactly 5 years
+PER,Peru,A06a,1,Fewer than 5 years
+PHL,Philippines,A06a,3,Between 5 years and 10 years
+PNG,Papua New Guinea,A06a,3,Between 5 years and 10 years
+POL,Poland,A06a,1,Fewer than 5 years
+PRT,Portugal,A06a,2,Exactly 5 years
+PRY,Paraguay,A06a,1,Fewer than 5 years
+QAT,Qatar,A06a,4,More than 10 years
+ROU,Romania,A06a,3,Between 5 years and 10 years
+RUS,Russia,A06a,2,Exactly 5 years
+RWA,Rwanda,A06a,2,Exactly 5 years
+SAU,Saudi Arabia,A06a,2,Exactly 5 years
+SDN,Sudan,A06a,3,Between 5 years and 10 years
+SEN,Senegal,A06a,2,Exactly 5 years
+SGP,Singapore,A06a,3,Between 5 years and 10 years
+SLB,Solomon Islands,A06a,2,Exactly 5 years
+SLE,Sierra Leone,A06a,4,More than 10 years
+SLV,El Salvador,A06a,2,Exactly 5 years
+SOM,Somalia,A06a,3,Between 5 years and 10 years
+SRB,Serbia,A06a,1,Fewer than 5 years
+SSD,South Sudan,A06a,3,Between 5 years and 10 years
+STP,Sao Tome and Principe,A06a,2,Exactly 5 years
+SUR,Suriname,A06a,2,Exactly 5 years
+SVK,Slovakia,A06a,3,Between 5 years and 10 years
+SVN,Slovenia,A06a,3,Between 5 years and 10 years
+SWE,Sweden,A06a,2,Exactly 5 years
+SWZ,Swaziland,A06a,3,Between 5 years and 10 years
+SYR,Syria,A06a,2,Exactly 5 years
+TCD,Chad,A06a,4,More than 10 years
+TGO,Togo,A06a,2,Exactly 5 years
+TJK,Tajikistan,A06a,2,Exactly 5 years
+TKM,Turkmenistan,A06a,2,Exactly 5 years
+TLS,East Timor,A06a,3,Between 5 years and 10 years
+TON,Tonga,A06a,2,Exactly 5 years
+TTO,Trinidad and Tobago,A06a,3,Between 5 years and 10 years
+TUN,Tunisia,A06a,2,Exactly 5 years
+TUR,Turkey,A06a,2,Exactly 5 years
+TUV,Tuvalu,A06a,3,Between 5 years and 10 years
+TWN,Taiwan,A06a,2,Exactly 5 years
+TZA,Tanzania,A06a,3,Between 5 years and 10 years
+UGA,Uganda,A06a,3,Between 5 years and 10 years
+UKR,Ukraine,A06a,2,Exactly 5 years
+USA,United States of America,A06a,2,Exactly 5 years
+UZB,Uzbekistan,A06a,2,Exactly 5 years
+VCT,Saint Vincent and the Grenadines,A06a,3,Between 5 years and 10 years
+VEN,Venezuela,A06a,3,Between 5 years and 10 years
+VNM,Vietnam,A06a,2,Exactly 5 years
+VUT,Vanuatu,A06a,3,Between 5 years and 10 years
+WSM,Samoa,A06a,2,Exactly 5 years
+XKX,Kosovo,A06a,2,Exactly 5 years
+ZAF,South Africa,A06a,2,Exactly 5 years
+ZMB,Zambia,A06a,3,Between 5 years and 10 years
+ZWE,Zimbabwe,A06a,3,Between 5 years and 10 years
