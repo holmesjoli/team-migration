@@ -177,6 +177,10 @@
         let status = true;
         clicks.updateClick(id, status);
 
+        if (id === "Q23") {
+          status = "blah";
+        }
+
         // if (status) {
           highlightPath(clicks, butterflyPathsG);
         // }
