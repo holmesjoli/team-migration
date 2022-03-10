@@ -80,15 +80,15 @@
 	<circle id="Q12" cx="544.2" cy="753.1" r="5.8" data-status="FALSE"/>
 	<circle id="Q11" cx="394" cy="774.1" r="5.8" data-status="FALSE"/>
 	<circle id="Q10" cx="296.2" cy="759.1" r="5.8" data-status="FALSE"/>
-	<circle id="Q9" cx="205.5" cy="531.9" r="5.8" data-status="FALSE"/>
-	<circle id="Q8" cx="275.4" cy="692" r="5.8" data-status="FALSE"/>
-	<circle id="Q7" cx="230.5" cy="462" r="5.8" data-status="FALSE"/>
-	<circle id="Q6" cx="421.2" cy="419.1" r="5.8" data-status="FALSE"/>
-	<circle id="Q5" cx="336.2" cy="344.1" r="5.8" data-status="FALSE"/>
-	<circle id="Q4" cx="481.2" cy="248.1" r="5.8" data-status="FALSE"/>
-	<circle id="Q3" cx="337.2" cy="218.1" r="5.8" data-status="FALSE"/>
-	<circle id="Q2" cx="490.7" cy="125.2" r="5.8" data-status="FALSE"/>
-	<circle id="Q1" cx="241.2" cy="111.1" r="5.8" data-status="FALSE"/>
+	<circle id="Q08" cx="205.5" cy="531.9" r="5.8" data-status="FALSE"/>
+	<circle id="Q09" cx="275.4" cy="692" r="5.8" data-status="FALSE"/>
+	<circle id="Q07" cx="230.5" cy="462" r="5.8" data-status="FALSE"/>
+	<circle id="Q06" cx="421.2" cy="419.1" r="5.8" data-status="FALSE"/>
+	<circle id="Q05" cx="336.2" cy="344.1" r="5.8" data-status="FALSE"/>
+	<circle id="Q04" cx="481.2" cy="248.1" r="5.8" data-status="FALSE"/>
+	<circle id="Q03" cx="337.2" cy="218.1" r="5.8" data-status="FALSE"/>
+	<circle id="Q02" cx="490.7" cy="125.2" r="5.8" data-status="FALSE"/>
+	<circle id="Q01" cx="241.2" cy="111.1" r="5.8" data-status="FALSE"/>
 </g>
 </svg>
 

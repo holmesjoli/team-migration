@@ -1,13 +1,13 @@
 h_side,v_side,group,question_id,question,status,visibility
-middle,upper,parentage,Q1,Was your parent born in {cntry}?,FALSE,visibile
-middle,upper,parentage,Q2,Were you born in {cntry}?,FALSE,visibile
-left,middle,parentage,Q3,Is your parent a citizen of {cntry}?,FALSE,visibile
-right,middle,parentage,Q4,Did your parent acquire citizenship in {cntry} after your birth?,FALSE,hidden
-left,middle,parentage,Q5,Are you adopted?,FALSE,hidden
-left,middle,parentage,Q6,Were you a dependent when your parent acquired citizenship?,FALSE,hidden
-left,middle,other,Q7,Were you previously a citizen of {cntry}?,FALSE,visible
-left,middle,other,Q8,Click to see if you apply,FALSE,visible
-left,middle,other,Q9,Are you a refugee?,FALSE,visible
+middle,upper,parentage,Q01,Was your parent born in {cntry}?,FALSE,visibile
+middle,upper,parentage,Q02,Were you born in {cntry}?,FALSE,visibile
+left,middle,parentage,Q03,Is your parent a citizen of {cntry}?,FALSE,visibile
+right,middle,parentage,Q04,Did your parent acquire citizenship in {cntry} after your birth?,FALSE,hidden
+left,middle,parentage,Q05,Are you adopted?,FALSE,hidden
+left,middle,parentage,Q06,Were you a dependent when your parent acquired citizenship?,FALSE,hidden
+left,middle,other,Q07,Were you previously a citizen of {cntry}?,FALSE,visible
+left,middle,other,Q08,Click to see if you apply,FALSE,visible
+left,middle,other,Q09,Are you a refugee?,FALSE,visible
 left,middle,other,Q10,Are you stateless?,FALSE,visible
 left,lower,other,Q11,"Do you have any special achievements, contributions or services to {cntry}?",FALSE,visible
 right,upper,other,Q12,Have you worked in public service for {cntry}?,FALSE,visible
