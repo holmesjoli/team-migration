@@ -1,180 +1,176 @@
-iso3,country,mode_id,values,time,specification,definition,restriction_warning,wing
-AFG,Afghanistan,A06a,2,Exactly 5 years,Person has been resident in Afghanistan for 5 years.,NA,NA,residence
-AGO,Angola,A06a,3,Between 5 years and 10 years,Person has been resident in Angola for 10 years.,NA,NA,residence
-ALB,Albania,A06a,2,Exactly 5 years,Person has been lawfully resident in Albania for at least 5 continuous years.,NA,NA,residence
-ARE,United Arab Emirates,A06a,4,More than 10 years,Person has been resident in the UAE for at least 30 years (lawful and continuous residence in UAE).,NA,NA,residence
-ARG,Argentina,A06a,1,Fewer than 5 years,Person has been resident in Argentina for a continuous period of at least 2 years preceding his/her request in accordance with the regulatory framework on immigration.,NA,NA,residence
-ARM,Armenia,A06a,1,Fewer than 5 years,Person has been lawfully resident in Armenia for 3 years.,NA,NA,residence
-ATG,Antigua and Barbuda,A06a,3,Between 5 years and 10 years,"Person has been resident in Antigua and Barbuda for 12 months immediately prior to the application (exemption for British protected persons), as well as during 5 out of 7 years predating the 12-month period. Person must have intent to reside in Antigua and Barbuda. Minister is explicitly allowed to waive certain requirements.",NA,NA,residence
-AUS,Australia,A06a,1,Fewer than 5 years,"Person must have been lawfully resident in Australia for 4 years immediately prior to making the application and holding permanent resident status for the last 12 months of that period. Minister must be satisfied that the person is likely to reside, or to continue to reside, in Australia or to maintain a close and continuing association with Australia.",NA,NA,residence
-AUT,Austria,A06a,3,Between 5 years and 10 years,"Person has been resident in Austria for 10 years, of which 5 years with a permanent resident permit immediately before the application. Residence requirement can be reduced to six years if person has proof of sustainable personal integration.",NA,NA,residence
-AZE,Azerbaijan,A06a,2,Exactly 5 years,Person has had 5 years of permanent and uninterrupted residence.,NA,NA,residence
-BDI,Burundi,A06a,3,Between 5 years and 10 years,Person has been resident at least 10 years.,NA,NA,residence
-BEL,Belgium,A06a,2,Exactly 5 years,Person has been resident in Belgium for at least 5 years.,NA,NA,residence
-BEN,Benin,A06a,3,Between 5 years and 10 years,Person has been resident in Benin for 3 years.,NA,NA,residence
-BFA,Burkina Faso,A06a,3,Between 5 years and 10 years,Person has been habitually and legally resident in Burkina Faso for 10 years.,NA,NA,residence
-BGD,Bangladesh,A06a,2,Exactly 5 years,"Person has been resident in Bangladesh for 12 months immediately prior to the application, as well as during 4 out of 7 years predating the 12-month period, or the person has been ordinarily resident in Bangladesh for 5 years. Intent to reside in Bangladesh or to enter or continue in the service of Bangladesh required.",NA,NA,residence
-BGR,Bulgaria,A06a,2,Exactly 5 years,Person has had permanent residence in Bulgaria for at least 5 years prior to the application.,NA,NA,residence
-BHR,Bahrain,A06a,3,Between 5 years and 10 years,Person has resided in the country for 25 years.,NA,NA,residence
-BHS,Bahamas,A06a,3,Between 5 years and 10 years,"Person has been resident in the Bahamas for 12 months immediately prior to the application, and was either resident in the country, in the service of the government, or had partly such residence and partly such service for 6 out of 9 years prior to the 12-month period and intent to make the Bahamas his/her permanent home (either by residence or government service).",NA,NA,residence
-BIH,Bosnia and Herzegovina,A06a,1,Fewer than 5 years,Person has been resident in BiH for 3 years immediately before the application.,NA,NA,residence
-BLR,Belarus,A06a,3,Between 5 years and 10 years,Person has had 7 years of uninterrupted residence in the country.,NA,NA,residence
-BLZ,Belize,A06a,2,Exactly 5 years,"Person has been ordinarily resident in Belize for 5 years immediately prior to the application, and intends to continue to do so.",NA,NA,residence
-BOL,Bolivia,A06a,1,Fewer than 5 years,Person has been legally resident in Bolivia for a continuous period of 3 years,NA,NA,residence
-BRA,Brazil,A06a,1,Fewer than 5 years,Person has been permanently resident in Brazil for at least 4 years immediately prior to the application and continues to do so.,NA,NA,residence
-BRB,Barbados,A06a,3,Between 5 years and 10 years,"Person has been resident in Barbados for 12 months immediately prior to the application (exemption for British protected persons), as well as during 5 out of 7 years predating the 12-month period. Intent to reside in Barbados required.",NA,NA,residence
-BRN,Brunei,A06a,4,More than 10 years,"Person has been lawfully resident in Brunei for at least 20 years in the aggregate within a period of 25 years immediately prior to the application, as well as throughout the 2 years immediately prior to the application. Intent to settle permanently in the country required.",NA,NA,residence
-BTN,Bhutan,A06a,4,More than 10 years,"Person has been resident in Bhutan for 20 years, and this period of residence has been registered in the census.",NA,NA,residence
-BWA,Botswana,A06a,3,Between 5 years and 10 years,"Person has been resident in Botswana for a continuous period of 12 months prior to the application, and has been resident for at least 10 out of the previous 12 years.",NA,NA,residence
-CAF,Central African Republic,A06a,2,Exactly 5 years,Person has been legally and habitually resident for 5 years.,NA,NA,residence
-CAN,Canada,A06a,2,Exactly 5 years,Person has been resident for 3 out 5 years immediately preceding the application.,NA,NA,residence
-CHE,Switzerland,A06a,3,Between 5 years and 10 years,"Person has a permanent residence permit, resided in Switzerland for 10 years  (3 of these must have been in the 5 years preceding the application).",NA,NA,residence
-CHL,Chile,A06a,2,Exactly 5 years,"Person has lived for a period of at least 5 years in Chile, and was granted permanent residence.",NA,NA,residence
-CIV,Cote dIvoire,A06a,3,Between 5 years and 10 years,Person has been habitually and legally resident in Cote d'Ivoire for 5 years.,NA,NA,residence
-CMR,Cameroon,A06a,2,Exactly 5 years,Person has been habitually resident for 5 years preceding the application.,NA,NA,residence
-COG,Congo Republic,A06a,3,Between 5 years and 10 years,Person has resided in the country for 10 years.,NA,NA,residence
-COL,Colombia,A06a,2,Exactly 5 years,Person has been legally and continuously resident in Colombia for 5 years immediately preceding the application.,NA,NA,residence
-COM,Comoros,A06a,3,Between 5 years and 10 years,Person has been legally resident for 10 years.,NA,NA,residence
-CPV,Cape Verde,A06a,2,Exactly 5 years,Person has been habitually resident in Cape Verde for at least 5 years.,NA,NA,residence
-CRI,Costa Rica,A06a,3,Between 5 years and 10 years,"Person has been resident in Costa Rica for at least 7 years. If citizen by birth of Spain, a Central American country or an Iberoamerican country, residence for at least 5 years.",NA,NA,residence
-CUB,Cuba,A06a,2,Exactly 5 years,Person has been resident in Cuba for 5 years.,NA,NA,residence
-CYP,Cyprus,A06a,2,Exactly 5 years,"Person was resident in Cyprus for a total period of 5 years within a period of 7 years, of which the year immediately prior to the submission of the application must be continuous. By way of exception, certain categories of persons (e.g. domestic workers, students) must have been resident in Cyprus for a total period of 7 years before the submission of the application, of which the last 12 months should be continuous. Person must have intention to remain in Cyprus or at service of Cyprus.",NA,NA,residence
-CZE,Czech Republic,A06a,2,Exactly 5 years,"Person has been resident in the Czech Republic for 5 years and has a permanent residence permit. 
-
-
-
-",NA,NA,residence
-DEU,Germany,A06a,3,Between 5 years and 10 years,"Person is over the age of 16, has been resident in Germany for 8 years and is entitled to permanent residence (without permanent residence, naturalisation is not an entitlement, but can be acquired on a discretionary basis).",NA,NA,residence
-DJI,Djibouti,A06a,3,Between 5 years and 10 years,Person has been habitually resident in Djibouti for at least 10 years.,NA,NA,residence
-DMA,Dominica,A06a,3,Between 5 years and 10 years,"Person has been resident in Dominica for 12 months immediately prior to the application, and was either resident in Dominica, in the service of the government, or had partly such residence and partly such service for 7 years predating the 12-month period.",NA,NA,residence
-DNK,Denmark,A06a,3,Between 5 years and 10 years,Person has been resident in Denmark for 9 years with a permanent residence permit at the time of application.,NA,NA,residence
-DOM,Dominican Republic,A06a,1,Fewer than 5 years,Person has been resident in the DR for at least 2 years uninterrupted.,NA,NA,residence
-DZA,Algeria,A06a,3,Between 5 years and 10 years,Person has lived in the country for a minimum of 7 years directly preceding the application.,NA,NA,residence
-ECU,Ecuador,A06a,1,Fewer than 5 years,Person has been resident in Ecuador for at least 3 years.,NA,NA,residence
-EGY,Egypt,A06a,3,Between 5 years and 10 years,Person has been resident in Egypt for 10 years.,NA,NA,residence
-ERI,Eritrea,A06a,4,More than 10 years,Person is not of 'Eritrean origin' and has been legally resident in Eritrea for at least 10 years before 1974 or at least 20 years while making visits abroad.,NA,NA,residence
-ESP,Spain,A06a,3,Between 5 years and 10 years,Person has been resident in Spain for 10 years immediately prior to the application.,NA,NA,residence
-EST,Estonia,A06a,3,Between 5 years and 10 years,"Person has been resident in Estonia for 8 years, of which the last 5 years permanently.",NA,NA,residence
-ETH,Ethiopia,A06a,1,Fewer than 5 years,Person has been domiciled in Ethiopia for at least 4 years.,NA,NA,residence
-FIN,Finland,A06a,2,Exactly 5 years,"Person has been resident in Finland for 5 years uninterrupted, or 7 years since the age of 15 with the last 2 years uninterrupted. (In both cases the residence requirement can be shortened with 1 year if applicant meets language requirements.) Section 18: Exceptions to the period of residence. Section 18a: Exceptions to the period of residence when the language requirement is fulfiled.",NA,NA,residence
-FJI,Fiji,A06a,2,Exactly 5 years,"Presence in Fiji for 5 of preceding 10 years, intention to reside in Fiji.",NA,NA,residence
-FRA,France,A06a,2,Exactly 5 years,Person has been resident in France for 5 years. (Residence requirement may be waived for certain categories including refugees.,NA,NA,residence
-GAB,Gabon,A06a,1,Fewer than 5 years,Person has been resident in Gabon for at least 5 years.,NA,NA,residence
-GBR,United Kingdom,A06a,2,Exactly 5 years,"Person has been resident in the UK for 5 years, intention to have principal home in the country and to continue residence in or service for the UK.",NA,NA,residence
-GEO,Georgia,A06a,3,Between 5 years and 10 years,Person has been lawfully resident for 10 years.,NA,NA,residence
-GHA,Ghana,A06a,2,Exactly 5 years,"Person has been legally resident in Ghana for an aggregate period of at least 5 years over 7 years, including the 12 months preceding the date of application.",NA,NA,residence
-GIN,Guinea,A06a,2,Exactly 5 years,"Person has been habitually resident in Guinea for at least 5 years (or person performs military service, civil service or professional services for Guinea abroad during this period).",NA,NA,residence
-GMB,Gambia,A06a,4,More than 10 years,Person has been ordinarily resident in The Gambia for a continuous period of not less than 15 years. Intention to permanently reside required.,NA,NA,residence
-GNB,Guinea Bissau,A06a,3,Between 5 years and 10 years,Person has been habitually resident in Guinea Bissau for at least 6 years.,NA,NA,residence
-GNQ,Equatorial Guinea,A06a,4,More than 10 years,Person has been legally resident for at least 40 years.,NA,NA,residence
-GRC,Greece,A06a,3,Between 5 years and 10 years,Person has been permanently resident in Greece for 7 years.,NA,NA,residence
-GRD,Grenada,A06a,3,Between 5 years and 10 years,"Person has been resident in Grenada for 12 months immediately prior to the application, and was either resident in Grenada, or in government service, or had partly such residence and partly such service for 5 out of 7 years predating the 12-month period. Intent to reside in Grenada required.",NA,NA,residence
-GTM,Guatemala,A06a,2,Exactly 5 years,Person has been resident in Guatemala for 5 years uninterrupted or 10 years in total.,NA,NA,residence
-GUY,Guyana,A06a,3,Between 5 years and 10 years,"Person has been resident in Guyana for 12 months immediately prior to the application, and 5 out of 7 years prior to the 12-month period. Intent to reside in the country.",NA,NA,residence
-HND,Honduras,A06a,1,Fewer than 5 years,Person has been resident in Honduras for a continuous period of 3 years.,NA,NA,residence
-HRV,Croatia,A06a,3,Between 5 years and 10 years,Person has been resident in Croatia for 8 years immediately before the application.,NA,NA,residence
-HTI,Haiti,A06a,2,Exactly 5 years,Person has been resident in Haiti for 5 years.,NA,NA,residence
-HUN,Hungary,A06a,3,Between 5 years and 10 years,Person has been resident in Hungary for 8 years with a settlement permit.,NA,NA,residence
-IDN,Indonesia,A06a,2,Exactly 5 years,Person has been continuously resident in Indonesia for 5 years or intermittently for 10 years.,NA,NA,residence
-IND,India,A06a,4,More than 10 years,"Person is not an illegal migrant and has been resident in India or abroad in the service of India for 12 months immediately prior to the application, as well as during 11 out of 14 years predating the 12-month period. Intent to reside in India or to enter or continue in the service of India required.",NA,NA,residence
-IRL,Ireland,A06a,2,Exactly 5 years,"Person has been resident in Ireland for 5 out of the last 9 years, including the year preceding the application. Intention to continue to reside in Ireland required.",NA,NA,residence
-IRN,Iran,A06a,2,Exactly 5 years,Person has resided in the territory for a period of 5 years (interruptions permitted).,NA,NA,residence
-IRQ,Iraq,A06a,3,Between 5 years and 10 years,Person has been resident in the country for 10 years.,NA,NA,residence
-ISL,Iceland,A06a,3,Between 5 years and 10 years,Person has been resident in Iceland for 7 years and meets the conditions for obtaining a permanent residence permit.,NA,NA,residence
-ISR,Israel,A06a,1,Fewer than 5 years,"Person is in Israel and has been resident there for 3 out of the 5 years immediately preceding the day of the submission of the application. Person is entitled to reside in Israel permanently, has settled (or intends to settle) in Israel.",NA,NA,residence
-ITA,Italy,A06a,3,Between 5 years and 10 years,Person has been resident in Italy for 10 years.,NA,NA,residence
-JAM,Jamaica,A06a,2,Exactly 5 years,"Person has been resident in Jamaica for 12 months immediately prior to the application, as well as for 4 out of 7 years predating the 12-month period. Intent to reside in Jamaica required.",NA,NA,residence
-JOR,Jordan,A06a,1,Fewer than 5 years,Person has been regularly resident in Jordan for a period of 4 years preceding the date of the application. Person intends to reside in Jordan.,NA,NA,residence
-JPN,Japan,A06a,2,Exactly 5 years,Person has been domiciled in Japan for a continuous period of 5 years.,NA,NA,residence
-KAZ,Kazakhstan,A06a,2,Exactly 5 years,Person has been lawfully and permanently resident for 5 years.,NA,NA,residence
-KEN,Kenya,A06a,3,Between 5 years and 10 years,"Person has been lawfully resident in Kenya for at least 7 years, including 12 months immediately prior to application.",NA,NA,residence
-KGZ,Kyrgyzstan,A06a,2,Exactly 5 years,Person has had 5 years of continuous and uninterrupted residence in the country.,NA,NA,residence
-KHM,Cambodia,A06a,3,Between 5 years and 10 years,Person is resident in Cambodia and has been continuously resident there for 7 years from the moment s/he received a residence card.,NA,NA,residence
-KIR,Kiribati,A06a,3,Between 5 years and 10 years,Ordinarily resident in Kiribati for 7 years (waived if applicant has lost or renounced citizenship).,NA,NA,residence
-KNA,Saint Kitts and Nevis,A06a,4,More than 10 years,"Person has been resident in St Kitts for 12 months immediately prior to the application (unless person is a British protected person), as well as for 14 years predating the 12-month period. intent to reside in St Kitts required.",NA,NA,residence
-KOR,South Korea,A06a,2,Exactly 5 years,Person has been domiciled in South Korea for a continuous period of 5 years and has permanent residence status.,NA,NA,residence
-LAO,Laos,A06a,3,Between 5 years and 10 years,Person has had continuous and permanent residence in Laos for 10 years.,NA,NA,residence
-LBY,Libya,A06a,3,Between 5 years and 10 years,Person has been resident in Libya for 10 years.,NA,NA,residence
-LCA,Saint Lucia,A06a,3,Between 5 years and 10 years,"Person has been resident in St Lucia for 12 months immediately prior to the application, and was either resident in St Lucia, or in government service, or had partly such residence and partly such service for 7 years predating the 12-month period. Intent to reside in St Lucia required.",NA,NA,residence
-LIE,Liechtenstein,A06a,3,Between 5 years and 10 years,Person has had 10 years of uninterrupted lawful and main residence in Liechtenstein.,NA,NA,residence
-LSO,Lesotho,A06a,2,Exactly 5 years,Person has been lawfully resident in Lesotho for at least 5 years.,NA,NA,residence
-LTU,Lithuania,A06a,3,Between 5 years and 10 years,Person has legally resided in Lithuania for the last 10 years and has the right of permanent residence.,NA,NA,residence
-LUX,Luxembourg,A06a,2,Exactly 5 years,Person has resided in Luxembourg for 5 years before the application (last year preceding application without interruption).,NA,NA,residence
-LVA,Latvia,A06a,2,Exactly 5 years,Person has been permanently resident in Latvia for 5 years.,NA,NA,residence
-MAR,Morocco,A06a,2,Exactly 5 years,Person has been resident in the country for at least 5 years.,NA,NA,residence
-MDA,Moldova,A06a,3,Between 5 years and 10 years,Person has been resident in Moldova for 10 years.,NA,NA,residence
-MDG,Madagascar,A06a,2,Exactly 5 years,Person has been habitually resident for 5 years.,NA,NA,residence
-MEX,Mexico,A06a,2,Exactly 5 years,Person has been resident in Mexico for 5 years immediately prior to the application.,NA,NA,residence
-MHL,Marshall Islands,A06a,3,Between 5 years and 10 years,Ordinarily resident in RMI for 10 years,NA,NA,residence
-MKD,Macedonia,A06a,3,Between 5 years and 10 years,Person has been permanently resident in Macedonia for at least 8 years.,NA,NA,residence
-MLI,Mali,A06a,3,Between 5 years and 10 years,Person has been habitually resident for at least 10 years.,NA,NA,residence
-MLT,Malta,A06a,3,Between 5 years and 10 years,Person has been resident in Malta for at least 5 of the past 7 years preceding the application.,NA,NA,residence
-MNE,Montenegro,A06a,3,Between 5 years and 10 years,Person has been resident in Montenegro for 10 years uninterrupted immediately before the application.,NA,NA,residence
-MNG,Mongolia,A06a,2,Exactly 5 years,Person has been permanently resident in Mongolia for 5 years.,NA,NA,residence
-MOZ,Mozambique,A06a,3,Between 5 years and 10 years,Person has been habitually resident in Mozambique for at least 10 years.,NA,NA,residence
-MRT,Mauritania,A06a,3,Between 5 years and 10 years,Person has lived in Mauritania for at least 10 years.,NA,NA,residence
-MUS,Mauritius,A06a,2,Exactly 5 years,"Person has been resident for at least 5 years during the previous 7 years, including 12 months preceding the application.",NA,NA,residence
-MWI,Malawi,A06a,3,Between 5 years and 10 years,Person has been ordinarily resident for at least 7 years.,NA,NA,residence
-MYS,Malaysia,A06a,3,Between 5 years and 10 years,"Person has been resident in Malaysia for 12 months immediately prior to the application, and was resident (holding Malaysian permanent resident status) in the country for 10 out of 12 years prior to the application.",NA,NA,residence
-"NAM",Namibia,A06a,3,Between 5 years and 10 years,Person has been lawfully and ordinarily resident for at least 10 years.,NA,NA,residence
-NER,Niger,A06a,3,Between 5 years and 10 years,Person has been habitually resident for at least 10 years.,NA,NA,residence
-NGA,Nigeria,A06a,4,More than 10 years,"Person has resided in Nigeria for a continuous period of 15 years, or has resided for 1 year prior to application and 15 years over previous 20 years",NA,NA,residence
-NIC,Nicaragua,A06a,1,Fewer than 5 years,Person has been resident in Nicaragua for a continuous period of 4 years since being granted a permanent resident permit.,NA,NA,residence
-NLD,Netherlands,A06a,2,Exactly 5 years,Person has been resident in the Netherlands for 5 years immediately before the application and there are no objections against indefinite residence in the country.,NA,NA,residence
-NOR,Norway,A06a,3,Between 5 years and 10 years,Person has resided in Norway for a total of 7 years in the last 10 years with residence or work permits of at least 1 year duration.,NA,NA,residence
-NZL,New Zealand,A06a,2,Exactly 5 years,"Person must be present in New Zealand (or in the Cook Islands, Niue or Tokelau) for a minimum of 1350 days during the 5 years immediately preceding the date of application and for at least 240 days in each of those 5 years and person intends to continue to reside in NZ or to enter into Crown service under the NZ government or service under an international organisation of which NZ is a member, or service in the employment of an entity resident or established in NZ.",NA,NA,residence
-OMN,Oman,A06a,3,Between 5 years and 10 years,Person has been resident in Oman for at least 20 years.,NA,NA,residence
-PAK,Pakistan,A06a,2,Exactly 5 years,"Person has been resident in Pakistan for 12 months immediately prior to the application, as well as during 4 out of 7 years predating the 12-month period.",NA,NA,residence
-PAN,Panama,A06a,2,Exactly 5 years,Person has been resident in Panama for a continuous period of 5 years (time spent during minority is fully counted).,NA,NA,residence
-PER,Peru,A06a,1,Fewer than 5 years,Person has been resident in Peru for a continuous period of at least 2 years.,NA,NA,residence
-PHL,Philippines,A06a,3,Between 5 years and 10 years,Person has been resident in the Philippines for a continuous period of 10 years.,NA,NA,residence
-PNG,Papua New Guinea,A06a,3,Between 5 years and 10 years,Residence for 8 years required.,NA,NA,residence
-POL,Poland,A06a,1,Fewer than 5 years,Person has been resident in Poland for 3 years with a permanent residence permit (or a long term EU residence permit).,NA,NA,residence
-PRT,Portugal,A06a,2,Exactly 5 years,Person has been resident in Portugal for 5 years.,NA,NA,residence
-PRY,Paraguay,A06a,1,Fewer than 5 years,Person has been resident in Paraguay for at least 3 years.,NA,NA,residence
-QAT,Qatar,A06a,4,More than 10 years,Person has been resident in the country for at least 25 years.,NA,NA,residence
-ROU,Romania,A06a,3,Between 5 years and 10 years,Person has been resident in Romania for 8 years.,NA,NA,residence
-RUS,Russia,A06a,2,Exactly 5 years,"Person has been resident in Russia for 5 years uninterrupted, under the permanent residence permit (note: it may take many years before a foreigner qualifies for the permanent residence permit).",NA,NA,residence
-RWA,Rwanda,A06a,2,Exactly 5 years,Person has been resident in Rwanda for at least 5 years.,NA,NA,residence
-SAU,Saudi Arabia,A06a,2,Exactly 5 years,"Person has had a permanent resident permit (kiqama) inside the Kingdom for 10 years continuously as a minimum. Note that under article 20 of the citizenship law it states that residency period will be reset if the applicant after filing his application left the kingdom for more than 12 months using his existing passport, or if before filing his application they left the kingdom for more than 6 months.",NA,NA,residence
-SDN,Sudan,A06a,3,Between 5 years and 10 years,Person has been lawfully and continuously resident in Sudan for 10 years or more.,NA,NA,residence
-SEN,Senegal,A06a,2,Exactly 5 years,Person has been habitually resident in STP for at least 5 years,NA,NA,residence
-SGP,Singapore,A06a,3,Between 5 years and 10 years,"Person has been resident in Singapore for 12 months immediately prior to the application, and was resident in the country for 10 out of 12 years prior to the application.",NA,NA,residence
-SLB,Solomon Islands,A06a,2,Exactly 5 years,"Person is ordinarily resident in Solomon Islands for five of the last ten years, intention to reside or maintain close and continuing relationship with Solomon Islands.",NA,NA,residence
-SLE,Sierra Leone,A06a,4,More than 10 years,Person has been resident in Sierra Leone for at least 15 years.,NA,NA,residence
-SLV,El Salvador,A06a,2,Exactly 5 years,Person has been resident in El Salvador for 5 years.,NA,NA,residence
-SOM,Somalia,A06a,3,Between 5 years and 10 years,Person has been resident in Somalia for at least 7 years.,NA,NA,residence
-SRB,Serbia,A06a,1,Fewer than 5 years,Person has been uninterruptedly resident in Serbia for at least 3 years.,NA,NA,residence
-SSD,South Sudan,A06a,3,Between 5 years and 10 years,Person has been resident for at least 10 years.,NA,NA,residence
-STP,Sao Tome and Principe,A06a,2,Exactly 5 years,Person has been habitually resident in STP for at least 5 years,NA,NA,residence
-SUR,Suriname,A06a,2,Exactly 5 years,Person has been resident in Suriname for 5 years immediately preceding the application.,NA,NA,residence
-SVK,Slovakia,A06a,3,Between 5 years and 10 years,Person has been resident in Slovakia for 8 consecutive years immediately prior to the application or 10 years with a permanent residence permit.,NA,NA,residence
-SVN,Slovenia,A06a,3,Between 5 years and 10 years,"Person has been resident in Slovenia for 10 years, of which 5 were continuous, and with a 'settled status' immediately before the application.",NA,NA,residence
-SWE,Sweden,A06a,2,Exactly 5 years,Person has been resident in Sweden for (in most cases) 5 years with a permanent residence permit.,NA,NA,residence
-SWZ,Swaziland,A06a,3,Between 5 years and 10 years,Person is ordinarily resident for at least 12 months prior to aplication and 5 years during the previous 7 years.,NA,NA,residence
-SYR,Syria,A06a,2,Exactly 5 years,Person has been resident in Syria for at least 5 years.,NA,NA,residence
-TCD,Chad,A06a,4,More than 10 years,Person has been resident in Chad for 15 years.,NA,NA,residence
-TGO,Togo,A06a,2,Exactly 5 years,Person has been habitually resident for at least 5 years.,NA,NA,residence
-TJK,Tajikistan,A06a,2,Exactly 5 years,Person has had permanent and continuous residence for 5 years.,NA,NA,residence
-TKM,Turkmenistan,A06a,2,Exactly 5 years,Person has been habitually resident for 5 years.,NA,NA,residence
-TLS,East Timor,A06a,3,Between 5 years and 10 years,Person has been habitually and regularly resident in Timor-Leste for at least 10 years counted before 7 December 1975 or after 20 May 2002.,NA,NA,residence
-TON,Tonga,A06a,2,Exactly 5 years,"Residence in Tonga for at least 5 years (a woman who was a Tongan subject before marriage to a non-Tongan who is no longer married, is not required to meet residence requirement).",NA,NA,residence
-TTO,Trinidad and Tobago,A06a,3,Between 5 years and 10 years,"Person has been resident in Trinidad and Tobago for 12 months immediately prior to the application, and was either resident in Trinidad and Tobago, or in government service, or had partly such residence and partly such service for 5 out of 7 years prior to the 12-month period.",NA,NA,residence
-TUN,Tunisia,A06a,2,Exactly 5 years,Person has been resident in the country for at least 5 years.,NA,NA,residence
-TUR,Turkey,A06a,2,Exactly 5 years,Person has been resident in Turkey for 5 years with intent to settle.,NA,NA,residence
-TUV,Tuvalu,A06a,3,Between 5 years and 10 years,Residence in Tuvalu for 7 years.,NA,NA,residence
-TWN,Taiwan,A06a,2,Exactly 5 years,Person is domiciled in Taiwan and has been resident for 5 continuous years of which at least 183 days annually.,NA,NA,residence
-TZA,Tanzania,A06a,3,Between 5 years and 10 years,Person has been resident for 12 months prior to the application and at least 7 years during previous 10 years.,NA,NA,residence
-UGA,Uganda,A06a,3,Between 5 years and 10 years,Person has legally and voluntarily migrated to Uganda and has been living there for at least 10 years.,NA,NA,residence
-UKR,Ukraine,A06a,2,Exactly 5 years,Person has been resident in Ukraine for 5 years uninterrupted. Permit to immigrate required.,NA,NA,residence
-USA,United States of America,A06a,2,Exactly 5 years,Person has been resident in the United States for a continuous period of 5 years.,NA,NA,residence
-UZB,Uzbekistan,A06a,2,Exactly 5 years,Person has been permanently resident for 5 years in the country.,NA,NA,residence
-VCT,Saint Vincent and the Grenadines,A06a,3,Between 5 years and 10 years,"Person has been resident in St Vincent for 12 months immediately prior to the application, and was either resident in St Vincent, or in government service for 6 out of 9 years predating the 12-month period.",NA,NA,residence
-VEN,Venezuela,A06a,3,Between 5 years and 10 years,Person has been continuously resident in Venezuela for at least 10 years immediately prior to the application.,NA,NA,residence
-VNM,Vietnam,A06a,2,Exactly 5 years,Person has been resident in Vietnam for 5 years.,NA,NA,residence
-VUT,Vanuatu,A06a,3,Between 5 years and 10 years,Residence in Vanuatu for continuous period of 10 years.,NA,NA,residence
-WSM,Samoa,A06a,2,Exactly 5 years,Valid permanent resident permit for 5 years,NA,NA,residence
-XKX,Kosovo,A06a,2,Exactly 5 years,Person has been resident in Kosovo for 5 consecutive years after receiving permanent residence permit.,NA,NA,residence
-ZAF,South Africa,A06a,2,Exactly 5 years,Person is a permanent resident and has been ordinarily and legally resident for at least 5 years.,NA,NA,residence
-ZMB,Zambia,A06a,3,Between 5 years and 10 years,Person was born outside Zambia and has been ordinarily resident in Zambia for a continuous period of at least 10 years.,NA,NA,residence
-ZWE,Zimbabwe,A06a,3,Between 5 years and 10 years,Person has been continuously and lawfully resident in Zimbabwe for at least 10 years.,NA,NA,residence
+iso3,country,mode_id,values,time
+AFG,Afghanistan,A06a,2,Exactly 5 years
+AGO,Angola,A06a,3,Between 5 years and 10 years
+ALB,Albania,A06a,2,Exactly 5 years
+ARE,United Arab Emirates,A06a,4,More than 10 years
+ARG,Argentina,A06a,1,Fewer than 5 years
+ARM,Armenia,A06a,1,Fewer than 5 years
+ATG,Antigua and Barbuda,A06a,3,Between 5 years and 10 years
+AUS,Australia,A06a,1,Fewer than 5 years
+AUT,Austria,A06a,3,Between 5 years and 10 years
+AZE,Azerbaijan,A06a,2,Exactly 5 years
+BDI,Burundi,A06a,3,Between 5 years and 10 years
+BEL,Belgium,A06a,2,Exactly 5 years
+BEN,Benin,A06a,3,Between 5 years and 10 years
+BFA,Burkina Faso,A06a,3,Between 5 years and 10 years
+BGD,Bangladesh,A06a,2,Exactly 5 years
+BGR,Bulgaria,A06a,2,Exactly 5 years
+BHR,Bahrain,A06a,3,Between 5 years and 10 years
+BHS,Bahamas,A06a,3,Between 5 years and 10 years
+BIH,Bosnia and Herzegovina,A06a,1,Fewer than 5 years
+BLR,Belarus,A06a,3,Between 5 years and 10 years
+BLZ,Belize,A06a,2,Exactly 5 years
+BOL,Bolivia,A06a,1,Fewer than 5 years
+BRA,Brazil,A06a,1,Fewer than 5 years
+BRB,Barbados,A06a,3,Between 5 years and 10 years
+BRN,Brunei,A06a,4,More than 10 years
+BTN,Bhutan,A06a,4,More than 10 years
+BWA,Botswana,A06a,3,Between 5 years and 10 years
+CAF,Central African Republic,A06a,2,Exactly 5 years
+CAN,Canada,A06a,2,Exactly 5 years
+CHE,Switzerland,A06a,3,Between 5 years and 10 years
+CHL,Chile,A06a,2,Exactly 5 years
+CIV,Cote dIvoire,A06a,3,Between 5 years and 10 years
+CMR,Cameroon,A06a,2,Exactly 5 years
+COG,Congo Republic,A06a,3,Between 5 years and 10 years
+COL,Colombia,A06a,2,Exactly 5 years
+COM,Comoros,A06a,3,Between 5 years and 10 years
+CPV,Cape Verde,A06a,2,Exactly 5 years
+CRI,Costa Rica,A06a,3,Between 5 years and 10 years
+CUB,Cuba,A06a,2,Exactly 5 years
+CYP,Cyprus,A06a,2,Exactly 5 years
+CZE,Czech Republic,A06a,2,Exactly 5 years
+DEU,Germany,A06a,3,Between 5 years and 10 years
+DJI,Djibouti,A06a,3,Between 5 years and 10 years
+DMA,Dominica,A06a,3,Between 5 years and 10 years
+DNK,Denmark,A06a,3,Between 5 years and 10 years
+DOM,Dominican Republic,A06a,1,Fewer than 5 years
+DZA,Algeria,A06a,3,Between 5 years and 10 years
+ECU,Ecuador,A06a,1,Fewer than 5 years
+EGY,Egypt,A06a,3,Between 5 years and 10 years
+ERI,Eritrea,A06a,4,More than 10 years
+ESP,Spain,A06a,3,Between 5 years and 10 years
+EST,Estonia,A06a,3,Between 5 years and 10 years
+ETH,Ethiopia,A06a,1,Fewer than 5 years
+FIN,Finland,A06a,2,Exactly 5 years
+FJI,Fiji,A06a,2,Exactly 5 years
+FRA,France,A06a,2,Exactly 5 years
+GAB,Gabon,A06a,1,Fewer than 5 years
+GBR,United Kingdom,A06a,2,Exactly 5 years
+GEO,Georgia,A06a,3,Between 5 years and 10 years
+GHA,Ghana,A06a,2,Exactly 5 years
+GIN,Guinea,A06a,2,Exactly 5 years
+GMB,Gambia,A06a,4,More than 10 years
+GNB,Guinea Bissau,A06a,3,Between 5 years and 10 years
+GNQ,Equatorial Guinea,A06a,4,More than 10 years
+GRC,Greece,A06a,3,Between 5 years and 10 years
+GRD,Grenada,A06a,3,Between 5 years and 10 years
+GTM,Guatemala,A06a,2,Exactly 5 years
+GUY,Guyana,A06a,3,Between 5 years and 10 years
+HND,Honduras,A06a,1,Fewer than 5 years
+HRV,Croatia,A06a,3,Between 5 years and 10 years
+HTI,Haiti,A06a,2,Exactly 5 years
+HUN,Hungary,A06a,3,Between 5 years and 10 years
+IDN,Indonesia,A06a,2,Exactly 5 years
+IND,India,A06a,4,More than 10 years
+IRL,Ireland,A06a,2,Exactly 5 years
+IRN,Iran,A06a,2,Exactly 5 years
+IRQ,Iraq,A06a,3,Between 5 years and 10 years
+ISL,Iceland,A06a,3,Between 5 years and 10 years
+ISR,Israel,A06a,1,Fewer than 5 years
+ITA,Italy,A06a,3,Between 5 years and 10 years
+JAM,Jamaica,A06a,2,Exactly 5 years
+JOR,Jordan,A06a,1,Fewer than 5 years
+JPN,Japan,A06a,2,Exactly 5 years
+KAZ,Kazakhstan,A06a,2,Exactly 5 years
+KEN,Kenya,A06a,3,Between 5 years and 10 years
+KGZ,Kyrgyzstan,A06a,2,Exactly 5 years
+KHM,Cambodia,A06a,3,Between 5 years and 10 years
+KIR,Kiribati,A06a,3,Between 5 years and 10 years
+KNA,Saint Kitts and Nevis,A06a,4,More than 10 years
+KOR,South Korea,A06a,2,Exactly 5 years
+LAO,Laos,A06a,3,Between 5 years and 10 years
+LBY,Libya,A06a,3,Between 5 years and 10 years
+LCA,Saint Lucia,A06a,3,Between 5 years and 10 years
+LIE,Liechtenstein,A06a,3,Between 5 years and 10 years
+LSO,Lesotho,A06a,2,Exactly 5 years
+LTU,Lithuania,A06a,3,Between 5 years and 10 years
+LUX,Luxembourg,A06a,2,Exactly 5 years
+LVA,Latvia,A06a,2,Exactly 5 years
+MAR,Morocco,A06a,2,Exactly 5 years
+MDA,Moldova,A06a,3,Between 5 years and 10 years
+MDG,Madagascar,A06a,2,Exactly 5 years
+MEX,Mexico,A06a,2,Exactly 5 years
+MHL,Marshall Islands,A06a,3,Between 5 years and 10 years
+MKD,Macedonia,A06a,3,Between 5 years and 10 years
+MLI,Mali,A06a,3,Between 5 years and 10 years
+MLT,Malta,A06a,3,Between 5 years and 10 years
+MNE,Montenegro,A06a,3,Between 5 years and 10 years
+MNG,Mongolia,A06a,2,Exactly 5 years
+MOZ,Mozambique,A06a,3,Between 5 years and 10 years
+MRT,Mauritania,A06a,3,Between 5 years and 10 years
+MUS,Mauritius,A06a,2,Exactly 5 years
+MWI,Malawi,A06a,3,Between 5 years and 10 years
+MYS,Malaysia,A06a,3,Between 5 years and 10 years
+"NAM",Namibia,A06a,3,Between 5 years and 10 years
+NER,Niger,A06a,3,Between 5 years and 10 years
+NGA,Nigeria,A06a,4,More than 10 years
+NIC,Nicaragua,A06a,1,Fewer than 5 years
+NLD,Netherlands,A06a,2,Exactly 5 years
+NOR,Norway,A06a,3,Between 5 years and 10 years
+NZL,New Zealand,A06a,2,Exactly 5 years
+OMN,Oman,A06a,3,Between 5 years and 10 years
+PAK,Pakistan,A06a,2,Exactly 5 years
+PAN,Panama,A06a,2,Exactly 5 years
+PER,Peru,A06a,1,Fewer than 5 years
+PHL,Philippines,A06a,3,Between 5 years and 10 years
+PNG,Papua New Guinea,A06a,3,Between 5 years and 10 years
+POL,Poland,A06a,1,Fewer than 5 years
+PRT,Portugal,A06a,2,Exactly 5 years
+PRY,Paraguay,A06a,1,Fewer than 5 years
+QAT,Qatar,A06a,4,More than 10 years
+ROU,Romania,A06a,3,Between 5 years and 10 years
+RUS,Russia,A06a,2,Exactly 5 years
+RWA,Rwanda,A06a,2,Exactly 5 years
+SAU,Saudi Arabia,A06a,2,Exactly 5 years
+SDN,Sudan,A06a,3,Between 5 years and 10 years
+SEN,Senegal,A06a,2,Exactly 5 years
+SGP,Singapore,A06a,3,Between 5 years and 10 years
+SLB,Solomon Islands,A06a,2,Exactly 5 years
+SLE,Sierra Leone,A06a,4,More than 10 years
+SLV,El Salvador,A06a,2,Exactly 5 years
+SOM,Somalia,A06a,3,Between 5 years and 10 years
+SRB,Serbia,A06a,1,Fewer than 5 years
+SSD,South Sudan,A06a,3,Between 5 years and 10 years
+STP,Sao Tome and Principe,A06a,2,Exactly 5 years
+SUR,Suriname,A06a,2,Exactly 5 years
+SVK,Slovakia,A06a,3,Between 5 years and 10 years
+SVN,Slovenia,A06a,3,Between 5 years and 10 years
+SWE,Sweden,A06a,2,Exactly 5 years
+SWZ,Swaziland,A06a,3,Between 5 years and 10 years
+SYR,Syria,A06a,2,Exactly 5 years
+TCD,Chad,A06a,4,More than 10 years
+TGO,Togo,A06a,2,Exactly 5 years
+TJK,Tajikistan,A06a,2,Exactly 5 years
+TKM,Turkmenistan,A06a,2,Exactly 5 years
+TLS,East Timor,A06a,3,Between 5 years and 10 years
+TON,Tonga,A06a,2,Exactly 5 years
+TTO,Trinidad and Tobago,A06a,3,Between 5 years and 10 years
+TUN,Tunisia,A06a,2,Exactly 5 years
+TUR,Turkey,A06a,2,Exactly 5 years
+TUV,Tuvalu,A06a,3,Between 5 years and 10 years
+TWN,Taiwan,A06a,2,Exactly 5 years
+TZA,Tanzania,A06a,3,Between 5 years and 10 years
+UGA,Uganda,A06a,3,Between 5 years and 10 years
+UKR,Ukraine,A06a,2,Exactly 5 years
+USA,United States of America,A06a,2,Exactly 5 years
+UZB,Uzbekistan,A06a,2,Exactly 5 years
+VCT,Saint Vincent and the Grenadines,A06a,3,Between 5 years and 10 years
+VEN,Venezuela,A06a,3,Between 5 years and 10 years
+VNM,Vietnam,A06a,2,Exactly 5 years
+VUT,Vanuatu,A06a,3,Between 5 years and 10 years
+WSM,Samoa,A06a,2,Exactly 5 years
+XKX,Kosovo,A06a,2,Exactly 5 years
+ZAF,South Africa,A06a,2,Exactly 5 years
+ZMB,Zambia,A06a,3,Between 5 years and 10 years
+ZWE,Zimbabwe,A06a,3,Between 5 years and 10 years

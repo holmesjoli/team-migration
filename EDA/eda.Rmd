@@ -98,7 +98,9 @@ df_long %>%
                           values == 2 ~ "Exactly 5 years",
                           values == 3 ~ "Between 5 years and 10 years",
                           values == 4 ~ "More than 10 years")) %>%
-  inner_join(modes) %>%
+  inner_join(modes %>%
+               filter(mode_id == "A06a") %>% 
+               select(mode_id)) %>%
   readr::write_csv("../svelte-development/public/data/modeA06a.csv")
   
 
