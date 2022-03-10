@@ -1,10 +1,10 @@
 <script>
   import { afterUpdate } from 'svelte';
-  import { select, selectAll } from "d3";
-  import {uniqueArray, findRegionColor} from "./helper.js"
+  import { select, selectAll, scaleOrdinal } from "d3";
+  import {uniqueArray, findRegionColor, getQuestionWithCountryName, createPossibleQuestions, createUnnecessaryQuestions, clickContainer, highlightPath} from "./helper.js"
   import Documentation from './Documentation.svelte'
   import regions from './regions.js'
-import { each } from 'svelte/internal';
+  import { each } from 'svelte/internal';
 
   export let selectedRegion;
   export let selectedCountry;
@@ -23,37 +23,56 @@ import { each } from 'svelte/internal';
     "A06d", "A06a", "A06b", "A06c", "A25", "A26", "A24", "A23", "A22",
     "A19", "A18", "A16"] 
 
+  let allQuestions = uniqueArray(questionToMode, "question");
+
   $: h = w * 74 / 91;
 
   $: if (selectedCountry !== "") {
+
+    let acqModeFiltered = acqMode.filter(d => d.country == selectedCountry);
+    let possibleModes = uniqueArray(acqModeFiltered, "mode_id");
+
+    let possibleQuestions = createPossibleQuestions(possibleModes, questionToMode);
+    let unnecessaryQuestions = createUnnecessaryQuestions(allQuestions, possibleQuestions);
+
+    let clicks = new clickContainer(possibleQuestions, possibleModes);
+    console.log(clicks);
+
+    console.log("possibleModes", possibleModes);
+    console.log("allQuestions", allQuestions);
+    console.log("possibleQuestions", possibleQuestions);
+    console.log("unnecessaryQuestions", unnecessaryQuestions);
+
     // filter and see what modes are available
-    let selectedAcqMode = acqMode.filter(d => d.country == selectedCountry)
-    selectedAcqMode = uniqueArray(selectedAcqMode, "mode_id")
-    let filteredAvailableMode = availableMode.filter(m => selectedAcqMode.includes(m));
-    let unnecessaryQuestion = questionToMode.filter(q => !selectedAcqMode.includes(q.mode_id))
-    unnecessaryQuestion = uniqueArray(unnecessaryQuestion, "question")
-    let necessaryQuestion = questionToMode.filter(q => selectedAcqMode.includes(q.mode_id))
-    necessaryQuestion = uniqueArray(necessaryQuestion, "question")
-    unnecessaryQuestion = unnecessaryQuestion.filter(q => necessaryQuestion.indexOf(q) == -1);
+    let filteredAvailableMode = availableMode.filter(m => possibleModes.includes(m));
+    console.log("filteredAvailableMode", filteredAvailableMode);
+    console.log(filteredAvailableMode);
 
     afterUpdate(() => {
       // set default colors of the big butterfly
       let butterflySel = select("#butterfly-path")
+
       butterflySel
         .select("#butterfly__wings")
-        .attr("fill", selectedColor.light)
+        .attr("fill", selectedColor.light);
+
       butterflySel
         .select("#butterfly__head")
-        .attr("fill", "#977B67")
+        .attr("fill", "#977B67");
+
       let butterflyPathsG = butterflySel
-        .select("#butterfly__paths")
+        .select("#butterfly__paths");
+
       butterflyPathsG
         .selectAll("path")
         .attr("fill", "none")
         .attr("stroke", "#ffffff")
         .attr("stroke-width", 5)
         .attr("data-available", "true")
-        .attr("data-active", "false")
+        .attr("data-active", "false");
+
+      console.log(butterflyPathsG);
+
       butterflyPathsG
         .selectAll("path")
         .each(function() {
@@ -63,9 +82,11 @@ import { each } from 'svelte/internal';
               .attr("data-available", "false")
               .style("opacity", 0.1);
           }
-        })
+        });
+
       let butterflyCirclesG = butterflySel
-        .select("#butterfly__circles")
+        .select("#butterfly__circles");
+
       butterflyCirclesG
         .selectAll("circle")
         .attr("fill", "white")
@@ -73,33 +94,36 @@ import { each } from 'svelte/internal';
         .attr("stroke-width", 4.5)
         .attr("data-available", "true")
         .attr("data-answer", "no")
-        .style("cursor", "pointer")
+        .style("cursor", "pointer");
+
       butterflyCirclesG
         .selectAll("circle")
         .each(function() {
           let id = select(this).attr("id")
-          if(unnecessaryQuestion.includes(id)) {
+          if(unnecessaryQuestions.includes(id)) {
             select(this).attr("data-available", "false").style("opacity", 0.1)
           }
-        })
+        });
 
       // populate questions
       if (!butterflyCirclesG.empty()) {
         selectAll(".butterfly__questions__question").remove();
         questions.forEach(q => {
           let id = q.question_id;
-          if (!unnecessaryQuestion.includes(id)) {
+          if (!unnecessaryQuestions.includes(id)) {
             let text = q.question;
             let side = {
               h: q.h_side,
               v: q.v_side
             };
+
             let node = butterflyCirclesG.select(`#${id}`);
             if (q.visibility == "hidden") {
               node
                 .attr("stroke", "lightgray")
                 .style("cursor", "default")
             }
+
             let position = [+node.attr("cx"), +node.attr("cy")]
 
             select("#butterfly__questions")
@@ -123,8 +147,16 @@ import { each } from 'svelte/internal';
 
       // circles on click event
       butterflyCirclesG.selectAll("circle").on("mouseover", function() {
-        select(this).transition(200).attr("r", 10).attr("stroke-width", 7.8)
-        let id = select(this).attr("id")
+
+        let id = select(this).attr("id");
+
+        if (!unnecessaryQuestions.includes(id)) {
+          select(this)
+          .transition(200)
+          .attr("r", 10)
+          .attr("stroke-width", 7.8)
+        }
+
         select(`foreignObject[data-question-id=${id}]`).style("font-weight", "bold")
       })
 
@@ -135,19 +167,26 @@ import { each } from 'svelte/internal';
       })
 
       butterflyCirclesG.selectAll("circle").on("click", function() {
-        let answerStatus = select(this).attr("data-answer")
-        if (answerStatus == "no") {
-          select(this).attr("data-answer", "yes").attr("fill", "black")
-        } else {
-          select(this).attr("data-answer", "no").attr("fill", "white")
-        }
-        console.log(select(this))
+
+        let id = select(this).property("id");
+        let status = true;
+        clicks.updateClick(id, status);
+
+        // if (status) {
+          highlightPath(clicks, butterflyPathsG);
+        // }
+
+        // if (answerStatus == "no") {
+        //   status = false;
+        //   select(this).attr("data-answer", "yes").attr("fill", "black")
+        // } else {
+        //   status = true;
+        //   select(this).attr("data-answer", "no").attr("fill", "white")
+        // }
+
+        // console.log(select(this))
       })
     })
-
-      acqMode = acqMode.filter(function(d) {
-        return d.country === selectedCountry;
-      });
 
       let showDef = uniqueArray(acqMode, "definition")[0];
       let showWarn = uniqueArray(acqMode, "restriction_warning")[0];
@@ -172,27 +211,16 @@ import { each } from 'svelte/internal';
     // }
   }
 
-  function getQuestionWithCountryName(selectedCountry, question) {
-    let words = question.split(/[\s}]+/)
-    let index = words.findIndex(w => w == "{cntry")
-    if (index !== -1) {
-      words[index] = selectedCountry
-    }
-    words = words.join(" ").replace(/\s+(\W)/g, "$1")
-    return words
-  }
 </script>
 
 <section id="big-butterfly__container" bind:clientWidth="{w}">
   {#if selectedCountry !== ""}
-    <h1>
+    <h1 class="title">
       Paths to acquire citizenship in <span class="country-highlight" style="background-color: {selectedColor.vivid}">{selectedCountry}</span>
     </h1>
-      Click nodes
-        <svg
-          width=18
-          height=18
-        >
+    <div class="instructions">
+      Click
+        <svg width=27 height=18>
           <circle
             cx=9
             cy=9
@@ -203,7 +231,7 @@ import { each } from 'svelte/internal';
           >
           </circle>
         </svg>
-      to answer questions, see if there's a law that allows you to aquire citizenship with your condition.
+      to answer questions. Paths will light up if there is a country-specific law that allows you to aquire citizenship with your condition.</div>
     {#if w !== undefined}
       <div id="citizenship-paths" style="height: {h}">
         <div id="butterfly__graphic">
@@ -223,13 +251,5 @@ import { each } from 'svelte/internal';
     color: white;
     padding: 0.3em 0.5em;
     border-radius: 8px;
-  }
-  #documentation {
-    display: flex;
-    flex-direction: row;
-  }
-  #documentation div {
-    background: rgb(211, 211, 211);
-    max-height: 75px;
   }
 </style>
