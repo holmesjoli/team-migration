@@ -186,7 +186,7 @@
         // }
         
         // *NOTE* for now, to set up the Documentation.svelte, setting this variable to a mode that's related to the question, not the actual mode that turns to "true". needs updates here.
-        trueMode = [...clicks.modes].filter(m => m[1] == true)[0][0]
+        // trueMode = [...clicks.modes].filter(m => m[1] == true)[0][0]
       })
     })
   }
