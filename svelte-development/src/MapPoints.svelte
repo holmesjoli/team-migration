@@ -1,7 +1,7 @@
 <script>
   import { spring } from "svelte/motion";
   import { getContext } from 'svelte';
-  import { scaleLinear, extent, min, max, select, selectAll, groups, line } from 'd3';
+  import { scaleLinear, extent, min, max, select, selectAll, groups, line, map } from 'd3';
   import { forceSimulation, forceCollide, forceLink, forceX, forceY } from "d3-force";
   
   import Popup from './Popup.svelte';
@@ -67,6 +67,7 @@
       regionCode: findRegionCode(d.properties.SUBREGION)
     }))
     butterflyPoints.set(newButterflyPoints)
+
   }
 
   function handleMouseOver() {
@@ -75,12 +76,70 @@
     let hoverRegionIndex = select(this).attr('data-region-index');
     hoveredRegionCode = regions[hoverRegionIndex].code;
 
-    links = regionFlow
-      .filter(d => d.CODE === hoveredRegionCode)
-      .filter(d => d.CODE !== d.ORIG); // Why are there some duplicates???
-    links = [
-      ...new Map(links.map((link) => [link.ORIG, link])).values(),
-    ];
+    console.log($butterflyPoints);
+    let x2=$butterflyPoints.filter(d => d.regionCode == hoveredRegionCode)[0].x;
+    let y2=$butterflyPoints.filter(d => d.regionCode == hoveredRegionCode)[0].y;
+    // let x2=$butterflyPoints.filter(d => d.regionCode == hoveredRegionCode)[0].x;
+    // let y2=$butterflyPoints.filter(d => d.regionCode == hoveredRegionCode)[0].y;
+
+    // console.log(x1, y1);
+
+    let values = regionFlow
+      .filter(d => d.DEST === hoveredRegionCode)
+      .filter(d => d.DEST !== d.ORIG);
+
+    let links = []
+    for (let v of values) {
+
+      let x1=$butterflyPoints.filter(d => d.regionCode == v.ORIG)[0].x;
+      let y1=$butterflyPoints.filter(d => d.regionCode == v.ORIG)[0].y;
+
+      v.x1 = x1;
+      v.y1 = y1;
+      v.x2 = x2;
+      v.y2 = y2;
+
+      // console.log(v)
+      links.push(v)
+    }
+
+    console.log(links);
+
+    // let ids = map(values, function(d) {return d.id;})
+    // let flow = [];
+    // ids.forEach(function(i) {
+    //   let t = regionFlowGeo.filter(d => d.id === i)
+    //   for (let i in t) {
+    //     flow.push(t[i]);
+    //   }
+    // });
+    // console.log(flow);
+    // const lineGroup = groups(flow, d => d.id);
+
+    // let newLine = line()
+    //   .x(function(d) { return projection(d.x); })
+    //   .y(function(d) { return projection(d.y); });
+
+    //   select("#world-map")
+    //   .selectAll(".line")
+    //   .data(lineGroup)
+    //   .join("path")
+    //       .attr("fill", "none")
+    //       .attr("stroke", "black")
+    //       .attr("stroke", 2)
+    //       .attr("d", function(d) { return newLine(d[1]); });
+
+          // x1={$butterflyPoints.filter(d => d.regionCode == ORIG)[0].x}
+          // y1={$butterflyPoints.filter(d => d.regionCode == ORIG)[0].y}
+          // x2={$butterflyPoints.filter(d => d.regionCode == CODE)[0].x}
+          // y2={$butterflyPoints.filter(d => d.regionCode == CODE)[0].y}
+          // data-orig={ORIG}
+          // data-code={CODE}
+          // data-value={value}
+          // stroke="gray"
+          // stroke-width={pathScale(value)}
+          // stroke-dasharray="1 {pathScale(value) * 2}"
+
   }
 
   function handleMouseOut() {
@@ -146,27 +205,6 @@
       {@html butterflies[1]}
     </g>
   </defs>
-
-  <g class="link-lines">
-    {#if links !== undefined}
-      {#each links as {CODE, ORIG, value}}
-      <!-- svelte-ignore component-name-lowercase -->
-        <line
-          x1={$butterflyPoints.filter(d => d.regionCode == ORIG)[0].x}
-          y1={$butterflyPoints.filter(d => d.regionCode == ORIG)[0].y}
-          x2={$butterflyPoints.filter(d => d.regionCode == CODE)[0].x}
-          y2={$butterflyPoints.filter(d => d.regionCode == CODE)[0].y}
-          data-orig={ORIG}
-          data-code={CODE}
-          data-value={value}
-          stroke="gray"
-          stroke-width={pathScale(value)}
-          stroke-dasharray="1 {pathScale(value) * 2}"
-          stroke-linecap="round"
-        ></line>
-      {/each}
-    {/if}
-  </g>
 
   {#each $butterflyPoints as {x, y, value, regionIndex, regionShape, regionCode}}
     <g
