@@ -138,7 +138,7 @@
               .attr("y", side.v == "upper" ? position[1] - 30 : side.v == "middle" ? position[1] - 15 : position[1] + 10)
               .attr("width", 170)
               .attr("height", 170)
-              .style("opacity", q.visibility == "hidden" ? 0 : 1)
+              // .style("opacity", q.visibility == "hidden" ? 0 : 1)
               .style("text-shadow", "-2px -2px 0 rgba(255, 255, 255, 0.7), 2px -2px 0 rgba(255, 255, 255, 0.7), -2px 2px 0 rgba(255, 255, 255, 0.7), 2px 2px 0 rgba(255, 255, 255, 0.7)")          
               .style("font-size", "0.8rem")
               .style("text-align", side.h == 'left' ? "right" : "left")
