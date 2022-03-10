@@ -17,9 +17,7 @@
   export let hoveredRegionCode;
   export let selectedCountry;
 
-  let dataset = [datasets[3], datasets[4], datasets[5], datasets[6], datasets[7], datasets[10], datasets[11]]
-
-  let links = [];
+  let dataset = [datasets[0].features, datasets[3], datasets[4], datasets[5], datasets[6], datasets[7], datasets[8], datasets[10], datasets[11]]
 
   const { open } = getContext('simple-modal');
 
@@ -35,14 +33,12 @@
     .domain(regions.map(function(d) {return d.name; }))
     .range(regions.map(function(d) {return d.color; }))
 
-  console.log(data.features);
   let butterflyPoints = spring(data.features.map(d => ({
     x: 0,
     y: 0,
     value: 0,
     subregion: 0,
     regionIndex: 0,
-    regionShape: 0,
     regionCode: 0,
   })),
     {
@@ -70,7 +66,6 @@
       value: d.properties.VALUE,
       subregion: d.properties.SUBREGION,
       regionIndex: findRegionIndex(d.properties.SUBREGION),
-      regionShape: findRegionShape(d.properties.SUBREGION),
       regionCode: findRegionCode(d.properties.SUBREGION)
     }))
     butterflyPoints.set(newButterflyPoints)
@@ -83,7 +78,6 @@
     let hoverRegionIndex = select(this).attr('data-region-index');
     hoveredRegionCode = regions[hoverRegionIndex].code;
 
-    console.log($butterflyPoints);
     let x2 = $butterflyPoints.filter(d => d.regionCode == hoveredRegionCode)[0].x;
     let y2 = $butterflyPoints.filter(d => d.regionCode == hoveredRegionCode)[0].y;
     let destRegion = $butterflyPoints.filter(d => d.regionCode == hoveredRegionCode)[0].subregion;
@@ -185,12 +179,6 @@
     let regionIndex = regions.findIndex(re => re.name === region);
     return +regions[regionIndex].code;
   }
-
-  function setDasharray() {
-    console.log("1 second");
-    dasharray = "1 3" ? "1 1" : "1 3"
-    setTimeout(setDasharray, 1000);
-  }
 </script>
 
 <g class="map-points">
@@ -212,7 +200,7 @@
     </g>
   </defs>
 
-  {#each $butterflyPoints as {x, y, value, regionIndex, regionShape, regionCode}}
+  {#each $butterflyPoints as {x, y, value, regionIndex, regionCode}}
     <g
       class="butterfly-container"
       transform="translate({sScale(value) * -50}, {sScale(value) * -50})"

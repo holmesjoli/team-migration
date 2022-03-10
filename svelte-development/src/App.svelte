@@ -25,7 +25,7 @@
     let butterflySvg2 = await text(butterflies[1])
     let butterflySvg3 = await text(butterflies[2])
     let butterflySvgs = [butterflySvg1, butterflySvg2, butterflySvg3]
-    let byCountryD = await csv("data/acq_by_country.csv")
+    let byCountryD = await csv("data/by_country.csv")
     let warnings = await csv("data/warnings.csv")
     let definitions = await csv("data/definitions.csv")
     let questions = await csv("data/questions.csv")
@@ -42,7 +42,7 @@
   function parseData(datasets) {
     // parse byCountryD
     datasets[3].map(d => {
-      d.n_acq_modes = +d.n_acq_modes;
+      d.value = +d.value;
     })
 
     // parse by regionFlow
@@ -61,7 +61,7 @@
     </div>
   {:then dataset}
     <MapContainer dataset={datasets} bind:selectedRegion={selectedRegion} bind:hoveredRegionCode={hoveredRegionCode} bind:selectedCountry={selectedCountry}/>
-    <Overview />
+
   {/await}
 </main>
 

@@ -21,24 +21,7 @@ section {
   text-align: center;
 }
 
-
-#legend {
-  top: 0;
-}
-
 .title {
   padding: 20px;
   margin: 10px;
-}
-
-.instructions {
-  padding: 10px;
-  margin: 10px;
-  display: flex;
-  align-items: center;
-  text-align: center
-}
-
-.instructions svg {
-  padding: 0 5px;
 }

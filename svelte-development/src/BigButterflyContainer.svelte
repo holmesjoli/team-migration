@@ -1,6 +1,6 @@
 <script>
   import { afterUpdate } from 'svelte';
-  import { select, selectAll, scaleOrdinal } from "d3";
+  import { select, selectAll, scaleOrdinal, mode } from "d3";
   import {uniqueArray, findRegionColor, getQuestionWithCountryName, createPossibleQuestions, createUnnecessaryQuestions, clickContainer, highlightPath} from "./helper.js"
   import Documentation from './Documentation.svelte'
   import regions from './regions.js'
@@ -16,7 +16,7 @@
   export let butterflies;
   export let modeA06a;
 
-  let w;
+  let w, trueMode;
   let selectedColor = findRegionColor(selectedRegion)
   let availableMode = // paths available based on the butterflyPath.svg
     ["A06f", "A07", "A01a", "A02a", "A02b", "A09",
@@ -41,17 +41,17 @@
     let a06aValue = modeA06a.filter(d => d.country == selectedCountry)[0].values;
 
     let clicks = new clickContainer(possibleQuestions, possibleModes, a06aValue);
-    console.log(clicks);
+    // console.log(clicks);
 
-    console.log("possibleModes", possibleModes);
-    console.log("allQuestions", allQuestions);
-    console.log("possibleQuestions", possibleQuestions);
-    console.log("unnecessaryQuestions", unnecessaryQuestions);
+    // console.log("possibleModes", possibleModes);
+    // console.log("allQuestions", allQuestions);
+    // console.log("possibleQuestions", possibleQuestions);
+    // console.log("unnecessaryQuestions", unnecessaryQuestions);
 
     // filter and see what modes are available
     let filteredAvailableMode = availableMode.filter(m => possibleModes.includes(m));
-    console.log("filteredAvailableMode", filteredAvailableMode);
-    console.log(filteredAvailableMode);
+    // console.log("filteredAvailableMode", filteredAvailableMode);
+    // console.log(filteredAvailableMode);
 
     afterUpdate(() => {
       // set default colors of the big butterfly
@@ -75,8 +75,6 @@
         .attr("stroke-width", 5)
         .attr("data-available", "true")
         .attr("data-active", "false");
-
-      console.log(butterflyPathsG);
 
       butterflyPathsG
         .selectAll("path")
@@ -152,16 +150,13 @@
 
       // circles on click event
       butterflyCirclesG.selectAll("circle").on("mouseover", function() {
-
         let id = select(this).attr("id");
-
         if (!unnecessaryQuestions.includes(id)) {
           select(this)
           .transition(200)
           .attr("r", 10)
           .attr("stroke-width", 7.8)
         }
-
         select(`foreignObject[data-question-id=${id}]`).style("font-weight", "bold")
       })
 
@@ -172,20 +167,16 @@
       })
 
       butterflyCirclesG.selectAll("circle").on("click", function() {
-
         let id = select(this).property("id");
         let status = true;
-
         clicks.updateClick(id, status);
-
         if (id === "Q23") {
           status = "blah";
         }
-
         // if (status) {
           highlightPath(clicks, butterflyPathsG);
         // }
-
+        
         // if (answerStatus == "no") {
         //   status = false;
         //   select(this).attr("data-answer", "yes").attr("fill", "black")
@@ -193,32 +184,11 @@
         //   status = true;
         //   select(this).attr("data-answer", "no").attr("fill", "white")
         // }
-
-        // console.log(select(this))
+        
+        // *NOTE* for now, to set up the Documentation.svelte, setting this variable to a mode that's related to the question, not the actual mode that turns to "true". needs updates here.
+        trueMode = [...clicks.modes].filter(m => m[1] == true)[0][0]
       })
     })
-
-      let showDef = uniqueArray(acqMode, "definition")[0];
-      let showWarn = uniqueArray(acqMode, "restriction_warning")[0];
-
-      if (showDef !== "NA") {
-        definitions = definitions.filter(function(d) {
-          d.definition_id === showDef;
-        });
-
-        // let def = definitions.definition[0];
-      }
-
-      if (showWarn !== "NA") {
-        warnings = warnings.filter(function(d) {
-          d.restriction_warning === showWarn;
-        });
-        // let warn = warnings.message[0];
-      }
-
-    // if (selectedRegion !== "") {
-    //   let color = colorScale(selectedRegion);
-    // }
   }
 
 </script>
@@ -248,7 +218,9 @@
           {@html butterflies[2]}
         </div>
       </div>
-      <Documentation />
+      {#if trueMode !== undefined}
+        <Documentation selectedCountry={selectedCountry} bind:trueMode={trueMode} acqMode={acqMode} warnings={warnings} definitions={definitions}/>
+      {/if}
     {/if}
   {/if}
 </section>
@@ -261,5 +233,10 @@
     color: white;
     padding: 0.3em 0.5em;
     border-radius: 8px;
+  }
+  .instructions {
+    padding: 10px;
+    margin: 10px auto;
+    max-width: 800px;
   }
 </style>
