@@ -144,8 +144,6 @@
     if (select(this).attr('data-region-index') != findRegionIndex(selectedRegion)) {
       select(this).attr('fill-opacity', 0.5)
     }
-    links = undefined;
-    console.log(links)
 
     select("#world-map")
       .selectAll(".link")
