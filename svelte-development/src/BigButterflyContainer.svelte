@@ -175,6 +175,7 @@
 
         let id = select(this).property("id");
         let status = true;
+
         clicks.updateClick(id, status);
 
         if (id === "Q23") {
