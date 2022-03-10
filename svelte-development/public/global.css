@@ -70,3 +70,7 @@ h2 {
 {
   height: 40px;
 }
+
+#legend {
+  top: 0;
+}
