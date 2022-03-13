@@ -39,35 +39,19 @@ h2 {
   padding-top: 60px;
 }
 
-
-.svelte-yhjukw
-{
-  padding-top: 10px;
-}
-
-.svelte-1iw9sua
-{
-    padding: 4px;
-    border-radius: 4px;
-}
-
-.country-highlight
-{
+.country-highlight {
   color: white;
 }
 
-#citizenship-paths
-{
+#citizenship-paths {
   padding-top: 40px;
 }
 
-.instructions
-{
+.instructions {
   font-size: 14px;
 }
 
-.country-card__country-name
-{
+.country-card__country-name {
   height: 40px;
 }
 
