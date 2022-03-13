@@ -180,9 +180,10 @@
         if (status) {
           let id = select(this).attr("id");
           if (!unnecessaryQuestions.includes(id)) {
-            id.attr("data-answer", "yes").attr("fill", "black");
+            select(this).attr("data-answer", "yes").attr("fill", "black");
           }
-        } 
+        }
+
         // else {
         //   status = true;
         //   select(this).attr("data-answer", "no").attr("fill", "white")
