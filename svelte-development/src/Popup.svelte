@@ -10,9 +10,9 @@
   export let butterflies;
 
   // region data for country cards
-  let selectedRegionValue = datasets[0].filter(d => d.properties.SUBREGION == selectedRegion)
-  selectedRegionValue = selectedRegionValue[0].properties.VALUE
-  let selectedRegionColor = regions.filter(d => d.name == selectedRegion)[0].color
+  let selectedRegionValue = datasets[0].filter(d => d.properties.SUBREGION == selectedRegion);
+  selectedRegionValue = selectedRegionValue[0].properties.VALUE;
+  let selectedRegionColor = regions.filter(d => d.name == selectedRegion)[0].color;
   let selectedRegionData = { value: selectedRegionValue, color: selectedRegionColor }
 </script>
 
