@@ -6,3 +6,5 @@
 .vscode
 
 svelte-development/public/build/*
+
+.DS_Store
