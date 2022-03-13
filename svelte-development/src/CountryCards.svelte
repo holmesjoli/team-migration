@@ -62,7 +62,6 @@
     }, 10);
   }
 
-
 </script>
 
 <div class="country-cards__container">
