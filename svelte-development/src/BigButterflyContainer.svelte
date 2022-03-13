@@ -1,7 +1,7 @@
 <script>
   import { afterUpdate } from 'svelte';
   import { select, selectAll, scaleOrdinal, mode } from "d3";
-  import {uniqueArray, findRegionColor, getQuestionWithCountryName, createPossibleQuestions, createUnnecessaryQuestions, clickContainer, highlightPath} from "./helper.js"
+  import {uniqueArray, findRegionColor, getQuestionWithCountryName, createPossibleQuestions, createUnnecessaryQuestions, clickContainer} from "./helper.js"
   import Documentation from './Documentation.svelte'
   import regions from './regions.js'
   import { each } from 'svelte/internal';
@@ -168,18 +168,17 @@
 
       butterflyCirclesG.selectAll("circle").on("click", function() {
         let id = select(this).property("id");
-        let status = !clicks.questions.get(id);
 
-        if (id === "Q23") {
-          status = "blah";
-        }
-        
-        highlightPath(clicks, butterflyPathsG);
+        // if (id === "Q23") {
+        //   status = "blah";
+        // }
 
         if (!unnecessaryQuestions.includes(id)) {
+          let status = !clicks.questions.get(id);
           clicks.questions.set(id, status);
           clicks.updatePaths();
           clicks.highlightPath(butterflyPathsG);
+          console.log(clicks);
 
           if (status) {
             select(this).attr("data-answer", "yes").attr("fill", "black");
