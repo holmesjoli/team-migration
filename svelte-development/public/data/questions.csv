@@ -1,30 +1,30 @@
-side,wing,group,question_id,question
-left,upper,parentage,Q1,Was your parent born in {cntry}?
-left,upper,parentage,Q2,Were you born in {cntry}?
-left,upper,parentage,Q3,Is your parent a citizen of {cntry}?
-left,upper,parentage,Q4,Did your parent acquire citizenship in {cntry} after your birth?
-left,upper,parentage,Q5,Are you adopted?
-left,upper,parentage,Q6,Were you a dependent when your parent acquired citizenship?
-right,lower,other,Q7,Were you previously a citizen of {cntry}?
-right,lower,other,Q8,Click to see if you apply
-right,lower,other,Q9,Are you a refugee?
-right,lower,other,Q10,Are you stateless?
-right,lower,other,Q11,"Do you have any special achievements, contributions or services to {cntry}?"
-right,lower,other,Q12,Have you worked in public service for {cntry}?
-right,lower,other,Q13,Have you made specific payments or investments in a country {cntry}?
-right,upper,relatives,Q14,Are you married or in a registered-partnership in {cntry}?
-right,upper,relatives,Q15,Is your spouse or registered-partner a citizen of {cntry}?
-right,upper,relatives,Q16,Were you a dependent of your spouse when they acquired citizenship of {cntry}?
-right,upper,relatives,Q17,Were your relative(s) a former citizen of {cntry}?
-right,upper,relatives,Q18,Were your relative(s) of {cntry} a parent or grandparent?
-right,upper,relatives,Q19,Are your relative(s) alive?
-right,upper,relatives,Q20,Were you a resident of {cntry} while you were a child?
-right,upper,relatives,Q21,Have you been a resident of {cntry} for a very long-time?
-left,lower,residence,Q22,Does {cntry} allow residence-based acquisition?
-left,lower,residence,Q23,How long have you resided in {cntry}?
-left,lower,residence,Q24,Are you willing to renounce your origin country to gain citizenship to {cntry}?
-left,lower,residence,Q25,"Can you read, speak and or understand the national language of {cntry}?"
-left,lower,residence,Q26,Do you have civic knowledge of {cntry}?
-left,lower,residence,Q27,Do you have a criminal record?
-left,lower,residence,Q28,Do you have an income or employment?
-left,lower,other,Q29,Do you have a cultural affinity for {cntry}?
+h_side,v_side,group,question_id,question,status,visibility
+middle,upper,parentage,Q01,Was your parent born in {cntry}?,FALSE,visibile
+middle,upper,parentage,Q02,Were you born in {cntry}?,FALSE,visibile
+left,middle,parentage,Q03,Is your parent a citizen of {cntry}?,FALSE,visibile
+right,middle,parentage,Q04,Did your parent acquire citizenship in {cntry} after your birth?,FALSE,hidden
+left,middle,parentage,Q05,Are you adopted?,FALSE,hidden
+left,middle,parentage,Q06,Were you a dependent when your parent acquired citizenship?,FALSE,hidden
+left,middle,other,Q07,Were you previously a citizen of {cntry}?,FALSE,visible
+left,middle,other,Q08,Click to see if you apply,FALSE,visible
+left,middle,other,Q09,Are you a refugee?,FALSE,visible
+left,middle,other,Q10,Are you stateless?,FALSE,visible
+left,lower,other,Q11,"Do you have any special achievements, contributions or services to {cntry}?",FALSE,visible
+right,upper,other,Q12,Have you worked in public service for {cntry}?,FALSE,visible
+right,lower,other,Q13,Have you made specific payments or investments in a country {cntry}?,FALSE,visible
+right,middle,relatives,Q14,Are you married or in a registered-partnership in {cntry}?,FALSE,visible
+right,middle,relatives,Q15,Is your spouse or registered-partner a citizen of {cntry}?,FALSE,hidden
+right,upper,relatives,Q16,Were you a dependent of your spouse when they acquired citizenship of {cntry}?,FALSE,hidden
+right,middle,relatives,Q17,Were your relative(s) a former citizen of {cntry}?,FALSE,visible
+right,upper,relatives,Q18,Were your relative(s) of {cntry} a parent or grandparent?,FALSE,hidden
+right,upper,relatives,Q19,Are your relative(s) alive?,FALSE,hidden
+right,middle,relatives,Q20,Were you a resident of {cntry} while you were a child?,FALSE,visible
+right,lower,relatives,Q21,Have you been a resident of {cntry} for a very long-time? ,FALSE,visible
+right,middle,residence,Q22,Have you lived in {cntry}?,FALSE,visible
+right,middle,residence,Q23,How long have you resided in {cntry}?,FALSE,hidden
+right,upper,residence,Q24,Are you willing to renounce your origin country to gain citizenship to {cntry}?,FALSE,hidden
+right,lower,residence,Q25,"Can you read, speak and or understand the national language of {cntry}?",FALSE,hidden
+right,middle,residence,Q26,Do you have civic knowledge of {cntry}?,FALSE,hidden
+right,middle,residence,Q27,Do you have a criminal record?,FALSE,hidden
+right,lower,residence,Q28,Do you have an income or employment?,FALSE,hidden
+left,middle,other,Q29,Do you have a cultural affinity for {cntry}?,FALSE,visible

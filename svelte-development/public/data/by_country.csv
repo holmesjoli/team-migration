@@ -1,0 +1,191 @@
+"iso3","country","region","value"
+"URY","Uruguay","South America",43927
+"MMR","Myanmar","South-eastern Asia",40111
+"PLW","Palau","Melanesia",2295
+"FSM","Micronesia","Melanesia",464
+"PRK","North Korea","Eastern Asia",16004
+"LBR","Liberia","Western Africa",61833
+"NPL","Nepal","Southern Asia",456936
+"CHN","China","Eastern Asia",225306
+"CUB","Cuba","Caribbean",8839
+"LBN","Lebanon","Western Asia",337704
+"BTN","Bhutan","Southern Asia",5383
+"NGA","Nigeria","Western Africa",195401
+"SYC","Seychelles","Eastern Africa",2505
+"BWA","Botswana","Southern Africa",20485
+"DJI","Djibouti","Eastern Africa",44930
+"FJI","Fiji","Melanesia",5363
+"GMB","Gambia","Western Africa",83276
+"NRU","Nauru","Melanesia",1016
+"SDN","Sudan","Northern Africa",383710
+"SSD","South Sudan","Eastern Africa",0
+"TON","Tonga","Polynesia",499
+"ZWE","Zimbabwe","Eastern Africa",155537
+"AFG","Afghanistan","Southern Asia",26535
+"COD","Congo DRC","Middle Africa",314586
+"IRQ","Iraq","Western Asia",73734
+"KWT","Kuwait","Western Asia",347567
+"LBY","Libya","Northern Africa",198486
+"LKA","Sri Lanka","Southern Asia",17421
+"MYS","Malaysia","South-eastern Asia",585950
+"PER","Peru","South America",32996
+"PRY","Paraguay","South America",82295
+"SLB","Solomon Islands","Melanesia",1631
+"SLV","El Salvador","Central America",16745
+"SWZ","Swaziland","Southern Africa",12179
+"WSM","Samoa","Polynesia",2748
+"YEM","Yemen","Western Asia",50156
+"ZMB","Zambia","Eastern Africa",166056
+"ARG","Argentina","South America",778492
+"BLZ","Belize","Central America",17365
+"BOL","Bolivia","South America",44377
+"BRN","Brunei","South-eastern Asia",42065
+"DOM","Dominican Republic","Caribbean",138922
+"ECU","Ecuador","South America",60638
+"ERI","Eritrea","Eastern Africa",5217
+"HND","Honduras","Central America",13834
+"MRT","Mauritania","Western Africa",25397
+"NER","Niger","Western Africa",59298
+"PAN","Panama","Central America",40767
+"TUV","Tuvalu","Polynesia",71
+"TZA","Tanzania","Eastern Africa",463938
+"VEN","Venezuela","South America",504956
+"BGD","Bangladesh","Southern Asia",411453
+"CHL","Chile","South America",81906
+"CIV","Cote dIvoire","Western Africa",937452
+"DZA","Algeria","Northern Africa",108951
+"IND","India","Southern Asia",3085360
+"MAR","Morocco","Northern Africa",20667
+"OMN","Oman","Western Asia",125592
+"SAU","Saudi Arabia","Western Asia",1685036
+"SOM","Somalia","Eastern Africa",262
+"TTO","Trinidad and Tobago","Caribbean",20399
+"UGA","Uganda","Eastern Africa",292301
+"USA","United States of America","Northern America",16793436
+"ETH","Ethiopia","Eastern Africa",266439
+"GRD","Grenada","Caribbean",2253
+"GTM","Guatemala","Central America",26878
+"HTI","Haiti","Caribbean",7069
+"KAZ","Kazakhstan","Central Asia",1448504
+"LSO","Lesotho","Southern Africa",1755
+"LVA","Latvia","Northern Europe",252546
+"MLI","Mali","Western Africa",65895
+"MNG","Mongolia","Eastern Asia",3273
+"MOZ","Mozambique","Eastern Africa",86034
+"NAM","Namibia","Southern Africa",60960
+"NZL","New Zealand","Australia and New Zealand",331471
+"PAK","Pakistan","Southern Asia",1930523
+"SEN","Senegal","Western Africa",91437
+"SGP","Singapore","South-eastern Asia",683314
+"SLE","Sierra Leone","Western Africa",43313
+"UZB","Uzbekistan","Central Asia",756788
+"ZAF","South Africa","Southern Africa",394673
+"AGO","Angola","Middle Africa",18779
+"ARE","United Arab Emirates","Western Asia",660567
+"BDI","Burundi","Eastern Africa",57491
+"BHR","Bahrain","Western Asia",70922
+"CAF","Central African Republic","Middle Africa",41978
+"COL","Colombia","South America",49340
+"CRI","Costa Rica","Central America",148893
+"EGY","Egypt","Northern Africa",81515
+"GHA","Ghana","Western Africa",87655
+"GNB","Guinea Bissau","Western Africa",9526
+"KEN","Kenya","Eastern Africa",319386
+"MDG","Madagascar","Eastern Africa",7515
+"MHL","Marshall Islands","Melanesia",655
+"MLT","Malta","Southern Europe",11130
+"MUS","Mauritius","Eastern Africa",9386
+"MWI","Malawi","Eastern Africa",96564
+"POL","Poland","Eastern Europe",463569
+"RWA","Rwanda","Eastern Africa",167208
+"SUR","Suriname","South America",7403
+"TCD","Chad","Middle Africa",45531
+"TUN","Tunisia","Northern Africa",14669
+"BHS","Bahamas","Caribbean",16835
+"BRA","Brazil","South America",306352
+"BRB","Barbados","Caribbean",12670
+"CMR","Cameroon","Middle Africa",85160
+"COG","Congo Republic","Middle Africa",149550
+"CYP","Cyprus","Western Asia",45018
+"EST","Estonia","Northern Europe",148430
+"GNQ","Equatorial Guinea","Middle Africa",1783
+"GUY","Guyana","South America",3523
+"IRN","Iran","Southern Asia",1104518
+"JAM","Jamaica","Caribbean",11157
+"KIR","Kiribati","Melanesia",888
+"LAO","Laos","South-eastern Asia",8579
+"MEX","Mexico","Central America",266155
+"NIC","Nicaragua","Central America",14337
+"QAT","Qatar","Western Asia",81883
+"STP","Sao Tome and Principe","Middle Africa",2097
+"SYR","Syria","Western Asia",190001
+"TJK","Tajikistan","Central Asia",167658
+"TLS","East Timor","South-eastern Asia",4861
+"ALB","Albania","Southern Europe",35887
+"AZE","Azerbaijan","Western Asia",185146
+"BFA","Burkina Faso","Western Africa",252591
+"CAN","Canada","Northern America",2849197
+"COM","Comoros","Eastern Africa",6550
+"GAB","Gabon","Middle Africa",89465
+"IDN","Indonesia","South-eastern Asia",125510
+"ISL","Iceland","Northern Europe",8685
+"JOR","Jordan","Western Asia",943627
+"LIE","Liechtenstein","Western Europe",7442
+"PNG","Papua New Guinea","Melanesia",9903
+"SRB","Serbia","Southern Europe",495183
+"TGO","Togo","Western Africa",59758
+"TKM","Turkmenistan","Central Asia",115215
+"VUT","Vanuatu","Melanesia",673
+"ATG","Antigua and Barbuda","Caribbean",12588
+"AUS","Australia","Australia and New Zealand",2169253
+"CHE","Switzerland","Western Europe",683653
+"CPV","Cape Verde","Western Africa",5114
+"DMA","Dominica","Caribbean",1531
+"GBR","United Kingdom","Northern Europe",2482950
+"IRL","Ireland","Northern Europe",177593
+"ISR","Israel","Western Asia",824218
+"KGZ","Kyrgyzstan","Central Asia",222038
+"NOR","Norway","Northern Europe",140899
+"PHL","Philippines","South-eastern Asia",114448
+"SWE","Sweden","Northern Europe",479249
+"BIH","Bosnia and Herzegovina","Southern Europe",42719
+"GEO","Georgia","Western Asia",41020
+"GIN","Guinea","Western Africa",277645
+"HRV","Croatia","Southern Europe",254834
+"JPN","Japan","Eastern Asia",869273
+"KHM","Cambodia","South-eastern Asia",71752
+"KNA","Saint Kitts and Nevis","Caribbean",1367
+"ROU","Romania","Eastern Europe",66050
+"VNM","Vietnam","South-eastern Asia",22514
+"BEN","Benin","Western Africa",56315
+"BLR","Belarus","Eastern Europe",608895
+"LUX","Luxembourg","Western Europe",70269
+"MKD","Macedonia","Southern Europe",72503
+"SVN","Slovenia","Southern Europe",97620
+"TUR","Turkey","Western Asia",608957
+"XKX","Kosovo","Southern Europe",NA
+"ARM","Armenia","Western Asia",366427
+"KOR","South Korea","Eastern Asia",96380
+"LCA","Saint Lucia","Caribbean",3489
+"LTU","Lithuania","Northern Europe",107994
+"MNE","Montenegro","Southern Europe",0
+"PRT","Portugal","Southern Europe",328348
+"SVK","Slovakia","Eastern Europe",64992
+"VCT","Saint Vincent and the Grenadines","Caribbean",2078
+"BEL","Belgium","Western Europe",575679
+"BGR","Bulgaria","Eastern Europe",24067
+"DNK","Denmark","Northern Europe",191049
+"ESP","Spain","Southern Europe",814234
+"HUN","Hungary","Eastern Europe",155074
+"ITA","Italy","Southern Europe",1144982
+"TWN","Taiwan","Eastern Asia",NA
+"FRA","France","Western Europe",3185929
+"NLD","Netherlands","Western Europe",750633
+"FIN","Finland","Northern Europe",34808
+"MDA","Moldova","Eastern Europe",142938
+"RUS","Russia","Eastern Europe",5913274
+"UKR","Ukraine","Eastern Europe",2934853
+"CZE","Czech Republic","Eastern Europe",101562
+"AUT","Austria","Western Europe",518229
+"DEU","Germany","Western Europe",4460105
+"GRC","Greece","Southern Europe",551871

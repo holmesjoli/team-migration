@@ -1,6 +1,5 @@
 <script>
   import { geoNaturalEarth1, geoPath } from "d3-geo";
-
   import MapPath from './MapPath.svelte';
   import MapPoints from './MapPoints.svelte';
   import Legend from "./Legend.svelte";
@@ -20,18 +19,17 @@
   let regions = dataset[8];
   let regionFlow = dataset[9];
   let totalMigrants = dataset[10];
-
+  
   let w;
-
+  
   $: h = 5 * w / 9;
   $: projection = geoNaturalEarth1().fitSize([w, h], outlineD).rotate([-5, 0, 0])
   $: path = geoPath(projection)
-
 </script>
 
 <section class="map__container" bind:clientWidth={w}>
   {#if w !== undefined}
-    <Modal show={$modal} transitionBgProps={{ duration: 0 }} styleCloseButton={{cursor: "pointer"}}>
+    <Modal show={$modal} transitionBgProps={{ duration: 0 }} styleCloseButton={{cursor: "pointer"}} styleWindow = {{"border-radius": "8px"}}>
       <svg id="world-map" width={w} height={h}>
         <MapPath data={outlineD} path={path}/>
         <MapPoints width={w} data={centroidsD} regionFlow ={regionFlow} projection={projection} butterflies={butterflies} bind:selectedRegion={selectedRegion} bind:hoveredRegionCode={hoveredRegionCode} bind:selectedCountry={selectedCountry} datasets={dataset}/>

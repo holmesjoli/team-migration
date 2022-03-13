@@ -1,35 +1,36 @@
 <script>
-  import { select, selectAll } from 'd3';
-  
-  import regions from './regions.js'
+  import { select, max, scaleLinear } from 'd3';
 
   export let selectedRegion;
   export let selectedCountry;
+  export let hoveredCountry;
   export let data;
+  export let color;
 
-  let selectedRegionD, selectedRegionInfo;
+  let maxValue = max(data, d => d.value)
+  let sizeScale = scaleLinear()
+    .domain([0, maxValue])
+    .range([0.3, 1]) 
 
-  $: {
-    selectedRegionD = data.filter(d => d.subregion == selectedRegion);
-    selectedRegionInfo = findSelectedRegionInfo(selectedRegion);
-  }
+  // should have a unified sizeScale between regions? but then some regions will just have small butterflies
+  // let sizeScale = scaleLinear()
+  //   .domain([0, 16793436])
+  //   .range([0.3, 1]) 
 
-  function findSelectedRegionInfo(region) {
-    if (region !== "") {
-      let index = regions.findIndex(re => re.name == region)
-      let color = regions[index].color;
-      let shape = regions[index].shape;
-      return {color: color, shape: shape};
-    }
-  }
+  data.map(d => {
+    d.value = isNaN(d.value) ? 0 : d.value
+    d.xOffset = 4.5 + 45.5 - sizeScale(d.value) * 91 / 2;
+    d.yOffset = 13 + 37 - sizeScale(d.value) * 74 / 2;
+    return d;
+  })
 
   function handleMouseOver() {
     let use = select(this).select("use")
     let color = use.attr("data-color")
-    // let country = use.attr("data-country")
     select(this).style("background", color)
     use.attr('fill', "white").attr('stroke', "white")
     select(this).select(".country-card__country-name").style("color", "white")
+    hoveredCountry = use.attr("data-country")
   }
 
   function handleMouseLeave() {
@@ -40,6 +41,7 @@
       use.attr('fill', color).attr('stroke', color)
       select(this).select(".country-card__country-name").style("color", "black")
     }
+    hoveredCountry = ""
   }
 
   function handleClick() {
@@ -53,14 +55,18 @@
     select(this).style("background", color)
     use.attr('fill', "white").attr('stroke', "white")
     select(this).select(".country-card__country-name").style("color", "white")
-    selectedCountry = use.attr("data-country")
+    selectedCountry = use.attr("data-country");
+
+    setTimeout(() => {
+      select("#big-butterfly__container").select("h1").node().scrollIntoView({behavior: "smooth", block: "start"});
+    }, 10);
   }
 
 </script>
 
 <div class="country-cards__container">
   {#if selectedRegion !== ""}
-    {#each selectedRegionD as d}
+    {#each data as { value, country, xOffset, yOffset }}
       <!-- svelte-ignore a11y-mouse-events-have-key-events -->
       <div
         class="country-card"
@@ -72,20 +78,21 @@
         <div class="country-card__butterfly">
           <svg width=100 height=100>
             <use
-              transform="translate({selectedRegionInfo.shape == 0 ? 4.5 : 1.5}, {selectedRegionInfo.shape == 0 ? 13 : 6.5})"
-              xlink:href="#butterfly-{selectedRegionInfo.shape}"
-              stroke="{selectedRegionInfo.color}"
+              transform="translate({xOffset}, {yOffset}) scale({sizeScale(value)}, {sizeScale(value)})"
+              xlink:href="#butterfly-0"
+              stroke="{color}"
               stroke-width=1
-              fill="{selectedRegionInfo.color}"
-              data-country="{d.country}"
-              data-color="{selectedRegionInfo.color}"
+              fill="{color}"
+              data-value="{value}"
+              data-country="{country}"
+              data-color="{color}"
             />
           </svg>
         </div>
         <div
           class="country-card__country-name"
           style="color: black;">
-          {d.country}
+          {country}
         </div>
       </div>
     {/each}
