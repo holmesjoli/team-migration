@@ -168,26 +168,22 @@
 
       butterflyCirclesG.selectAll("circle").on("click", function() {
         let id = select(this).property("id");
-        let status = true;
+        let status = !clicks.questions.get(id);
+        console.log(status);
         clicks.updateClick(id, status);
         if (id === "Q23") {
           status = "blah";
         }
-        // if (status) {
-          highlightPath(clicks, butterflyPathsG);
-        // }
         
-        if (status) {
-          let id = select(this).attr("id");
-          if (!unnecessaryQuestions.includes(id)) {
+        highlightPath(clicks, butterflyPathsG);
+
+        if (!unnecessaryQuestions.includes(id)) {
+          if (status) {
             select(this).attr("data-answer", "yes").attr("fill", "black");
+          } else {
+            select(this).attr("data-answer", "no").attr("fill", "white");
           }
         }
-
-        // else {
-        //   status = true;
-        //   select(this).attr("data-answer", "no").attr("fill", "white")
-        // }
         
         // *NOTE* for now, to set up the Documentation.svelte, setting this variable to a mode that's related to the question, not the actual mode that turns to "true". needs updates here.
         // trueMode = [...clicks.modes].filter(m => m[1] == true)[0][0]
@@ -203,19 +199,40 @@
       Paths to acquire citizenship in <span class="country-highlight" style="background-color: {selectedColor.vivid}">{selectedCountry}</span>
     </h1>
     <div class="instructions">
-      Click
-        <svg width=27 height=18>
+      Click buttons <svg width=24 height=18>
+        <circle
+          cx=9
+          cy=9
+          r=5
+          stroke-width=4
+          stroke="black"
+          fill="white"
+        >
+        </circle>
+      </svg> to toggle paths <i>On</i> and <i>Off</i>. The default for each button is <b>No</b>, which looks like
+        <svg width=24 height=18>
           <circle
             cx=9
             cy=9
             r=5
             stroke-width=4
             stroke="black"
-            fill="white"
+            fill="white">
+          </circle>
+        </svg>
+        . The <b>Yes</b> will look like 
+        <svg width=24 height=18>
+          <circle
+            cx=9
+            cy=9
+            r=5
+            stroke-width=4
+            stroke="black"
+            fill="black"
           >
           </circle>
         </svg>
-      to answer questions. Paths will light up if there is a country-specific law that allows you to acquire citizenship with your condition.</div>
+        . Paths will light up if there is a country-specific law that allows you to acquire citizenship with your condition.</div>
     {#if w !== undefined}
       <div id="citizenship-paths" style="height: {h}">
         <div id="butterfly__graphic">
@@ -242,5 +259,9 @@
     padding: 10px;
     margin: 10px auto;
     max-width: 800px;
+  }
+
+  .instructions svg {
+    padding: 0 3px;
   }
 </style>
