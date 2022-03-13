@@ -81,9 +81,9 @@
         .each(function() {
           let id = select(this).attr("id")
           if (!filteredAvailableMode.includes(id)) {
-            select(this)
-              .attr("data-available", "false")
-              .style("opacity", 0.1);
+            select(this).remove();
+          } else {
+            select(this).attr("opacity", .3);
           }
         });
 
@@ -104,7 +104,7 @@
         .each(function() {
           let id = select(this).attr("id")
           if(unnecessaryQuestions.includes(id)) {
-            select(this).attr("data-available", "false").style("opacity", 0.1)
+            select(this).remove();
           }
         });
 

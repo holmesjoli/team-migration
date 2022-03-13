@@ -328,17 +328,16 @@ export function highlightPath(
   clicks,
   butterflyPathsG,
   bodyColor = "url(#citizenship__achieved)",
-  pathColor = "#ae8625"
 ) {
   for (let i of clicks.modes) {
-    let color;
+    let opacity;
     if (i[1]) {
       select("#butterfly__head").attr("fill", bodyColor);
-      color = pathColor;
+      opacity = 1;
     } else {
-      color = "#FFFFFF";
+      opacity = .3;
     }
 
-    butterflyPathsG.select("#" + i[0]).attr("stroke", color);
+    butterflyPathsG.select("#" + i[0]).attr("opacity", opacity);
   }
 }
