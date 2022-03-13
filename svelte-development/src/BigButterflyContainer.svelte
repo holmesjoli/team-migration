@@ -169,8 +169,7 @@
       butterflyCirclesG.selectAll("circle").on("click", function() {
         let id = select(this).property("id");
         let status = !clicks.questions.get(id);
-        console.log(status);
-        clicks.updateClick(id, status);
+
         if (id === "Q23") {
           status = "blah";
         }
@@ -178,6 +177,10 @@
         highlightPath(clicks, butterflyPathsG);
 
         if (!unnecessaryQuestions.includes(id)) {
+          clicks.questions.set(id, status);
+          clicks.updatePaths();
+          clicks.highlightPath(butterflyPathsG);
+
           if (status) {
             select(this).attr("data-answer", "yes").attr("fill", "black");
           } else {

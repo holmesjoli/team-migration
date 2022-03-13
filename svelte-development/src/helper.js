@@ -103,6 +103,20 @@ export class clickContainer {
     this.updatePaths();
   }
 
+  highlightPath(butterflyPathsG) {
+    for (let i of this.modes) {
+      let color;
+      if (i[1]) {
+        select("#butterfly__head").attr("fill", "url(#citizenship__achieved)");
+        color = "#ae8625";
+      } else {
+        color = "#FFFFFF";
+      }
+  
+      butterflyPathsG.select("#" + i[0]).attr("stroke", color);
+    }
+  }
+
   updatePaths() {
     //A01a
     if (this.questions.get("Q03") && this.questions.get("Q02")) {
@@ -321,24 +335,5 @@ export class clickContainer {
         this.modes.set("A26", true);
       }
     }
-  }
-}
-
-export function highlightPath(
-  clicks,
-  butterflyPathsG,
-  bodyColor = "url(#citizenship__achieved)",
-  pathColor = "#ae8625"
-) {
-  for (let i of clicks.modes) {
-    let color;
-    if (i[1]) {
-      select("#butterfly__head").attr("fill", bodyColor);
-      color = pathColor;
-    } else {
-      color = "#FFFFFF";
-    }
-
-    butterflyPathsG.select("#" + i[0]).attr("stroke", color);
   }
 }
