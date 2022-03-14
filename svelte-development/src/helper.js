@@ -104,17 +104,24 @@ export class clickContainer {
   }
 
   highlightPath(butterflyPathsG) {
+
     for (let i of this.modes) {
       let color;
       if (i[1]) {
-        console.log(i);
-        select("#butterfly__head").attr("fill", "url(#citizenship__achieved)");
         color = "#ae8625";
       } else {
         color = "#FFFFFF";
       }
   
       butterflyPathsG.select("#" + i[0]).attr("stroke", color);
+    }
+
+    let highlight = Array.from(this.modes.values()).some((bool) => bool === true);
+
+    if (highlight) {
+      select("#butterfly__head").attr("fill", "url(#citizenship__achieved)");
+    } else {
+      select("#butterfly__head").attr("fill", "#977B67");
     }
   }
 
