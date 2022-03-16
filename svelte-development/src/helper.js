@@ -84,10 +84,11 @@ export class clickContainer {
   pathFalse = "#FFFFFF";
   pathNA = "#";
 
-  constructor(possibleQuestions, possibleModes, a06aValue) {
+  constructor(possibleQuestions, possibleModes, a06aValue, a02aValue) {
     this.questions = this.createMap(possibleQuestions);
     this.modes = this.createMap(possibleModes);
     this.a06aValue = a06aValue;
+    this.a02aValue = true;
   }
 
   createMap(array) {
@@ -146,7 +147,7 @@ export class clickContainer {
 
     //A02a
     if (this.modes.get("A02a") !== undefined) {
-      if (this.questions.get("Q02")) {
+      if (this.questions.get("Q02") || this.a02aValue) {
         this.modes.set("A02a", true);
       } else {
         this.modes.set("A02a", false);

@@ -36,11 +36,23 @@
     let possibleQuestions = createPossibleQuestions(possibleModes, questionToMode);
     let unnecessaryQuestions = createUnnecessaryQuestions(allQuestions, possibleQuestions);
 
+    let a02aValue;
+    if (possibleModes.includes("A02b")) {
+      possibleModes.push("A02a");
+      a02aValue = false;
+    }
+
+    console.log(possibleQuestions);
+    console.log(unnecessaryQuestions);
+    console.log(possibleModes);
 
     // console.log(modeA06a);
     let a06aValue = modeA06a.filter(d => d.country == selectedCountry)[0].values;
 
-    let clicks = new clickContainer(possibleQuestions, possibleModes, a06aValue);
+    let clicks = new clickContainer(possibleQuestions, possibleModes, a06aValue, a02aValue);
+
+    console.log(possibleModes);
+
     // console.log(clicks);
 
     // console.log("possibleModes", possibleModes);
