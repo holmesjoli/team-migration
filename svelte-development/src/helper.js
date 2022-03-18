@@ -1,6 +1,11 @@
 import regions from "./regions";
 import { select } from "d3";
 
+export const a06aValues = [{value: 1, text: "fewer than 5 years"},
+                          {value: 2, text: "exactly 5 years"},
+                          {value: 3, text: "between 5 years and 10 years"},
+                          {value: 4, text: "more than 10 years"}];
+
 // Title Unique Array
 // Returns the unique values of a variable in a dataset as an array
 export function uniqueArray(data, variable) {
@@ -24,11 +29,17 @@ export function findRegionColor(region) {
 
 // Title Get Questions With Country Name
 // Param Places country name into the question
-export function getQuestionWithCountryName(selectedCountry, question) {
+export function getQuestionWithCountryName(selectedCountry, question, a06aText) {
   let words = question.split(/[\s}]+/);
-  let index = words.findIndex((w) => w == "{cntry");
-  if (index !== -1) {
-    words[index] = selectedCountry;
+  let cntryIndex = words.findIndex((w) => w == "{cntry");
+  let yearsIndex = words.findIndex((w) => w == "{years");
+
+  if (cntryIndex !== -1) {
+    words[cntryIndex] = selectedCountry;
+  }
+
+  if (yearsIndex !== -1) {
+    words[yearsIndex] = a06aText;
   }
   words = words.join(" ").replace(/\s+(\W)/g, "$1");
   return words;
@@ -84,10 +95,9 @@ export class clickContainer {
   pathFalse = "#FFFFFF";
   pathNA = "#";
 
-  constructor(possibleQuestions, possibleModes, a06aValue, a02aValue) {
+  constructor(possibleQuestions, possibleModes, a02aValue) {
     this.questions = this.createMap(possibleQuestions);
     this.modes = this.createMap(possibleModes);
-    this.a06aValue = a06aValue;
     this.a02aValue = true;
   }
 
@@ -163,14 +173,14 @@ export class clickContainer {
       }
     }
 
-    // A06a
-    // if (this.modes.get("A06a") !== undefined) {
-    //   if (this.questions.get("Q22") && this.questions.get("Q23") == this.a06aValue) {
-    //     this.mode.set("A06a", true);
-    //   } else {
-    //     this.mode.set("A06a", false);
-    //   }
-    // }
+    //A06a
+    if (this.modes.get("A06a") !== undefined) {
+      if (this.questions.get("Q22") && this.questions.get("Q23")) {
+        this.modes.set("A06a", true);
+      } else {
+        this.modes.set("A06a", false);
+      }
+    }
 
     //A06b
     if (this.modes.get("A06b") !== undefined) {

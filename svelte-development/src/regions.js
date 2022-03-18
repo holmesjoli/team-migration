@@ -147,4 +147,5 @@ const regions = [
     code: "905",
   },
 ];
+
 export default regions;

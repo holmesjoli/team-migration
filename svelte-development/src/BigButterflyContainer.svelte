@@ -1,7 +1,7 @@
 <script>
   import { afterUpdate } from 'svelte';
   import { select, selectAll, scaleOrdinal, mode } from "d3";
-  import {uniqueArray, findRegionColor, getQuestionWithCountryName, createPossibleQuestions, createUnnecessaryQuestions, clickContainer} from "./helper.js"
+  import {uniqueArray, findRegionColor, getQuestionWithCountryName, createPossibleQuestions, createUnnecessaryQuestions, clickContainer, a06aValues} from "./helper.js"
   import Documentation from './Documentation.svelte'
   import regions from './regions.js'
   import { each } from 'svelte/internal';
@@ -37,19 +37,19 @@
     let unnecessaryQuestions = createUnnecessaryQuestions(allQuestions, possibleQuestions);
 
     let a02aValue;
-    if (possibleModes.includes("A02b")) {
-      possibleModes.push("A02a");
-      a02aValue = false;
-    }
+    // if (possibleModes.includes("A02b")) {
+    //   possibleModes.push("A02a");
+    //   a02aValue = false;
+    // }
 
     console.log(possibleQuestions);
     console.log(unnecessaryQuestions);
     console.log(possibleModes);
 
-    // console.log(modeA06a);
-    let a06aValue = modeA06a.filter(d => d.country == selectedCountry)[0].values;
+    let a06aValue = modeA06a.filter(d => d.country === selectedCountry)[0].values;
+    let a06aText = a06aValues.filter(d => d.value == a06aValue)[0].text;
 
-    let clicks = new clickContainer(possibleQuestions, possibleModes, a06aValue, a02aValue);
+    let clicks = new clickContainer(possibleQuestions, possibleModes, a02aValue);
 
     console.log(possibleModes);
 
@@ -143,7 +143,7 @@
 
             select("#butterfly__questions")
               .append("foreignObject")
-              .html(getQuestionWithCountryName(selectedCountry, text))
+              .html(getQuestionWithCountryName(selectedCountry, text, a06aText))
               .classed("butterfly__questions__question", true)
               .attr("data-question-id", id)
               .attr("x", side.h == "left" ? position[0] - 170 - 20 : position[0] + 20)
