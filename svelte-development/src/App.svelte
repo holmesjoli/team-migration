@@ -67,8 +67,8 @@
     </div>
   {:then dataset}
     <MapContainer dataset={datasets} bind:selectedRegion={selectedRegion} bind:hoveredRegionCode={hoveredRegionCode} bind:selectedCountry={selectedCountry}/>
-
   {/await}
+  <Footer />
 </main>
 
 <style>
