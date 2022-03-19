@@ -207,6 +207,7 @@
           fill-opacity="0.5"
           data-region-index="{regionIndex}"
           data-region-code="{regionCode}"
+          data-value="{value}"
         />
       </g>
     </g>

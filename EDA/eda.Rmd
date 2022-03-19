@@ -63,18 +63,88 @@ codes <- subregion_code %>%
   distinct(subregion_code) %>% 
   pull(subregion_code)
 
-modes <- dm.combine_questions(df_long, df_acq)
+modes <- dm.combine_questions(df_long, df_acq) %>%
+  inner_join(df %>% select(iso3, country))
 
 ```
 
 
 ```{r write_data}
 
-flow %>%
+z <- flow %>%
   filter(dest_loc %in% codes) %>%
   filter(orig_loc %in% codes) %>%
   select(-c(dest_notes, dest_dtype)) %>%
-  write_csv("../data/region_flows.csv")
+  dplyr::group_by(dest_loc, orig_loc) %>%
+  summarize(value = sum(value)) %>%
+  rename(DEST = dest_loc,
+         ORIG = orig_loc) %>%
+  filter(DEST != ORIG) %>%
+  ungroup() %>%
+  mutate(id = 1:n(),
+         value_bins = case_when(value < 1000 ~ "< 1000",
+                                value >= 1000 & value < 10000 ~ "< 10000",
+                                value >= 10000 & value < 100000 ~ "< 100000",
+                                value >= 100000 & value < 1000000 ~ "< 1000000",
+                                value >= 1000000 ~ "1000000+"))
+
+z %>%
+  write_csv("../svelte-development/public/data/region_flows.csv")
+
+z %>%
+  select(-value) %>%
+  pivot_longer(names_to = "PLACE", values_to = "CODE", -c(id)) %>% 
+  left_join(centroids) %>% 
+  write_csv("../svelte-development/public/data/region_flows_geo.csv")
+  
+
+b <- flow %>%
+  filter(dest_loc %in% xwalk$loc_code) %>%
+  filter(orig_loc %in% xwalk$loc_code) %>%
+  dplyr::group_by(dest_loc) %>%
+  summarize(value = sum(value)) %>%
+  rename(loc_code = dest_loc) %>%
+  # filter(DEST) %>%
+  ungroup() %>%
+  inner_join(xwalk) %>%
+  select(iso3, region, value) %>% 
+  rename(country = region) %>% 
+  write.csv("../svelte-development/public/data/country_flows.csv")
+
+total_migrants <- flow %>%
+  filter(dest_loc %in% codes) %>%
+  filter(orig_loc %in% codes) %>%
+  group_by(orig_loc) %>%
+  summarize(TOTAL_MIGRANTS = sum(value)) %>%
+  inner_join(subregion_code, by = c("orig_loc" = "subregion_code")) %>%
+  mutate(TOTAL_MIGRANTS_BINS = case_when(TOTAL_MIGRANTS < 1000000 ~ "< 1 million",
+                              TOTAL_MIGRANTS >= 1000000 & TOTAL_MIGRANTS < 2000000 ~ "< 2 million",
+                              TOTAL_MIGRANTS >= 2000000 & TOTAL_MIGRANTS < 5000000 ~ "< 5 million",
+                              TOTAL_MIGRANTS > 5000000 ~ "> 5 million"))
+
+centroid <- geojsonR::FROM_GeoJson("../svelte-development/public/data/mapData/region-centroid.geojson")
+
+centroid$features <- lapply(centroid$features, function(x) {
+  x2 <- x$properties
+  
+  ttl <- total_migrants %>%
+    filter(orig_loc == x2$CODE)
+  
+  x2$TOTAL_MIGRANTS <- ttl %>%
+    pull(TOTAL_MIGRANTS)
+  
+  x2$TOTAL_MIGRANTS_BIN <- ttl %>%
+    pull(TOTAL_MIGRANTS_BINS)
+  
+  return(x2)
+  
+})
+
+library(sf)
+meuse_sf = sf::st_as_sf(centroid, coords = c("x", "y"), crs = 28992, agr = "constant")
+st_write(meuse, "meuse.geojson")
+
+"../svelte-development/public/data/mapData/region-centroid.geojson"
 
 region_geo <- dm.region_geojson(pth = "../data/shape/world-administrative-boundaries.shp",
                                 xwalk,
@@ -103,6 +173,12 @@ df_long %>%
                select(mode_id)) %>%
   readr::write_csv("../svelte-development/public/data/modeA06a.csv")
   
+
+```
+
+```{r}
+ggplot(z %>% filter(value <= 100000), aes(x = value)) +
+  geom_histogram(bins = 100, color = "white")
 
 ```
 

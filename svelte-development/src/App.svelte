@@ -37,6 +37,7 @@
     datasets = [mapCentroidsD, mapOutlineD, butterflySvgs, byCountryD, warnings,
     definitions, questions, acqMode, regions, regionFlow, questionsToMode, modeA06a];
     parseData(datasets);
+    console.log(datasets)
   }
 
   function parseData(datasets) {
@@ -48,6 +49,11 @@
     // parse by regionFlow
     datasets[9].map(d => {
       d.value = +d.value;
+    })
+
+    // parse totalMigrants
+    datasets[10].map(d => {
+      d.TOTAL_MIGRANTS = +d.TOTAL_MIGRANTS;
     })
   }
 

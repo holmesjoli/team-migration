@@ -55,6 +55,7 @@ a:hover {
 .user-signifier {
   color: var(--link-gray);
   font-style: italic;
+  font-size: 0.8em;
 }
 
 .title {
@@ -76,10 +77,6 @@ a:hover {
   color: white;
 }
 
-#citizenship-paths {
-  padding-top: 40px;
-}
-
 .instructions {
   font-size: 14px;
 }
@@ -90,4 +87,25 @@ a:hover {
 
 #legend {
   bottom: 5vh;
+}
+
+.svelte-yhjukw {
+  padding-top: 10px;
+}
+
+.svelte-1iw9sua {
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.country-highlight {
+  color: white;
+}
+
+.country-card__country-name {
+  height: 40px;
+}
+
+#legend {
+  top: 0;
 }

@@ -132,11 +132,11 @@
               .html(getQuestionWithCountryName(selectedCountry, text))
               .classed("butterfly__questions__question", true)
               .attr("data-question-id", id)
-              .attr("x", side.h == "left" ? position[0] - 170 - 40 : position[0] + 40)
-              .attr("y", side.v == "upper" ? position[1] - 35 : side.v == "middle" ? position[1] - 15 : position[1] + 10)
-              .attr("width", 150)
-              .attr("height", 150)
-              .style("opacity", q.visibility == "hidden" ? 0 : 1)
+              .attr("x", side.h == "left" ? position[0] - 170 - 20 : position[0] + 20)
+              .attr("y", side.v == "upper" ? position[1] - 30 : side.v == "middle" ? position[1] - 15 : position[1] + 10)
+              .attr("width", 170)
+              .attr("height", 170)
+              // .style("opacity", q.visibility == "hidden" ? 0 : 1)
               .style("text-shadow", "-2px -2px 0 rgba(255, 255, 255, 0.7), 2px -2px 0 rgba(255, 255, 255, 0.7), -2px 2px 0 rgba(255, 255, 255, 0.7), 2px 2px 0 rgba(255, 255, 255, 0.7)")          
               .style("font-size", "0.8rem")
               .style("text-align", side.h == 'left' ? "right" : "left")
@@ -279,11 +279,11 @@
         // if (status) {
           highlightPath(clicks, butterflyPathsG);
         // }
-
-        // if (answerStatus == "no") {
-        //   status = false;
-        //   select(this).attr("data-answer", "yes").attr("fill", "black")
-        // } else {
+        
+        if (status) {
+          select(this).attr("data-answer", "yes").attr("fill", "black")
+        } 
+        // else {
         //   status = true;
         //   select(this).attr("data-answer", "no").attr("fill", "white")
         // }
@@ -302,7 +302,7 @@
       Paths to acquire citizenship in <span class="country-highlight" style="background-color: {selectedColor.vivid}">{selectedCountry}</span>
     </h1>
     <div class="instructions">
-      Click
+      <p class="user-signifier">Click
         <svg width=18 height=18>
           <circle
             cx=9
@@ -314,7 +314,8 @@
           >
           </circle>
         </svg>
-      to answer questions. Paths will light up if there is a country-specific law that allows you to aquire citizenship with your condition.</div>
+        to answer questions. Paths will light up if there is a country-specific law that allows you to acquire citizenship with your condition.
+      </p></div>
     {#if w !== undefined}
       <div id="citizenship-paths" style="height: {h}">
         <div id="butterfly__graphic">
@@ -355,7 +356,8 @@
   .instructions {
     padding: 10px;
     margin: 10px auto;
-    max-width: 800px;
+    max-width: 600px;
+    font-size: 18px;
   }
   #answer-selection__Q22 {
     position: absolute;
