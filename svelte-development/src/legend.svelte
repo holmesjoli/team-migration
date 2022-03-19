@@ -33,9 +33,9 @@
   </div>
     {#if width > 1220 * 0.9}
     <svg
-      width=200
-      height={legendH}
-    >
+    width=200
+    height={legendH}
+  >
       <g>
         {#each legendD as {width, height, value, text}, i}
           <use

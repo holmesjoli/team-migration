@@ -21,7 +21,7 @@ right,upper,relatives,Q19,Are your relative(s) alive?,FALSE,hidden
 right,middle,relatives,Q20,Were you a resident of {cntry} while you were a child?,FALSE,visible
 right,lower,relatives,Q21,Have you been a resident of {cntry} for a very long-time? ,FALSE,visible
 right,middle,residence,Q22,Have you lived in {cntry}?,FALSE,visible
-right,middle,residence,Q23,How long have you resided in {cntry}?,FALSE,hidden
+right,middle,residence,Q23,Have you resided in {cntry} for {years}?,FALSE,hidden
 right,upper,residence,Q24,Are you willing to renounce your origin country to gain citizenship to {cntry}?,FALSE,hidden
 right,lower,residence,Q25,"Can you read, speak and or understand the national language of {cntry}?",FALSE,hidden
 right,middle,residence,Q26,Do you have civic knowledge of {cntry}?,FALSE,hidden

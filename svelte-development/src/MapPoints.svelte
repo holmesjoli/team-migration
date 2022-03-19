@@ -155,6 +155,7 @@
     let selectedRegionIndex = select(this).attr('data-region-index');
     selectedRegion = regions[selectedRegionIndex].name;
     open(Popup, { selectedRegion: selectedRegion, selectedCountry: selectedCountry, datasets: dataset, butterflies: butterflies});
+    select(this).attr('fill-opacity', .5);
 
     if (selectedCountry !== "") {
       let container = select(".country-cards__container");

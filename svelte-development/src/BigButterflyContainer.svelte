@@ -1,7 +1,7 @@
 <script>
   import { afterUpdate } from 'svelte';
   import { select, selectAll, scaleOrdinal, mode } from "d3";
-  import {uniqueArray, findRegionColor, getQuestionWithCountryName, createPossibleQuestions, createUnnecessaryQuestions, clickContainer, highlightPath} from "./helper.js"
+  import {uniqueArray, findRegionColor, getQuestionWithCountryName, createPossibleQuestions, createUnnecessaryQuestions, clickContainer, a06aValues} from "./helper.js"
   import Documentation from './Documentation.svelte'
   import regions from './regions.js'
   import { each } from 'svelte/internal';
@@ -36,11 +36,23 @@
     let possibleQuestions = createPossibleQuestions(possibleModes, questionToMode);
     let unnecessaryQuestions = createUnnecessaryQuestions(allQuestions, possibleQuestions);
 
+    let a02aValue;
+    // if (possibleModes.includes("A02b")) {
+    //   possibleModes.push("A02a");
+    //   a02aValue = false;
+    // }
 
-    // console.log(modeA06a);
-    let a06aValue = modeA06a.filter(d => d.country == selectedCountry)[0].values;
+    console.log(possibleQuestions);
+    console.log(unnecessaryQuestions);
+    console.log(possibleModes);
 
-    let clicks = new clickContainer(possibleQuestions, possibleModes, a06aValue);
+    let a06aValue = modeA06a.filter(d => d.country === selectedCountry)[0].values;
+    let a06aText = a06aValues.filter(d => d.value == a06aValue)[0].text;
+
+    let clicks = new clickContainer(possibleQuestions, possibleModes, a02aValue);
+
+    console.log(possibleModes);
+
     // console.log(clicks);
 
     // console.log("possibleModes", possibleModes);
@@ -131,7 +143,7 @@
 
             select("#butterfly__questions")
               .append("foreignObject")
-              .html(getQuestionWithCountryName(selectedCountry, text))
+              .html(getQuestionWithCountryName(selectedCountry, text, a06aText))
               .classed("butterfly__questions__question", true)
               .attr("data-question-id", id)
               .attr("x", side.h == "left" ? position[0] - 170 - 20 : position[0] + 20)
@@ -168,22 +180,24 @@
 
       butterflyCirclesG.selectAll("circle").on("click", function() {
         let id = select(this).property("id");
-        let status = true;
-        clicks.updateClick(id, status);
-        if (id === "Q23") {
-          status = "blah";
+
+        // if (id === "Q23") {
+        //   status = "blah";
+        // }
+
+        if (!unnecessaryQuestions.includes(id)) {
+          let status = !clicks.questions.get(id);
+          clicks.questions.set(id, status);
+          clicks.updatePaths();
+          clicks.highlightPath(butterflyPathsG);
+          console.log(clicks);
+
+          if (status) {
+            select(this).attr("data-answer", "yes").attr("fill", "black");
+          } else {
+            select(this).attr("data-answer", "no").attr("fill", "white");
+          }
         }
-        // if (status) {
-          highlightPath(clicks, butterflyPathsG);
-        // }
-        
-        if (status) {
-          select(this).attr("data-answer", "yes").attr("fill", "black")
-        } 
-        // else {
-        //   status = true;
-        //   select(this).attr("data-answer", "no").attr("fill", "white")
-        // }
         
         // *NOTE* for now, to set up the Documentation.svelte, setting this variable to a mode that's related to the question, not the actual mode that turns to "true". needs updates here.
         // trueMode = [...clicks.modes].filter(m => m[1] == true)[0][0]
@@ -199,19 +213,40 @@
       Paths to acquire citizenship in <span class="country-highlight" style="background-color: {selectedColor.vivid}">{selectedCountry}</span>
     </h1>
     <div class="instructions">
-      Click
-        <svg width=27 height=18>
+      Click buttons <svg width=24 height=18>
+        <circle
+          cx=9
+          cy=9
+          r=5
+          stroke-width=4
+          stroke="black"
+          fill="white"
+        >
+        </circle>
+      </svg> to toggle paths <i>On</i> and <i>Off</i>. The default for each button is <b>No</b>, which looks like
+        <svg width=24 height=18>
           <circle
             cx=9
             cy=9
             r=5
             stroke-width=4
             stroke="black"
-            fill="white"
+            fill="white">
+          </circle>
+        </svg>
+        . The <b>Yes</b> will look like 
+        <svg width=24 height=18>
+          <circle
+            cx=9
+            cy=9
+            r=5
+            stroke-width=4
+            stroke="black"
+            fill="black"
           >
           </circle>
         </svg>
-      to answer questions. Paths will light up if there is a country-specific law that allows you to acquire citizenship with your condition.</div>
+        . Paths will light up if there is a country-specific law that allows you to acquire citizenship with your condition.</div>
     {#if w !== undefined}
       <div id="citizenship-paths" style="height: {h}">
         <div id="butterfly__graphic">
@@ -238,5 +273,9 @@
     padding: 10px;
     margin: 10px auto;
     max-width: 800px;
+  }
+
+  .instructions svg {
+    padding: 0 3px;
   }
 </style>
