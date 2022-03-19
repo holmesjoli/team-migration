@@ -17,7 +17,7 @@
 <section>
   <div>
     <h1>
-      In 2020, <span style="text-decoration: underline solid {regionData.color} 5px; text-underline-offset: 2px">{formatValue(regionData.value)}</span> people migrated into <span class="highlight" style="background-color: {regionData.color}">{selectedRegion}</span>.
+      <span class="highlight" style="background-color: {regionData.color}">{selectedRegion}</span>
     </h1>
     <CountryCardExplainer bind:hoveredCountry={hoveredCountry} regionData={regionData} countryData={filteredData}/>
   </div>

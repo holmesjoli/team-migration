@@ -1,5 +1,6 @@
 <script>
   import { geoNaturalEarth1, geoPath } from "d3-geo";
+  import MapExplainer from "./MapExplainer.svelte";
   import MapPath from './MapPath.svelte';
   import MapPoints from './MapPoints.svelte';
   import Legend from "./Legend.svelte";
@@ -16,9 +17,7 @@
   let centroidsD = dataset[0];
   let outlineD = dataset[1];
   let butterflies = dataset[2];
-  let regions = dataset[8];
   let regionFlow = dataset[9];
-  let totalMigrants = dataset[10];
   
   let w;
   
@@ -27,12 +26,13 @@
   $: path = geoPath(projection)
 </script>
 
-<section class="map__container" bind:clientWidth={w}>
+<section id="map__container" class="map__container" bind:clientWidth={w}>
   {#if w !== undefined}
     <Modal show={$modal} transitionBgProps={{ duration: 0 }} styleCloseButton={{cursor: "pointer"}} styleWindow = {{"border-radius": "8px"}}>
+      <MapExplainer bind:hoveredRegionCode={hoveredRegionCode} data={centroidsD} />
       <svg id="world-map" width={w} height={h}>
         <MapPath data={outlineD} path={path}/>
-        <MapPoints width={w} data={centroidsD} regionFlow ={regionFlow} projection={projection} butterflies={butterflies} bind:selectedRegion={selectedRegion} bind:hoveredRegionCode={hoveredRegionCode} bind:selectedCountry={selectedCountry} datasets={dataset}/>
+        <MapPoints width={w} data={centroidsD} regionFlow={regionFlow} projection={projection} butterflies={butterflies} bind:selectedRegion={selectedRegion} bind:hoveredRegionCode={hoveredRegionCode} bind:selectedCountry={selectedCountry} datasets={dataset}/>
       </svg>
       <div id="legend">
         <Legend width={w} height={h} data={centroidsD}/>

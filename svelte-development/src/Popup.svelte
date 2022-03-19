@@ -1,5 +1,4 @@
 <script>
-  import {max, min} from "d3"
   import CountryCardContainer from './CountryCardContainer.svelte';
   import BigButterflyContainer from './BigButterflyContainer.svelte';
   import regions from "./regions"

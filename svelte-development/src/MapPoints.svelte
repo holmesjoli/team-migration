@@ -1,7 +1,7 @@
 <script>
   import { spring } from "svelte/motion";
   import { getContext } from 'svelte';
-  import { scaleLinear, extent, min, max, select, selectAll, groups, line, map, scaleOrdinal } from 'd3';
+  import { scaleLinear, extent, select, scaleOrdinal } from 'd3';
   import { forceSimulation, forceCollide, forceLink, forceX, forceY } from "d3-force";
   
   import Popup from './Popup.svelte';
@@ -140,6 +140,8 @@
   }
 
   function handleMouseOut() {
+    hoveredRegionCode = "";
+
     if (select(this).attr('data-region-index') != findRegionIndex(selectedRegion)) {
       select(this).attr('fill-opacity', 0.5)
     }
@@ -170,11 +172,6 @@
     return regions.findIndex(re => re.name === region)
   }
 
-  function findRegionShape(region) {
-    let regionIndex = regions.findIndex(re => re.name === region)
-    return regions[regionIndex].shape
-  }
-
   function findRegionCode(region) {
     let regionIndex = regions.findIndex(re => re.name === region);
     return +regions[regionIndex].code;
@@ -182,21 +179,9 @@
 </script>
 
 <g class="map-points">
-  <!-- {#each butterflies as {b}, i}
-    <defs>
-      <g id="butterfly-{i}">
-        {@html b}
-      </g>
-    </defs>
-  {/each} -->
   <defs>
     <g id="butterfly-0">
       {@html butterflies[0]}
-    </g>
-  </defs>
-  <defs>
-    <g id="butterfly-1">
-      {@html butterflies[1]}
     </g>
   </defs>
 

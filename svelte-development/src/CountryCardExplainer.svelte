@@ -16,7 +16,7 @@
 </script>
 
 <div>
-  <p>
+  <p class="user-signifier">
     Select a country to show various ways you can aquire citizenship.
   </p>
   {#if hoveredCountry !== ""}
