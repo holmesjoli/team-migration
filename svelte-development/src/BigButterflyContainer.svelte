@@ -14,7 +14,7 @@
   export let butterflies;
   export let modeA06a;
 
-  let w, trueMode, clicks;
+  let w, trueMode;
   let acqModeFiltered, possibleModes, possibleQuestions, unnecessaryQuestions, possiblePaths, a06aValue, a06aText, filteredQuestionToMode;
   let selectedColor = findRegionColor(selectedRegion);
   let allPaths = [
@@ -428,7 +428,7 @@
           >
           </circle>
         </svg>
-        to answer questions. Paths will light up if there is a country-specific law that allows you to acquire citizenship with your condition.
+        to answer questions. Paths will light up and the butterfly thorax will turn gold if there is a country-specific law that allows you to acquire citizenship with your condition.
         <!-- <span class="reset" on:click={handleResetButton}>RESET CONDITIONS</span> -->
       </p>
     </div>
@@ -468,7 +468,7 @@
     max-width: 600px;
     font-size: 18px;
   }
-  .reset {
+  /* .reset {
     display: inline;
     cursor: pointer;
     font-size: 0.7rem;
@@ -481,6 +481,6 @@
   .reset:hover {
     background: #aaaaaa;
     color: white;
-  }
+  } */
 
 </style>
