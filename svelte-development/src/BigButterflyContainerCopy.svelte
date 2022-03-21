@@ -1,7 +1,7 @@
 <script>
   import { afterUpdate } from 'svelte';
   import { select, selectAll } from "d3";
-  import { uniqueArray, findRegionColor, getQuestionWithCountryName } from "./helper.js"
+  import { uniqueArray, findRegionColor, getQuestionWithCountryName, createPossibleQuestions, createUnnecessaryQuestions, clickContainer } from "./helper.js"
   import Documentation from './Documentation.svelte'
 
   export let selectedRegion;
@@ -15,59 +15,53 @@
   export let modeA06a;
 
   let w, trueMode, clicks;
-  let acqModeFiltered, possibleModes, possibleQuestions, unnecessaryQuestions, possiblePaths, a06aValue, a06aText, filteredQuestionToMode;
-  let selectedColor = findRegionColor(selectedRegion);
-  let allPaths = [
-    "path_1", "path_2", "path_3", "path_4", "path_5",
-    "path_6", "path_7", "path_8", "path_9", "path_10",
-    "path_11", "path_12", "path_13", "path_14", "path_15",
-    "path_16", "path_17", "path_18", "path_19", "path_20",
-    "path_21", "path_22", "path_23", "path_24", "path_25",
-    "path_26", "path_27", "path_28", "path_29", "path_30",
-    "path_31", "path_32", "path_33", "path_34", "path_35",
-    "path_36", "path_37", "path_38", "path_39", "path_40",
-  ]
+  let acqModeFiltered, possibleModes, possibleQuestions, unnecessaryQuestions, a06aValue, a06aText, filteredAvailableModes, newQuestions;
+  let selectedColor = findRegionColor(selectedRegion)
+  let availableModes =
+  // paths available based on the butterflyPath.svg
+    ["A06f", "A07", "A01a", "A02a", "A02b", "A09",
+    "A14", "A10", "A08", "A11", "A12a", "A12b", "A13", "A21", "A06e",
+    "A06d", "A06a", "A06b", "A06c", "A25", "A26", "A24", "A23", "A22",
+    "A19", "A18", "A16"] 
+
+  let allQuestions = uniqueArray(questionToMode, "question");
+
+  function handleResetButton() {
+    possibleModes.forEach(mode => {
+      clicks.modes.set(mode, false)
+    })
+    possibleQuestions.forEach(question => {
+      clicks.questions.set(question, false)
+    })
+    clicks.updatePaths();
+    let butterflyPathsG = select("#butterfly__paths");
+    clicks.highlightPath(butterflyPathsG);
+    console.log(clicks)
+  }
 
   $: h = w * 74 / 91;
 
   $: if (selectedCountry !== "") {
 
-    // get possible modes, possible questions / paths, unnecessary questions
     acqModeFiltered = acqMode.filter(d => d.country == selectedCountry);
     possibleModes = uniqueArray(acqModeFiltered, "mode_id");
-    // console.log(questionToMode)
-    // console.log(possibleModes)
+    possibleQuestions = createPossibleQuestions(possibleModes, questionToMode);
+    unnecessaryQuestions = createUnnecessaryQuestions(allQuestions, possibleQuestions);
 
-    possibleQuestions = [];
-    possiblePaths = [];
-    filteredQuestionToMode = [];
-    questionToMode.forEach(el => {
-      let mode = el.associated_mode;
-      let isIncluded = possibleModes.includes(mode);
-      if (isIncluded) {
-        possibleQuestions.push(el.question);
-        possiblePaths.push(el.path_to_light_up);
-        filteredQuestionToMode.push(el);
-      }
-    })
-    possibleQuestions = [...new Set(possibleQuestions)]
-    possiblePaths = [...new Set(possiblePaths)]
-
-    // console.log(possibleQuestions)
-    // console.log(possiblePaths)
-    // console.log(filteredQuestionToMode)
-
-    unnecessaryQuestions = [];
-    questions.forEach(el => {
-      let id = el.question_id;
-      let isIncluded = possibleQuestions.includes(id);
-      if (!isIncluded) {
-        unnecessaryQuestions.push(id)
-      }
-    })
-
-    a06aValue = modeA06a.filter(d => d.country == selectedCountry)[0].values;
+    a06aValue = modeA06a.filter(d => d.country === selectedCountry)[0].values;
     a06aText = modeA06a.filter(d => d.values == a06aValue)[0].time;
+    clicks = new clickContainer(possibleQuestions, possibleModes);
+    // console.log(clicks);
+
+    // console.log("possibleModes", possibleModes);
+    // console.log("allQuestions", allQuestions);
+    // console.log("possibleQuestions", possibleQuestions);
+    // console.log("unnecessaryQuestions", unnecessaryQuestions);
+
+    // filter and see what modes are available
+    filteredAvailableModes = availableModes.filter(m => possibleModes.includes(m));
+    // console.log("filteredAvailableModes", filteredAvailableModes);
+    // console.log(filteredAvailableModes);
 
     afterUpdate(() => {
       // set default colors of the big butterfly
@@ -81,17 +75,17 @@
       let butterflyPathsG = butterflySel
         .select("#butterfly__paths");
       butterflyPathsG
-        .selectAll(".butterfly__path")
+        .selectAll("path")
         .attr("fill", "none")
         .attr("stroke", "#ffffff")
         .attr("stroke-width", 5)
         .attr("data-available", "true")
-        .attr("data-matched", "false");
+        .attr("data-active", "false");
       butterflyPathsG
-        .selectAll(".butterfly__path")
+        .selectAll("path")
         .each(function() {
           let id = select(this).attr("id")
-          if (!possiblePaths.includes(id)) {
+          if (!filteredAvailableModes.includes(id)) {
             select(this)
               .attr("data-available", "false")
               .style("opacity", 0.1);
@@ -156,7 +150,7 @@
               .attr("height", 170)
               .style("opacity", q.visibility == "hidden" ? 0 : 1)
               .style("text-shadow", "-2px -2px 0 rgba(255, 255, 255, 0.7), 2px -2px 0 rgba(255, 255, 255, 0.7), -2px 2px 0 rgba(255, 255, 255, 0.7), 2px 2px 0 rgba(255, 255, 255, 0.7)")          
-              .style("font-size", "0.8rem")
+              .style("font-size", "1rem")
               .style("text-align", side.h == 'left' ? "right" : "left")
               .style("line-height", 1)
               .style("transition", "all 0.2s ease")     
@@ -207,7 +201,7 @@
                 .attr("x", 10)
                 .attr("y", -20)
                 .attr("text-anchor", "middle")
-                .style("font-size", "0.8rem")
+                .style("font-size", "1rem")
                 .style("font-weight", "bold")
                 .text("")
                 .style("text-shadow", "-2px -2px 0 rgba(255, 255, 255, 0.7), 2px -2px 0 rgba(255, 255, 255, 0.7), -2px 2px 0 rgba(255, 255, 255, 0.7), 2px 2px 0 rgba(255, 255, 255, 0.7)")  
@@ -221,187 +215,148 @@
       .on("mouseover", function() {
         //  get question id -- eg. "Q02"
         let id = select(this).attr("id");
+        let status = clicks.questions.get(id);
+
         // make question bold
         select(`foreignObject[data-question-id=${id}]`)
         .style("font-weight", "bold")
+
         // make this circle invisible
         select(this)
         .transition(200)
         .style("opacity", 0)
+
         let toggleG = select(`#switch__${id}`)
         // make toggle visible
         toggleG
           .style("opacity", 1)
           .style("pointer-events", "auto")
+
         // make toggle swichable
         toggleG
           .selectAll("circle")
           .on("mouseover", function() {
-            toggleMouseOver(select(this), select(this.parentNode))
+            let isAnswered =  select(this.parentNode).attr("data-question-answered");
+            if (isAnswered == "false") {
+              toggleG.selectAll("circle").style("opacity", 0)
+              select(this).style("opacity", 1)
+              
+              // make text visible
+              let answer = select(this).attr('data-answer-state')
+              toggleG.select("text").text(answer)
+            }
           })
           .on("click", function() {
-            toggleClick(select(this), select(this.parentNode))
+            let id = select(this.parentNode).attr("data-question-id");
+            let answer = select(this).attr("data-answer-state");
+            console.log(answer)
+            // *FROM SIMPLE TOGGLE*
+            if (!unnecessaryQuestions.includes(id)) {
+              let status = clicks.questions.get(id);
+              status = answer == "Yes" ? true : false;
+              clicks.questions.set(id, status);
+              clicks.updatePaths();
+              clicks.highlightPath(butterflyPathsG);
+              clicks.updateClick(id, status);
+              console.log(clicks);
+            }
+            
+            // switch data-question-answered attribute
+            select(this.parentNode)
+            .attr("data-question-answered", "true")
+            .attr("data-answer", answer)
+            // switch toggle cursor
+            select(this.parentNode)
+            .style("cursor", "default")
+            .style("pointer-events", "none")
+            .selectAll("circle")
+            .style("cursor", "default")
+            .style("pointer-events", "none")            
+            // make toggle question text Yes/No invisible
+            select(this.parentNode)
+            .select("text")
+            .style("opacity", 0)
+            // make question text muted
+            select(`foreignObject[data-question-id=${id}]`)
+            .style("opacity", 0.1)
+            console.log(select(this))
+
+            // get new circles and texts to light up
+            newQuestions = questions.filter(q => q.q_waiting == id);
+            if (newQuestions.length > 0) {
+              let newQuestionIds = newQuestions.map(q => q.question_id);
+              console.log(newQuestionIds)
+              newQuestionIds.forEach(qId => {
+                console.log(qId)
+                let circle = select(`circle#${qId}`);
+                let isAvailable = circle.attr("data-available");
+                console.log(isAvailable)
+                if (isAvailable == "true") {
+                  console.log(circle)
+                  circle
+                    .attr("stroke", "black");
+                }
+              })
+            }
+            
           }) 
+        toggleG
           .on("mouseleave", function() {
-            toggleMouseLeave(select(this), select(this.parentNode))
+            let id = select(this).attr("data-question-id");
+            let isAnswered = select(this).attr("data-question-answered");
+            if (isAnswered == "false") {
+              // make toggle invisible
+              select(this)
+              .style("opacity", 0)
+              .style("pointer-events", "none")
+              // make the original circle visible
+              select(`circle#${id}`)
+              .style("opacity", 1)
+            }
+            // make text normal weight
+            select(`foreignObject[data-question-id=${id}]`).style("font-weight", "normal")
           })
       })
+
+      // butterflyCirclesG.selectAll("circle").on("click", function() {
+      //   let id = select(this).attr("id");
+
+      //   // Below is extra step for Q23
+      //   // .on("click", function() {
+      //   //   let answer = select(this).attr('data-answer-state')
+      //   //   // set answer state
+      //   //   status = answer == "Yes" ? true : false
+      //   //   // disable pointer events
+      //   //   toggleG.style("pointer-events", "none")
+
+      //   //   let inputValue;
+      //   //   if (id == "Q22" && status == true) {
+      //   //     let form = select("#answer-selection__Q22")
+      //   //     form.style("display", "block")
+      //   //     let submitButton = form.select("div")
+      //   //     submitButton.on("click", function() {
+      //   //       let selectedInput = form.select("input:checked")
+      //   //       if (!selectedInput.empty()) {
+      //   //         inputValue = selectedInput.attr("value")
+      //   //         form.style("opacity", 0.1)
+      //   //         console.log(inputValue)
+      //   //       }
+      //   //     })
+      //   //   }
+      //   // })
+      //   // if (status) {
+      //     // highlightPath(clicks, butterflyPathsG);
+      //   // }
+        
+      //   // else {
+      //   //   status = true;
+      //   //   select(this).attr("data-answer", "no").attr("fill", "white")
+      //   // }
         
       //   // *NOTE* for now, to set up the Documentation.svelte, setting this variable to a mode that's related to the question, not the actual mode that turns to "true". needs updates here.
       //   // trueMode = [...clicks.modes].filter(m => m[1] == true)[0][0]
       // })
     })
-  }
-
-  function toggleMouseOver(selection, parent) {
-    let isAnswered =  parent.attr("data-question-answered");
-    if (isAnswered == "false") {
-      parent.selectAll("circle").style("opacity", 0)
-      selection.style("opacity", 1)
-      
-      // make text visible
-      let answer = selection.attr('data-answer-state')
-      parent.select("text").text(answer)
-    }
-  }
-
-  function toggleMouseLeave(selection, parent) {
-    let id = parent.attr("data-question-id");
-    let isAnswered = parent.attr("data-question-answered");
-    // console.log(id, isAnswered)
-    if (isAnswered == "false") {
-      // make toggle invisible
-      parent
-        .style("opacity", 0)
-        .style("pointer-events", "none")
-        // make the original circle visible
-        select(`circle#${id}`)
-        .style("opacity", 1)
-    }
-    // make text normal weight
-    select(`foreignObject[data-question-id=${id}]`).style("font-weight", "normal")
-  }
-
-  function toggleClick(selection, parent) {
-    let id = parent.attr("data-question-id");
-    let answer = selection.attr("data-answer-state");
-    // console.log("user's answer:", answer)       
-    
-    // switch data-question-answered attribute
-    parent
-    .attr("data-question-answered", "true")
-    .attr("data-answer", answer)
-    // switch toggle cursor
-    parent
-    .style("cursor", "default")
-    .style("pointer-events", "none")
-    .selectAll("circle")
-    .style("cursor", "default")
-    .style("pointer-events", "none")            
-    // make toggle question text Yes/No muted
-    parent
-    .select("text")
-    .style("opacity", 0.1)
-    // make question text muted
-    select(`foreignObject[data-question-id=${id}]`)
-    .style("opacity", 0.1)
-
-    // light up paths
-    let associatedQuestionToMode = filteredQuestionToMode.filter(el => el.question == id);
-    associatedQuestionToMode.forEach(el => {
-      // console.log(el)
-      let path = el.path_to_light_up;
-      // console.log("required answer", el.answer)
-      if (el.answer == answer) {
-        // console.log("answers matched!")
-
-        // light up the path and the head
-        select(`#${path}`)
-          .attr("stroke", "#ae8625")
-          .attr("data-matched", "true")
-        if (el.citizenship_achieved == "TRUE") {
-          select("#butterfly__head")
-          .attr("fill", "url(#citizenship__achieved)")
-        }
-        
-        // get new circles and texts to light up
-        let childQuestion = el.child_question;
-        // console.log(childQuestion)
-        if (childQuestion !== "") {
-          // make the child circle appear
-          select(`circle#${childQuestion}`)
-            .attr("data-waiting", "false")
-            .attr("stroke", "black")
-            .style("cursor", "pointer")
-          // make the child text appear
-          select(`foreignObject[data-question-id=${childQuestion}]`)
-            .style("opacity", 1)
-          // enable the toggle
-          select(`g#switch__${childQuestion}`)
-            .style("pointer-events", "auto")
-            .on("mouseover", function() {
-              select(this).style("opacity", 1)
-            })
-            .on("mouseleave", function() {
-              select(this).style("opacity", 0)
-            })
-            .selectAll("circle")
-            .on("mouseover", function() {
-              select(`circle#${childQuestion}`)
-                .style("opacity", 0)
-              select(this).style("opacity", 1)
-              let answer = select(this).attr('data-answer-state')
-              select(this.parentNode).select("text").text(answer)
-            })
-            .on("mouseleave", function() {
-              let isAnswered = select(this.parentNode).attr('data-question-answered')
-              // console.log(isAnswered)
-              if (isAnswered == "false") {
-                select(`circle#${childQuestion}`)
-                  .style("opacity", 1)
-                select(this).style("opacity", 0)
-                select(this.parentNode).select("text").text("")  
-              }
-            })
-            .on("click", function() {
-              toggleClick(select(this), select(this.parentNode))
-            })
-        }
-      } else {
-        // console.log("answers don't match")
-        // disable the path
-        let isMatched = select(`#${path}`)
-          .attr("data-matched")
-        if (isMatched == "false") {
-          select(`#${path}`)
-            .style("opacity", 0.1)
-        }
-        // disable the following questions and paths
-        let followingQuestions = [el.child_question, el.grandchild_question]
-        followingQuestions = followingQuestions.filter(q => q !== "");
-        if (followingQuestions.length > 0) {
-          followingQuestions.forEach(q => {
-            // console.log(q)
-            select(`circle#${q}`)
-              .style("opacity", 0.3);
-            let paths = filteredQuestionToMode
-              .filter(el => el.question == q)                    
-            paths.forEach(el => {
-              let path = el.path_to_light_up;
-              let isMatched = select(`#${path}`)
-                .attr("data-matched")
-              if (isMatched == "false") {
-                select(`#${path}`)
-                  .style("opacity", 0.1)
-              }
-            })
-          })
-        }
-      }
-    })       
-  }
-
-  function handleResetButton() {
   }
 
 </script>
@@ -429,7 +384,7 @@
           </circle>
         </svg>
         to answer questions. Paths will light up if there is a country-specific law that allows you to acquire citizenship with your condition.
-        <!-- <span class="reset" on:click={handleResetButton}>RESET CONDITIONS</span> -->
+        <span class="reset" on:click={handleResetButton}>RESET CONDITIONS</span>
       </p>
     </div>
     {#if w !== undefined}

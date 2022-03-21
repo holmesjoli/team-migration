@@ -4,7 +4,7 @@ var app = (function () {
     'use strict';
 
     function noop$2() { }
-    const identity$5 = x => x;
+    const identity$4 = x => x;
     function assign(tar, src) {
         // @ts-ignore
         for (const k in src)
@@ -267,39 +267,6 @@ var app = (function () {
         const e = document.createEvent('CustomEvent');
         e.initCustomEvent(type, bubbles, false, detail);
         return e;
-    }
-    class HtmlTag {
-        constructor() {
-            this.e = this.n = null;
-        }
-        c(html) {
-            this.h(html);
-        }
-        m(html, target, anchor = null) {
-            if (!this.e) {
-                this.e = element(target.nodeName);
-                this.t = target;
-                this.c(html);
-            }
-            this.i(anchor);
-        }
-        h(html) {
-            this.e.innerHTML = html;
-            this.n = Array.from(this.e.childNodes);
-        }
-        i(anchor) {
-            for (let i = 0; i < this.n.length; i += 1) {
-                insert(this.t, this.n[i], anchor);
-            }
-        }
-        p(html) {
-            this.d();
-            this.h(html);
-            this.i(this.a);
-        }
-        d() {
-            this.n.forEach(detach);
-        }
     }
 
     // we need to store the information for multiple documents because a Svelte application could also contain iframes
@@ -580,7 +547,7 @@ var app = (function () {
             };
         }
         function go(b) {
-            const { delay = 0, duration = 300, easing = identity$5, tick = noop$2, css } = config || null_transition;
+            const { delay = 0, duration = 300, easing = identity$4, tick = noop$2, css } = config || null_transition;
             const program = {
                 start: now$1() + delay,
                 b
@@ -1173,33 +1140,6 @@ var app = (function () {
       return value !== null && typeof value === "object" ? value.valueOf() : value;
     }
 
-    function identity$4(x) {
-      return x;
-    }
-
-    function groups(values, ...keys) {
-      return nest(values, Array.from, identity$4, keys);
-    }
-
-    function nest(values, map, reduce, keys) {
-      return (function regroup(values, i) {
-        if (i >= keys.length) return reduce(values);
-        const groups = new InternMap();
-        const keyof = keys[i++];
-        let index = -1;
-        for (const value of values) {
-          const key = keyof(value, ++index, values);
-          const group = groups.get(key);
-          if (group) group.push(value);
-          else groups.set(key, [value]);
-        }
-        for (const [key, values] of groups) {
-          groups.set(key, regroup(values, i));
-        }
-        return map(groups);
-      })(values, 0);
-    }
-
     var e10 = Math.sqrt(50),
         e5 = Math.sqrt(10),
         e2 = Math.sqrt(2);
@@ -1274,27 +1214,6 @@ var app = (function () {
         }
       }
       return max;
-    }
-
-    function min(values, valueof) {
-      let min;
-      if (valueof === undefined) {
-        for (const value of values) {
-          if (value != null
-              && (min > value || (min === undefined && value >= value))) {
-            min = value;
-          }
-        }
-      } else {
-        let index = -1;
-        for (let value of values) {
-          if ((value = valueof(value, ++index, values)) != null
-              && (min > value || (min === undefined && value >= value))) {
-            min = value;
-          }
-        }
-      }
-      return min;
     }
 
     function* flatten(arrays) {
@@ -1458,7 +1377,7 @@ var app = (function () {
     // selection; we don’t ever want to create a selection backed by a live
     // HTMLCollection or NodeList. However, note that selection.selectAll will use a
     // static NodeList as a group, since it safely derived from querySelectorAll.
-    function array$1(x) {
+    function array(x) {
       return x == null ? [] : Array.isArray(x) ? x : Array.from(x);
     }
 
@@ -1474,7 +1393,7 @@ var app = (function () {
 
     function arrayAll(select) {
       return function() {
-        return array$1(select.apply(this, arguments));
+        return array(select.apply(this, arguments));
       };
     }
 
@@ -1578,7 +1497,7 @@ var app = (function () {
       querySelectorAll: function(selector) { return this._parent.querySelectorAll(selector); }
     };
 
-    function constant$3(x) {
+    function constant$2(x) {
       return function() {
         return x;
       };
@@ -1665,7 +1584,7 @@ var app = (function () {
           parents = this._parents,
           groups = this._groups;
 
-      if (typeof value !== "function") value = constant$3(value);
+      if (typeof value !== "function") value = constant$2(value);
 
       for (var m = groups.length, update = new Array(m), enter = new Array(m), exit = new Array(m), j = 0; j < m; ++j) {
         var parent = parents[j],
@@ -2317,7 +2236,7 @@ var app = (function () {
     function selectAll(selector) {
       return typeof selector === "string"
           ? new Selection$1([document.querySelectorAll(selector)], [document.documentElement])
-          : new Selection$1([array$1(selector)], root);
+          : new Selection$1([array(selector)], root);
     }
 
     function define(constructor, factory, prototype) {
@@ -2701,7 +2620,7 @@ var app = (function () {
           : m1) * 255;
     }
 
-    var constant$2 = x => () => x;
+    var constant$1 = x => () => x;
 
     function linear$1(a, d) {
       return function(t) {
@@ -2717,13 +2636,13 @@ var app = (function () {
 
     function gamma(y) {
       return (y = +y) === 1 ? nogamma : function(a, b) {
-        return b - a ? exponential(a, b, y) : constant$2(isNaN(a) ? b : a);
+        return b - a ? exponential(a, b, y) : constant$1(isNaN(a) ? b : a);
       };
     }
 
     function nogamma(a, b) {
       var d = b - a;
-      return d ? linear$1(a, d) : constant$2(isNaN(a) ? b : a);
+      return d ? linear$1(a, d) : constant$1(isNaN(a) ? b : a);
     }
 
     var interpolateRgb = (function rgbGamma(y) {
@@ -2879,7 +2798,7 @@ var app = (function () {
 
     function interpolate$1(a, b) {
       var t = typeof b, c;
-      return b == null || t === "boolean" ? constant$2(b)
+      return b == null || t === "boolean" ? constant$1(b)
           : (t === "number" ? interpolateNumber
           : t === "string" ? ((c = color(b)) ? (b = c, interpolateRgb) : interpolateString)
           : b instanceof color ? interpolateRgb
@@ -3989,135 +3908,6 @@ var app = (function () {
     selection.prototype.interrupt = selection_interrupt;
     selection.prototype.transition = selection_transition;
 
-    const pi$1 = Math.PI,
-        tau$1 = 2 * pi$1,
-        epsilon$1 = 1e-6,
-        tauEpsilon = tau$1 - epsilon$1;
-
-    function Path() {
-      this._x0 = this._y0 = // start of current subpath
-      this._x1 = this._y1 = null; // end of current subpath
-      this._ = "";
-    }
-
-    function path() {
-      return new Path;
-    }
-
-    Path.prototype = path.prototype = {
-      constructor: Path,
-      moveTo: function(x, y) {
-        this._ += "M" + (this._x0 = this._x1 = +x) + "," + (this._y0 = this._y1 = +y);
-      },
-      closePath: function() {
-        if (this._x1 !== null) {
-          this._x1 = this._x0, this._y1 = this._y0;
-          this._ += "Z";
-        }
-      },
-      lineTo: function(x, y) {
-        this._ += "L" + (this._x1 = +x) + "," + (this._y1 = +y);
-      },
-      quadraticCurveTo: function(x1, y1, x, y) {
-        this._ += "Q" + (+x1) + "," + (+y1) + "," + (this._x1 = +x) + "," + (this._y1 = +y);
-      },
-      bezierCurveTo: function(x1, y1, x2, y2, x, y) {
-        this._ += "C" + (+x1) + "," + (+y1) + "," + (+x2) + "," + (+y2) + "," + (this._x1 = +x) + "," + (this._y1 = +y);
-      },
-      arcTo: function(x1, y1, x2, y2, r) {
-        x1 = +x1, y1 = +y1, x2 = +x2, y2 = +y2, r = +r;
-        var x0 = this._x1,
-            y0 = this._y1,
-            x21 = x2 - x1,
-            y21 = y2 - y1,
-            x01 = x0 - x1,
-            y01 = y0 - y1,
-            l01_2 = x01 * x01 + y01 * y01;
-
-        // Is the radius negative? Error.
-        if (r < 0) throw new Error("negative radius: " + r);
-
-        // Is this path empty? Move to (x1,y1).
-        if (this._x1 === null) {
-          this._ += "M" + (this._x1 = x1) + "," + (this._y1 = y1);
-        }
-
-        // Or, is (x1,y1) coincident with (x0,y0)? Do nothing.
-        else if (!(l01_2 > epsilon$1));
-
-        // Or, are (x0,y0), (x1,y1) and (x2,y2) collinear?
-        // Equivalently, is (x1,y1) coincident with (x2,y2)?
-        // Or, is the radius zero? Line to (x1,y1).
-        else if (!(Math.abs(y01 * x21 - y21 * x01) > epsilon$1) || !r) {
-          this._ += "L" + (this._x1 = x1) + "," + (this._y1 = y1);
-        }
-
-        // Otherwise, draw an arc!
-        else {
-          var x20 = x2 - x0,
-              y20 = y2 - y0,
-              l21_2 = x21 * x21 + y21 * y21,
-              l20_2 = x20 * x20 + y20 * y20,
-              l21 = Math.sqrt(l21_2),
-              l01 = Math.sqrt(l01_2),
-              l = r * Math.tan((pi$1 - Math.acos((l21_2 + l01_2 - l20_2) / (2 * l21 * l01))) / 2),
-              t01 = l / l01,
-              t21 = l / l21;
-
-          // If the start tangent is not coincident with (x0,y0), line to.
-          if (Math.abs(t01 - 1) > epsilon$1) {
-            this._ += "L" + (x1 + t01 * x01) + "," + (y1 + t01 * y01);
-          }
-
-          this._ += "A" + r + "," + r + ",0,0," + (+(y01 * x20 > x01 * y20)) + "," + (this._x1 = x1 + t21 * x21) + "," + (this._y1 = y1 + t21 * y21);
-        }
-      },
-      arc: function(x, y, r, a0, a1, ccw) {
-        x = +x, y = +y, r = +r, ccw = !!ccw;
-        var dx = r * Math.cos(a0),
-            dy = r * Math.sin(a0),
-            x0 = x + dx,
-            y0 = y + dy,
-            cw = 1 ^ ccw,
-            da = ccw ? a0 - a1 : a1 - a0;
-
-        // Is the radius negative? Error.
-        if (r < 0) throw new Error("negative radius: " + r);
-
-        // Is this path empty? Move to (x0,y0).
-        if (this._x1 === null) {
-          this._ += "M" + x0 + "," + y0;
-        }
-
-        // Or, is (x0,y0) not coincident with the previous point? Line to (x0,y0).
-        else if (Math.abs(this._x1 - x0) > epsilon$1 || Math.abs(this._y1 - y0) > epsilon$1) {
-          this._ += "L" + x0 + "," + y0;
-        }
-
-        // Is this arc empty? We’re done.
-        if (!r) return;
-
-        // Does the angle go the wrong way? Flip the direction.
-        if (da < 0) da = da % tau$1 + tau$1;
-
-        // Is this a complete circle? Draw two arcs to complete the circle.
-        if (da > tauEpsilon) {
-          this._ += "A" + r + "," + r + ",0,1," + cw + "," + (x - dx) + "," + (y - dy) + "A" + r + "," + r + ",0,1," + cw + "," + (this._x1 = x0) + "," + (this._y1 = y0);
-        }
-
-        // Is this arc non-empty? Draw an arc!
-        else if (da > epsilon$1) {
-          this._ += "A" + r + "," + r + ",0," + (+(da >= pi$1)) + "," + cw + "," + (this._x1 = x + r * Math.cos(a1)) + "," + (this._y1 = y + r * Math.sin(a1));
-        }
-      },
-      rect: function(x, y, w, h) {
-        this._ += "M" + (this._x0 = this._x1 = +x) + "," + (this._y0 = this._y1 = +y) + "h" + (+w) + "v" + (+h) + "h" + (-w) + "Z";
-      },
-      toString: function() {
-        return this._;
-      }
-    };
-
     var EOL = {},
         EOF = {},
         QUOTE = 34,
@@ -4724,7 +4514,7 @@ var app = (function () {
     treeProto.x = tree_x;
     treeProto.y = tree_y;
 
-    function constant$1(x) {
+    function constant(x) {
       return function() {
         return x;
       };
@@ -4734,11 +4524,11 @@ var app = (function () {
       return (random() - 0.5) * 1e-6;
     }
 
-    function x$1(d) {
+    function x(d) {
       return d.x + d.vx;
     }
 
-    function y$1(d) {
+    function y(d) {
       return d.y + d.vy;
     }
 
@@ -4749,7 +4539,7 @@ var app = (function () {
           strength = 1,
           iterations = 1;
 
-      if (typeof radius !== "function") radius = constant$1(radius == null ? 1 : +radius);
+      if (typeof radius !== "function") radius = constant(radius == null ? 1 : +radius);
 
       function force() {
         var i, n = nodes.length,
@@ -4761,7 +4551,7 @@ var app = (function () {
             ri2;
 
         for (var k = 0; k < iterations; ++k) {
-          tree = quadtree(nodes, x$1, y$1).visitAfter(prepare);
+          tree = quadtree(nodes, x, y).visitAfter(prepare);
           for (i = 0; i < n; ++i) {
             node = nodes[i];
             ri = radii[node.index], ri2 = ri * ri;
@@ -4825,7 +4615,7 @@ var app = (function () {
       };
 
       force.radius = function(_) {
-        return arguments.length ? (radius = typeof _ === "function" ? _ : constant$1(+_), initialize(), force) : radius;
+        return arguments.length ? (radius = typeof _ === "function" ? _ : constant(+_), initialize(), force) : radius;
       };
 
       return force;
@@ -4845,7 +4635,7 @@ var app = (function () {
       var id = index,
           strength = defaultStrength,
           strengths,
-          distance = constant$1(30),
+          distance = constant(30),
           distances,
           nodes,
           count,
@@ -4936,11 +4726,11 @@ var app = (function () {
       };
 
       force.strength = function(_) {
-        return arguments.length ? (strength = typeof _ === "function" ? _ : constant$1(+_), initializeStrength(), force) : strength;
+        return arguments.length ? (strength = typeof _ === "function" ? _ : constant(+_), initializeStrength(), force) : strength;
       };
 
       force.distance = function(_) {
-        return arguments.length ? (distance = typeof _ === "function" ? _ : constant$1(+_), initializeDistance(), force) : distance;
+        return arguments.length ? (distance = typeof _ === "function" ? _ : constant(+_), initializeDistance(), force) : distance;
       };
 
       return force;
@@ -5102,12 +4892,12 @@ var app = (function () {
     }
 
     function forceX(x) {
-      var strength = constant$1(0.1),
+      var strength = constant(0.1),
           nodes,
           strengths,
           xz;
 
-      if (typeof x !== "function") x = constant$1(x == null ? 0 : +x);
+      if (typeof x !== "function") x = constant(x == null ? 0 : +x);
 
       function force(alpha) {
         for (var i = 0, n = nodes.length, node; i < n; ++i) {
@@ -5131,23 +4921,23 @@ var app = (function () {
       };
 
       force.strength = function(_) {
-        return arguments.length ? (strength = typeof _ === "function" ? _ : constant$1(+_), initialize(), force) : strength;
+        return arguments.length ? (strength = typeof _ === "function" ? _ : constant(+_), initialize(), force) : strength;
       };
 
       force.x = function(_) {
-        return arguments.length ? (x = typeof _ === "function" ? _ : constant$1(+_), initialize(), force) : x;
+        return arguments.length ? (x = typeof _ === "function" ? _ : constant(+_), initialize(), force) : x;
       };
 
       return force;
     }
 
     function forceY(y) {
-      var strength = constant$1(0.1),
+      var strength = constant(0.1),
           nodes,
           strengths,
           yz;
 
-      if (typeof y !== "function") y = constant$1(y == null ? 0 : +y);
+      if (typeof y !== "function") y = constant(y == null ? 0 : +y);
 
       function force(alpha) {
         for (var i = 0, n = nodes.length, node; i < n; ++i) {
@@ -5171,11 +4961,11 @@ var app = (function () {
       };
 
       force.strength = function(_) {
-        return arguments.length ? (strength = typeof _ === "function" ? _ : constant$1(+_), initialize(), force) : strength;
+        return arguments.length ? (strength = typeof _ === "function" ? _ : constant(+_), initialize(), force) : strength;
       };
 
       force.y = function(_) {
-        return arguments.length ? (y = typeof _ === "function" ? _ : constant$1(+_), initialize(), force) : y;
+        return arguments.length ? (y = typeof _ === "function" ? _ : constant(+_), initialize(), force) : y;
       };
 
       return force;
@@ -7555,153 +7345,106 @@ var app = (function () {
       return linearish(scale);
     }
 
-    function constant(x) {
-      return function constant() {
-        return x;
-      };
-    }
-
-    function array(x) {
-      return typeof x === "object" && "length" in x
-        ? x // Array, TypedArray, NodeList, array-like
-        : Array.from(x); // Map, Set, iterable, string, or anything else
-    }
-
-    function Linear(context) {
-      this._context = context;
-    }
-
-    Linear.prototype = {
-      areaStart: function() {
-        this._line = 0;
-      },
-      areaEnd: function() {
-        this._line = NaN;
-      },
-      lineStart: function() {
-        this._point = 0;
-      },
-      lineEnd: function() {
-        if (this._line || (this._line !== 0 && this._point === 1)) this._context.closePath();
-        this._line = 1 - this._line;
-      },
-      point: function(x, y) {
-        x = +x, y = +y;
-        switch (this._point) {
-          case 0: this._point = 1; this._line ? this._context.lineTo(x, y) : this._context.moveTo(x, y); break;
-          case 1: this._point = 2; // falls through
-          default: this._context.lineTo(x, y); break;
-        }
-      }
-    };
-
-    function curveLinear(context) {
-      return new Linear(context);
-    }
-
-    function x(p) {
-      return p[0];
-    }
-
-    function y(p) {
-      return p[1];
-    }
-
-    function line(x$1, y$1) {
-      var defined = constant(true),
-          context = null,
-          curve = curveLinear,
-          output = null;
-
-      x$1 = typeof x$1 === "function" ? x$1 : (x$1 === undefined) ? x : constant(x$1);
-      y$1 = typeof y$1 === "function" ? y$1 : (y$1 === undefined) ? y : constant(y$1);
-
-      function line(data) {
-        var i,
-            n = (data = array(data)).length,
-            d,
-            defined0 = false,
-            buffer;
-
-        if (context == null) output = curve(buffer = path());
-
-        for (i = 0; i <= n; ++i) {
-          if (!(i < n && defined(d = data[i], i, data)) === defined0) {
-            if (defined0 = !defined0) output.lineStart();
-            else output.lineEnd();
-          }
-          if (defined0) output.point(+x$1(d, i, data), +y$1(d, i, data));
-        }
-
-        if (buffer) return output = null, buffer + "" || null;
-      }
-
-      line.x = function(_) {
-        return arguments.length ? (x$1 = typeof _ === "function" ? _ : constant(+_), line) : x$1;
-      };
-
-      line.y = function(_) {
-        return arguments.length ? (y$1 = typeof _ === "function" ? _ : constant(+_), line) : y$1;
-      };
-
-      line.defined = function(_) {
-        return arguments.length ? (defined = typeof _ === "function" ? _ : constant(!!_), line) : defined;
-      };
-
-      line.curve = function(_) {
-        return arguments.length ? (curve = _, context != null && (output = curve(context)), line) : curve;
-      };
-
-      line.context = function(_) {
-        return arguments.length ? (_ == null ? context = output = null : output = curve(context = _), line) : context;
-      };
-
-      return line;
-    }
-
     /* src/TItle.svelte generated by Svelte v3.46.4 */
 
-    const file$8 = "src/TItle.svelte";
+    const file$d = "src/TItle.svelte";
 
-    function create_fragment$c(ctx) {
+    function create_fragment$e(ctx) {
+    	let section;
     	let div;
     	let h1;
     	let t1;
-    	let h2;
+    	let p0;
+    	let t3;
+    	let article;
+    	let p1;
+    	let t4;
+    	let a0;
+    	let t6;
+    	let a1;
+    	let t8;
+    	let t9;
+    	let p2;
+    	let t11;
+    	let p3;
 
     	const block = {
     		c: function create() {
+    			section = element("section");
     			div = element("div");
     			h1 = element("h1");
-    			h1.textContent = "Paths of Global Migration";
+    			h1.textContent = "Migration is Natural";
     			t1 = space();
-    			h2 = element("h2");
-    			h2.textContent = "Migration is Natural";
-    			add_location(h1, file$8, 5, 2, 29);
-    			add_location(h2, file$8, 6, 2, 66);
-    			attr_dev(div, "class", "svelte-81lfm4");
-    			add_location(div, file$8, 4, 0, 21);
+    			p0 = element("p");
+    			p0.textContent = "By Joli Holmes, Yuriko Schumacher, and Naveen Kumar Cherukuri";
+    			t3 = space();
+    			article = element("article");
+    			p1 = element("p");
+    			t4 = text$1("While ");
+    			a0 = element("a");
+    			a0.textContent = "countries have their own laws to grant citizenship to migrants";
+    			t6 = text$1(", in 2020, more than 85 million people migrated into another country worldwide, according to the ");
+    			a1 = element("a");
+    			a1.textContent = "United Nations Population Devision";
+    			t8 = text$1(".");
+    			t9 = space();
+    			p2 = element("p");
+    			p2.textContent = "On the map below, the butterflies are placed on the 21 subregions in the world, and their sizes reflect the number of people who moved there from another region in 2020.";
+    			t11 = space();
+    			p3 = element("p");
+    			p3.textContent = "Hover over the butterflies to see how many people migrated into the region, and click the butterflies to show the number of migrants by country in the region, as well as to explore various ways to acquire citizeniship in each country.";
+    			attr_dev(h1, "class", "svelte-18hrpm9");
+    			add_location(h1, file$d, 6, 4, 43);
+    			add_location(p0, file$d, 7, 4, 77);
+    			attr_dev(div, "class", "svelte-18hrpm9");
+    			add_location(div, file$d, 5, 2, 33);
+    			attr_dev(a0, "href", "https://cadmus.eui.eu//handle/1814/73190");
+    			attr_dev(a0, "target", "_blank");
+    			add_location(a0, file$d, 13, 12, 199);
+    			attr_dev(a1, "href", "https://www.un.org/development/desa/pd/content/international-migrant-stock");
+    			attr_dev(a1, "target", "_blank");
+    			add_location(a1, file$d, 13, 242, 429);
+    			add_location(p1, file$d, 12, 4, 183);
+    			add_location(p2, file$d, 15, 4, 583);
+    			add_location(p3, file$d, 18, 4, 776);
+    			attr_dev(article, "class", "svelte-18hrpm9");
+    			add_location(article, file$d, 11, 2, 169);
+    			attr_dev(section, "class", "svelte-18hrpm9");
+    			add_location(section, file$d, 4, 0, 21);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, div, anchor);
+    			insert_dev(target, section, anchor);
+    			append_dev(section, div);
     			append_dev(div, h1);
     			append_dev(div, t1);
-    			append_dev(div, h2);
+    			append_dev(div, p0);
+    			append_dev(section, t3);
+    			append_dev(section, article);
+    			append_dev(article, p1);
+    			append_dev(p1, t4);
+    			append_dev(p1, a0);
+    			append_dev(p1, t6);
+    			append_dev(p1, a1);
+    			append_dev(p1, t8);
+    			append_dev(article, t9);
+    			append_dev(article, p2);
+    			append_dev(article, t11);
+    			append_dev(article, p3);
     		},
     		p: noop$2,
     		i: noop$2,
     		o: noop$2,
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(div);
+    			if (detaching) detach_dev(section);
     		}
     	};
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_fragment$c.name,
+    		id: create_fragment$e.name,
     		type: "component",
     		source: "",
     		ctx
@@ -7710,7 +7453,7 @@ var app = (function () {
     	return block;
     }
 
-    function instance$c($$self, $$props) {
+    function instance$e($$self, $$props) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('TItle', slots, []);
     	const writable_props = [];
@@ -7725,22 +7468,465 @@ var app = (function () {
     class TItle extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init$1(this, options, instance$c, create_fragment$c, safe_not_equal, {});
+    		init$1(this, options, instance$e, create_fragment$e, safe_not_equal, {});
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
     			tagName: "TItle",
     			options,
-    			id: create_fragment$c.name
+    			id: create_fragment$e.name
     		});
+    	}
+    }
+
+    const regions = [
+      {
+        name: "Polynesia",
+        shape: 0,
+        color: "#5C800B",
+        colorLight: "#ADC085",
+        code: "957",
+      },
+      {
+        name: "Melanesia",
+        shape: 0,
+        color: "#5C800B",
+        colorLight: "#ADC085",
+        code: "928",
+      },
+      {
+        name: "Southern Africa",
+        shape: 0,
+        color: "#E08F56",
+        colorLight: "#F0C7AB",
+        code: "913",
+      },
+      {
+        name: "Central America",
+        shape: 0,
+        color: "#AF70A5",
+        colorLight: "#D7B7D2",
+        code: "916",
+      },
+      {
+        name: "Caribbean",
+        shape: 0,
+        color: "#AF70A5",
+        colorLight: "#D7B7D2",
+        code: "915",
+      },
+      {
+        name: "Middle Africa",
+        shape: 0,
+        color: "#E08F56",
+        colorLight: "#F0C7AB",
+        code: "911",
+      },
+      {
+        name: "Northern Africa",
+        shape: 0,
+        color: "#E08F56",
+        colorLight: "#F0C7AB",
+        code: "912",
+      },
+      {
+        name: "South America",
+        shape: 0,
+        color: "#AF70A5",
+        colorLight: "#D7B7D2",
+        code: "931",
+      },
+      {
+        name: "Eastern Africa",
+        shape: 0,
+        color: "#E08F56",
+        colorLight: "#F0C7AB",
+        code: "910",
+      },
+      {
+        name: "Western Africa",
+        shape: 0,
+        color: "#E08F56",
+        colorLight: "#F0C7AB",
+        code: "914",
+      },
+      {
+        name: "South-eastern Asia",
+        shape: 1,
+        color: "#F6CC52",
+        colorLight: "#FAE5A8",
+        code: "920",
+      },
+      {
+        name: "Eastern Asia",
+        shape: 1,
+        color: "#F6CC52",
+        colorLight: "#FAE5A8",
+        code: "906",
+      },
+      {
+        name: "Central Asia",
+        shape: 1,
+        color: "#F6CC52",
+        colorLight: "#FAE5A8",
+        code: "5500",
+      },
+      {
+        name: "Southern Europe",
+        shape: 1,
+        color: "#78B2EB",
+        colorLight: "#BBD8F5",
+        code: "925",
+      },
+      {
+        name: "Northern Europe",
+        shape: 1,
+        color: "#78B2EB",
+        colorLight: "#BBD8F5",
+        code: "924",
+      },
+      {
+        name: "Australia and New Zealand",
+        shape: 0,
+        color: "#5C800B",
+        colorLight: "#ADC085",
+        code: "927",
+      },
+      {
+        name: "Western Asia",
+        shape: 1,
+        color: "#F6CC52",
+        colorLight: "#FAE5A8",
+        code: "922",
+      },
+      {
+        name: "Southern Asia",
+        shape: 1,
+        color: "#F6CC52",
+        colorLight: "#FAE5A8",
+        code: "5501",
+      },
+      {
+        name: "Western Europe",
+        shape: 1,
+        color: "#78B2EB",
+        colorLight: "#BBD8F5",
+        code: "926",
+      },
+      {
+        name: "Eastern Europe",
+        shape: 1,
+        color: "#78B2EB",
+        colorLight: "#BBD8F5",
+        code: "923",
+      },
+      {
+        name: "Northern America",
+        shape: 0,
+        color: "#AF70A5",
+        colorLight: "#D7B7D2",
+        code: "905",
+      },
+    ];
+
+    /* src/MapExplainer.svelte generated by Svelte v3.46.4 */
+    const file$c = "src/MapExplainer.svelte";
+
+    // (29:2) {:else}
+    function create_else_block$3(ctx) {
+    	let p0;
+    	let t0;
+    	let span0;
+    	let t1_value = /*formatValue*/ ctx[3](/*hoveredRegionData*/ ctx[2].value) + "";
+    	let t1;
+    	let t2;
+    	let span1;
+    	let t3;
+    	let t4;
+    	let t5;
+    	let p1;
+
+    	const block = {
+    		c: function create() {
+    			p0 = element("p");
+    			t0 = text$1("In 2020, ");
+    			span0 = element("span");
+    			t1 = text$1(t1_value);
+    			t2 = text$1(" people migrated into ");
+    			span1 = element("span");
+    			t3 = text$1(/*hoveredRegion*/ ctx[1]);
+    			t4 = text$1(".");
+    			t5 = space();
+    			p1 = element("p");
+    			p1.textContent = "Click to show details on countries in the region.";
+    			set_style(span0, "text-decoration", "underline solid " + /*hoveredRegionData*/ ctx[2].color + " 5px");
+    			set_style(span0, "text-underline-offset", "2px");
+    			attr_dev(span0, "class", "svelte-167j5ss");
+    			add_location(span0, file$c, 30, 15, 971);
+    			attr_dev(span1, "class", "highlight svelte-167j5ss");
+    			set_style(span1, "background-color", /*hoveredRegionData*/ ctx[2].color);
+    			add_location(span1, file$c, 30, 187, 1143);
+    			add_location(p0, file$c, 29, 4, 952);
+    			attr_dev(p1, "class", "user-signifier");
+    			add_location(p1, file$c, 32, 4, 1256);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, p0, anchor);
+    			append_dev(p0, t0);
+    			append_dev(p0, span0);
+    			append_dev(span0, t1);
+    			append_dev(p0, t2);
+    			append_dev(p0, span1);
+    			append_dev(span1, t3);
+    			append_dev(p0, t4);
+    			insert_dev(target, t5, anchor);
+    			insert_dev(target, p1, anchor);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*hoveredRegionData*/ 4 && t1_value !== (t1_value = /*formatValue*/ ctx[3](/*hoveredRegionData*/ ctx[2].value) + "")) set_data_dev(t1, t1_value);
+
+    			if (dirty & /*hoveredRegionData*/ 4) {
+    				set_style(span0, "text-decoration", "underline solid " + /*hoveredRegionData*/ ctx[2].color + " 5px");
+    			}
+
+    			if (dirty & /*hoveredRegion*/ 2) set_data_dev(t3, /*hoveredRegion*/ ctx[1]);
+
+    			if (dirty & /*hoveredRegionData*/ 4) {
+    				set_style(span1, "background-color", /*hoveredRegionData*/ ctx[2].color);
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(p0);
+    			if (detaching) detach_dev(t5);
+    			if (detaching) detach_dev(p1);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_else_block$3.name,
+    		type: "else",
+    		source: "(29:2) {:else}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (22:2) {#if hoveredRegionCode == ""}
+    function create_if_block$6(ctx) {
+    	let p0;
+    	let t1;
+    	let p1;
+    	let t2;
+    	let br0;
+    	let br1;
+
+    	const block = {
+    		c: function create() {
+    			p0 = element("p");
+    			p0.textContent = "Hover over the butterflies.";
+    			t1 = space();
+    			p1 = element("p");
+    			t2 = text$1("Hover over the butterflies to see how many people migrated into the region in 2020.");
+    			br0 = element("br");
+    			br1 = element("br");
+    			set_style(p0, "color", "white");
+    			add_location(p0, file$c, 22, 4, 731);
+    			add_location(br0, file$c, 26, 89, 920);
+    			add_location(br1, file$c, 26, 93, 924);
+    			attr_dev(p1, "class", "user-signifier");
+    			add_location(p1, file$c, 25, 4, 804);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, p0, anchor);
+    			insert_dev(target, t1, anchor);
+    			insert_dev(target, p1, anchor);
+    			append_dev(p1, t2);
+    			append_dev(p1, br0);
+    			append_dev(p1, br1);
+    		},
+    		p: noop$2,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(p0);
+    			if (detaching) detach_dev(t1);
+    			if (detaching) detach_dev(p1);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block$6.name,
+    		type: "if",
+    		source: "(22:2) {#if hoveredRegionCode == \\\"\\\"}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function create_fragment$d(ctx) {
+    	let div;
+
+    	function select_block_type(ctx, dirty) {
+    		if (/*hoveredRegionCode*/ ctx[0] == "") return create_if_block$6;
+    		return create_else_block$3;
+    	}
+
+    	let current_block_type = select_block_type(ctx);
+    	let if_block = current_block_type(ctx);
+
+    	const block = {
+    		c: function create() {
+    			div = element("div");
+    			if_block.c();
+    			attr_dev(div, "class", "svelte-167j5ss");
+    			add_location(div, file$c, 20, 0, 689);
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div, anchor);
+    			if_block.m(div, null);
+    		},
+    		p: function update(ctx, [dirty]) {
+    			if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block) {
+    				if_block.p(ctx, dirty);
+    			} else {
+    				if_block.d(1);
+    				if_block = current_block_type(ctx);
+
+    				if (if_block) {
+    					if_block.c();
+    					if_block.m(div, null);
+    				}
+    			}
+    		},
+    		i: noop$2,
+    		o: noop$2,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div);
+    			if_block.d();
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_fragment$d.name,
+    		type: "component",
+    		source: "",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function instance$d($$self, $$props, $$invalidate) {
+    	let { $$slots: slots = {}, $$scope } = $$props;
+    	validate_slots('MapExplainer', slots, []);
+    	let { hoveredRegionCode } = $$props;
+    	let { data } = $$props;
+    	const formatValue = format(",");
+    	let hoveredRegionData, hoveredRegion;
+    	const writable_props = ['hoveredRegionCode', 'data'];
+
+    	Object.keys($$props).forEach(key => {
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<MapExplainer> was created with unknown prop '${key}'`);
+    	});
+
+    	$$self.$$set = $$props => {
+    		if ('hoveredRegionCode' in $$props) $$invalidate(0, hoveredRegionCode = $$props.hoveredRegionCode);
+    		if ('data' in $$props) $$invalidate(4, data = $$props.data);
+    	};
+
+    	$$self.$capture_state = () => ({
+    		format,
+    		regions,
+    		hoveredRegionCode,
+    		data,
+    		formatValue,
+    		hoveredRegionData,
+    		hoveredRegion
+    	});
+
+    	$$self.$inject_state = $$props => {
+    		if ('hoveredRegionCode' in $$props) $$invalidate(0, hoveredRegionCode = $$props.hoveredRegionCode);
+    		if ('data' in $$props) $$invalidate(4, data = $$props.data);
+    		if ('hoveredRegionData' in $$props) $$invalidate(2, hoveredRegionData = $$props.hoveredRegionData);
+    		if ('hoveredRegion' in $$props) $$invalidate(1, hoveredRegion = $$props.hoveredRegion);
+    	};
+
+    	if ($$props && "$$inject" in $$props) {
+    		$$self.$inject_state($$props.$$inject);
+    	}
+
+    	$$self.$$.update = () => {
+    		if ($$self.$$.dirty & /*hoveredRegionCode, hoveredRegion, data*/ 19) {
+    			if (hoveredRegionCode !== "") {
+    				$$invalidate(1, hoveredRegion = regions.filter(d => d.code == hoveredRegionCode)[0]);
+    				$$invalidate(1, hoveredRegion = hoveredRegion.name);
+    				let hoveredRegionValue = data.features.filter(d => d.properties.SUBREGION == hoveredRegion);
+    				hoveredRegionValue = hoveredRegionValue[0].properties.VALUE;
+    				let hoveredRegionColor = regions.filter(d => d.name == hoveredRegion)[0].color;
+
+    				$$invalidate(2, hoveredRegionData = {
+    					value: hoveredRegionValue,
+    					color: hoveredRegionColor
+    				});
+    			}
+    		}
+    	};
+
+    	return [hoveredRegionCode, hoveredRegion, hoveredRegionData, formatValue, data];
+    }
+
+    class MapExplainer extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+    		init$1(this, options, instance$d, create_fragment$d, safe_not_equal, { hoveredRegionCode: 0, data: 4 });
+
+    		dispatch_dev("SvelteRegisterComponent", {
+    			component: this,
+    			tagName: "MapExplainer",
+    			options,
+    			id: create_fragment$d.name
+    		});
+
+    		const { ctx } = this.$$;
+    		const props = options.props || {};
+
+    		if (/*hoveredRegionCode*/ ctx[0] === undefined && !('hoveredRegionCode' in props)) {
+    			console.warn("<MapExplainer> was created without expected prop 'hoveredRegionCode'");
+    		}
+
+    		if (/*data*/ ctx[4] === undefined && !('data' in props)) {
+    			console.warn("<MapExplainer> was created without expected prop 'data'");
+    		}
+    	}
+
+    	get hoveredRegionCode() {
+    		throw new Error("<MapExplainer>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set hoveredRegionCode(value) {
+    		throw new Error("<MapExplainer>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get data() {
+    		throw new Error("<MapExplainer>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set data(value) {
+    		throw new Error("<MapExplainer>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
     }
 
     /* src/MapPath.svelte generated by Svelte v3.46.4 */
 
-    const file$7 = "src/MapPath.svelte";
+    const file$b = "src/MapPath.svelte";
 
-    function create_fragment$b(ctx) {
+    function create_fragment$c(ctx) {
     	let g;
     	let path_1;
     	let path_1_d_value;
@@ -7752,9 +7938,9 @@ var app = (function () {
     			attr_dev(path_1, "d", path_1_d_value = /*path*/ ctx[1](/*data*/ ctx[0].features[0]));
     			attr_dev(path_1, "fill", "#eeeeee");
     			attr_dev(path_1, "stroke-width", "0");
-    			add_location(path_1, file$7, 6, 2, 81);
+    			add_location(path_1, file$b, 6, 2, 81);
     			attr_dev(g, "class", "map-path");
-    			add_location(g, file$7, 5, 0, 58);
+    			add_location(g, file$b, 5, 0, 58);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -7777,7 +7963,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_fragment$b.name,
+    		id: create_fragment$c.name,
     		type: "component",
     		source: "",
     		ctx
@@ -7786,7 +7972,7 @@ var app = (function () {
     	return block;
     }
 
-    function instance$b($$self, $$props, $$invalidate) {
+    function instance$c($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('MapPath', slots, []);
     	let { data } = $$props;
@@ -7819,13 +8005,13 @@ var app = (function () {
     class MapPath extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init$1(this, options, instance$b, create_fragment$b, safe_not_equal, { data: 0, path: 1 });
+    		init$1(this, options, instance$c, create_fragment$c, safe_not_equal, { data: 0, path: 1 });
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
     			tagName: "MapPath",
     			options,
-    			id: create_fragment$b.name
+    			id: create_fragment$c.name
     		});
 
     		const { ctx } = this.$$;
@@ -8032,48 +8218,414 @@ var app = (function () {
         tick: tick
     });
 
-    const regions = [
-      { name: "Polynesia", shape: 0, color: "#676767", code: "957" },
-      { name: "Melanesia", shape: 0, color: "#5A20A3", code: "928" },
-      { name: "Southern Africa", shape: 0, color: "#E08F56", code: "913" },
-      { name: "Central America", shape: 0, color: "#B6050F", code: "916" },
-      { name: "Caribbean", shape: 0, color: "#B6050F", code: "915" },
-      { name: "Middle Africa", shape: 0, color: "#E08F56", code: "911" },
-      { name: "Northern Africa", shape: 0, color: "#E08F56", code: "912" },
-      { name: "South America", shape: 0, color: "#AF70A5", code: "931" },
-      { name: "Eastern Africa", shape: 0, color: "#E08F56", code: "910" },
-      { name: "Western Africa", shape: 0, color: "#E08F56", code: "914" },
-      { name: "South-eastern Asia", shape: 1, color: "#F6CC52", code: "920" },
-      { name: "Eastern Asia", shape: 1, color: "#F6CC52", code: "906" },
-      { name: "Central Asia", shape: 1, color: "#F6CC52", code: "5500" },
-      { name: "Southern Europe", shape: 1, color: "#78B2EB", code: "925" },
-      { name: "Northern Europe", shape: 1, color: "#78B2EB", code: "924" },
-      { name: "Australia and New Zealand", shape: 0, color: "#AFD164", code: "927" },
-      { name: "Western Asia", shape: 1, color: "#F6CC52", code: "922" },
-      { name: "Southern Asia", shape: 1, color: "#F6CC52", code: "5501" },
-      { name: "Western Europe", shape: 1, color: "#78B2EB", code: "926" },
-      { name: "Eastern Europe", shape: 1, color: "#78B2EB", code: "923" },
-      { name: "Northern America", shape: 0, color: "#AF70A5", code: "905" },
-    ];
+    /* src/CountryCardExplainer.svelte generated by Svelte v3.46.4 */
+    const file$a = "src/CountryCardExplainer.svelte";
+
+    // (32:2) {:else}
+    function create_else_block_1(ctx) {
+    	let p;
+
+    	const block = {
+    		c: function create() {
+    			p = element("p");
+    			p.textContent = "Hover over the country.";
+    			set_style(p, "color", "white");
+    			set_style(p, "padding-top", "10px");
+    			attr_dev(p, "class", "svelte-yhjukw");
+    			add_location(p, file$a, 32, 4, 1191);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, p, anchor);
+    		},
+    		p: noop$2,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(p);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_else_block_1.name,
+    		type: "else",
+    		source: "(32:2) {:else}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (22:2) {#if hoveredCountry !== ""}
+    function create_if_block$5(ctx) {
+    	let if_block_anchor;
+
+    	function select_block_type_1(ctx, dirty) {
+    		if (/*hoveredCountry*/ ctx[1] == "Taiwan" | /*hoveredCountry*/ ctx[1] == "Kosovo") return create_if_block_1$3;
+    		return create_else_block$2;
+    	}
+
+    	let current_block_type = select_block_type_1(ctx);
+    	let if_block = current_block_type(ctx);
+
+    	const block = {
+    		c: function create() {
+    			if_block.c();
+    			if_block_anchor = empty$1();
+    		},
+    		m: function mount(target, anchor) {
+    			if_block.m(target, anchor);
+    			insert_dev(target, if_block_anchor, anchor);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (current_block_type === (current_block_type = select_block_type_1(ctx)) && if_block) {
+    				if_block.p(ctx, dirty);
+    			} else {
+    				if_block.d(1);
+    				if_block = current_block_type(ctx);
+
+    				if (if_block) {
+    					if_block.c();
+    					if_block.m(if_block_anchor.parentNode, if_block_anchor);
+    				}
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if_block.d(detaching);
+    			if (detaching) detach_dev(if_block_anchor);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block$5.name,
+    		type: "if",
+    		source: "(22:2) {#if hoveredCountry !== \\\"\\\"}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (27:4) {:else}
+    function create_else_block$2(ctx) {
+    	let p;
+    	let span0;
+    	let t0;
+    	let t1;
+    	let span1;
+    	let t2_value = /*formatValue*/ ctx[3](/*countryValue*/ ctx[2]) + "";
+    	let t2;
+    	let t3;
+
+    	const block = {
+    		c: function create() {
+    			p = element("p");
+    			span0 = element("span");
+    			t0 = text$1(/*hoveredCountry*/ ctx[1]);
+    			t1 = text$1(" had a total of ");
+    			span1 = element("span");
+    			t2 = text$1(t2_value);
+    			t3 = text$1(" migrants in 2020.");
+    			set_style(span0, "text-decoration", "underline solid " + /*regionData*/ ctx[0].color + " 5px");
+    			set_style(span0, "text-underline-offset", "2px");
+    			attr_dev(span0, "class", "svelte-yhjukw");
+    			add_location(span0, file$a, 28, 8, 868);
+    			set_style(span1, "text-decoration", "underline solid " + /*regionData*/ ctx[0].color + " 5px");
+    			set_style(span1, "text-underline-offset", "2px");
+    			attr_dev(span1, "class", "svelte-yhjukw");
+    			add_location(span1, file$a, 28, 145, 1005);
+    			set_style(p, "padding-top", "10px");
+    			attr_dev(p, "class", "svelte-yhjukw");
+    			add_location(p, file$a, 27, 6, 829);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, p, anchor);
+    			append_dev(p, span0);
+    			append_dev(span0, t0);
+    			append_dev(p, t1);
+    			append_dev(p, span1);
+    			append_dev(span1, t2);
+    			append_dev(p, t3);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*hoveredCountry*/ 2) set_data_dev(t0, /*hoveredCountry*/ ctx[1]);
+
+    			if (dirty & /*regionData*/ 1) {
+    				set_style(span0, "text-decoration", "underline solid " + /*regionData*/ ctx[0].color + " 5px");
+    			}
+
+    			if (dirty & /*countryValue*/ 4 && t2_value !== (t2_value = /*formatValue*/ ctx[3](/*countryValue*/ ctx[2]) + "")) set_data_dev(t2, t2_value);
+
+    			if (dirty & /*regionData*/ 1) {
+    				set_style(span1, "text-decoration", "underline solid " + /*regionData*/ ctx[0].color + " 5px");
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(p);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_else_block$2.name,
+    		type: "else",
+    		source: "(27:4) {:else}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (23:4) {#if hoveredCountry == "Taiwan" | hoveredCountry == "Kosovo"}
+    function create_if_block_1$3(ctx) {
+    	let p;
+    	let t0;
+    	let span;
+    	let t1;
+    	let t2;
+
+    	const block = {
+    		c: function create() {
+    			p = element("p");
+    			t0 = text$1("The data is missing about the number of migrants in ");
+    			span = element("span");
+    			t1 = text$1(/*hoveredCountry*/ ctx[1]);
+    			t2 = text$1(".");
+    			set_style(span, "text-decoration", "underline solid " + /*regionData*/ ctx[0].color + " 5px");
+    			set_style(span, "text-underline-offset", "2px");
+    			attr_dev(span, "class", "svelte-yhjukw");
+    			add_location(span, file$a, 24, 60, 677);
+    			set_style(p, "padding-top", "10px");
+    			attr_dev(p, "class", "svelte-yhjukw");
+    			add_location(p, file$a, 23, 6, 586);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, p, anchor);
+    			append_dev(p, t0);
+    			append_dev(p, span);
+    			append_dev(span, t1);
+    			append_dev(p, t2);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*hoveredCountry*/ 2) set_data_dev(t1, /*hoveredCountry*/ ctx[1]);
+
+    			if (dirty & /*regionData*/ 1) {
+    				set_style(span, "text-decoration", "underline solid " + /*regionData*/ ctx[0].color + " 5px");
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(p);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_1$3.name,
+    		type: "if",
+    		source: "(23:4) {#if hoveredCountry == \\\"Taiwan\\\" | hoveredCountry == \\\"Kosovo\\\"}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function create_fragment$b(ctx) {
+    	let div;
+    	let p;
+    	let t1;
+
+    	function select_block_type(ctx, dirty) {
+    		if (/*hoveredCountry*/ ctx[1] !== "") return create_if_block$5;
+    		return create_else_block_1;
+    	}
+
+    	let current_block_type = select_block_type(ctx);
+    	let if_block = current_block_type(ctx);
+
+    	const block = {
+    		c: function create() {
+    			div = element("div");
+    			p = element("p");
+    			p.textContent = "Select a country to show various ways you can aquire citizenship.";
+    			t1 = space();
+    			if_block.c();
+    			attr_dev(p, "class", "user-signifier svelte-yhjukw");
+    			set_style(p, "padding-top", "10px");
+    			add_location(p, file$a, 18, 2, 353);
+    			attr_dev(div, "class", "svelte-yhjukw");
+    			add_location(div, file$a, 17, 0, 345);
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div, anchor);
+    			append_dev(div, p);
+    			append_dev(div, t1);
+    			if_block.m(div, null);
+    		},
+    		p: function update(ctx, [dirty]) {
+    			if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block) {
+    				if_block.p(ctx, dirty);
+    			} else {
+    				if_block.d(1);
+    				if_block = current_block_type(ctx);
+
+    				if (if_block) {
+    					if_block.c();
+    					if_block.m(div, null);
+    				}
+    			}
+    		},
+    		i: noop$2,
+    		o: noop$2,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div);
+    			if_block.d();
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_fragment$b.name,
+    		type: "component",
+    		source: "",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function instance$b($$self, $$props, $$invalidate) {
+    	let { $$slots: slots = {}, $$scope } = $$props;
+    	validate_slots('CountryCardExplainer', slots, []);
+    	let { regionData } = $$props;
+    	let { countryData } = $$props;
+    	let { hoveredCountry } = $$props;
+    	let countryValue;
+    	const formatValue = format(",");
+    	const writable_props = ['regionData', 'countryData', 'hoveredCountry'];
+
+    	Object.keys($$props).forEach(key => {
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<CountryCardExplainer> was created with unknown prop '${key}'`);
+    	});
+
+    	$$self.$$set = $$props => {
+    		if ('regionData' in $$props) $$invalidate(0, regionData = $$props.regionData);
+    		if ('countryData' in $$props) $$invalidate(4, countryData = $$props.countryData);
+    		if ('hoveredCountry' in $$props) $$invalidate(1, hoveredCountry = $$props.hoveredCountry);
+    	};
+
+    	$$self.$capture_state = () => ({
+    		format,
+    		regionData,
+    		countryData,
+    		hoveredCountry,
+    		countryValue,
+    		formatValue
+    	});
+
+    	$$self.$inject_state = $$props => {
+    		if ('regionData' in $$props) $$invalidate(0, regionData = $$props.regionData);
+    		if ('countryData' in $$props) $$invalidate(4, countryData = $$props.countryData);
+    		if ('hoveredCountry' in $$props) $$invalidate(1, hoveredCountry = $$props.hoveredCountry);
+    		if ('countryValue' in $$props) $$invalidate(2, countryValue = $$props.countryValue);
+    	};
+
+    	if ($$props && "$$inject" in $$props) {
+    		$$self.$inject_state($$props.$$inject);
+    	}
+
+    	$$self.$$.update = () => {
+    		if ($$self.$$.dirty & /*hoveredCountry, countryData, countryValue*/ 22) {
+    			if (hoveredCountry !== "") {
+    				$$invalidate(2, countryValue = countryData.filter(d => d.country == hoveredCountry));
+    				$$invalidate(2, countryValue = countryValue[0].value);
+    			}
+    		}
+    	};
+
+    	return [regionData, hoveredCountry, countryValue, formatValue, countryData];
+    }
+
+    class CountryCardExplainer extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+
+    		init$1(this, options, instance$b, create_fragment$b, safe_not_equal, {
+    			regionData: 0,
+    			countryData: 4,
+    			hoveredCountry: 1
+    		});
+
+    		dispatch_dev("SvelteRegisterComponent", {
+    			component: this,
+    			tagName: "CountryCardExplainer",
+    			options,
+    			id: create_fragment$b.name
+    		});
+
+    		const { ctx } = this.$$;
+    		const props = options.props || {};
+
+    		if (/*regionData*/ ctx[0] === undefined && !('regionData' in props)) {
+    			console.warn("<CountryCardExplainer> was created without expected prop 'regionData'");
+    		}
+
+    		if (/*countryData*/ ctx[4] === undefined && !('countryData' in props)) {
+    			console.warn("<CountryCardExplainer> was created without expected prop 'countryData'");
+    		}
+
+    		if (/*hoveredCountry*/ ctx[1] === undefined && !('hoveredCountry' in props)) {
+    			console.warn("<CountryCardExplainer> was created without expected prop 'hoveredCountry'");
+    		}
+    	}
+
+    	get regionData() {
+    		throw new Error("<CountryCardExplainer>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set regionData(value) {
+    		throw new Error("<CountryCardExplainer>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get countryData() {
+    		throw new Error("<CountryCardExplainer>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set countryData(value) {
+    		throw new Error("<CountryCardExplainer>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get hoveredCountry() {
+    		throw new Error("<CountryCardExplainer>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set hoveredCountry(value) {
+    		throw new Error("<CountryCardExplainer>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+    }
 
     /* src/CountryCards.svelte generated by Svelte v3.46.4 */
-    const file$6 = "src/CountryCards.svelte";
+    const file$9 = "src/CountryCards.svelte";
 
-    function get_each_context$1(ctx, list, i) {
+    function get_each_context$2(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[9] = list[i];
+    	child_ctx[10] = list[i].value;
+    	child_ctx[11] = list[i].country;
+    	child_ctx[12] = list[i].xOffset;
+    	child_ctx[13] = list[i].yOffset;
     	return child_ctx;
     }
 
-    // (62:2) {#if selectedRegion !== ""}
+    // (68:2) {#if selectedRegion !== ""}
     function create_if_block$4(ctx) {
     	let each_1_anchor;
-    	let each_value = /*selectedRegionD*/ ctx[1];
+    	let each_value = /*data*/ ctx[1];
     	validate_each_argument(each_value);
     	let each_blocks = [];
 
     	for (let i = 0; i < each_value.length; i += 1) {
-    		each_blocks[i] = create_each_block$1(get_each_context$1(ctx, each_value, i));
+    		each_blocks[i] = create_each_block$2(get_each_context$2(ctx, each_value, i));
     	}
 
     	const block = {
@@ -8092,18 +8644,18 @@ var app = (function () {
     			insert_dev(target, each_1_anchor, anchor);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*handleMouseOver, handleMouseLeave, handleClick, selectedRegionD, selectedRegionInfo*/ 62) {
-    				each_value = /*selectedRegionD*/ ctx[1];
+    			if (dirty & /*handleMouseOver, handleMouseLeave, handleClick, data, sizeScale, color*/ 126) {
+    				each_value = /*data*/ ctx[1];
     				validate_each_argument(each_value);
     				let i;
 
     				for (i = 0; i < each_value.length; i += 1) {
-    					const child_ctx = get_each_context$1(ctx, each_value, i);
+    					const child_ctx = get_each_context$2(ctx, each_value, i);
 
     					if (each_blocks[i]) {
     						each_blocks[i].p(child_ctx, dirty);
     					} else {
-    						each_blocks[i] = create_each_block$1(child_ctx);
+    						each_blocks[i] = create_each_block$2(child_ctx);
     						each_blocks[i].c();
     						each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
     					}
@@ -8126,28 +8678,25 @@ var app = (function () {
     		block,
     		id: create_if_block$4.name,
     		type: "if",
-    		source: "(62:2) {#if selectedRegion !== \\\"\\\"}",
+    		source: "(68:2) {#if selectedRegion !== \\\"\\\"}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (63:4) {#each selectedRegionD as d}
-    function create_each_block$1(ctx) {
+    // (69:4) {#each data as { value, country, xOffset, yOffset }}
+    function create_each_block$2(ctx) {
     	let div2;
     	let div0;
     	let svg;
     	let use;
     	let use_transform_value;
-    	let use_xlink_href_value;
-    	let use_stroke_value;
-    	let use_fill_value;
+    	let use_data_value_value;
     	let use_data_country_value;
-    	let use_data_color_value;
     	let t0;
     	let div1;
-    	let t1_value = /*d*/ ctx[9].country + "";
+    	let t1_value = /*country*/ ctx[11] + "";
     	let t1;
     	let t2;
     	let mounted;
@@ -8163,25 +8712,26 @@ var app = (function () {
     			div1 = element("div");
     			t1 = text$1(t1_value);
     			t2 = space();
-    			attr_dev(use, "transform", use_transform_value = "translate(" + (/*selectedRegionInfo*/ ctx[2].shape == 0 ? 4.5 : 1.5) + ", " + (/*selectedRegionInfo*/ ctx[2].shape == 0 ? 13 : 6.5) + ")");
-    			xlink_attr(use, "xlink:href", use_xlink_href_value = "#butterfly-" + /*selectedRegionInfo*/ ctx[2].shape);
-    			attr_dev(use, "stroke", use_stroke_value = /*selectedRegionInfo*/ ctx[2].color);
+    			attr_dev(use, "transform", use_transform_value = "translate(" + /*xOffset*/ ctx[12] + ", " + /*yOffset*/ ctx[13] + ") scale(" + /*sizeScale*/ ctx[3](/*value*/ ctx[10]) + ", " + /*sizeScale*/ ctx[3](/*value*/ ctx[10]) + ")");
+    			xlink_attr(use, "xlink:href", "#butterfly-0");
+    			attr_dev(use, "stroke", /*color*/ ctx[2]);
     			attr_dev(use, "stroke-width", "1");
-    			attr_dev(use, "fill", use_fill_value = /*selectedRegionInfo*/ ctx[2].color);
-    			attr_dev(use, "data-country", use_data_country_value = /*d*/ ctx[9].country);
-    			attr_dev(use, "data-color", use_data_color_value = /*selectedRegionInfo*/ ctx[2].color);
-    			add_location(use, file$6, 73, 12, 2405);
+    			attr_dev(use, "fill", /*color*/ ctx[2]);
+    			attr_dev(use, "data-value", use_data_value_value = /*value*/ ctx[10]);
+    			attr_dev(use, "data-country", use_data_country_value = /*country*/ ctx[11]);
+    			attr_dev(use, "data-color", /*color*/ ctx[2]);
+    			add_location(use, file$9, 79, 12, 2683);
     			attr_dev(svg, "width", "100");
     			attr_dev(svg, "height", "100");
-    			add_location(svg, file$6, 72, 10, 2366);
+    			add_location(svg, file$9, 78, 10, 2644);
     			attr_dev(div0, "class", "country-card__butterfly");
-    			add_location(div0, file$6, 71, 8, 2318);
-    			attr_dev(div1, "class", "country-card__country-name");
-    			set_style(div1, "color", "black");
-    			add_location(div1, file$6, 84, 8, 2877);
-    			attr_dev(div2, "class", "country-card svelte-f9fvk4");
+    			add_location(div0, file$9, 77, 8, 2596);
+    			attr_dev(div1, "class", "country-card__country-name svelte-rb287c");
+    			set_style(div1, "color", "#222222");
+    			add_location(div1, file$9, 91, 8, 3085);
+    			attr_dev(div2, "class", "country-card svelte-rb287c");
     			set_style(div2, "background", "white");
-    			add_location(div2, file$6, 64, 6, 2125);
+    			add_location(div2, file$9, 70, 6, 2403);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div2, anchor);
@@ -8195,40 +8745,40 @@ var app = (function () {
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(div2, "mouseover", /*handleMouseOver*/ ctx[3], false, false, false),
-    					listen_dev(div2, "mouseout", /*handleMouseLeave*/ ctx[4], false, false, false),
-    					listen_dev(div2, "click", /*handleClick*/ ctx[5], false, false, false)
+    					listen_dev(div2, "mouseover", /*handleMouseOver*/ ctx[4], false, false, false),
+    					listen_dev(div2, "mouseout", /*handleMouseLeave*/ ctx[5], false, false, false),
+    					listen_dev(div2, "click", /*handleClick*/ ctx[6], false, false, false)
     				];
 
     				mounted = true;
     			}
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*selectedRegionInfo*/ 4 && use_transform_value !== (use_transform_value = "translate(" + (/*selectedRegionInfo*/ ctx[2].shape == 0 ? 4.5 : 1.5) + ", " + (/*selectedRegionInfo*/ ctx[2].shape == 0 ? 13 : 6.5) + ")")) {
+    			if (dirty & /*data*/ 2 && use_transform_value !== (use_transform_value = "translate(" + /*xOffset*/ ctx[12] + ", " + /*yOffset*/ ctx[13] + ") scale(" + /*sizeScale*/ ctx[3](/*value*/ ctx[10]) + ", " + /*sizeScale*/ ctx[3](/*value*/ ctx[10]) + ")")) {
     				attr_dev(use, "transform", use_transform_value);
     			}
 
-    			if (dirty & /*selectedRegionInfo*/ 4 && use_xlink_href_value !== (use_xlink_href_value = "#butterfly-" + /*selectedRegionInfo*/ ctx[2].shape)) {
-    				xlink_attr(use, "xlink:href", use_xlink_href_value);
+    			if (dirty & /*color*/ 4) {
+    				attr_dev(use, "stroke", /*color*/ ctx[2]);
     			}
 
-    			if (dirty & /*selectedRegionInfo*/ 4 && use_stroke_value !== (use_stroke_value = /*selectedRegionInfo*/ ctx[2].color)) {
-    				attr_dev(use, "stroke", use_stroke_value);
+    			if (dirty & /*color*/ 4) {
+    				attr_dev(use, "fill", /*color*/ ctx[2]);
     			}
 
-    			if (dirty & /*selectedRegionInfo*/ 4 && use_fill_value !== (use_fill_value = /*selectedRegionInfo*/ ctx[2].color)) {
-    				attr_dev(use, "fill", use_fill_value);
+    			if (dirty & /*data*/ 2 && use_data_value_value !== (use_data_value_value = /*value*/ ctx[10])) {
+    				attr_dev(use, "data-value", use_data_value_value);
     			}
 
-    			if (dirty & /*selectedRegionD*/ 2 && use_data_country_value !== (use_data_country_value = /*d*/ ctx[9].country)) {
+    			if (dirty & /*data*/ 2 && use_data_country_value !== (use_data_country_value = /*country*/ ctx[11])) {
     				attr_dev(use, "data-country", use_data_country_value);
     			}
 
-    			if (dirty & /*selectedRegionInfo*/ 4 && use_data_color_value !== (use_data_color_value = /*selectedRegionInfo*/ ctx[2].color)) {
-    				attr_dev(use, "data-color", use_data_color_value);
+    			if (dirty & /*color*/ 4) {
+    				attr_dev(use, "data-color", /*color*/ ctx[2]);
     			}
 
-    			if (dirty & /*selectedRegionD*/ 2 && t1_value !== (t1_value = /*d*/ ctx[9].country + "")) set_data_dev(t1, t1_value);
+    			if (dirty & /*data*/ 2 && t1_value !== (t1_value = /*country*/ ctx[11] + "")) set_data_dev(t1, t1_value);
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(div2);
@@ -8239,9 +8789,9 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_each_block$1.name,
+    		id: create_each_block$2.name,
     		type: "each",
-    		source: "(63:4) {#each selectedRegionD as d}",
+    		source: "(69:4) {#each data as { value, country, xOffset, yOffset }}",
     		ctx
     	});
 
@@ -8256,8 +8806,8 @@ var app = (function () {
     		c: function create() {
     			div = element("div");
     			if (if_block) if_block.c();
-    			attr_dev(div, "class", "country-cards__container svelte-f9fvk4");
-    			add_location(div, file$6, 60, 0, 1954);
+    			attr_dev(div, "class", "country-cards__container svelte-rb287c");
+    			add_location(div, file$9, 66, 0, 2208);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -8304,27 +8854,30 @@ var app = (function () {
     	validate_slots('CountryCards', slots, []);
     	let { selectedRegion } = $$props;
     	let { selectedCountry } = $$props;
+    	let { hoveredCountry } = $$props;
     	let { data } = $$props;
-    	let selectedRegionD, selectedRegionInfo;
+    	let { color } = $$props;
+    	let maxValue = max(data, d => d.value);
+    	let sizeScale = linear().domain([0, maxValue]).range([0.3, 1]);
 
-    	function findSelectedRegionInfo(region) {
-    		if (region !== "") {
-    			let index = regions.findIndex(re => re.name == region);
-    			let color = regions[index].color;
-    			let shape = regions[index].shape;
-    			return { color, shape };
-    		}
-    	}
+    	// should have a unified sizeScale between regions? but then some regions will just have small butterflies
+    	// let sizeScale = scaleLinear()
+    	//   .domain([0, 16793436])
+    	//   .range([0.3, 1]) 
+    	data.map(d => {
+    		d.value = isNaN(d.value) ? 0 : d.value;
+    		d.xOffset = 4.5 + 45.5 - sizeScale(d.value) * 91 / 2;
+    		d.yOffset = 13 + 37 - sizeScale(d.value) * 74 / 2;
+    		return d;
+    	});
 
     	function handleMouseOver() {
     		let use = select(this).select("use");
     		let color = use.attr("data-color");
-
-    		// let country = use.attr("data-country")
     		select(this).style("background", color);
-
     		use.attr('fill', "white").attr('stroke', "white");
     		select(this).select(".country-card__country-name").style("color", "white");
+    		$$invalidate(8, hoveredCountry = use.attr("data-country"));
     	}
 
     	function handleMouseLeave() {
@@ -8336,6 +8889,8 @@ var app = (function () {
     			use.attr('fill', color).attr('stroke', color);
     			select(this).select(".country-card__country-name").style("color", "black");
     		}
+
+    		$$invalidate(8, hoveredCountry = "");
     	}
 
     	function handleClick() {
@@ -8348,10 +8903,17 @@ var app = (function () {
     		select(this).style("background", color);
     		use.attr('fill', "white").attr('stroke', "white");
     		select(this).select(".country-card__country-name").style("color", "white");
-    		$$invalidate(6, selectedCountry = use.attr("data-country"));
+    		$$invalidate(7, selectedCountry = use.attr("data-country"));
+
+    		setTimeout(
+    			() => {
+    				select("#big-butterfly__container").select("h1").node().scrollIntoView({ behavior: "smooth", block: "start" });
+    			},
+    			10
+    		);
     	}
 
-    	const writable_props = ['selectedRegion', 'selectedCountry', 'data'];
+    	const writable_props = ['selectedRegion', 'selectedCountry', 'hoveredCountry', 'data', 'color'];
 
     	Object.keys($$props).forEach(key => {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<CountryCards> was created with unknown prop '${key}'`);
@@ -8359,20 +8921,23 @@ var app = (function () {
 
     	$$self.$$set = $$props => {
     		if ('selectedRegion' in $$props) $$invalidate(0, selectedRegion = $$props.selectedRegion);
-    		if ('selectedCountry' in $$props) $$invalidate(6, selectedCountry = $$props.selectedCountry);
-    		if ('data' in $$props) $$invalidate(7, data = $$props.data);
+    		if ('selectedCountry' in $$props) $$invalidate(7, selectedCountry = $$props.selectedCountry);
+    		if ('hoveredCountry' in $$props) $$invalidate(8, hoveredCountry = $$props.hoveredCountry);
+    		if ('data' in $$props) $$invalidate(1, data = $$props.data);
+    		if ('color' in $$props) $$invalidate(2, color = $$props.color);
     	};
 
     	$$self.$capture_state = () => ({
     		select,
-    		selectAll,
-    		regions,
+    		max,
+    		scaleLinear: linear,
     		selectedRegion,
     		selectedCountry,
+    		hoveredCountry,
     		data,
-    		selectedRegionD,
-    		selectedRegionInfo,
-    		findSelectedRegionInfo,
+    		color,
+    		maxValue,
+    		sizeScale,
     		handleMouseOver,
     		handleMouseLeave,
     		handleClick
@@ -8380,34 +8945,28 @@ var app = (function () {
 
     	$$self.$inject_state = $$props => {
     		if ('selectedRegion' in $$props) $$invalidate(0, selectedRegion = $$props.selectedRegion);
-    		if ('selectedCountry' in $$props) $$invalidate(6, selectedCountry = $$props.selectedCountry);
-    		if ('data' in $$props) $$invalidate(7, data = $$props.data);
-    		if ('selectedRegionD' in $$props) $$invalidate(1, selectedRegionD = $$props.selectedRegionD);
-    		if ('selectedRegionInfo' in $$props) $$invalidate(2, selectedRegionInfo = $$props.selectedRegionInfo);
+    		if ('selectedCountry' in $$props) $$invalidate(7, selectedCountry = $$props.selectedCountry);
+    		if ('hoveredCountry' in $$props) $$invalidate(8, hoveredCountry = $$props.hoveredCountry);
+    		if ('data' in $$props) $$invalidate(1, data = $$props.data);
+    		if ('color' in $$props) $$invalidate(2, color = $$props.color);
+    		if ('maxValue' in $$props) maxValue = $$props.maxValue;
+    		if ('sizeScale' in $$props) $$invalidate(3, sizeScale = $$props.sizeScale);
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	$$self.$$.update = () => {
-    		if ($$self.$$.dirty & /*data, selectedRegion*/ 129) {
-    			{
-    				$$invalidate(1, selectedRegionD = data.filter(d => d.subregion == selectedRegion));
-    				$$invalidate(2, selectedRegionInfo = findSelectedRegionInfo(selectedRegion));
-    			}
-    		}
-    	};
-
     	return [
     		selectedRegion,
-    		selectedRegionD,
-    		selectedRegionInfo,
+    		data,
+    		color,
+    		sizeScale,
     		handleMouseOver,
     		handleMouseLeave,
     		handleClick,
     		selectedCountry,
-    		data
+    		hoveredCountry
     	];
     }
 
@@ -8417,8 +8976,10 @@ var app = (function () {
 
     		init$1(this, options, instance$a, create_fragment$a, safe_not_equal, {
     			selectedRegion: 0,
-    			selectedCountry: 6,
-    			data: 7
+    			selectedCountry: 7,
+    			hoveredCountry: 8,
+    			data: 1,
+    			color: 2
     		});
 
     		dispatch_dev("SvelteRegisterComponent", {
@@ -8435,12 +8996,20 @@ var app = (function () {
     			console.warn("<CountryCards> was created without expected prop 'selectedRegion'");
     		}
 
-    		if (/*selectedCountry*/ ctx[6] === undefined && !('selectedCountry' in props)) {
+    		if (/*selectedCountry*/ ctx[7] === undefined && !('selectedCountry' in props)) {
     			console.warn("<CountryCards> was created without expected prop 'selectedCountry'");
     		}
 
-    		if (/*data*/ ctx[7] === undefined && !('data' in props)) {
+    		if (/*hoveredCountry*/ ctx[8] === undefined && !('hoveredCountry' in props)) {
+    			console.warn("<CountryCards> was created without expected prop 'hoveredCountry'");
+    		}
+
+    		if (/*data*/ ctx[1] === undefined && !('data' in props)) {
     			console.warn("<CountryCards> was created without expected prop 'data'");
+    		}
+
+    		if (/*color*/ ctx[2] === undefined && !('color' in props)) {
+    			console.warn("<CountryCards> was created without expected prop 'color'");
     		}
     	}
 
@@ -8460,6 +9029,14 @@ var app = (function () {
     		throw new Error("<CountryCards>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
+    	get hoveredCountry() {
+    		throw new Error("<CountryCards>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set hoveredCountry(value) {
+    		throw new Error("<CountryCards>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
     	get data() {
     		throw new Error("<CountryCards>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
@@ -8467,32 +9044,71 @@ var app = (function () {
     	set data(value) {
     		throw new Error("<CountryCards>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
+
+    	get color() {
+    		throw new Error("<CountryCards>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set color(value) {
+    		throw new Error("<CountryCards>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
     }
 
     /* src/CountryCardContainer.svelte generated by Svelte v3.46.4 */
-    const file$5 = "src/CountryCardContainer.svelte";
+    const file$8 = "src/CountryCardContainer.svelte";
 
     function create_fragment$9(ctx) {
     	let section;
+    	let div;
     	let h1;
+    	let span;
     	let t0;
     	let t1;
-    	let h2;
-    	let t3;
+    	let countrycardexplainer;
+    	let updating_hoveredCountry;
+    	let t2;
     	let countrycards;
     	let updating_selectedRegion;
     	let updating_selectedCountry;
+    	let updating_hoveredCountry_1;
     	let current;
 
+    	function countrycardexplainer_hoveredCountry_binding(value) {
+    		/*countrycardexplainer_hoveredCountry_binding*/ ctx[6](value);
+    	}
+
+    	let countrycardexplainer_props = {
+    		regionData: /*regionData*/ ctx[2],
+    		countryData: /*filteredData*/ ctx[4]
+    	};
+
+    	if (/*hoveredCountry*/ ctx[3] !== void 0) {
+    		countrycardexplainer_props.hoveredCountry = /*hoveredCountry*/ ctx[3];
+    	}
+
+    	countrycardexplainer = new CountryCardExplainer({
+    			props: countrycardexplainer_props,
+    			$$inline: true
+    		});
+
+    	binding_callbacks.push(() => bind$1(countrycardexplainer, 'hoveredCountry', countrycardexplainer_hoveredCountry_binding));
+
     	function countrycards_selectedRegion_binding(value) {
-    		/*countrycards_selectedRegion_binding*/ ctx[3](value);
+    		/*countrycards_selectedRegion_binding*/ ctx[7](value);
     	}
 
     	function countrycards_selectedCountry_binding(value) {
-    		/*countrycards_selectedCountry_binding*/ ctx[4](value);
+    		/*countrycards_selectedCountry_binding*/ ctx[8](value);
     	}
 
-    	let countrycards_props = { data: /*data*/ ctx[2] };
+    	function countrycards_hoveredCountry_binding(value) {
+    		/*countrycards_hoveredCountry_binding*/ ctx[9](value);
+    	}
+
+    	let countrycards_props = {
+    		data: /*filteredData*/ ctx[4],
+    		color: /*regionData*/ ctx[2].color
+    	};
 
     	if (/*selectedRegion*/ ctx[0] !== void 0) {
     		countrycards_props.selectedRegion = /*selectedRegion*/ ctx[0];
@@ -8502,6 +9118,10 @@ var app = (function () {
     		countrycards_props.selectedCountry = /*selectedCountry*/ ctx[1];
     	}
 
+    	if (/*hoveredCountry*/ ctx[3] !== void 0) {
+    		countrycards_props.hoveredCountry = /*hoveredCountry*/ ctx[3];
+    	}
+
     	countrycards = new CountryCards({
     			props: countrycards_props,
     			$$inline: true
@@ -8509,38 +9129,62 @@ var app = (function () {
 
     	binding_callbacks.push(() => bind$1(countrycards, 'selectedRegion', countrycards_selectedRegion_binding));
     	binding_callbacks.push(() => bind$1(countrycards, 'selectedCountry', countrycards_selectedCountry_binding));
+    	binding_callbacks.push(() => bind$1(countrycards, 'hoveredCountry', countrycards_hoveredCountry_binding));
 
     	const block = {
     		c: function create() {
     			section = element("section");
+    			div = element("div");
     			h1 = element("h1");
+    			span = element("span");
     			t0 = text$1(/*selectedRegion*/ ctx[0]);
     			t1 = space();
-    			h2 = element("h2");
-    			h2.textContent = "Select a country to see available paths of migration";
-    			t3 = space();
+    			create_component(countrycardexplainer.$$.fragment);
+    			t2 = space();
     			create_component(countrycards.$$.fragment);
-    			add_location(h1, file$5, 10, 2, 163);
-    			add_location(h2, file$5, 13, 2, 199);
-    			add_location(section, file$5, 9, 0, 151);
+    			attr_dev(span, "class", "highlight svelte-hc7xnx");
+    			set_style(span, "background-color", /*regionData*/ ctx[2].color);
+    			add_location(span, file$8, 19, 6, 455);
+    			attr_dev(h1, "class", "svelte-hc7xnx");
+    			add_location(h1, file$8, 18, 4, 444);
+    			attr_dev(div, "class", "svelte-hc7xnx");
+    			add_location(div, file$8, 17, 2, 434);
+    			add_location(section, file$8, 16, 0, 422);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, section, anchor);
-    			append_dev(section, h1);
-    			append_dev(h1, t0);
-    			append_dev(section, t1);
-    			append_dev(section, h2);
-    			append_dev(section, t3);
+    			append_dev(section, div);
+    			append_dev(div, h1);
+    			append_dev(h1, span);
+    			append_dev(span, t0);
+    			append_dev(div, t1);
+    			mount_component(countrycardexplainer, div, null);
+    			append_dev(section, t2);
     			mount_component(countrycards, section, null);
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
     			if (!current || dirty & /*selectedRegion*/ 1) set_data_dev(t0, /*selectedRegion*/ ctx[0]);
+
+    			if (!current || dirty & /*regionData*/ 4) {
+    				set_style(span, "background-color", /*regionData*/ ctx[2].color);
+    			}
+
+    			const countrycardexplainer_changes = {};
+    			if (dirty & /*regionData*/ 4) countrycardexplainer_changes.regionData = /*regionData*/ ctx[2];
+
+    			if (!updating_hoveredCountry && dirty & /*hoveredCountry*/ 8) {
+    				updating_hoveredCountry = true;
+    				countrycardexplainer_changes.hoveredCountry = /*hoveredCountry*/ ctx[3];
+    				add_flush_callback(() => updating_hoveredCountry = false);
+    			}
+
+    			countrycardexplainer.$set(countrycardexplainer_changes);
     			const countrycards_changes = {};
-    			if (dirty & /*data*/ 4) countrycards_changes.data = /*data*/ ctx[2];
+    			if (dirty & /*regionData*/ 4) countrycards_changes.color = /*regionData*/ ctx[2].color;
 
     			if (!updating_selectedRegion && dirty & /*selectedRegion*/ 1) {
     				updating_selectedRegion = true;
@@ -8554,19 +9198,28 @@ var app = (function () {
     				add_flush_callback(() => updating_selectedCountry = false);
     			}
 
+    			if (!updating_hoveredCountry_1 && dirty & /*hoveredCountry*/ 8) {
+    				updating_hoveredCountry_1 = true;
+    				countrycards_changes.hoveredCountry = /*hoveredCountry*/ ctx[3];
+    				add_flush_callback(() => updating_hoveredCountry_1 = false);
+    			}
+
     			countrycards.$set(countrycards_changes);
     		},
     		i: function intro(local) {
     			if (current) return;
+    			transition_in(countrycardexplainer.$$.fragment, local);
     			transition_in(countrycards.$$.fragment, local);
     			current = true;
     		},
     		o: function outro(local) {
+    			transition_out(countrycardexplainer.$$.fragment, local);
     			transition_out(countrycards.$$.fragment, local);
     			current = false;
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(section);
+    			destroy_component(countrycardexplainer);
     			destroy_component(countrycards);
     		}
     	};
@@ -8587,12 +9240,21 @@ var app = (function () {
     	validate_slots('CountryCardContainer', slots, []);
     	let { selectedRegion } = $$props;
     	let { selectedCountry } = $$props;
-    	let { data } = $$props;
-    	const writable_props = ['selectedRegion', 'selectedCountry', 'data'];
+    	let { countryData } = $$props;
+    	let { regionData } = $$props;
+    	let hoveredCountry = "";
+    	const formatValue = format(",");
+    	let filteredData = countryData.filter(d => d.region == selectedRegion);
+    	const writable_props = ['selectedRegion', 'selectedCountry', 'countryData', 'regionData'];
 
     	Object.keys($$props).forEach(key => {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<CountryCardContainer> was created with unknown prop '${key}'`);
     	});
+
+    	function countrycardexplainer_hoveredCountry_binding(value) {
+    		hoveredCountry = value;
+    		$$invalidate(3, hoveredCountry);
+    	}
 
     	function countrycards_selectedRegion_binding(value) {
     		selectedRegion = value;
@@ -8604,23 +9266,39 @@ var app = (function () {
     		$$invalidate(1, selectedCountry);
     	}
 
+    	function countrycards_hoveredCountry_binding(value) {
+    		hoveredCountry = value;
+    		$$invalidate(3, hoveredCountry);
+    	}
+
     	$$self.$$set = $$props => {
     		if ('selectedRegion' in $$props) $$invalidate(0, selectedRegion = $$props.selectedRegion);
     		if ('selectedCountry' in $$props) $$invalidate(1, selectedCountry = $$props.selectedCountry);
-    		if ('data' in $$props) $$invalidate(2, data = $$props.data);
+    		if ('countryData' in $$props) $$invalidate(5, countryData = $$props.countryData);
+    		if ('regionData' in $$props) $$invalidate(2, regionData = $$props.regionData);
     	};
 
     	$$self.$capture_state = () => ({
+    		format,
+    		max,
+    		CountryCardExplainer,
     		CountryCards,
     		selectedRegion,
     		selectedCountry,
-    		data
+    		countryData,
+    		regionData,
+    		hoveredCountry,
+    		formatValue,
+    		filteredData
     	});
 
     	$$self.$inject_state = $$props => {
     		if ('selectedRegion' in $$props) $$invalidate(0, selectedRegion = $$props.selectedRegion);
     		if ('selectedCountry' in $$props) $$invalidate(1, selectedCountry = $$props.selectedCountry);
-    		if ('data' in $$props) $$invalidate(2, data = $$props.data);
+    		if ('countryData' in $$props) $$invalidate(5, countryData = $$props.countryData);
+    		if ('regionData' in $$props) $$invalidate(2, regionData = $$props.regionData);
+    		if ('hoveredCountry' in $$props) $$invalidate(3, hoveredCountry = $$props.hoveredCountry);
+    		if ('filteredData' in $$props) $$invalidate(4, filteredData = $$props.filteredData);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -8630,9 +9308,14 @@ var app = (function () {
     	return [
     		selectedRegion,
     		selectedCountry,
-    		data,
+    		regionData,
+    		hoveredCountry,
+    		filteredData,
+    		countryData,
+    		countrycardexplainer_hoveredCountry_binding,
     		countrycards_selectedRegion_binding,
-    		countrycards_selectedCountry_binding
+    		countrycards_selectedCountry_binding,
+    		countrycards_hoveredCountry_binding
     	];
     }
 
@@ -8643,7 +9326,8 @@ var app = (function () {
     		init$1(this, options, instance$9, create_fragment$9, safe_not_equal, {
     			selectedRegion: 0,
     			selectedCountry: 1,
-    			data: 2
+    			countryData: 5,
+    			regionData: 2
     		});
 
     		dispatch_dev("SvelteRegisterComponent", {
@@ -8664,8 +9348,12 @@ var app = (function () {
     			console.warn("<CountryCardContainer> was created without expected prop 'selectedCountry'");
     		}
 
-    		if (/*data*/ ctx[2] === undefined && !('data' in props)) {
-    			console.warn("<CountryCardContainer> was created without expected prop 'data'");
+    		if (/*countryData*/ ctx[5] === undefined && !('countryData' in props)) {
+    			console.warn("<CountryCardContainer> was created without expected prop 'countryData'");
+    		}
+
+    		if (/*regionData*/ ctx[2] === undefined && !('regionData' in props)) {
+    			console.warn("<CountryCardContainer> was created without expected prop 'regionData'");
     		}
     	}
 
@@ -8685,11 +9373,19 @@ var app = (function () {
     		throw new Error("<CountryCardContainer>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
-    	get data() {
+    	get countryData() {
     		throw new Error("<CountryCardContainer>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
-    	set data(value) {
+    	set countryData(value) {
+    		throw new Error("<CountryCardContainer>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get regionData() {
+    		throw new Error("<CountryCardContainer>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set regionData(value) {
     		throw new Error("<CountryCardContainer>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
     }
@@ -8697,40 +9393,111 @@ var app = (function () {
     // Title Unique Array
     // Returns the unique values of a variable in a dataset as an array
     function uniqueArray(data, variable) {
-        let all = data.map(function (d) {
-            return d[variable];
-        });
+      let all = data.map(function (d) {
+        return d[variable];
+      });
 
-        return [...new Set(all)];
+      return [...new Set(all)];
     }
 
     // Title Region Color
     // Param region object containing a mapping between region and color
-    function regionColor(regions) {
-
-        let reg = uniqueArray(regions, "name");
-        let color = uniqueArray(regions, "color");
-
-        let scale = ordinal()
-            .domain(reg)
-            .range(color);
-
-        return scale;
+    function findRegionColor(region) {
+      let regionIndex = regions.findIndex((re) => re.name === region);
+      let color = {
+        vivid: regions[regionIndex].color,
+        light: regions[regionIndex].colorLight,
+      };
+      return color;
     }
 
-    /* src/BigButterfly.svelte generated by Svelte v3.46.4 */
+    // Title Get Questions With Country Name
+    // Param Places country name into the question
+    function getQuestionWithCountryName(
+      selectedCountry,
+      question,
+      a06aText
+    ) {
+      let words = question.split(/[\s}]+/);
+      let cntryIndex = words.findIndex((w) => w == "{cntry");
+      let yearsIndex = words.findIndex((w) => w == "{years");
+
+      if (cntryIndex !== -1) {
+        words[cntryIndex] = selectedCountry;
+      }
+
+      if (yearsIndex !== -1) {
+        words[yearsIndex] = a06aText;
+      }
+      words = words.join(" ").replace(/\s+(\W)/g, "$1");
+      return words;
+    }
+
+    /* src/Documentation.svelte generated by Svelte v3.46.4 */
+    const file$7 = "src/Documentation.svelte";
 
     function create_fragment$8(ctx) {
+    	let div2;
+    	let div0;
+    	let h30;
+    	let t1;
+    	let t2;
+    	let t3;
+    	let div1;
+    	let h31;
+    	let t5;
+    	let t6;
+
     	const block = {
-    		c: noop$2,
+    		c: function create() {
+    			div2 = element("div");
+    			div0 = element("div");
+    			h30 = element("h3");
+    			h30.textContent = "Specifications / Warnings";
+    			t1 = space();
+    			t2 = text$1(/*specificationWarningMessage*/ ctx[0]);
+    			t3 = space();
+    			div1 = element("div");
+    			h31 = element("h3");
+    			h31.textContent = "Definitions";
+    			t5 = space();
+    			t6 = text$1(/*definitionMessage*/ ctx[1]);
+    			attr_dev(h30, "class", "svelte-1o8udgc");
+    			add_location(h30, file$7, 38, 4, 1466);
+    			attr_dev(div0, "class", "svelte-1o8udgc");
+    			add_location(div0, file$7, 37, 2, 1456);
+    			attr_dev(h31, "class", "svelte-1o8udgc");
+    			add_location(h31, file$7, 42, 4, 1556);
+    			attr_dev(div1, "class", "svelte-1o8udgc");
+    			add_location(div1, file$7, 41, 2, 1546);
+    			attr_dev(div2, "id", "documentation");
+    			attr_dev(div2, "class", "svelte-1o8udgc");
+    			add_location(div2, file$7, 36, 0, 1429);
+    		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
-    		m: noop$2,
-    		p: noop$2,
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div2, anchor);
+    			append_dev(div2, div0);
+    			append_dev(div0, h30);
+    			append_dev(div0, t1);
+    			append_dev(div0, t2);
+    			append_dev(div2, t3);
+    			append_dev(div2, div1);
+    			append_dev(div1, h31);
+    			append_dev(div1, t5);
+    			append_dev(div1, t6);
+    		},
+    		p: function update(ctx, [dirty]) {
+    			if (dirty & /*specificationWarningMessage*/ 1) set_data_dev(t2, /*specificationWarningMessage*/ ctx[0]);
+    			if (dirty & /*definitionMessage*/ 2) set_data_dev(t6, /*definitionMessage*/ ctx[1]);
+    		},
     		i: noop$2,
     		o: noop$2,
-    		d: noop$2
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div2);
+    		}
     	};
 
     	dispatch_dev("SvelteRegisterBlock", {
@@ -8744,220 +9511,263 @@ var app = (function () {
     	return block;
     }
 
-    function instance$8($$self, $$props) {
+    function instance$8($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
-    	validate_slots('BigButterfly', slots, []);
-    	const writable_props = [];
+    	validate_slots('Documentation', slots, []);
+    	let { selectedCountry } = $$props;
+    	let { trueMode } = $$props;
+    	let { acqMode } = $$props;
+    	let { warnings } = $$props;
+    	let { definitions } = $$props;
+    	let specificationWarningMessage, definitionMessage;
+    	const writable_props = ['selectedCountry', 'trueMode', 'acqMode', 'warnings', 'definitions'];
 
     	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<BigButterfly> was created with unknown prop '${key}'`);
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<Documentation> was created with unknown prop '${key}'`);
     	});
 
-    	return [];
+    	$$self.$$set = $$props => {
+    		if ('selectedCountry' in $$props) $$invalidate(2, selectedCountry = $$props.selectedCountry);
+    		if ('trueMode' in $$props) $$invalidate(3, trueMode = $$props.trueMode);
+    		if ('acqMode' in $$props) $$invalidate(4, acqMode = $$props.acqMode);
+    		if ('warnings' in $$props) $$invalidate(5, warnings = $$props.warnings);
+    		if ('definitions' in $$props) $$invalidate(6, definitions = $$props.definitions);
+    	};
+
+    	$$self.$capture_state = () => ({
+    		getQuestionWithCountryName,
+    		selectedCountry,
+    		trueMode,
+    		acqMode,
+    		warnings,
+    		definitions,
+    		specificationWarningMessage,
+    		definitionMessage
+    	});
+
+    	$$self.$inject_state = $$props => {
+    		if ('selectedCountry' in $$props) $$invalidate(2, selectedCountry = $$props.selectedCountry);
+    		if ('trueMode' in $$props) $$invalidate(3, trueMode = $$props.trueMode);
+    		if ('acqMode' in $$props) $$invalidate(4, acqMode = $$props.acqMode);
+    		if ('warnings' in $$props) $$invalidate(5, warnings = $$props.warnings);
+    		if ('definitions' in $$props) $$invalidate(6, definitions = $$props.definitions);
+    		if ('specificationWarningMessage' in $$props) $$invalidate(0, specificationWarningMessage = $$props.specificationWarningMessage);
+    		if ('definitionMessage' in $$props) $$invalidate(1, definitionMessage = $$props.definitionMessage);
+    	};
+
+    	if ($$props && "$$inject" in $$props) {
+    		$$self.$inject_state($$props.$$inject);
+    	}
+
+    	$$self.$$.update = () => {
+    		if ($$self.$$.dirty & /*acqMode, selectedCountry, trueMode, warnings, specificationWarningMessage, definitions*/ 125) {
+    			// If a particular mode for a particular country returns TRUE
+    			// Check to see if warning is NA in warnings.csv
+    			// Use warnings.csv to look up the warning and print the warning to the user
+    			// If warning is not NA, print the specification from modes_acq.csv b. If a particular mode for a particular country returns TRUE
+    			// Check to see if definitions is NA in definitions.csv
+    			// Use definitions.csv to look up the definition and print the definition to the user
+    			{
+    				let countryAcqMode = acqMode.filter(d => d.country == selectedCountry);
+    				let dataForThisMode = countryAcqMode.filter(d => d.mode_id == trueMode)[0];
+    				let warningType = dataForThisMode.restriction_warning;
+
+    				$$invalidate(0, specificationWarningMessage = warningType == "NA"
+    				? dataForThisMode.specification
+    				: warnings.filter(d => d.restriction_warning == warningType)[0].message);
+
+    				$$invalidate(0, specificationWarningMessage = getQuestionWithCountryName(selectedCountry, specificationWarningMessage));
+    				let definitionType = dataForThisMode.definition;
+
+    				$$invalidate(1, definitionMessage = definitionType == "NA"
+    				? ""
+    				: definitions.filter(d => d.definition_id == definitionType)[0].definition);
+    			}
+    		}
+    	};
+
+    	return [
+    		specificationWarningMessage,
+    		definitionMessage,
+    		selectedCountry,
+    		trueMode,
+    		acqMode,
+    		warnings,
+    		definitions
+    	];
     }
 
-    class BigButterfly extends SvelteComponentDev {
+    class Documentation extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init$1(this, options, instance$8, create_fragment$8, safe_not_equal, {});
+
+    		init$1(this, options, instance$8, create_fragment$8, safe_not_equal, {
+    			selectedCountry: 2,
+    			trueMode: 3,
+    			acqMode: 4,
+    			warnings: 5,
+    			definitions: 6
+    		});
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
-    			tagName: "BigButterfly",
+    			tagName: "Documentation",
     			options,
     			id: create_fragment$8.name
     		});
+
+    		const { ctx } = this.$$;
+    		const props = options.props || {};
+
+    		if (/*selectedCountry*/ ctx[2] === undefined && !('selectedCountry' in props)) {
+    			console.warn("<Documentation> was created without expected prop 'selectedCountry'");
+    		}
+
+    		if (/*trueMode*/ ctx[3] === undefined && !('trueMode' in props)) {
+    			console.warn("<Documentation> was created without expected prop 'trueMode'");
+    		}
+
+    		if (/*acqMode*/ ctx[4] === undefined && !('acqMode' in props)) {
+    			console.warn("<Documentation> was created without expected prop 'acqMode'");
+    		}
+
+    		if (/*warnings*/ ctx[5] === undefined && !('warnings' in props)) {
+    			console.warn("<Documentation> was created without expected prop 'warnings'");
+    		}
+
+    		if (/*definitions*/ ctx[6] === undefined && !('definitions' in props)) {
+    			console.warn("<Documentation> was created without expected prop 'definitions'");
+    		}
+    	}
+
+    	get selectedCountry() {
+    		throw new Error("<Documentation>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set selectedCountry(value) {
+    		throw new Error("<Documentation>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get trueMode() {
+    		throw new Error("<Documentation>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set trueMode(value) {
+    		throw new Error("<Documentation>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get acqMode() {
+    		throw new Error("<Documentation>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set acqMode(value) {
+    		throw new Error("<Documentation>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get warnings() {
+    		throw new Error("<Documentation>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set warnings(value) {
+    		throw new Error("<Documentation>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get definitions() {
+    		throw new Error("<Documentation>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set definitions(value) {
+    		throw new Error("<Documentation>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
     }
 
     /* src/BigButterflyContainer.svelte generated by Svelte v3.46.4 */
+    const file$6 = "src/BigButterflyContainer.svelte";
 
-    const { console: console_1 } = globals;
-    const file$4 = "src/BigButterflyContainer.svelte";
-
-    // (50:0) {#if selectedCountry !== ""}
+    // (410:2) {#if selectedCountry !== ""}
     function create_if_block$3(ctx) {
-    	let section;
     	let h1;
     	let t0;
+    	let span;
     	let t1;
     	let t2;
-    	let div8;
-    	let html_tag;
-    	let raw_value = /*butterflies*/ ctx[1][2] + "";
+    	let div;
+    	let p;
     	let t3;
-    	let div3;
-    	let bigbutterfly;
+    	let svg;
+    	let circle;
     	let t4;
-    	let div2;
-    	let div0;
     	let t5;
-    	let div1;
-    	let t6;
-    	let div7;
-    	let div4;
-    	let t7;
-    	let div5;
-    	let t8;
-    	let div6;
-    	let current;
-    	bigbutterfly = new BigButterfly({ $$inline: true });
-
-    	const block = {
-    		c: function create() {
-    			section = element("section");
-    			h1 = element("h1");
-    			t0 = text$1("Paths to citizenship in ");
-    			t1 = text$1(/*selectedCountry*/ ctx[0]);
-    			t2 = space();
-    			div8 = element("div");
-    			html_tag = new HtmlTag();
-    			t3 = space();
-    			div3 = element("div");
-    			create_component(bigbutterfly.$$.fragment);
-    			t4 = space();
-    			div2 = element("div");
-    			div0 = element("div");
-    			t5 = space();
-<<<<<<< HEAD
-    			div1 = element("div");
-    			t6 = space();
-    			div7 = element("div");
-    			div4 = element("div");
-    			t7 = space();
-    			div5 = element("div");
-    			t8 = space();
-    			div6 = element("div");
-    			add_location(h1, file$4, 51, 4, 1284);
-    			html_tag.a = t3;
-    			attr_dev(div0, "class", "definitions svelte-19ebhm5");
-    			add_location(div0, file$4, 59, 8, 1522);
-    			attr_dev(div1, "class", "warnings svelte-19ebhm5");
-    			add_location(div1, file$4, 60, 8, 1562);
-    			attr_dev(div2, "class", "definitions-warnings__container svelte-19ebhm5");
-    			add_location(div2, file$4, 58, 6, 1468);
-    			attr_dev(div3, "class", "container");
-    			add_location(div3, file$4, 56, 4, 1415);
-    			attr_dev(div4, "id", "warnings");
-    			attr_dev(div4, "class", "svelte-19ebhm5");
-    			add_location(div4, file$4, 64, 6, 1650);
-    			attr_dev(div5, "id", "specification");
-    			attr_dev(div5, "class", "svelte-19ebhm5");
-    			add_location(div5, file$4, 65, 6, 1682);
-    			attr_dev(div6, "id", "definitions");
-    			attr_dev(div6, "class", "svelte-19ebhm5");
-    			add_location(div6, file$4, 66, 6, 1719);
-    			attr_dev(div7, "id", "documentation");
-    			attr_dev(div7, "class", "svelte-19ebhm5");
-    			add_location(div7, file$4, 63, 4, 1619);
-    			attr_dev(div8, "id", "citizenship-paths");
-    			add_location(div8, file$4, 54, 4, 1351);
-    			attr_dev(section, "class", "big-butterfly__container");
-    			add_location(section, file$4, 50, 2, 1237);
-=======
-    			div3 = element("div");
-    			add_location(h1, file$4, 50, 4, 1282);
-    			attr_dev(div0, "id", "citizenship-paths");
-    			add_location(div0, file$4, 53, 4, 1352);
-    			attr_dev(div1, "id", "warnings");
-    			attr_dev(div1, "class", "svelte-1mt2l5u");
-    			add_location(div1, file$4, 57, 6, 1462);
-    			attr_dev(div2, "id", "specification");
-    			attr_dev(div2, "class", "svelte-1mt2l5u");
-    			add_location(div2, file$4, 58, 6, 1495);
-    			attr_dev(div3, "id", "definitions");
-    			attr_dev(div3, "class", "svelte-1mt2l5u");
-    			add_location(div3, file$4, 59, 6, 1533);
-    			attr_dev(div4, "id", "documentation");
-    			attr_dev(div4, "class", "svelte-1mt2l5u");
-    			add_location(div4, file$4, 56, 4, 1430);
-    			attr_dev(section, "class", "big-butterfly__container svelte-1mt2l5u");
-    			add_location(section, file$4, 49, 2, 1234);
->>>>>>> parent of f5acd8c (added bundle)
-    		},
-    		m: function mount(target, anchor) {
-    			insert_dev(target, section, anchor);
-    			append_dev(section, h1);
-    			append_dev(h1, t0);
-    			append_dev(h1, t1);
-    			append_dev(section, t2);
-    			append_dev(section, div8);
-    			html_tag.m(raw_value, div8);
-    			append_dev(div8, t3);
-    			append_dev(div8, div3);
-    			mount_component(bigbutterfly, div3, null);
-    			append_dev(div3, t4);
-    			append_dev(div3, div2);
-    			append_dev(div2, div0);
-    			append_dev(div2, t5);
-    			append_dev(div2, div1);
-    			append_dev(div8, t6);
-    			append_dev(div8, div7);
-    			append_dev(div7, div4);
-    			append_dev(div7, t7);
-    			append_dev(div7, div5);
-    			append_dev(div7, t8);
-    			append_dev(div7, div6);
-    			current = true;
-    		},
-    		p: function update(ctx, dirty) {
-    			if (!current || dirty & /*selectedCountry*/ 1) set_data_dev(t1, /*selectedCountry*/ ctx[0]);
-    			if ((!current || dirty & /*butterflies*/ 2) && raw_value !== (raw_value = /*butterflies*/ ctx[1][2] + "")) html_tag.p(raw_value);
-    		},
-    		i: function intro(local) {
-    			if (current) return;
-    			transition_in(bigbutterfly.$$.fragment, local);
-    			current = true;
-    		},
-    		o: function outro(local) {
-    			transition_out(bigbutterfly.$$.fragment, local);
-    			current = false;
-    		},
-    		d: function destroy(detaching) {
-    			if (detaching) detach_dev(section);
-    			destroy_component(bigbutterfly);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_if_block$3.name,
-    		type: "if",
-    		source: "(50:0) {#if selectedCountry !== \\\"\\\"}",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    function create_fragment$7(ctx) {
     	let if_block_anchor;
     	let current;
-    	let if_block = /*selectedCountry*/ ctx[0] !== "" && create_if_block$3(ctx);
+    	let if_block = /*w*/ ctx[5] !== undefined && create_if_block_1$2(ctx);
 
     	const block = {
     		c: function create() {
+    			h1 = element("h1");
+    			t0 = text$1("Paths to acquire citizenship in ");
+    			span = element("span");
+    			t1 = text$1(/*selectedCountry*/ ctx[0]);
+    			t2 = space();
+    			div = element("div");
+    			p = element("p");
+    			t3 = text$1("Click buttons\n        ");
+    			svg = svg_element("svg");
+    			circle = svg_element("circle");
+    			t4 = text$1("\n        to answer questions. Paths will light up if there is a country-specific law that allows you to acquire citizenship with your condition.");
+    			t5 = space();
     			if (if_block) if_block.c();
     			if_block_anchor = empty$1();
-    		},
-    		l: function claim(nodes) {
-    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    			attr_dev(span, "class", "country-highlight svelte-1v85f4o");
+    			set_style(span, "background-color", /*selectedColor*/ ctx[8].vivid);
+    			add_location(span, file$6, 411, 38, 15115);
+    			attr_dev(h1, "class", "title svelte-1v85f4o");
+    			add_location(h1, file$6, 410, 4, 15058);
+    			attr_dev(circle, "cx", "9");
+    			attr_dev(circle, "cy", "9");
+    			attr_dev(circle, "r", "5");
+    			attr_dev(circle, "stroke-width", "4");
+    			attr_dev(circle, "stroke", "black");
+    			attr_dev(circle, "fill", "white");
+    			add_location(circle, file$6, 420, 10, 15417);
+    			attr_dev(svg, "width", "18");
+    			attr_dev(svg, "height", "18");
+    			attr_dev(svg, "transform", "translate(0, 5)");
+    			add_location(svg, file$6, 415, 8, 15315);
+    			attr_dev(p, "class", "user-signifier");
+    			add_location(p, file$6, 414, 6, 15267);
+    			attr_dev(div, "class", "instructions svelte-1v85f4o");
+    			add_location(div, file$6, 413, 4, 15234);
     		},
     		m: function mount(target, anchor) {
+    			insert_dev(target, h1, anchor);
+    			append_dev(h1, t0);
+    			append_dev(h1, span);
+    			append_dev(span, t1);
+    			insert_dev(target, t2, anchor);
+    			insert_dev(target, div, anchor);
+    			append_dev(div, p);
+    			append_dev(p, t3);
+    			append_dev(p, svg);
+    			append_dev(svg, circle);
+    			append_dev(p, t4);
+    			insert_dev(target, t5, anchor);
     			if (if_block) if_block.m(target, anchor);
     			insert_dev(target, if_block_anchor, anchor);
     			current = true;
     		},
-    		p: function update(ctx, [dirty]) {
-    			if (/*selectedCountry*/ ctx[0] !== "") {
+    		p: function update(ctx, dirty) {
+    			if (!current || dirty & /*selectedCountry*/ 1) set_data_dev(t1, /*selectedCountry*/ ctx[0]);
+
+    			if (/*w*/ ctx[5] !== undefined) {
     				if (if_block) {
     					if_block.p(ctx, dirty);
 
-    					if (dirty & /*selectedCountry*/ 1) {
+    					if (dirty & /*w*/ 32) {
     						transition_in(if_block, 1);
     					}
     				} else {
-    					if_block = create_if_block$3(ctx);
+    					if_block = create_if_block_1$2(ctx);
     					if_block.c();
     					transition_in(if_block, 1);
     					if_block.m(if_block_anchor.parentNode, if_block_anchor);
@@ -8982,8 +9792,253 @@ var app = (function () {
     			current = false;
     		},
     		d: function destroy(detaching) {
+    			if (detaching) detach_dev(h1);
+    			if (detaching) detach_dev(t2);
+    			if (detaching) detach_dev(div);
+    			if (detaching) detach_dev(t5);
     			if (if_block) if_block.d(detaching);
     			if (detaching) detach_dev(if_block_anchor);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block$3.name,
+    		type: "if",
+    		source: "(410:2) {#if selectedCountry !== \\\"\\\"}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (435:4) {#if w !== undefined}
+    function create_if_block_1$2(ctx) {
+    	let div1;
+    	let div0;
+    	let raw_value = /*butterflies*/ ctx[4][2] + "";
+    	let t;
+    	let if_block_anchor;
+    	let current;
+    	let if_block = /*trueMode*/ ctx[6] !== undefined && create_if_block_2$1(ctx);
+
+    	const block = {
+    		c: function create() {
+    			div1 = element("div");
+    			div0 = element("div");
+    			t = space();
+    			if (if_block) if_block.c();
+    			if_block_anchor = empty$1();
+    			attr_dev(div0, "id", "butterfly__graphic");
+    			attr_dev(div0, "class", "svelte-1v85f4o");
+    			add_location(div0, file$6, 436, 8, 15946);
+    			attr_dev(div1, "id", "citizenship-paths");
+    			set_style(div1, "height", /*h*/ ctx[7]);
+    			add_location(div1, file$6, 435, 6, 15889);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div1, anchor);
+    			append_dev(div1, div0);
+    			div0.innerHTML = raw_value;
+    			insert_dev(target, t, anchor);
+    			if (if_block) if_block.m(target, anchor);
+    			insert_dev(target, if_block_anchor, anchor);
+    			current = true;
+    		},
+    		p: function update(ctx, dirty) {
+    			if ((!current || dirty & /*butterflies*/ 16) && raw_value !== (raw_value = /*butterflies*/ ctx[4][2] + "")) div0.innerHTML = raw_value;
+    			if (!current || dirty & /*h*/ 128) {
+    				set_style(div1, "height", /*h*/ ctx[7]);
+    			}
+
+    			if (/*trueMode*/ ctx[6] !== undefined) {
+    				if (if_block) {
+    					if_block.p(ctx, dirty);
+
+    					if (dirty & /*trueMode*/ 64) {
+    						transition_in(if_block, 1);
+    					}
+    				} else {
+    					if_block = create_if_block_2$1(ctx);
+    					if_block.c();
+    					transition_in(if_block, 1);
+    					if_block.m(if_block_anchor.parentNode, if_block_anchor);
+    				}
+    			} else if (if_block) {
+    				group_outros();
+
+    				transition_out(if_block, 1, 1, () => {
+    					if_block = null;
+    				});
+
+    				check_outros();
+    			}
+    		},
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(if_block);
+    			current = true;
+    		},
+    		o: function outro(local) {
+    			transition_out(if_block);
+    			current = false;
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div1);
+    			if (detaching) detach_dev(t);
+    			if (if_block) if_block.d(detaching);
+    			if (detaching) detach_dev(if_block_anchor);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_1$2.name,
+    		type: "if",
+    		source: "(435:4) {#if w !== undefined}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (441:6) {#if trueMode !== undefined}
+    function create_if_block_2$1(ctx) {
+    	let documentation;
+    	let updating_trueMode;
+    	let current;
+
+    	function documentation_trueMode_binding(value) {
+    		/*documentation_trueMode_binding*/ ctx[21](value);
+    	}
+
+    	let documentation_props = {
+    		selectedCountry: /*selectedCountry*/ ctx[0],
+    		acqMode: /*acqMode*/ ctx[3],
+    		warnings: /*warnings*/ ctx[2],
+    		definitions: /*definitions*/ ctx[1]
+    	};
+
+    	if (/*trueMode*/ ctx[6] !== void 0) {
+    		documentation_props.trueMode = /*trueMode*/ ctx[6];
+    	}
+
+    	documentation = new Documentation({
+    			props: documentation_props,
+    			$$inline: true
+    		});
+
+    	binding_callbacks.push(() => bind$1(documentation, 'trueMode', documentation_trueMode_binding));
+
+    	const block = {
+    		c: function create() {
+    			create_component(documentation.$$.fragment);
+    		},
+    		m: function mount(target, anchor) {
+    			mount_component(documentation, target, anchor);
+    			current = true;
+    		},
+    		p: function update(ctx, dirty) {
+    			const documentation_changes = {};
+    			if (dirty & /*selectedCountry*/ 1) documentation_changes.selectedCountry = /*selectedCountry*/ ctx[0];
+    			if (dirty & /*acqMode*/ 8) documentation_changes.acqMode = /*acqMode*/ ctx[3];
+    			if (dirty & /*warnings*/ 4) documentation_changes.warnings = /*warnings*/ ctx[2];
+    			if (dirty & /*definitions*/ 2) documentation_changes.definitions = /*definitions*/ ctx[1];
+
+    			if (!updating_trueMode && dirty & /*trueMode*/ 64) {
+    				updating_trueMode = true;
+    				documentation_changes.trueMode = /*trueMode*/ ctx[6];
+    				add_flush_callback(() => updating_trueMode = false);
+    			}
+
+    			documentation.$set(documentation_changes);
+    		},
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(documentation.$$.fragment, local);
+    			current = true;
+    		},
+    		o: function outro(local) {
+    			transition_out(documentation.$$.fragment, local);
+    			current = false;
+    		},
+    		d: function destroy(detaching) {
+    			destroy_component(documentation, detaching);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_2$1.name,
+    		type: "if",
+    		source: "(441:6) {#if trueMode !== undefined}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function create_fragment$7(ctx) {
+    	let section;
+    	let section_resize_listener;
+    	let current;
+    	let if_block = /*selectedCountry*/ ctx[0] !== "" && create_if_block$3(ctx);
+
+    	const block = {
+    		c: function create() {
+    			section = element("section");
+    			if (if_block) if_block.c();
+    			attr_dev(section, "id", "big-butterfly__container");
+    			attr_dev(section, "class", "svelte-1v85f4o");
+    			add_render_callback(() => /*section_elementresize_handler*/ ctx[22].call(section));
+    			add_location(section, file$6, 408, 0, 14960);
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, section, anchor);
+    			if (if_block) if_block.m(section, null);
+    			section_resize_listener = add_resize_listener(section, /*section_elementresize_handler*/ ctx[22].bind(section));
+    			current = true;
+    		},
+    		p: function update(ctx, [dirty]) {
+    			if (/*selectedCountry*/ ctx[0] !== "") {
+    				if (if_block) {
+    					if_block.p(ctx, dirty);
+
+    					if (dirty & /*selectedCountry*/ 1) {
+    						transition_in(if_block, 1);
+    					}
+    				} else {
+    					if_block = create_if_block$3(ctx);
+    					if_block.c();
+    					transition_in(if_block, 1);
+    					if_block.m(section, null);
+    				}
+    			} else if (if_block) {
+    				group_outros();
+
+    				transition_out(if_block, 1, 1, () => {
+    					if_block = null;
+    				});
+
+    				check_outros();
+    			}
+    		},
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(if_block);
+    			current = true;
+    		},
+    		o: function outro(local) {
+    			transition_out(if_block);
+    			current = false;
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(section);
+    			if (if_block) if_block.d();
+    			section_resize_listener();
     		}
     	};
 
@@ -8998,7 +10053,26 @@ var app = (function () {
     	return block;
     }
 
+    function toggleMouseOver(selection, parent) {
+    	let isAnswered = parent.attr("data-question-answered");
+
+    	if (isAnswered == "false") {
+    		parent.selectAll("circle").style("opacity", 0);
+    		selection.style("opacity", 1);
+
+    		// make text visible
+    		let answer = selection.attr('data-answer-state');
+
+    		parent.select("text").text(answer);
+    	}
+    }
+
+    function handleResetButton() {
+    	
+    }
+
     function instance$7($$self, $$props, $$invalidate) {
+    	let h;
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('BigButterflyContainer', slots, []);
     	let { selectedRegion } = $$props;
@@ -9007,8 +10081,184 @@ var app = (function () {
     	let { warnings } = $$props;
     	let { questions } = $$props;
     	let { acqMode } = $$props;
+    	let { questionToMode } = $$props;
     	let { butterflies } = $$props;
-    	let colorScale = regionColor(regions);
+    	let { modeA06a } = $$props;
+    	let w, trueMode, clicks;
+
+    	let acqModeFiltered,
+    		possibleModes,
+    		possibleQuestions,
+    		unnecessaryQuestions,
+    		possiblePaths,
+    		a06aValue,
+    		a06aText,
+    		filteredQuestionToMode;
+
+    	let selectedColor = findRegionColor(selectedRegion);
+
+    	let allPaths = [
+    		"path_1",
+    		"path_2",
+    		"path_3",
+    		"path_4",
+    		"path_5",
+    		"path_6",
+    		"path_7",
+    		"path_8",
+    		"path_9",
+    		"path_10",
+    		"path_11",
+    		"path_12",
+    		"path_13",
+    		"path_14",
+    		"path_15",
+    		"path_16",
+    		"path_17",
+    		"path_18",
+    		"path_19",
+    		"path_20",
+    		"path_21",
+    		"path_22",
+    		"path_23",
+    		"path_24",
+    		"path_25",
+    		"path_26",
+    		"path_27",
+    		"path_28",
+    		"path_29",
+    		"path_30",
+    		"path_31",
+    		"path_32",
+    		"path_33",
+    		"path_34",
+    		"path_35",
+    		"path_36",
+    		"path_37",
+    		"path_38",
+    		"path_39",
+    		"path_40"
+    	];
+
+    	function toggleMouseLeave(selection, parent) {
+    		let id = parent.attr("data-question-id");
+    		let isAnswered = parent.attr("data-question-answered");
+
+    		// console.log(id, isAnswered)
+    		if (isAnswered == "false") {
+    			// make toggle invisible
+    			parent.style("opacity", 0).style("pointer-events", "none");
+
+    			// make the original circle visible
+    			select(`circle#${id}`).style("opacity", 1);
+    		}
+
+    		// make text normal weight
+    		select(`foreignObject[data-question-id=${id}]`).style("font-weight", "normal");
+    	}
+
+    	function toggleClick(selection, parent) {
+    		let id = parent.attr("data-question-id");
+    		let answer = selection.attr("data-answer-state");
+
+    		// console.log("user's answer:", answer)       
+    		// switch data-question-answered attribute
+    		parent.attr("data-question-answered", "true").attr("data-answer", answer);
+
+    		// switch toggle cursor
+    		parent.style("cursor", "default").style("pointer-events", "none").selectAll("circle").style("cursor", "default").style("pointer-events", "none");
+
+    		// make toggle question text Yes/No muted
+    		parent.select("text").style("opacity", 0.1);
+
+    		// make question text muted
+    		select(`foreignObject[data-question-id=${id}]`).style("opacity", 0.1);
+
+    		// light up paths
+    		let associatedQuestionToMode = filteredQuestionToMode.filter(el => el.question == id);
+
+    		associatedQuestionToMode.forEach(el => {
+    			// console.log(el)
+    			let path = el.path_to_light_up;
+
+    			// console.log("required answer", el.answer)
+    			if (el.answer == answer) {
+    				// console.log("answers matched!")
+    				// light up the path and the head
+    				select(`#${path}`).attr("stroke", "#ae8625").attr("data-matched", "true");
+
+    				if (el.citizenship_achieved == "TRUE") {
+    					select("#butterfly__head").attr("fill", "url(#citizenship__achieved)");
+    				}
+
+    				// get new circles and texts to light up
+    				let childQuestion = el.child_question;
+
+    				// console.log(childQuestion)
+    				if (childQuestion !== "") {
+    					// make the child circle appear
+    					select(`circle#${childQuestion}`).attr("data-waiting", "false").attr("stroke", "black").style("cursor", "pointer");
+
+    					// make the child text appear
+    					select(`foreignObject[data-question-id=${childQuestion}]`).style("opacity", 1);
+
+    					// enable the toggle
+    					select(`g#switch__${childQuestion}`).style("pointer-events", "auto").on("mouseover", function () {
+    						select(this).style("opacity", 1);
+    					}).on("mouseleave", function () {
+    						select(this).style("opacity", 0);
+    					}).selectAll("circle").on("mouseover", function () {
+    						select(`circle#${childQuestion}`).style("opacity", 0);
+    						select(this).style("opacity", 1);
+    						let answer = select(this).attr('data-answer-state');
+    						select(this.parentNode).select("text").text(answer);
+    					}).on("mouseleave", function () {
+    						let isAnswered = select(this.parentNode).attr('data-question-answered');
+
+    						// console.log(isAnswered)
+    						if (isAnswered == "false") {
+    							select(`circle#${childQuestion}`).style("opacity", 1);
+    							select(this).style("opacity", 0);
+    							select(this.parentNode).select("text").text("");
+    						}
+    					}).on("click", function () {
+    						toggleClick(select(this), select(this.parentNode));
+    					});
+    				}
+    			} else {
+    				// console.log("answers don't match")
+    				// disable the path
+    				let isMatched = select(`#${path}`).attr("data-matched");
+
+    				if (isMatched == "false") {
+    					select(`#${path}`).style("opacity", 0.1);
+    				}
+
+    				// disable the following questions and paths
+    				let followingQuestions = [el.child_question, el.grandchild_question];
+
+    				followingQuestions = followingQuestions.filter(q => q !== "");
+
+    				if (followingQuestions.length > 0) {
+    					followingQuestions.forEach(q => {
+    						// console.log(q)
+    						select(`circle#${q}`).style("opacity", 0.3);
+
+    						let paths = filteredQuestionToMode.filter(el => el.question == q);
+
+    						paths.forEach(el => {
+    							let path = el.path_to_light_up;
+    							let isMatched = select(`#${path}`).attr("data-matched");
+
+    							if (isMatched == "false") {
+    								select(`#${path}`).style("opacity", 0.1);
+    							}
+    						});
+    					});
+    				}
+    			}
+    		});
+    	}
 
     	const writable_props = [
     		'selectedRegion',
@@ -9017,47 +10267,98 @@ var app = (function () {
     		'warnings',
     		'questions',
     		'acqMode',
-    		'butterflies'
+    		'questionToMode',
+    		'butterflies',
+    		'modeA06a'
     	];
 
     	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1.warn(`<BigButterflyContainer> was created with unknown prop '${key}'`);
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<BigButterflyContainer> was created with unknown prop '${key}'`);
     	});
 
+    	function documentation_trueMode_binding(value) {
+    		trueMode = value;
+    		$$invalidate(6, trueMode);
+    	}
+
+    	function section_elementresize_handler() {
+    		w = this.clientWidth;
+    		$$invalidate(5, w);
+    	}
+
     	$$self.$$set = $$props => {
-    		if ('selectedRegion' in $$props) $$invalidate(5, selectedRegion = $$props.selectedRegion);
+    		if ('selectedRegion' in $$props) $$invalidate(9, selectedRegion = $$props.selectedRegion);
     		if ('selectedCountry' in $$props) $$invalidate(0, selectedCountry = $$props.selectedCountry);
-    		if ('definitions' in $$props) $$invalidate(2, definitions = $$props.definitions);
-    		if ('warnings' in $$props) $$invalidate(3, warnings = $$props.warnings);
-    		if ('questions' in $$props) $$invalidate(6, questions = $$props.questions);
-    		if ('acqMode' in $$props) $$invalidate(4, acqMode = $$props.acqMode);
-    		if ('butterflies' in $$props) $$invalidate(1, butterflies = $$props.butterflies);
+    		if ('definitions' in $$props) $$invalidate(1, definitions = $$props.definitions);
+    		if ('warnings' in $$props) $$invalidate(2, warnings = $$props.warnings);
+    		if ('questions' in $$props) $$invalidate(10, questions = $$props.questions);
+    		if ('acqMode' in $$props) $$invalidate(3, acqMode = $$props.acqMode);
+    		if ('questionToMode' in $$props) $$invalidate(11, questionToMode = $$props.questionToMode);
+    		if ('butterflies' in $$props) $$invalidate(4, butterflies = $$props.butterflies);
+    		if ('modeA06a' in $$props) $$invalidate(12, modeA06a = $$props.modeA06a);
     	};
 
     	$$self.$capture_state = () => ({
+    		afterUpdate,
+    		select,
+    		selectAll,
     		uniqueArray,
-    		regionColor,
-    		regions,
+    		findRegionColor,
+    		getQuestionWithCountryName,
+    		Documentation,
     		selectedRegion,
-    		BigButterfly,
     		selectedCountry,
     		definitions,
     		warnings,
     		questions,
     		acqMode,
+    		questionToMode,
     		butterflies,
-    		colorScale
+    		modeA06a,
+    		w,
+    		trueMode,
+    		clicks,
+    		acqModeFiltered,
+    		possibleModes,
+    		possibleQuestions,
+    		unnecessaryQuestions,
+    		possiblePaths,
+    		a06aValue,
+    		a06aText,
+    		filteredQuestionToMode,
+    		selectedColor,
+    		allPaths,
+    		toggleMouseOver,
+    		toggleMouseLeave,
+    		toggleClick,
+    		handleResetButton,
+    		h
     	});
 
     	$$self.$inject_state = $$props => {
-    		if ('selectedRegion' in $$props) $$invalidate(5, selectedRegion = $$props.selectedRegion);
+    		if ('selectedRegion' in $$props) $$invalidate(9, selectedRegion = $$props.selectedRegion);
     		if ('selectedCountry' in $$props) $$invalidate(0, selectedCountry = $$props.selectedCountry);
-    		if ('definitions' in $$props) $$invalidate(2, definitions = $$props.definitions);
-    		if ('warnings' in $$props) $$invalidate(3, warnings = $$props.warnings);
-    		if ('questions' in $$props) $$invalidate(6, questions = $$props.questions);
-    		if ('acqMode' in $$props) $$invalidate(4, acqMode = $$props.acqMode);
-    		if ('butterflies' in $$props) $$invalidate(1, butterflies = $$props.butterflies);
-    		if ('colorScale' in $$props) $$invalidate(7, colorScale = $$props.colorScale);
+    		if ('definitions' in $$props) $$invalidate(1, definitions = $$props.definitions);
+    		if ('warnings' in $$props) $$invalidate(2, warnings = $$props.warnings);
+    		if ('questions' in $$props) $$invalidate(10, questions = $$props.questions);
+    		if ('acqMode' in $$props) $$invalidate(3, acqMode = $$props.acqMode);
+    		if ('questionToMode' in $$props) $$invalidate(11, questionToMode = $$props.questionToMode);
+    		if ('butterflies' in $$props) $$invalidate(4, butterflies = $$props.butterflies);
+    		if ('modeA06a' in $$props) $$invalidate(12, modeA06a = $$props.modeA06a);
+    		if ('w' in $$props) $$invalidate(5, w = $$props.w);
+    		if ('trueMode' in $$props) $$invalidate(6, trueMode = $$props.trueMode);
+    		if ('clicks' in $$props) clicks = $$props.clicks;
+    		if ('acqModeFiltered' in $$props) $$invalidate(13, acqModeFiltered = $$props.acqModeFiltered);
+    		if ('possibleModes' in $$props) $$invalidate(14, possibleModes = $$props.possibleModes);
+    		if ('possibleQuestions' in $$props) $$invalidate(15, possibleQuestions = $$props.possibleQuestions);
+    		if ('unnecessaryQuestions' in $$props) $$invalidate(16, unnecessaryQuestions = $$props.unnecessaryQuestions);
+    		if ('possiblePaths' in $$props) $$invalidate(17, possiblePaths = $$props.possiblePaths);
+    		if ('a06aValue' in $$props) $$invalidate(18, a06aValue = $$props.a06aValue);
+    		if ('a06aText' in $$props) $$invalidate(19, a06aText = $$props.a06aText);
+    		if ('filteredQuestionToMode' in $$props) $$invalidate(20, filteredQuestionToMode = $$props.filteredQuestionToMode);
+    		if ('selectedColor' in $$props) $$invalidate(8, selectedColor = $$props.selectedColor);
+    		if ('allPaths' in $$props) allPaths = $$props.allPaths;
+    		if ('h' in $$props) $$invalidate(7, h = $$props.h);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -9065,46 +10366,177 @@ var app = (function () {
     	}
 
     	$$self.$$.update = () => {
-    		if ($$self.$$.dirty & /*selectedCountry, acqMode, definitions, warnings, questions, selectedRegion*/ 125) {
-    			{
-    				if (selectedCountry !== "") {
-    					$$invalidate(4, acqMode = acqMode.filter(function (d) {
-    						return d.country === selectedCountry;
-    					}));
+    		if ($$self.$$.dirty & /*w*/ 32) {
+    			$$invalidate(7, h = w * 74 / 91);
+    		}
 
-    					let showDef = uniqueArray(acqMode, "definition")[0];
-    					let showWarn = uniqueArray(acqMode, "restriction_warning")[0];
+    		if ($$self.$$.dirty & /*selectedCountry, acqMode, acqModeFiltered, questionToMode, possibleModes, possibleQuestions, possiblePaths, filteredQuestionToMode, questions, unnecessaryQuestions, modeA06a, a06aValue, a06aText*/ 2096137) {
+    			if (selectedCountry !== "") {
+    				// get possible modes, possible questions / paths, unnecessary questions
+    				$$invalidate(13, acqModeFiltered = acqMode.filter(d => d.country == selectedCountry));
 
-    					if (showDef !== "NA") {
-    						$$invalidate(2, definitions = definitions.filter(function (d) {
-    							d.definition_id === showDef;
-    						}));
-    					} // let def = definitions.definition[0];
+    				$$invalidate(14, possibleModes = uniqueArray(acqModeFiltered, "mode_id"));
 
-    					if (showWarn !== "NA") {
-    						$$invalidate(3, warnings = warnings.filter(function (d) {
-    							d.restriction_warning === showWarn;
-    						}));
+    				// console.log(questionToMode)
+    				// console.log(possibleModes)
+    				$$invalidate(15, possibleQuestions = []);
 
-    						console.log(questions);
-    					} // let warn = warnings.message[0];
-    				}
+    				$$invalidate(17, possiblePaths = []);
+    				$$invalidate(20, filteredQuestionToMode = []);
 
-    				if (selectedRegion !== "") {
-    					colorScale(selectedRegion);
-    				}
+    				questionToMode.forEach(el => {
+    					let mode = el.associated_mode;
+    					let isIncluded = possibleModes.includes(mode);
+
+    					if (isIncluded) {
+    						possibleQuestions.push(el.question);
+    						possiblePaths.push(el.path_to_light_up);
+    						filteredQuestionToMode.push(el);
+    					}
+    				});
+
+    				$$invalidate(15, possibleQuestions = [...new Set(possibleQuestions)]);
+    				$$invalidate(17, possiblePaths = [...new Set(possiblePaths)]);
+
+    				// console.log(possibleQuestions)
+    				// console.log(possiblePaths)
+    				// console.log(filteredQuestionToMode)
+    				$$invalidate(16, unnecessaryQuestions = []);
+
+    				questions.forEach(el => {
+    					let id = el.question_id;
+    					let isIncluded = possibleQuestions.includes(id);
+
+    					if (!isIncluded) {
+    						unnecessaryQuestions.push(id);
+    					}
+    				});
+
+    				$$invalidate(18, a06aValue = modeA06a.filter(d => d.country == selectedCountry)[0].values);
+    				$$invalidate(19, a06aText = modeA06a.filter(d => d.values == a06aValue)[0].time);
+
+    				afterUpdate(() => {
+    					// set default colors of the big butterfly
+    					let butterflySel = select("#butterfly-path");
+
+    					butterflySel.select("#butterfly__wings").attr("fill", selectedColor.light);
+    					butterflySel.select("#butterfly__head").attr("fill", "#977B67");
+    					let butterflyPathsG = butterflySel.select("#butterfly__paths");
+    					butterflyPathsG.selectAll(".butterfly__path").attr("fill", "none").attr("stroke", "#ffffff").attr("stroke-width", 5).attr("data-available", "true").attr("data-matched", "false");
+
+    					butterflyPathsG.selectAll(".butterfly__path").each(function () {
+    						let id = select(this).attr("id");
+
+    						if (!possiblePaths.includes(id)) {
+    							select(this).attr("data-available", "false").style("opacity", 0.1);
+    						}
+    					});
+
+    					let butterflyCirclesG = butterflySel.select("#butterfly__circles");
+    					butterflyCirclesG.selectAll("circle").attr("fill", "white").attr("stroke", "#000000").attr("stroke-width", 4.5).attr("data-available", "true").attr("data-waiting", "false").attr("data-answer", "no").style("cursor", "pointer");
+
+    					// Make unavailable nodes muted and unclickable
+    					butterflyCirclesG.selectAll("circle").each(function () {
+    						let id = select(this).attr("id");
+
+    						if (unnecessaryQuestions.includes(id)) {
+    							select(this).attr("data-available", "false").attr("stroke", "lightgray").style("opacity", 0.3).style("cursor", "default");
+    						}
+    					});
+
+    					if (!butterflyCirclesG.empty()) {
+    						// populate questions
+    						selectAll(".butterfly__questions__question").remove();
+
+    						questions.forEach(q => {
+    							let id = q.question_id;
+
+    							if (!unnecessaryQuestions.includes(id)) {
+    								let text = q.question;
+    								let side = { h: q.h_side, v: q.v_side };
+
+    								// mute colors of the questions waiting for another quesiton to be answered
+    								let node = butterflyCirclesG.select(`#${id}`);
+
+    								if (q.visibility == "hidden") {
+    									node.attr("stroke", "lightgray").attr("data-waiting", "true").style("cursor", "default");
+    								}
+
+    								let position = [+node.attr("cx"), +node.attr("cy")];
+
+    								select("#butterfly__questions").append("foreignObject").html(getQuestionWithCountryName(selectedCountry, text, a06aText)).classed("butterfly__questions__question", true).attr("data-question-id", id).attr("x", side.h == "left"
+    								? position[0] - 170 - 30
+    								: position[0] + 30).attr("y", side.v == "upper"
+    								? position[1] - 30
+    								: side.v == "middle" ? position[1] - 15 : position[1] + 10).attr("width", 170).attr("height", 170).style("opacity", q.visibility == "hidden" ? 0 : 1).style("text-shadow", "-2px -2px 0 rgba(255, 255, 255, 0.7), 2px -2px 0 rgba(255, 255, 255, 0.7), -2px 2px 0 rgba(255, 255, 255, 0.7), 2px 2px 0 rgba(255, 255, 255, 0.7)").style("font-size", "0.8rem").style("text-align", side.h == 'left' ? "right" : "left").style("line-height", 1).style("transition", "all 0.2s ease");
+
+    								// add toggle switch
+    								let switchG = select("#butterfly__toggle").append("g").classed("switch", true).attr("transform", `translate(${position[0] - 10}, ${position[1]})`).attr("id", `switch__${id}`).attr("data-question-id", `${id}`).attr("data-question-answered", "false").attr("data-answer", "NA").style("opacity", 0).style("pointer-events", "none");
+
+    								switchG.append("line").attr("x1", 0).attr("y1", 0).attr("x2", 20).attr("y2", 0).attr('stroke', "white").attr("stroke-width", 20).attr("stroke-linecap", "round").style("opacity", 0.8);
+    								switchG.append("circle").attr("cx", 0).attr("r", 10).attr("data-answer-state", "No").attr("stroke", "lightgray").attr('stroke-width', 7.8).attr('fill', "white").style("opacity", 0).style("cursor", "pointer");
+    								switchG.append("circle").attr("cx", 20).attr("r", 10).attr("data-answer-state", "Yes").attr("stroke", "black").attr('stroke-width', 7.8).attr('fill', "white").style("opacity", 0).style("cursor", "pointer");
+    								switchG.append("text").attr("x", 10).attr("y", -20).attr("text-anchor", "middle").style("font-size", "0.8rem").style("font-weight", "bold").text("").style("text-shadow", "-2px -2px 0 rgba(255, 255, 255, 0.7), 2px -2px 0 rgba(255, 255, 255, 0.7), -2px 2px 0 rgba(255, 255, 255, 0.7), 2px 2px 0 rgba(255, 255, 255, 0.7)");
+    							}
+    						});
+    					}
+
+    					// circles on hover event
+    					butterflyCirclesG.selectAll("circle[data-available='true'][data-waiting='false']").on("mouseover", function () {
+    						//  get question id -- eg. "Q02"
+    						let id = select(this).attr("id");
+
+    						// make question bold
+    						select(`foreignObject[data-question-id=${id}]`).style("font-weight", "bold");
+
+    						// make this circle invisible
+    						select(this).transition(200).style("opacity", 0);
+
+    						let toggleG = select(`#switch__${id}`);
+
+    						// make toggle visible
+    						toggleG.style("opacity", 1).style("pointer-events", "auto");
+
+    						// make toggle swichable
+    						toggleG.selectAll("circle").on("mouseover", function () {
+    							toggleMouseOver(select(this), select(this.parentNode));
+    						}).on("click", function () {
+    							toggleClick(select(this), select(this.parentNode));
+    						}).on("mouseleave", function () {
+    							toggleMouseLeave(select(this), select(this.parentNode));
+    						});
+    					});
+    				}); //   // *NOTE* for now, to set up the Documentation.svelte, setting this variable to a mode that's related to the question, not the actual mode that turns to "true". needs updates here.
+    				//   // trueMode = [...clicks.modes].filter(m => m[1] == true)[0][0]
+    				// })
     			}
     		}
     	};
 
     	return [
     		selectedCountry,
-    		butterflies,
     		definitions,
     		warnings,
     		acqMode,
+    		butterflies,
+    		w,
+    		trueMode,
+    		h,
+    		selectedColor,
     		selectedRegion,
-    		questions
+    		questions,
+    		questionToMode,
+    		modeA06a,
+    		acqModeFiltered,
+    		possibleModes,
+    		possibleQuestions,
+    		unnecessaryQuestions,
+    		possiblePaths,
+    		a06aValue,
+    		a06aText,
+    		filteredQuestionToMode,
+    		documentation_trueMode_binding,
+    		section_elementresize_handler
     	];
     }
 
@@ -9113,13 +10545,15 @@ var app = (function () {
     		super(options);
 
     		init$1(this, options, instance$7, create_fragment$7, safe_not_equal, {
-    			selectedRegion: 5,
+    			selectedRegion: 9,
     			selectedCountry: 0,
-    			definitions: 2,
-    			warnings: 3,
-    			questions: 6,
-    			acqMode: 4,
-    			butterflies: 1
+    			definitions: 1,
+    			warnings: 2,
+    			questions: 10,
+    			acqMode: 3,
+    			questionToMode: 11,
+    			butterflies: 4,
+    			modeA06a: 12
     		});
 
     		dispatch_dev("SvelteRegisterComponent", {
@@ -9132,32 +10566,40 @@ var app = (function () {
     		const { ctx } = this.$$;
     		const props = options.props || {};
 
-    		if (/*selectedRegion*/ ctx[5] === undefined && !('selectedRegion' in props)) {
-    			console_1.warn("<BigButterflyContainer> was created without expected prop 'selectedRegion'");
+    		if (/*selectedRegion*/ ctx[9] === undefined && !('selectedRegion' in props)) {
+    			console.warn("<BigButterflyContainer> was created without expected prop 'selectedRegion'");
     		}
 
     		if (/*selectedCountry*/ ctx[0] === undefined && !('selectedCountry' in props)) {
-    			console_1.warn("<BigButterflyContainer> was created without expected prop 'selectedCountry'");
+    			console.warn("<BigButterflyContainer> was created without expected prop 'selectedCountry'");
     		}
 
-    		if (/*definitions*/ ctx[2] === undefined && !('definitions' in props)) {
-    			console_1.warn("<BigButterflyContainer> was created without expected prop 'definitions'");
+    		if (/*definitions*/ ctx[1] === undefined && !('definitions' in props)) {
+    			console.warn("<BigButterflyContainer> was created without expected prop 'definitions'");
     		}
 
-    		if (/*warnings*/ ctx[3] === undefined && !('warnings' in props)) {
-    			console_1.warn("<BigButterflyContainer> was created without expected prop 'warnings'");
+    		if (/*warnings*/ ctx[2] === undefined && !('warnings' in props)) {
+    			console.warn("<BigButterflyContainer> was created without expected prop 'warnings'");
     		}
 
-    		if (/*questions*/ ctx[6] === undefined && !('questions' in props)) {
-    			console_1.warn("<BigButterflyContainer> was created without expected prop 'questions'");
+    		if (/*questions*/ ctx[10] === undefined && !('questions' in props)) {
+    			console.warn("<BigButterflyContainer> was created without expected prop 'questions'");
     		}
 
-    		if (/*acqMode*/ ctx[4] === undefined && !('acqMode' in props)) {
-    			console_1.warn("<BigButterflyContainer> was created without expected prop 'acqMode'");
+    		if (/*acqMode*/ ctx[3] === undefined && !('acqMode' in props)) {
+    			console.warn("<BigButterflyContainer> was created without expected prop 'acqMode'");
     		}
 
-    		if (/*butterflies*/ ctx[1] === undefined && !('butterflies' in props)) {
-    			console_1.warn("<BigButterflyContainer> was created without expected prop 'butterflies'");
+    		if (/*questionToMode*/ ctx[11] === undefined && !('questionToMode' in props)) {
+    			console.warn("<BigButterflyContainer> was created without expected prop 'questionToMode'");
+    		}
+
+    		if (/*butterflies*/ ctx[4] === undefined && !('butterflies' in props)) {
+    			console.warn("<BigButterflyContainer> was created without expected prop 'butterflies'");
+    		}
+
+    		if (/*modeA06a*/ ctx[12] === undefined && !('modeA06a' in props)) {
+    			console.warn("<BigButterflyContainer> was created without expected prop 'modeA06a'");
     		}
     	}
 
@@ -9209,11 +10651,27 @@ var app = (function () {
     		throw new Error("<BigButterflyContainer>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
+    	get questionToMode() {
+    		throw new Error("<BigButterflyContainer>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set questionToMode(value) {
+    		throw new Error("<BigButterflyContainer>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
     	get butterflies() {
     		throw new Error("<BigButterflyContainer>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
     	set butterflies(value) {
+    		throw new Error("<BigButterflyContainer>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get modeA06a() {
+    		throw new Error("<BigButterflyContainer>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set modeA06a(value) {
     		throw new Error("<BigButterflyContainer>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
     }
@@ -9231,14 +10689,17 @@ var app = (function () {
     	let current;
 
     	function countrycardcontainer_selectedRegion_binding(value) {
-    		/*countrycardcontainer_selectedRegion_binding*/ ctx[4](value);
+    		/*countrycardcontainer_selectedRegion_binding*/ ctx[5](value);
     	}
 
     	function countrycardcontainer_selectedCountry_binding(value) {
-    		/*countrycardcontainer_selectedCountry_binding*/ ctx[5](value);
+    		/*countrycardcontainer_selectedCountry_binding*/ ctx[6](value);
     	}
 
-    	let countrycardcontainer_props = { data: /*datasets*/ ctx[2][3] };
+    	let countrycardcontainer_props = {
+    		countryData: /*datasets*/ ctx[2][1],
+    		regionData: /*selectedRegionData*/ ctx[4]
+    	};
 
     	if (/*selectedRegion*/ ctx[0] !== void 0) {
     		countrycardcontainer_props.selectedRegion = /*selectedRegion*/ ctx[0];
@@ -9257,19 +10718,21 @@ var app = (function () {
     	binding_callbacks.push(() => bind$1(countrycardcontainer, 'selectedCountry', countrycardcontainer_selectedCountry_binding));
 
     	function bigbutterflycontainer_selectedCountry_binding(value) {
-    		/*bigbutterflycontainer_selectedCountry_binding*/ ctx[6](value);
+    		/*bigbutterflycontainer_selectedCountry_binding*/ ctx[7](value);
     	}
 
     	function bigbutterflycontainer_selectedRegion_binding(value) {
-    		/*bigbutterflycontainer_selectedRegion_binding*/ ctx[7](value);
+    		/*bigbutterflycontainer_selectedRegion_binding*/ ctx[8](value);
     	}
 
     	let bigbutterflycontainer_props = {
-    		warnings: /*datasets*/ ctx[2][4],
-    		definitions: /*datasets*/ ctx[2][5],
-    		questions: /*datasets*/ ctx[2][6],
-    		acqMode: /*datasets*/ ctx[2][7],
-    		butterflies: /*butterflies*/ ctx[3]
+    		warnings: /*datasets*/ ctx[2][2],
+    		definitions: /*datasets*/ ctx[2][3],
+    		questions: /*datasets*/ ctx[2][4],
+    		acqMode: /*datasets*/ ctx[2][5],
+    		questionToMode: /*datasets*/ ctx[2][7],
+    		butterflies: /*butterflies*/ ctx[3],
+    		modeA06a: /*datasets*/ ctx[2][8]
     	};
 
     	if (/*selectedCountry*/ ctx[1] !== void 0) {
@@ -9305,7 +10768,7 @@ var app = (function () {
     		},
     		p: function update(ctx, [dirty]) {
     			const countrycardcontainer_changes = {};
-    			if (dirty & /*datasets*/ 4) countrycardcontainer_changes.data = /*datasets*/ ctx[2][3];
+    			if (dirty & /*datasets*/ 4) countrycardcontainer_changes.countryData = /*datasets*/ ctx[2][1];
 
     			if (!updating_selectedRegion && dirty & /*selectedRegion*/ 1) {
     				updating_selectedRegion = true;
@@ -9321,11 +10784,13 @@ var app = (function () {
 
     			countrycardcontainer.$set(countrycardcontainer_changes);
     			const bigbutterflycontainer_changes = {};
-    			if (dirty & /*datasets*/ 4) bigbutterflycontainer_changes.warnings = /*datasets*/ ctx[2][4];
-    			if (dirty & /*datasets*/ 4) bigbutterflycontainer_changes.definitions = /*datasets*/ ctx[2][5];
-    			if (dirty & /*datasets*/ 4) bigbutterflycontainer_changes.questions = /*datasets*/ ctx[2][6];
-    			if (dirty & /*datasets*/ 4) bigbutterflycontainer_changes.acqMode = /*datasets*/ ctx[2][7];
+    			if (dirty & /*datasets*/ 4) bigbutterflycontainer_changes.warnings = /*datasets*/ ctx[2][2];
+    			if (dirty & /*datasets*/ 4) bigbutterflycontainer_changes.definitions = /*datasets*/ ctx[2][3];
+    			if (dirty & /*datasets*/ 4) bigbutterflycontainer_changes.questions = /*datasets*/ ctx[2][4];
+    			if (dirty & /*datasets*/ 4) bigbutterflycontainer_changes.acqMode = /*datasets*/ ctx[2][5];
+    			if (dirty & /*datasets*/ 4) bigbutterflycontainer_changes.questionToMode = /*datasets*/ ctx[2][7];
     			if (dirty & /*butterflies*/ 8) bigbutterflycontainer_changes.butterflies = /*butterflies*/ ctx[3];
+    			if (dirty & /*datasets*/ 4) bigbutterflycontainer_changes.modeA06a = /*datasets*/ ctx[2][8];
 
     			if (!updating_selectedCountry_1 && dirty & /*selectedCountry*/ 2) {
     				updating_selectedCountry_1 = true;
@@ -9377,6 +10842,18 @@ var app = (function () {
     	let { selectedCountry } = $$props;
     	let { datasets } = $$props;
     	let { butterflies } = $$props;
+
+    	// region data for country cards
+    	let selectedRegionValue = datasets[0].filter(d => d.properties.SUBREGION == selectedRegion);
+
+    	selectedRegionValue = selectedRegionValue[0].properties.VALUE;
+    	let selectedRegionColor = regions.filter(d => d.name == selectedRegion)[0].color;
+
+    	let selectedRegionData = {
+    		value: selectedRegionValue,
+    		color: selectedRegionColor
+    	};
+
     	const writable_props = ['selectedRegion', 'selectedCountry', 'datasets', 'butterflies'];
 
     	Object.keys($$props).forEach(key => {
@@ -9413,10 +10890,14 @@ var app = (function () {
     	$$self.$capture_state = () => ({
     		CountryCardContainer,
     		BigButterflyContainer,
+    		regions,
     		selectedRegion,
     		selectedCountry,
     		datasets,
-    		butterflies
+    		butterflies,
+    		selectedRegionValue,
+    		selectedRegionColor,
+    		selectedRegionData
     	});
 
     	$$self.$inject_state = $$props => {
@@ -9424,6 +10905,9 @@ var app = (function () {
     		if ('selectedCountry' in $$props) $$invalidate(1, selectedCountry = $$props.selectedCountry);
     		if ('datasets' in $$props) $$invalidate(2, datasets = $$props.datasets);
     		if ('butterflies' in $$props) $$invalidate(3, butterflies = $$props.butterflies);
+    		if ('selectedRegionValue' in $$props) selectedRegionValue = $$props.selectedRegionValue;
+    		if ('selectedRegionColor' in $$props) selectedRegionColor = $$props.selectedRegionColor;
+    		if ('selectedRegionData' in $$props) $$invalidate(4, selectedRegionData = $$props.selectedRegionData);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -9435,6 +10919,7 @@ var app = (function () {
     		selectedCountry,
     		datasets,
     		butterflies,
+    		selectedRegionData,
     		countrycardcontainer_selectedRegion_binding,
     		countrycardcontainer_selectedCountry_binding,
     		bigbutterflycontainer_selectedCountry_binding,
@@ -9514,209 +10999,29 @@ var app = (function () {
     }
 
     /* src/MapPoints.svelte generated by Svelte v3.46.4 */
-    const file$3 = "src/MapPoints.svelte";
+    const file$5 = "src/MapPoints.svelte";
 
-    function get_each_context(ctx, list, i) {
+    function get_each_context$1(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[24] = list[i].x;
-    	child_ctx[25] = list[i].y;
-    	child_ctx[26] = list[i].value;
-    	child_ctx[27] = list[i].regionIndex;
-    	child_ctx[28] = list[i].regionShape;
-    	child_ctx[29] = list[i].regionCode;
+    	child_ctx[21] = list[i].x;
+    	child_ctx[22] = list[i].y;
+    	child_ctx[23] = list[i].value;
+    	child_ctx[24] = list[i].regionIndex;
+    	child_ctx[25] = list[i].regionCode;
     	return child_ctx;
     }
 
-    function get_each_context_1(ctx, list, i) {
-    	const child_ctx = ctx.slice();
-    	child_ctx[32] = list[i].CODE;
-    	child_ctx[33] = list[i].ORIG;
-    	child_ctx[26] = list[i].value;
-    	return child_ctx;
-    }
-
-    // (145:4) {#if links !== undefined}
-    function create_if_block$2(ctx) {
-    	let each_1_anchor;
-    	let each_value_1 = /*links*/ ctx[1];
-    	validate_each_argument(each_value_1);
-    	let each_blocks = [];
-
-    	for (let i = 0; i < each_value_1.length; i += 1) {
-    		each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
-    	}
-
-    	const block = {
-    		c: function create() {
-    			for (let i = 0; i < each_blocks.length; i += 1) {
-    				each_blocks[i].c();
-    			}
-
-    			each_1_anchor = empty$1();
-    		},
-    		m: function mount(target, anchor) {
-    			for (let i = 0; i < each_blocks.length; i += 1) {
-    				each_blocks[i].m(target, anchor);
-    			}
-
-    			insert_dev(target, each_1_anchor, anchor);
-    		},
-    		p: function update(ctx, dirty) {
-    			if (dirty[0] & /*$butterflyPoints, links, pathScale*/ 22) {
-    				each_value_1 = /*links*/ ctx[1];
-    				validate_each_argument(each_value_1);
-    				let i;
-
-    				for (i = 0; i < each_value_1.length; i += 1) {
-    					const child_ctx = get_each_context_1(ctx, each_value_1, i);
-
-    					if (each_blocks[i]) {
-    						each_blocks[i].p(child_ctx, dirty);
-    					} else {
-    						each_blocks[i] = create_each_block_1(child_ctx);
-    						each_blocks[i].c();
-    						each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
-    					}
-    				}
-
-    				for (; i < each_blocks.length; i += 1) {
-    					each_blocks[i].d(1);
-    				}
-
-    				each_blocks.length = each_value_1.length;
-    			}
-    		},
-    		d: function destroy(detaching) {
-    			destroy_each(each_blocks, detaching);
-    			if (detaching) detach_dev(each_1_anchor);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_if_block$2.name,
-    		type: "if",
-    		source: "(145:4) {#if links !== undefined}",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (146:6) {#each links as {CODE, ORIG, value}}
-    function create_each_block_1(ctx) {
-    	let line_1;
-    	let line_1_x__value;
-    	let line_1_y__value;
-    	let line_1_x__value_1;
-    	let line_1_y__value_1;
-    	let line_1_data_orig_value;
-    	let line_1_data_code_value;
-    	let line_1_data_value_value;
-    	let line_1_stroke_width_value;
-    	let line_1_stroke_dasharray_value;
-
-    	function func(...args) {
-    		return /*func*/ ctx[16](/*ORIG*/ ctx[33], ...args);
-    	}
-
-    	function func_1(...args) {
-    		return /*func_1*/ ctx[17](/*ORIG*/ ctx[33], ...args);
-    	}
-
-    	function func_2(...args) {
-    		return /*func_2*/ ctx[18](/*CODE*/ ctx[32], ...args);
-    	}
-
-    	function func_3(...args) {
-    		return /*func_3*/ ctx[19](/*CODE*/ ctx[32], ...args);
-    	}
-
-    	const block = {
-    		c: function create() {
-    			line_1 = svg_element("line");
-    			attr_dev(line_1, "x1", line_1_x__value = /*$butterflyPoints*/ ctx[2].filter(func)[0].x);
-    			attr_dev(line_1, "y1", line_1_y__value = /*$butterflyPoints*/ ctx[2].filter(func_1)[0].y);
-    			attr_dev(line_1, "x2", line_1_x__value_1 = /*$butterflyPoints*/ ctx[2].filter(func_2)[0].x);
-    			attr_dev(line_1, "y2", line_1_y__value_1 = /*$butterflyPoints*/ ctx[2].filter(func_3)[0].y);
-    			attr_dev(line_1, "data-orig", line_1_data_orig_value = /*ORIG*/ ctx[33]);
-    			attr_dev(line_1, "data-code", line_1_data_code_value = /*CODE*/ ctx[32]);
-    			attr_dev(line_1, "data-value", line_1_data_value_value = /*value*/ ctx[26]);
-    			attr_dev(line_1, "stroke", "gray");
-    			attr_dev(line_1, "stroke-width", line_1_stroke_width_value = /*pathScale*/ ctx[4](/*value*/ ctx[26]));
-    			attr_dev(line_1, "stroke-dasharray", line_1_stroke_dasharray_value = "1 " + /*pathScale*/ ctx[4](/*value*/ ctx[26]) * 2);
-    			attr_dev(line_1, "stroke-linecap", "round");
-    			add_location(line_1, file$3, 147, 8, 4264);
-    		},
-    		m: function mount(target, anchor) {
-    			insert_dev(target, line_1, anchor);
-    		},
-    		p: function update(new_ctx, dirty) {
-    			ctx = new_ctx;
-
-    			if (dirty[0] & /*$butterflyPoints, links*/ 6 && line_1_x__value !== (line_1_x__value = /*$butterflyPoints*/ ctx[2].filter(func)[0].x)) {
-    				attr_dev(line_1, "x1", line_1_x__value);
-    			}
-
-    			if (dirty[0] & /*$butterflyPoints, links*/ 6 && line_1_y__value !== (line_1_y__value = /*$butterflyPoints*/ ctx[2].filter(func_1)[0].y)) {
-    				attr_dev(line_1, "y1", line_1_y__value);
-    			}
-
-    			if (dirty[0] & /*$butterflyPoints, links*/ 6 && line_1_x__value_1 !== (line_1_x__value_1 = /*$butterflyPoints*/ ctx[2].filter(func_2)[0].x)) {
-    				attr_dev(line_1, "x2", line_1_x__value_1);
-    			}
-
-    			if (dirty[0] & /*$butterflyPoints, links*/ 6 && line_1_y__value_1 !== (line_1_y__value_1 = /*$butterflyPoints*/ ctx[2].filter(func_3)[0].y)) {
-    				attr_dev(line_1, "y2", line_1_y__value_1);
-    			}
-
-    			if (dirty[0] & /*links*/ 2 && line_1_data_orig_value !== (line_1_data_orig_value = /*ORIG*/ ctx[33])) {
-    				attr_dev(line_1, "data-orig", line_1_data_orig_value);
-    			}
-
-    			if (dirty[0] & /*links*/ 2 && line_1_data_code_value !== (line_1_data_code_value = /*CODE*/ ctx[32])) {
-    				attr_dev(line_1, "data-code", line_1_data_code_value);
-    			}
-
-    			if (dirty[0] & /*links*/ 2 && line_1_data_value_value !== (line_1_data_value_value = /*value*/ ctx[26])) {
-    				attr_dev(line_1, "data-value", line_1_data_value_value);
-    			}
-
-    			if (dirty[0] & /*links*/ 2 && line_1_stroke_width_value !== (line_1_stroke_width_value = /*pathScale*/ ctx[4](/*value*/ ctx[26]))) {
-    				attr_dev(line_1, "stroke-width", line_1_stroke_width_value);
-    			}
-
-    			if (dirty[0] & /*links*/ 2 && line_1_stroke_dasharray_value !== (line_1_stroke_dasharray_value = "1 " + /*pathScale*/ ctx[4](/*value*/ ctx[26]) * 2)) {
-    				attr_dev(line_1, "stroke-dasharray", line_1_stroke_dasharray_value);
-    			}
-    		},
-    		d: function destroy(detaching) {
-    			if (detaching) detach_dev(line_1);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_each_block_1.name,
-    		type: "each",
-    		source: "(146:6) {#each links as {CODE, ORIG, value}}",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (165:2) {#each $butterflyPoints as {x, y, value, regionIndex, regionShape, regionCode}}
-    function create_each_block(ctx) {
+    // (187:2) {#each $butterflyPoints as {x, y, value, regionIndex, regionCode}}
+    function create_each_block$1(ctx) {
     	let g1;
     	let g0;
     	let use;
-    	let use_xlink_href_value;
     	let use_transform_value;
     	let use_stroke_value;
     	let use_fill_value;
     	let use_data_region_index_value;
     	let use_data_region_code_value;
+    	let use_data_value_value;
     	let g0_transform_value;
     	let g1_transform_value;
     	let mounted;
@@ -9727,22 +11032,23 @@ var app = (function () {
     			g1 = svg_element("g");
     			g0 = svg_element("g");
     			use = svg_element("use");
-    			xlink_attr(use, "xlink:href", use_xlink_href_value = "#butterfly-" + /*regionShape*/ ctx[28]);
-    			attr_dev(use, "transform", use_transform_value = "scale(" + /*sScale*/ ctx[3](/*value*/ ctx[26]) + ")");
-    			attr_dev(use, "stroke", use_stroke_value = regions[/*regionIndex*/ ctx[27]].color);
+    			xlink_attr(use, "xlink:href", "#butterfly-0");
+    			attr_dev(use, "transform", use_transform_value = "scale(" + /*sScale*/ ctx[2](/*value*/ ctx[23]) + ")");
+    			attr_dev(use, "stroke", use_stroke_value = regions[/*regionIndex*/ ctx[24]].color);
     			attr_dev(use, "stroke-width", "1");
-    			attr_dev(use, "fill", use_fill_value = regions[/*regionIndex*/ ctx[27]].color);
+    			attr_dev(use, "fill", use_fill_value = regions[/*regionIndex*/ ctx[24]].color);
     			attr_dev(use, "fill-opacity", "0.5");
-    			attr_dev(use, "data-region-index", use_data_region_index_value = /*regionIndex*/ ctx[27]);
-    			attr_dev(use, "data-region-code", use_data_region_code_value = /*regionCode*/ ctx[29]);
+    			attr_dev(use, "data-region-index", use_data_region_index_value = /*regionIndex*/ ctx[24]);
+    			attr_dev(use, "data-region-code", use_data_region_code_value = /*regionCode*/ ctx[25]);
+    			attr_dev(use, "data-value", use_data_value_value = /*value*/ ctx[23]);
     			attr_dev(use, "class", "svelte-rmrozh");
-    			add_location(use, file$3, 174, 8, 5232);
+    			add_location(use, file$5, 196, 8, 6181);
     			attr_dev(g0, "class", "butterfly svelte-rmrozh");
-    			attr_dev(g0, "transform", g0_transform_value = "translate(" + /*x*/ ctx[24] + ", " + /*y*/ ctx[25] + ") rotate(" + (Math.random() * 60 - 30) + ")");
-    			add_location(g0, file$3, 169, 6, 5048);
+    			attr_dev(g0, "transform", g0_transform_value = "translate(" + /*x*/ ctx[21] + ", " + /*y*/ ctx[22] + ") rotate(" + (Math.random() * 60 - 30) + ")");
+    			add_location(g0, file$5, 191, 6, 5997);
     			attr_dev(g1, "class", "butterfly-container");
-    			attr_dev(g1, "transform", g1_transform_value = "translate(" + /*sScale*/ ctx[3](/*value*/ ctx[26]) * -50 + ", " + /*sScale*/ ctx[3](/*value*/ ctx[26]) * -50 + ")");
-    			add_location(g1, file$3, 165, 4, 4925);
+    			attr_dev(g1, "transform", g1_transform_value = "translate(" + /*sScale*/ ctx[2](/*value*/ ctx[23]) * -50 + ", " + /*sScale*/ ctx[2](/*value*/ ctx[23]) * -50 + ")");
+    			add_location(g1, file$5, 187, 4, 5874);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, g1, anchor);
@@ -9751,44 +11057,44 @@ var app = (function () {
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(use, "mouseover", /*handleMouseOver*/ ctx[6], false, false, false),
-    					listen_dev(use, "mouseout", /*handleMouseOut*/ ctx[7], false, false, false),
-    					listen_dev(use, "click", /*handleClick*/ ctx[8], false, false, false)
+    					listen_dev(use, "mouseover", /*handleMouseOver*/ ctx[4], false, false, false),
+    					listen_dev(use, "mouseout", /*handleMouseOut*/ ctx[5], false, false, false),
+    					listen_dev(use, "click", /*handleClick*/ ctx[6], false, false, false)
     				];
 
     				mounted = true;
     			}
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty[0] & /*$butterflyPoints*/ 4 && use_xlink_href_value !== (use_xlink_href_value = "#butterfly-" + /*regionShape*/ ctx[28])) {
-    				xlink_attr(use, "xlink:href", use_xlink_href_value);
-    			}
-
-    			if (dirty[0] & /*$butterflyPoints*/ 4 && use_transform_value !== (use_transform_value = "scale(" + /*sScale*/ ctx[3](/*value*/ ctx[26]) + ")")) {
+    			if (dirty & /*$butterflyPoints*/ 2 && use_transform_value !== (use_transform_value = "scale(" + /*sScale*/ ctx[2](/*value*/ ctx[23]) + ")")) {
     				attr_dev(use, "transform", use_transform_value);
     			}
 
-    			if (dirty[0] & /*$butterflyPoints*/ 4 && use_stroke_value !== (use_stroke_value = regions[/*regionIndex*/ ctx[27]].color)) {
+    			if (dirty & /*$butterflyPoints*/ 2 && use_stroke_value !== (use_stroke_value = regions[/*regionIndex*/ ctx[24]].color)) {
     				attr_dev(use, "stroke", use_stroke_value);
     			}
 
-    			if (dirty[0] & /*$butterflyPoints*/ 4 && use_fill_value !== (use_fill_value = regions[/*regionIndex*/ ctx[27]].color)) {
+    			if (dirty & /*$butterflyPoints*/ 2 && use_fill_value !== (use_fill_value = regions[/*regionIndex*/ ctx[24]].color)) {
     				attr_dev(use, "fill", use_fill_value);
     			}
 
-    			if (dirty[0] & /*$butterflyPoints*/ 4 && use_data_region_index_value !== (use_data_region_index_value = /*regionIndex*/ ctx[27])) {
+    			if (dirty & /*$butterflyPoints*/ 2 && use_data_region_index_value !== (use_data_region_index_value = /*regionIndex*/ ctx[24])) {
     				attr_dev(use, "data-region-index", use_data_region_index_value);
     			}
 
-    			if (dirty[0] & /*$butterflyPoints*/ 4 && use_data_region_code_value !== (use_data_region_code_value = /*regionCode*/ ctx[29])) {
+    			if (dirty & /*$butterflyPoints*/ 2 && use_data_region_code_value !== (use_data_region_code_value = /*regionCode*/ ctx[25])) {
     				attr_dev(use, "data-region-code", use_data_region_code_value);
     			}
 
-    			if (dirty[0] & /*$butterflyPoints*/ 4 && g0_transform_value !== (g0_transform_value = "translate(" + /*x*/ ctx[24] + ", " + /*y*/ ctx[25] + ") rotate(" + (Math.random() * 60 - 30) + ")")) {
+    			if (dirty & /*$butterflyPoints*/ 2 && use_data_value_value !== (use_data_value_value = /*value*/ ctx[23])) {
+    				attr_dev(use, "data-value", use_data_value_value);
+    			}
+
+    			if (dirty & /*$butterflyPoints*/ 2 && g0_transform_value !== (g0_transform_value = "translate(" + /*x*/ ctx[21] + ", " + /*y*/ ctx[22] + ") rotate(" + (Math.random() * 60 - 30) + ")")) {
     				attr_dev(g0, "transform", g0_transform_value);
     			}
 
-    			if (dirty[0] & /*$butterflyPoints*/ 4 && g1_transform_value !== (g1_transform_value = "translate(" + /*sScale*/ ctx[3](/*value*/ ctx[26]) * -50 + ", " + /*sScale*/ ctx[3](/*value*/ ctx[26]) * -50 + ")")) {
+    			if (dirty & /*$butterflyPoints*/ 2 && g1_transform_value !== (g1_transform_value = "translate(" + /*sScale*/ ctx[2](/*value*/ ctx[23]) * -50 + ", " + /*sScale*/ ctx[2](/*value*/ ctx[23]) * -50 + ")")) {
     				attr_dev(g1, "transform", g1_transform_value);
     			}
     		},
@@ -9801,9 +11107,9 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_each_block.name,
+    		id: create_each_block$1.name,
     		type: "each",
-    		source: "(165:2) {#each $butterflyPoints as {x, y, value, regionIndex, regionShape, regionCode}}",
+    		source: "(187:2) {#each $butterflyPoints as {x, y, value, regionIndex, regionCode}}",
     		ctx
     	});
 
@@ -9811,95 +11117,63 @@ var app = (function () {
     }
 
     function create_fragment$5(ctx) {
-    	let g3;
-    	let defs0;
-    	let g0;
-    	let raw0_value = /*butterflies*/ ctx[0][0] + "";
-    	let defs1;
     	let g1;
-    	let raw1_value = /*butterflies*/ ctx[0][1] + "";
-    	let g2;
-    	let if_block = /*links*/ ctx[1] !== undefined && create_if_block$2(ctx);
-    	let each_value = /*$butterflyPoints*/ ctx[2];
+    	let defs;
+    	let g0;
+    	let raw_value = /*butterflies*/ ctx[0][0] + "";
+    	let each_value = /*$butterflyPoints*/ ctx[1];
     	validate_each_argument(each_value);
     	let each_blocks = [];
 
     	for (let i = 0; i < each_value.length; i += 1) {
-    		each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
+    		each_blocks[i] = create_each_block$1(get_each_context$1(ctx, each_value, i));
     	}
 
     	const block = {
     		c: function create() {
-    			g3 = svg_element("g");
-    			defs0 = svg_element("defs");
-    			g0 = svg_element("g");
-    			defs1 = svg_element("defs");
     			g1 = svg_element("g");
-    			g2 = svg_element("g");
-    			if (if_block) if_block.c();
+    			defs = svg_element("defs");
+    			g0 = svg_element("g");
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
 
     			attr_dev(g0, "id", "butterfly-0");
-    			add_location(g0, file$3, 133, 4, 3952);
-    			add_location(defs0, file$3, 132, 2, 3941);
-    			attr_dev(g1, "id", "butterfly-1");
-    			add_location(g1, file$3, 138, 4, 4034);
-    			add_location(defs1, file$3, 137, 2, 4023);
-    			attr_dev(g2, "class", "link-lines");
-    			add_location(g2, file$3, 143, 2, 4106);
-    			attr_dev(g3, "class", "map-points");
-    			add_location(g3, file$3, 124, 0, 3784);
+    			add_location(g0, file$5, 181, 4, 5731);
+    			add_location(defs, file$5, 180, 2, 5720);
+    			attr_dev(g1, "class", "map-points");
+    			add_location(g1, file$5, 179, 0, 5695);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, g3, anchor);
-    			append_dev(g3, defs0);
-    			append_dev(defs0, g0);
-    			g0.innerHTML = raw0_value;
-    			append_dev(g3, defs1);
-    			append_dev(defs1, g1);
-    			g1.innerHTML = raw1_value;
-    			append_dev(g3, g2);
-    			if (if_block) if_block.m(g2, null);
+    			insert_dev(target, g1, anchor);
+    			append_dev(g1, defs);
+    			append_dev(defs, g0);
+    			g0.innerHTML = raw_value;
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
-    				each_blocks[i].m(g3, null);
+    				each_blocks[i].m(g1, null);
     			}
     		},
-    		p: function update(ctx, dirty) {
-    			if (dirty[0] & /*butterflies*/ 1 && raw0_value !== (raw0_value = /*butterflies*/ ctx[0][0] + "")) g0.innerHTML = raw0_value;			if (dirty[0] & /*butterflies*/ 1 && raw1_value !== (raw1_value = /*butterflies*/ ctx[0][1] + "")) g1.innerHTML = raw1_value;
-    			if (/*links*/ ctx[1] !== undefined) {
-    				if (if_block) {
-    					if_block.p(ctx, dirty);
-    				} else {
-    					if_block = create_if_block$2(ctx);
-    					if_block.c();
-    					if_block.m(g2, null);
-    				}
-    			} else if (if_block) {
-    				if_block.d(1);
-    				if_block = null;
-    			}
-
-    			if (dirty[0] & /*sScale, $butterflyPoints, handleMouseOver, handleMouseOut, handleClick*/ 460) {
-    				each_value = /*$butterflyPoints*/ ctx[2];
+    		p: function update(ctx, [dirty]) {
+    			if (dirty & /*butterflies*/ 1 && raw_value !== (raw_value = /*butterflies*/ ctx[0][0] + "")) g0.innerHTML = raw_value;
+    			if (dirty & /*sScale, $butterflyPoints, Math, regions, handleMouseOver, handleMouseOut, handleClick*/ 118) {
+    				each_value = /*$butterflyPoints*/ ctx[1];
     				validate_each_argument(each_value);
     				let i;
 
     				for (i = 0; i < each_value.length; i += 1) {
-    					const child_ctx = get_each_context(ctx, each_value, i);
+    					const child_ctx = get_each_context$1(ctx, each_value, i);
 
     					if (each_blocks[i]) {
     						each_blocks[i].p(child_ctx, dirty);
     					} else {
-    						each_blocks[i] = create_each_block(child_ctx);
+    						each_blocks[i] = create_each_block$1(child_ctx);
     						each_blocks[i].c();
-    						each_blocks[i].m(g3, null);
+    						each_blocks[i].m(g1, null);
     					}
     				}
 
@@ -9913,8 +11187,7 @@ var app = (function () {
     		i: noop$2,
     		o: noop$2,
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(g3);
-    			if (if_block) if_block.d();
+    			if (detaching) detach_dev(g1);
     			destroy_each(each_blocks, detaching);
     		}
     	};
@@ -9930,15 +11203,11 @@ var app = (function () {
     	return block;
     }
 
-    function setDasharray() {
-    	dasharray = "1 1" ;
-    	setTimeout(setDasharray, 1000);
-    }
-
     function instance$5($$self, $$props, $$invalidate) {
     	let $butterflyPoints;
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('MapPoints', slots, []);
+    	let { width } = $$props;
     	let { regionFlow } = $$props;
     	let { datasets } = $$props;
     	let { data } = $$props;
@@ -9947,52 +11216,121 @@ var app = (function () {
     	let { selectedRegion } = $$props;
     	let { hoveredRegionCode } = $$props;
     	let { selectedCountry } = $$props;
-    	let links = [];
+
+    	let dataset = [
+    		datasets[0].features,
+    		datasets[3],
+    		datasets[4],
+    		datasets[5],
+    		datasets[6],
+    		datasets[7],
+    		datasets[8],
+    		datasets[10],
+    		datasets[11]
+    	];
+
     	const { open } = getContext('simple-modal');
-    	const sScale = linear().domain(extent(data.features, d => d.properties.VALUE)).range([0.25, 1]);
-    	const pathScale = linear().domain(extent(regionFlow, d => d.value)).range([1, 10]);
+    	const sScale = linear().domain(extent(data.features, d => d.properties.VALUE)).range([0.25, width / 1200]);
+    	const pathScale = linear().domain(extent(regionFlow, d => d.value)).range([1, 20]);
+
+    	const colorScale = ordinal().domain(regions.map(function (d) {
+    		return d.name;
+    	})).range(regions.map(function (d) {
+    		return d.color;
+    	}));
 
     	let butterflyPoints = spring(
     		data.features.map(d => ({
     			x: 0,
     			y: 0,
     			value: 0,
+    			subregion: 0,
     			regionIndex: 0,
-    			regionShape: 0,
     			regionCode: 0
     		})),
     		{ stiffness: 1, damping: 1 }
     	);
 
     	validate_store(butterflyPoints, 'butterflyPoints');
-    	component_subscribe($$self, butterflyPoints, value => $$invalidate(2, $butterflyPoints = value));
+    	component_subscribe($$self, butterflyPoints, value => $$invalidate(1, $butterflyPoints = value));
 
     	function handleMouseOver() {
     		select(this).attr('fill-opacity', 1);
     		let hoverRegionIndex = select(this).attr('data-region-index');
-    		$$invalidate(10, hoveredRegionCode = regions[hoverRegionIndex].code);
-    		$$invalidate(1, links = regionFlow.filter(d => d.CODE === hoveredRegionCode).filter(d => d.CODE !== d.ORIG)); // Why are there some duplicates???
-    		$$invalidate(1, links = [...new Map(links.map(link => [link.ORIG, link])).values()]);
-    	}
+    		$$invalidate(8, hoveredRegionCode = regions[hoverRegionIndex].code);
+    		let x2 = $butterflyPoints.filter(d => d.regionCode == hoveredRegionCode)[0].x;
+    		let y2 = $butterflyPoints.filter(d => d.regionCode == hoveredRegionCode)[0].y;
+    		let destRegion = $butterflyPoints.filter(d => d.regionCode == hoveredRegionCode)[0].subregion;
+    		let values = regionFlow.filter(d => d.DEST === hoveredRegionCode).filter(d => d.DEST !== d.ORIG);
+    		let links = [];
 
+    		for (let v of values) {
+    			let x1 = $butterflyPoints.filter(d => d.regionCode == v.ORIG)[0].x;
+    			let y1 = $butterflyPoints.filter(d => d.regionCode == v.ORIG)[0].y;
+    			v.x1 = x1;
+    			v.y1 = y1;
+    			v.x2 = x2;
+    			v.y2 = y2;
+    			v.subRegion = $butterflyPoints.filter(d => d.regionCode == v.ORIG)[0].subregion;
+    			v.destRegion = destRegion;
+    			links.push(v);
+    		}
+
+    		select("#world-map").selectAll(".line").data(links).enter().append("line").attr("class", "link").attr("x1", function (d) {
+    			return d.x1;
+    		}).attr("y1", function (d) {
+    			return d.y1;
+    		}).attr("x2", function (d) {
+    			return d.x1;
+    		}).attr("y2", function (d) {
+    			return d.y1;
+    		}).attr("stroke", function (d) {
+    			return colorScale(d.subRegion);
+    		}).attr("stroke-width", function (d) {
+    			return pathScale(d.value);
+    		}).attr("stroke-opacity", .5).transition().duration(2000).attr("x1", function (d) {
+    			return d.x1;
+    		}).attr("y1", function (d) {
+    			return d.y1;
+    		}).attr("x2", function (d) {
+    			return d.x2;
+    		}).attr("y2", function (d) {
+    			return d.y2;
+    		}).attr("stroke", function (d) {
+    			return colorScale(d.destRegion);
+    		});
+    	} // const lineGroup = groups(links, d => d.DEST);
+    	// let newLine = line()
+
+    	//   .x(function(d) { return projection(d.x); })
+    	//   .y(function(d) { return projection(d.y); });
+    	//   select("#world-map")
+    	//   .selectAll(".line")
+    	//   .data(lineGroup)
+    	//   .join("path")
+    	//       .attr("fill", "none")
+    	//       .attr("stroke", "black")
+    	//       .attr("stroke", 2)
+    	//       .attr("d", function(d) { return newLine(d[1]); });
     	function handleMouseOut() {
+    		$$invalidate(8, hoveredRegionCode = "");
+
     		if (select(this).attr('data-region-index') != findRegionIndex(selectedRegion)) {
     			select(this).attr('fill-opacity', 0.5);
     		}
 
-    		$$invalidate(1, links = undefined);
+    		select("#world-map").selectAll(".link").remove();
     	}
 
     	function handleClick() {
     		select(".map-points").selectAll("use").attr('fill-opacity', 0.5);
-    		select(this).attr('fill-opacity', 1);
     		let selectedRegionIndex = select(this).attr('data-region-index');
-    		$$invalidate(9, selectedRegion = regions[selectedRegionIndex].name);
+    		$$invalidate(7, selectedRegion = regions[selectedRegionIndex].name);
 
     		open(Popup, {
     			selectedRegion,
     			selectedCountry,
-    			datasets,
+    			datasets: dataset,
     			butterflies
     		});
 
@@ -10002,17 +11340,12 @@ var app = (function () {
     			container.selectAll('.country-card').style("background", "white");
     			container.selectAll("use").attr("fill", color).attr("stroke", color);
     			container.selectAll(".country-card__country-name").style("color", "black");
-    			$$invalidate(11, selectedCountry = "");
+    			$$invalidate(9, selectedCountry = "");
     		}
     	}
 
     	function findRegionIndex(region) {
     		return regions.findIndex(re => re.name === region);
-    	}
-
-    	function findRegionShape(region) {
-    		let regionIndex = regions.findIndex(re => re.name === region);
-    		return regions[regionIndex].shape;
     	}
 
     	function findRegionCode(region) {
@@ -10021,6 +11354,7 @@ var app = (function () {
     	}
 
     	const writable_props = [
+    		'width',
     		'regionFlow',
     		'datasets',
     		'data',
@@ -10035,20 +11369,16 @@ var app = (function () {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<MapPoints> was created with unknown prop '${key}'`);
     	});
 
-    	const func = (ORIG, d) => d.regionCode == ORIG;
-    	const func_1 = (ORIG, d) => d.regionCode == ORIG;
-    	const func_2 = (CODE, d) => d.regionCode == CODE;
-    	const func_3 = (CODE, d) => d.regionCode == CODE;
-
     	$$self.$$set = $$props => {
-    		if ('regionFlow' in $$props) $$invalidate(12, regionFlow = $$props.regionFlow);
-    		if ('datasets' in $$props) $$invalidate(13, datasets = $$props.datasets);
-    		if ('data' in $$props) $$invalidate(14, data = $$props.data);
-    		if ('projection' in $$props) $$invalidate(15, projection = $$props.projection);
+    		if ('width' in $$props) $$invalidate(10, width = $$props.width);
+    		if ('regionFlow' in $$props) $$invalidate(11, regionFlow = $$props.regionFlow);
+    		if ('datasets' in $$props) $$invalidate(12, datasets = $$props.datasets);
+    		if ('data' in $$props) $$invalidate(13, data = $$props.data);
+    		if ('projection' in $$props) $$invalidate(14, projection = $$props.projection);
     		if ('butterflies' in $$props) $$invalidate(0, butterflies = $$props.butterflies);
-    		if ('selectedRegion' in $$props) $$invalidate(9, selectedRegion = $$props.selectedRegion);
-    		if ('hoveredRegionCode' in $$props) $$invalidate(10, hoveredRegionCode = $$props.hoveredRegionCode);
-    		if ('selectedCountry' in $$props) $$invalidate(11, selectedCountry = $$props.selectedCountry);
+    		if ('selectedRegion' in $$props) $$invalidate(7, selectedRegion = $$props.selectedRegion);
+    		if ('hoveredRegionCode' in $$props) $$invalidate(8, hoveredRegionCode = $$props.hoveredRegionCode);
+    		if ('selectedCountry' in $$props) $$invalidate(9, selectedCountry = $$props.selectedCountry);
     	};
 
     	$$self.$capture_state = () => ({
@@ -10056,12 +11386,8 @@ var app = (function () {
     		getContext,
     		scaleLinear: linear,
     		extent,
-    		min,
-    		max,
     		select,
-    		selectAll,
-    		groups,
-    		line,
+    		scaleOrdinal: ordinal,
     		forceSimulation,
     		forceCollide,
     		forceLink,
@@ -10069,6 +11395,7 @@ var app = (function () {
     		forceY,
     		Popup,
     		regions,
+    		width,
     		regionFlow,
     		datasets,
     		data,
@@ -10077,32 +11404,32 @@ var app = (function () {
     		selectedRegion,
     		hoveredRegionCode,
     		selectedCountry,
-    		links,
+    		dataset,
     		open,
     		sScale,
     		pathScale,
+    		colorScale,
     		butterflyPoints,
     		handleMouseOver,
     		handleMouseOut,
     		handleClick,
     		findRegionIndex,
-    		findRegionShape,
     		findRegionCode,
-    		setDasharray,
     		$butterflyPoints
     	});
 
     	$$self.$inject_state = $$props => {
-    		if ('regionFlow' in $$props) $$invalidate(12, regionFlow = $$props.regionFlow);
-    		if ('datasets' in $$props) $$invalidate(13, datasets = $$props.datasets);
-    		if ('data' in $$props) $$invalidate(14, data = $$props.data);
-    		if ('projection' in $$props) $$invalidate(15, projection = $$props.projection);
+    		if ('width' in $$props) $$invalidate(10, width = $$props.width);
+    		if ('regionFlow' in $$props) $$invalidate(11, regionFlow = $$props.regionFlow);
+    		if ('datasets' in $$props) $$invalidate(12, datasets = $$props.datasets);
+    		if ('data' in $$props) $$invalidate(13, data = $$props.data);
+    		if ('projection' in $$props) $$invalidate(14, projection = $$props.projection);
     		if ('butterflies' in $$props) $$invalidate(0, butterflies = $$props.butterflies);
-    		if ('selectedRegion' in $$props) $$invalidate(9, selectedRegion = $$props.selectedRegion);
-    		if ('hoveredRegionCode' in $$props) $$invalidate(10, hoveredRegionCode = $$props.hoveredRegionCode);
-    		if ('selectedCountry' in $$props) $$invalidate(11, selectedCountry = $$props.selectedCountry);
-    		if ('links' in $$props) $$invalidate(1, links = $$props.links);
-    		if ('butterflyPoints' in $$props) $$invalidate(5, butterflyPoints = $$props.butterflyPoints);
+    		if ('selectedRegion' in $$props) $$invalidate(7, selectedRegion = $$props.selectedRegion);
+    		if ('hoveredRegionCode' in $$props) $$invalidate(8, hoveredRegionCode = $$props.hoveredRegionCode);
+    		if ('selectedCountry' in $$props) $$invalidate(9, selectedCountry = $$props.selectedCountry);
+    		if ('dataset' in $$props) dataset = $$props.dataset;
+    		if ('butterflyPoints' in $$props) $$invalidate(3, butterflyPoints = $$props.butterflyPoints);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -10110,8 +11437,10 @@ var app = (function () {
     	}
 
     	$$self.$$.update = () => {
-    		if ($$self.$$.dirty[0] & /*data, projection*/ 49152) {
+    		if ($$self.$$.dirty & /*width, data, projection*/ 25600) {
     			{
+    				sScale.range([0.25, width / 1200]);
+
     				forceSimulation(data.features).force("collide", forceCollide().radius(d => sScale(d.properties.VALUE) * 55)).force("x", forceX().x(d => projection(d.geometry.coordinates)[0])).force("y", forceY().y(d => projection(d.geometry.coordinates)[1])).force("link", forceLink().id(function (d) {
     					return d.CODE;
     				})).stop().tick(100);
@@ -10120,8 +11449,8 @@ var app = (function () {
     					x: d.x,
     					y: d.y,
     					value: d.properties.VALUE,
+    					subregion: d.properties.SUBREGION,
     					regionIndex: findRegionIndex(d.properties.SUBREGION),
-    					regionShape: findRegionShape(d.properties.SUBREGION),
     					regionCode: findRegionCode(d.properties.SUBREGION)
     				}));
 
@@ -10132,10 +11461,8 @@ var app = (function () {
 
     	return [
     		butterflies,
-    		links,
     		$butterflyPoints,
     		sScale,
-    		pathScale,
     		butterflyPoints,
     		handleMouseOver,
     		handleMouseOut,
@@ -10143,14 +11470,11 @@ var app = (function () {
     		selectedRegion,
     		hoveredRegionCode,
     		selectedCountry,
+    		width,
     		regionFlow,
     		datasets,
     		data,
-    		projection,
-    		func,
-    		func_1,
-    		func_2,
-    		func_3
+    		projection
     	];
     }
 
@@ -10158,25 +11482,17 @@ var app = (function () {
     	constructor(options) {
     		super(options);
 
-    		init$1(
-    			this,
-    			options,
-    			instance$5,
-    			create_fragment$5,
-    			safe_not_equal,
-    			{
-    				regionFlow: 12,
-    				datasets: 13,
-    				data: 14,
-    				projection: 15,
-    				butterflies: 0,
-    				selectedRegion: 9,
-    				hoveredRegionCode: 10,
-    				selectedCountry: 11
-    			},
-    			null,
-    			[-1, -1]
-    		);
+    		init$1(this, options, instance$5, create_fragment$5, safe_not_equal, {
+    			width: 10,
+    			regionFlow: 11,
+    			datasets: 12,
+    			data: 13,
+    			projection: 14,
+    			butterflies: 0,
+    			selectedRegion: 7,
+    			hoveredRegionCode: 8,
+    			selectedCountry: 9
+    		});
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
@@ -10188,19 +11504,23 @@ var app = (function () {
     		const { ctx } = this.$$;
     		const props = options.props || {};
 
-    		if (/*regionFlow*/ ctx[12] === undefined && !('regionFlow' in props)) {
+    		if (/*width*/ ctx[10] === undefined && !('width' in props)) {
+    			console.warn("<MapPoints> was created without expected prop 'width'");
+    		}
+
+    		if (/*regionFlow*/ ctx[11] === undefined && !('regionFlow' in props)) {
     			console.warn("<MapPoints> was created without expected prop 'regionFlow'");
     		}
 
-    		if (/*datasets*/ ctx[13] === undefined && !('datasets' in props)) {
+    		if (/*datasets*/ ctx[12] === undefined && !('datasets' in props)) {
     			console.warn("<MapPoints> was created without expected prop 'datasets'");
     		}
 
-    		if (/*data*/ ctx[14] === undefined && !('data' in props)) {
+    		if (/*data*/ ctx[13] === undefined && !('data' in props)) {
     			console.warn("<MapPoints> was created without expected prop 'data'");
     		}
 
-    		if (/*projection*/ ctx[15] === undefined && !('projection' in props)) {
+    		if (/*projection*/ ctx[14] === undefined && !('projection' in props)) {
     			console.warn("<MapPoints> was created without expected prop 'projection'");
     		}
 
@@ -10208,17 +11528,25 @@ var app = (function () {
     			console.warn("<MapPoints> was created without expected prop 'butterflies'");
     		}
 
-    		if (/*selectedRegion*/ ctx[9] === undefined && !('selectedRegion' in props)) {
+    		if (/*selectedRegion*/ ctx[7] === undefined && !('selectedRegion' in props)) {
     			console.warn("<MapPoints> was created without expected prop 'selectedRegion'");
     		}
 
-    		if (/*hoveredRegionCode*/ ctx[10] === undefined && !('hoveredRegionCode' in props)) {
+    		if (/*hoveredRegionCode*/ ctx[8] === undefined && !('hoveredRegionCode' in props)) {
     			console.warn("<MapPoints> was created without expected prop 'hoveredRegionCode'");
     		}
 
-    		if (/*selectedCountry*/ ctx[11] === undefined && !('selectedCountry' in props)) {
+    		if (/*selectedCountry*/ ctx[9] === undefined && !('selectedCountry' in props)) {
     			console.warn("<MapPoints> was created without expected prop 'selectedCountry'");
     		}
+    	}
+
+    	get width() {
+    		throw new Error("<MapPoints>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set width(value) {
+    		throw new Error("<MapPoints>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
     	get regionFlow() {
@@ -10286,7 +11614,514 @@ var app = (function () {
     	}
     }
 
-    function fade(node, { delay = 0, duration = 400, easing = identity$5 } = {}) {
+    /* src/Legend.svelte generated by Svelte v3.46.4 */
+    const file$4 = "src/Legend.svelte";
+
+    function get_each_context_1(ctx, list, i) {
+    	const child_ctx = ctx.slice();
+    	child_ctx[0] = list[i].width;
+    	child_ctx[1] = list[i].height;
+    	child_ctx[6] = list[i].value;
+    	child_ctx[7] = list[i].text;
+    	child_ctx[9] = i;
+    	return child_ctx;
+    }
+
+    function get_each_context(ctx, list, i) {
+    	const child_ctx = ctx.slice();
+    	child_ctx[0] = list[i].width;
+    	child_ctx[1] = list[i].height;
+    	child_ctx[6] = list[i].value;
+    	child_ctx[7] = list[i].text;
+    	child_ctx[9] = i;
+    	return child_ctx;
+    }
+
+    // (30:0) {#if height !== undefined}
+    function create_if_block$2(ctx) {
+    	let div;
+    	let t1;
+    	let if_block_anchor;
+
+    	function select_block_type(ctx, dirty) {
+    		if (/*width*/ ctx[0] > 1220 * 0.9) return create_if_block_1$1;
+    		return create_else_block$1;
+    	}
+
+    	let current_block_type = select_block_type(ctx);
+    	let if_block = current_block_type(ctx);
+
+    	const block = {
+    		c: function create() {
+    			div = element("div");
+    			div.textContent = "Total number of migrants to a region";
+    			t1 = space();
+    			if_block.c();
+    			if_block_anchor = empty$1();
+    			attr_dev(div, "class", "svelte-19q25q2");
+    			add_location(div, file$4, 30, 2, 667);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div, anchor);
+    			insert_dev(target, t1, anchor);
+    			if_block.m(target, anchor);
+    			insert_dev(target, if_block_anchor, anchor);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block) {
+    				if_block.p(ctx, dirty);
+    			} else {
+    				if_block.d(1);
+    				if_block = current_block_type(ctx);
+
+    				if (if_block) {
+    					if_block.c();
+    					if_block.m(if_block_anchor.parentNode, if_block_anchor);
+    				}
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div);
+    			if (detaching) detach_dev(t1);
+    			if_block.d(detaching);
+    			if (detaching) detach_dev(if_block_anchor);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block$2.name,
+    		type: "if",
+    		source: "(30:0) {#if height !== undefined}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (59:4) {:else}
+    function create_else_block$1(ctx) {
+    	let svg;
+    	let g;
+    	let svg_width_value;
+    	let each_value_1 = /*legendD*/ ctx[4];
+    	validate_each_argument(each_value_1);
+    	let each_blocks = [];
+
+    	for (let i = 0; i < each_value_1.length; i += 1) {
+    		each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
+    	}
+
+    	const block = {
+    		c: function create() {
+    			svg = svg_element("svg");
+    			g = svg_element("g");
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].c();
+    			}
+
+    			add_location(g, file$4, 63, 6, 1446);
+    			attr_dev(svg, "width", svg_width_value = /*width*/ ctx[0] - 200);
+    			attr_dev(svg, "height", 120);
+    			add_location(svg, file$4, 59, 4, 1384);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, svg, anchor);
+    			append_dev(svg, g);
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].m(g, null);
+    			}
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*legendD, sScale*/ 20) {
+    				each_value_1 = /*legendD*/ ctx[4];
+    				validate_each_argument(each_value_1);
+    				let i;
+
+    				for (i = 0; i < each_value_1.length; i += 1) {
+    					const child_ctx = get_each_context_1(ctx, each_value_1, i);
+
+    					if (each_blocks[i]) {
+    						each_blocks[i].p(child_ctx, dirty);
+    					} else {
+    						each_blocks[i] = create_each_block_1(child_ctx);
+    						each_blocks[i].c();
+    						each_blocks[i].m(g, null);
+    					}
+    				}
+
+    				for (; i < each_blocks.length; i += 1) {
+    					each_blocks[i].d(1);
+    				}
+
+    				each_blocks.length = each_value_1.length;
+    			}
+
+    			if (dirty & /*width*/ 1 && svg_width_value !== (svg_width_value = /*width*/ ctx[0] - 200)) {
+    				attr_dev(svg, "width", svg_width_value);
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(svg);
+    			destroy_each(each_blocks, detaching);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_else_block$1.name,
+    		type: "else",
+    		source: "(59:4) {:else}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (34:4) {#if width > 1220 * 0.9}
+    function create_if_block_1$1(ctx) {
+    	let svg;
+    	let g;
+    	let each_value = /*legendD*/ ctx[4];
+    	validate_each_argument(each_value);
+    	let each_blocks = [];
+
+    	for (let i = 0; i < each_value.length; i += 1) {
+    		each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
+    	}
+
+    	const block = {
+    		c: function create() {
+    			svg = svg_element("svg");
+    			g = svg_element("g");
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].c();
+    			}
+
+    			add_location(g, file$4, 38, 6, 812);
+    			attr_dev(svg, "width", "200");
+    			attr_dev(svg, "height", /*legendH*/ ctx[3]);
+    			add_location(svg, file$4, 34, 4, 756);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, svg, anchor);
+    			append_dev(svg, g);
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].m(g, null);
+    			}
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*legendD, sScale*/ 20) {
+    				each_value = /*legendD*/ ctx[4];
+    				validate_each_argument(each_value);
+    				let i;
+
+    				for (i = 0; i < each_value.length; i += 1) {
+    					const child_ctx = get_each_context(ctx, each_value, i);
+
+    					if (each_blocks[i]) {
+    						each_blocks[i].p(child_ctx, dirty);
+    					} else {
+    						each_blocks[i] = create_each_block(child_ctx);
+    						each_blocks[i].c();
+    						each_blocks[i].m(g, null);
+    					}
+    				}
+
+    				for (; i < each_blocks.length; i += 1) {
+    					each_blocks[i].d(1);
+    				}
+
+    				each_blocks.length = each_value.length;
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(svg);
+    			destroy_each(each_blocks, detaching);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_1$1.name,
+    		type: "if",
+    		source: "(34:4) {#if width > 1220 * 0.9}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (65:8) {#each legendD as {width, height, value, text}
+    function create_each_block_1(ctx) {
+    	let use;
+    	let text_1;
+    	let t_value = /*text*/ ctx[7] + "";
+    	let t;
+
+    	const block = {
+    		c: function create() {
+    			use = svg_element("use");
+    			text_1 = svg_element("text");
+    			t = text$1(t_value);
+    			xlink_attr(use, "xlink:href", "#butterfly-0");
+    			attr_dev(use, "transform", "translate(" + (50 + 75 * /*i*/ ctx[9] + /*width*/ ctx[0] / 2) + ", " + (70 - /*height*/ ctx[1] / 2) + ") scale(" + /*sScale*/ ctx[2](/*value*/ ctx[6]) + ", " + /*sScale*/ ctx[2](/*value*/ ctx[6]) + ")");
+    			attr_dev(use, "stroke", "black");
+    			attr_dev(use, "stroke-width", "1");
+    			attr_dev(use, "fill", "black");
+    			attr_dev(use, "fill-opacity", "0.5");
+    			add_location(use, file$4, 65, 10, 1519);
+    			attr_dev(text_1, "x", 50 + 85 * /*i*/ ctx[9] + /*width*/ ctx[0] / 2);
+    			attr_dev(text_1, "y", 60 - /*height*/ ctx[1] / 2);
+    			attr_dev(text_1, "text-anchor", "middle");
+    			attr_dev(text_1, "class", "svelte-19q25q2");
+    			add_location(text_1, file$4, 73, 10, 1815);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, use, anchor);
+    			insert_dev(target, text_1, anchor);
+    			append_dev(text_1, t);
+    		},
+    		p: noop$2,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(use);
+    			if (detaching) detach_dev(text_1);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_each_block_1.name,
+    		type: "each",
+    		source: "(65:8) {#each legendD as {width, height, value, text}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (40:8) {#each legendD as {width, height, value, text}
+    function create_each_block(ctx) {
+    	let use;
+    	let text_1;
+    	let t_value = /*text*/ ctx[7] + "";
+    	let t;
+
+    	const block = {
+    		c: function create() {
+    			use = svg_element("use");
+    			text_1 = svg_element("text");
+    			t = text$1(t_value);
+    			xlink_attr(use, "xlink:href", "#butterfly-0");
+    			attr_dev(use, "transform", "translate(" + (100 - /*width*/ ctx[0] / 2) + ", " + (15 + /*i*/ ctx[9] * 65 + /*height*/ ctx[1] / 2) + ") scale(" + /*sScale*/ ctx[2](/*value*/ ctx[6]) + ", " + /*sScale*/ ctx[2](/*value*/ ctx[6]) + ")");
+    			attr_dev(use, "stroke", "black");
+    			attr_dev(use, "stroke-width", "1");
+    			attr_dev(use, "fill", "black");
+    			attr_dev(use, "fill-opacity", "0.5");
+    			add_location(use, file$4, 40, 10, 885);
+    			attr_dev(text_1, "x", "100");
+    			attr_dev(text_1, "y", 5 + /*i*/ ctx[9] * 65 + /*height*/ ctx[1] / 2);
+    			attr_dev(text_1, "text-anchor", "middle");
+    			attr_dev(text_1, "class", "svelte-19q25q2");
+    			add_location(text_1, file$4, 48, 10, 1182);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, use, anchor);
+    			insert_dev(target, text_1, anchor);
+    			append_dev(text_1, t);
+    		},
+    		p: noop$2,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(use);
+    			if (detaching) detach_dev(text_1);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_each_block.name,
+    		type: "each",
+    		source: "(40:8) {#each legendD as {width, height, value, text}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function create_fragment$4(ctx) {
+    	let if_block_anchor;
+    	let if_block = /*height*/ ctx[1] !== undefined && create_if_block$2(ctx);
+
+    	const block = {
+    		c: function create() {
+    			if (if_block) if_block.c();
+    			if_block_anchor = empty$1();
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			if (if_block) if_block.m(target, anchor);
+    			insert_dev(target, if_block_anchor, anchor);
+    		},
+    		p: function update(ctx, [dirty]) {
+    			if (/*height*/ ctx[1] !== undefined) {
+    				if (if_block) {
+    					if_block.p(ctx, dirty);
+    				} else {
+    					if_block = create_if_block$2(ctx);
+    					if_block.c();
+    					if_block.m(if_block_anchor.parentNode, if_block_anchor);
+    				}
+    			} else if (if_block) {
+    				if_block.d(1);
+    				if_block = null;
+    			}
+    		},
+    		i: noop$2,
+    		o: noop$2,
+    		d: function destroy(detaching) {
+    			if (if_block) if_block.d(detaching);
+    			if (detaching) detach_dev(if_block_anchor);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_fragment$4.name,
+    		type: "component",
+    		source: "",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function instance$4($$self, $$props, $$invalidate) {
+    	let { $$slots: slots = {}, $$scope } = $$props;
+    	validate_slots('Legend', slots, []);
+    	let { data } = $$props;
+    	let { width } = $$props;
+    	let { height } = $$props;
+    	const sScale = linear().domain(extent(data.features, d => d.properties.VALUE)).range([0.25, width / 1200]);
+    	let legendH = 400;
+
+    	let legendD = [
+    		{ value: 1000000, text: "1 million" },
+    		{ value: 5000000, text: "5 million" },
+    		{ value: 10000000, text: "10 million" }
+    	];
+
+    	legendD.map(d => {
+    		d.width = sScale(d.value) * 91;
+    		d.height = sScale(d.value) * 74;
+    		return d;
+    	});
+
+    	const writable_props = ['data', 'width', 'height'];
+
+    	Object.keys($$props).forEach(key => {
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<Legend> was created with unknown prop '${key}'`);
+    	});
+
+    	$$self.$$set = $$props => {
+    		if ('data' in $$props) $$invalidate(5, data = $$props.data);
+    		if ('width' in $$props) $$invalidate(0, width = $$props.width);
+    		if ('height' in $$props) $$invalidate(1, height = $$props.height);
+    	};
+
+    	$$self.$capture_state = () => ({
+    		scaleLinear: linear,
+    		extent,
+    		data,
+    		width,
+    		height,
+    		sScale,
+    		legendH,
+    		legendD
+    	});
+
+    	$$self.$inject_state = $$props => {
+    		if ('data' in $$props) $$invalidate(5, data = $$props.data);
+    		if ('width' in $$props) $$invalidate(0, width = $$props.width);
+    		if ('height' in $$props) $$invalidate(1, height = $$props.height);
+    		if ('legendH' in $$props) $$invalidate(3, legendH = $$props.legendH);
+    		if ('legendD' in $$props) $$invalidate(4, legendD = $$props.legendD);
+    	};
+
+    	if ($$props && "$$inject" in $$props) {
+    		$$self.$inject_state($$props.$$inject);
+    	}
+
+    	$$self.$$.update = () => {
+    		if ($$self.$$.dirty & /*width*/ 1) {
+    			{
+    				sScale.range([0.25, width / 1200]);
+    			}
+    		}
+    	};
+
+    	return [width, height, sScale, legendH, legendD, data];
+    }
+
+    class Legend extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+    		init$1(this, options, instance$4, create_fragment$4, safe_not_equal, { data: 5, width: 0, height: 1 });
+
+    		dispatch_dev("SvelteRegisterComponent", {
+    			component: this,
+    			tagName: "Legend",
+    			options,
+    			id: create_fragment$4.name
+    		});
+
+    		const { ctx } = this.$$;
+    		const props = options.props || {};
+
+    		if (/*data*/ ctx[5] === undefined && !('data' in props)) {
+    			console.warn("<Legend> was created without expected prop 'data'");
+    		}
+
+    		if (/*width*/ ctx[0] === undefined && !('width' in props)) {
+    			console.warn("<Legend> was created without expected prop 'width'");
+    		}
+
+    		if (/*height*/ ctx[1] === undefined && !('height' in props)) {
+    			console.warn("<Legend> was created without expected prop 'height'");
+    		}
+    	}
+
+    	get data() {
+    		throw new Error("<Legend>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set data(value) {
+    		throw new Error("<Legend>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get width() {
+    		throw new Error("<Legend>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set width(value) {
+    		throw new Error("<Legend>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get height() {
+    		throw new Error("<Legend>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set height(value) {
+    		throw new Error("<Legend>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+    }
+
+    function fade(node, { delay = 0, duration = 400, easing = identity$4 } = {}) {
         const o = +getComputedStyle(node).opacity;
         return {
             delay,
@@ -10299,7 +12134,7 @@ var app = (function () {
     /* src/Modal.svelte generated by Svelte v3.46.4 */
 
     const { Object: Object_1, window: window_1 } = globals;
-    const file$2 = "src/Modal.svelte";
+    const file$3 = "src/Modal.svelte";
 
     // (398:0) {#if Component}
     function create_if_block$1(ctx) {
@@ -10343,7 +12178,7 @@ var app = (function () {
     			attr_dev(div0, "class", div0_class_value = "" + (null_to_empty(/*state*/ ctx[1].classContent) + " svelte-1247dek"));
     			attr_dev(div0, "style", /*cssContent*/ ctx[9]);
     			toggle_class(div0, "content", !/*unstyled*/ ctx[0]);
-    			add_location(div0, file$2, 441, 8, 11015);
+    			add_location(div0, file$3, 441, 8, 11015);
     			attr_dev(div1, "class", div1_class_value = "" + (null_to_empty(/*state*/ ctx[1].classWindow) + " svelte-1247dek"));
     			attr_dev(div1, "role", "dialog");
     			attr_dev(div1, "aria-modal", "true");
@@ -10355,15 +12190,15 @@ var app = (function () {
     			attr_dev(div1, "aria-labelledby", div1_aria_labelledby_value = /*state*/ ctx[1].ariaLabelledBy || null);
     			attr_dev(div1, "style", /*cssWindow*/ ctx[8]);
     			toggle_class(div1, "window", !/*unstyled*/ ctx[0]);
-    			add_location(div1, file$2, 413, 6, 10068);
+    			add_location(div1, file$3, 413, 6, 10068);
     			attr_dev(div2, "class", div2_class_value = "" + (null_to_empty(/*state*/ ctx[1].classWindowWrap) + " svelte-1247dek"));
     			attr_dev(div2, "style", /*cssWindowWrap*/ ctx[7]);
     			toggle_class(div2, "wrap", !/*unstyled*/ ctx[0]);
-    			add_location(div2, file$2, 407, 4, 9935);
+    			add_location(div2, file$3, 407, 4, 9935);
     			attr_dev(div3, "class", div3_class_value = "" + (null_to_empty(/*state*/ ctx[1].classBg) + " svelte-1247dek"));
     			attr_dev(div3, "style", /*cssBg*/ ctx[6]);
     			toggle_class(div3, "bg", !/*unstyled*/ ctx[0]);
-    			add_location(div3, file$2, 398, 2, 9689);
+    			add_location(div3, file$3, 398, 2, 9689);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div3, anchor);
@@ -10685,7 +12520,7 @@ var app = (function () {
     			attr_dev(button, "aria-label", "Close modal");
     			attr_dev(button, "style", /*cssCloseButton*/ ctx[10]);
     			toggle_class(button, "close", !/*unstyled*/ ctx[0]);
-    			add_location(button, file$2, 432, 12, 10764);
+    			add_location(button, file$3, 432, 12, 10764);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, button, anchor);
@@ -10808,7 +12643,7 @@ var app = (function () {
     	return block;
     }
 
-    function create_fragment$4(ctx) {
+    function create_fragment$3(ctx) {
     	let t;
     	let current;
     	let mounted;
@@ -10902,7 +12737,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_fragment$4.name,
+    		id: create_fragment$3.name,
     		type: "component",
     		source: "",
     		ctx
@@ -10920,7 +12755,7 @@ var app = (function () {
     	};
     }
 
-    function instance$4($$self, $$props, $$invalidate) {
+    function instance$3($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Modal', slots, ['default']);
     	const dispatch = createEventDispatcher();
@@ -11433,8 +13268,8 @@ var app = (function () {
     		init$1(
     			this,
     			options,
-    			instance$4,
-    			create_fragment$4,
+    			instance$3,
+    			create_fragment$3,
     			safe_not_equal,
     			{
     				show: 22,
@@ -11470,7 +13305,7 @@ var app = (function () {
     			component: this,
     			tagName: "Modal",
     			options,
-    			id: create_fragment$4.name
+    			id: create_fragment$3.name
     		});
     	}
 
@@ -11670,9 +13505,9 @@ var app = (function () {
     const modal = writable(null);
 
     /* src/MapContainer.svelte generated by Svelte v3.46.4 */
-    const file$1 = "src/MapContainer.svelte";
+    const file$2 = "src/MapContainer.svelte";
 
-    // (31:2) {#if w !== undefined}
+    // (30:2) {#if w !== undefined}
     function create_if_block(ctx) {
     	let modal_1;
     	let current;
@@ -11725,22 +13560,45 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(31:2) {#if w !== undefined}",
+    		source: "(30:2) {#if w !== undefined}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (32:4) <Modal show={$modal} transitionBgProps={{ duration: 0 }} styleCloseButton={{cursor: "pointer"}} styleWindow={{"border-radius": "8px"}}>
+    // (31:4) <Modal show={$modal} transitionBgProps={{ duration: 0 }} styleCloseButton={{cursor: "pointer"}} styleWindow = {{"border-radius": "8px"}}>
     function create_default_slot(ctx) {
+    	let mapexplainer;
+    	let updating_hoveredRegionCode;
+    	let t0;
     	let svg;
     	let mappath;
     	let mappoints;
     	let updating_selectedRegion;
-    	let updating_hoveredRegionCode;
+    	let updating_hoveredRegionCode_1;
     	let updating_selectedCountry;
+    	let t1;
+    	let div;
+    	let legend;
     	let current;
+
+    	function mapexplainer_hoveredRegionCode_binding(value) {
+    		/*mapexplainer_hoveredRegionCode_binding*/ ctx[13](value);
+    	}
+
+    	let mapexplainer_props = { data: /*centroidsD*/ ctx[9] };
+
+    	if (/*hoveredRegionCode*/ ctx[1] !== void 0) {
+    		mapexplainer_props.hoveredRegionCode = /*hoveredRegionCode*/ ctx[1];
+    	}
+
+    	mapexplainer = new MapExplainer({
+    			props: mapexplainer_props,
+    			$$inline: true
+    		});
+
+    	binding_callbacks.push(() => bind$1(mapexplainer, 'hoveredRegionCode', mapexplainer_hoveredRegionCode_binding));
 
     	mappath = new MapPath({
     			props: {
@@ -11751,18 +13609,19 @@ var app = (function () {
     		});
 
     	function mappoints_selectedRegion_binding(value) {
-    		/*mappoints_selectedRegion_binding*/ ctx[13](value);
+    		/*mappoints_selectedRegion_binding*/ ctx[14](value);
     	}
 
     	function mappoints_hoveredRegionCode_binding(value) {
-    		/*mappoints_hoveredRegionCode_binding*/ ctx[14](value);
+    		/*mappoints_hoveredRegionCode_binding*/ ctx[15](value);
     	}
 
     	function mappoints_selectedCountry_binding(value) {
-    		/*mappoints_selectedCountry_binding*/ ctx[15](value);
+    		/*mappoints_selectedCountry_binding*/ ctx[16](value);
     	}
 
     	let mappoints_props = {
+    		width: /*w*/ ctx[4],
     		data: /*centroidsD*/ ctx[9],
     		regionFlow: /*regionFlow*/ ctx[12],
     		projection: /*projection*/ ctx[5],
@@ -11787,26 +13646,59 @@ var app = (function () {
     	binding_callbacks.push(() => bind$1(mappoints, 'hoveredRegionCode', mappoints_hoveredRegionCode_binding));
     	binding_callbacks.push(() => bind$1(mappoints, 'selectedCountry', mappoints_selectedCountry_binding));
 
+    	legend = new Legend({
+    			props: {
+    				width: /*w*/ ctx[4],
+    				height: /*h*/ ctx[6],
+    				data: /*centroidsD*/ ctx[9]
+    			},
+    			$$inline: true
+    		});
+
     	const block = {
     		c: function create() {
+    			create_component(mapexplainer.$$.fragment);
+    			t0 = space();
     			svg = svg_element("svg");
     			create_component(mappath.$$.fragment);
     			create_component(mappoints.$$.fragment);
+    			t1 = space();
+    			div = element("div");
+    			create_component(legend.$$.fragment);
+    			attr_dev(svg, "id", "world-map");
     			attr_dev(svg, "width", /*w*/ ctx[4]);
     			attr_dev(svg, "height", /*h*/ ctx[6]);
-    			add_location(svg, file$1, 32, 6, 990);
+    			add_location(svg, file$2, 32, 6, 1137);
+    			attr_dev(div, "id", "legend");
+    			attr_dev(div, "class", "svelte-1ya2ozk");
+    			add_location(div, file$2, 36, 6, 1506);
     		},
     		m: function mount(target, anchor) {
+    			mount_component(mapexplainer, target, anchor);
+    			insert_dev(target, t0, anchor);
     			insert_dev(target, svg, anchor);
     			mount_component(mappath, svg, null);
     			mount_component(mappoints, svg, null);
+    			insert_dev(target, t1, anchor);
+    			insert_dev(target, div, anchor);
+    			mount_component(legend, div, null);
     			current = true;
     		},
     		p: function update(ctx, dirty) {
+    			const mapexplainer_changes = {};
+
+    			if (!updating_hoveredRegionCode && dirty & /*hoveredRegionCode*/ 2) {
+    				updating_hoveredRegionCode = true;
+    				mapexplainer_changes.hoveredRegionCode = /*hoveredRegionCode*/ ctx[1];
+    				add_flush_callback(() => updating_hoveredRegionCode = false);
+    			}
+
+    			mapexplainer.$set(mapexplainer_changes);
     			const mappath_changes = {};
     			if (dirty & /*path*/ 128) mappath_changes.path = /*path*/ ctx[7];
     			mappath.$set(mappath_changes);
     			const mappoints_changes = {};
+    			if (dirty & /*w*/ 16) mappoints_changes.width = /*w*/ ctx[4];
     			if (dirty & /*projection*/ 32) mappoints_changes.projection = /*projection*/ ctx[5];
     			if (dirty & /*dataset*/ 8) mappoints_changes.datasets = /*dataset*/ ctx[3];
 
@@ -11816,10 +13708,10 @@ var app = (function () {
     				add_flush_callback(() => updating_selectedRegion = false);
     			}
 
-    			if (!updating_hoveredRegionCode && dirty & /*hoveredRegionCode*/ 2) {
-    				updating_hoveredRegionCode = true;
+    			if (!updating_hoveredRegionCode_1 && dirty & /*hoveredRegionCode*/ 2) {
+    				updating_hoveredRegionCode_1 = true;
     				mappoints_changes.hoveredRegionCode = /*hoveredRegionCode*/ ctx[1];
-    				add_flush_callback(() => updating_hoveredRegionCode = false);
+    				add_flush_callback(() => updating_hoveredRegionCode_1 = false);
     			}
 
     			if (!updating_selectedCountry && dirty & /*selectedCountry*/ 4) {
@@ -11837,22 +13729,36 @@ var app = (function () {
     			if (!current || dirty & /*h*/ 64) {
     				attr_dev(svg, "height", /*h*/ ctx[6]);
     			}
+
+    			const legend_changes = {};
+    			if (dirty & /*w*/ 16) legend_changes.width = /*w*/ ctx[4];
+    			if (dirty & /*h*/ 64) legend_changes.height = /*h*/ ctx[6];
+    			legend.$set(legend_changes);
     		},
     		i: function intro(local) {
     			if (current) return;
+    			transition_in(mapexplainer.$$.fragment, local);
     			transition_in(mappath.$$.fragment, local);
     			transition_in(mappoints.$$.fragment, local);
+    			transition_in(legend.$$.fragment, local);
     			current = true;
     		},
     		o: function outro(local) {
+    			transition_out(mapexplainer.$$.fragment, local);
     			transition_out(mappath.$$.fragment, local);
     			transition_out(mappoints.$$.fragment, local);
+    			transition_out(legend.$$.fragment, local);
     			current = false;
     		},
     		d: function destroy(detaching) {
+    			destroy_component(mapexplainer, detaching);
+    			if (detaching) detach_dev(t0);
     			if (detaching) detach_dev(svg);
     			destroy_component(mappath);
     			destroy_component(mappoints);
+    			if (detaching) detach_dev(t1);
+    			if (detaching) detach_dev(div);
+    			destroy_component(legend);
     		}
     	};
 
@@ -11860,14 +13766,14 @@ var app = (function () {
     		block,
     		id: create_default_slot.name,
     		type: "slot",
-    		source: "(32:4) <Modal show={$modal} transitionBgProps={{ duration: 0 }} styleCloseButton={{cursor: \\\"pointer\\\"}} styleWindow={{\\\"border-radius\\\": \\\"8px\\\"}}>",
+    		source: "(31:4) <Modal show={$modal} transitionBgProps={{ duration: 0 }} styleCloseButton={{cursor: \\\"pointer\\\"}} styleWindow = {{\\\"border-radius\\\": \\\"8px\\\"}}>",
     		ctx
     	});
 
     	return block;
     }
 
-    function create_fragment$3(ctx) {
+    function create_fragment$2(ctx) {
     	let section;
     	let section_resize_listener;
     	let current;
@@ -11877,9 +13783,10 @@ var app = (function () {
     		c: function create() {
     			section = element("section");
     			if (if_block) if_block.c();
-    			attr_dev(section, "class", "map__container");
-    			add_render_callback(() => /*section_elementresize_handler*/ ctx[16].call(section));
-    			add_location(section, file$1, 29, 0, 766);
+    			attr_dev(section, "id", "map__container");
+    			attr_dev(section, "class", "map__container svelte-1ya2ozk");
+    			add_render_callback(() => /*section_elementresize_handler*/ ctx[17].call(section));
+    			add_location(section, file$2, 28, 0, 807);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -11887,7 +13794,7 @@ var app = (function () {
     		m: function mount(target, anchor) {
     			insert_dev(target, section, anchor);
     			if (if_block) if_block.m(section, null);
-    			section_resize_listener = add_resize_listener(section, /*section_elementresize_handler*/ ctx[16].bind(section));
+    			section_resize_listener = add_resize_listener(section, /*section_elementresize_handler*/ ctx[17].bind(section));
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
@@ -11932,7 +13839,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_fragment$3.name,
+    		id: create_fragment$2.name,
     		type: "component",
     		source: "",
     		ctx
@@ -11941,7 +13848,7 @@ var app = (function () {
     	return block;
     }
 
-    function instance$3($$self, $$props, $$invalidate) {
+    function instance$2($$self, $$props, $$invalidate) {
     	let h;
     	let projection;
     	let path;
@@ -11957,7 +13864,6 @@ var app = (function () {
     	let centroidsD = dataset[0];
     	let outlineD = dataset[1];
     	let butterflies = dataset[2];
-    	let regions = dataset[8];
     	let regionFlow = dataset[9];
     	let w;
     	const writable_props = ['dataset', 'selectedRegion', 'hoveredRegionCode', 'selectedCountry'];
@@ -11965,6 +13871,11 @@ var app = (function () {
     	Object.keys($$props).forEach(key => {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<MapContainer> was created with unknown prop '${key}'`);
     	});
+
+    	function mapexplainer_hoveredRegionCode_binding(value) {
+    		hoveredRegionCode = value;
+    		$$invalidate(1, hoveredRegionCode);
+    	}
 
     	function mappoints_selectedRegion_binding(value) {
     		selectedRegion = value;
@@ -11996,8 +13907,10 @@ var app = (function () {
     	$$self.$capture_state = () => ({
     		geoNaturalEarth1,
     		geoPath,
+    		MapExplainer,
     		MapPath,
     		MapPoints,
+    		Legend,
     		Modal,
     		modal,
     		dataset,
@@ -12007,7 +13920,6 @@ var app = (function () {
     		centroidsD,
     		outlineD,
     		butterflies,
-    		regions,
     		regionFlow,
     		w,
     		projection,
@@ -12024,7 +13936,6 @@ var app = (function () {
     		if ('centroidsD' in $$props) $$invalidate(9, centroidsD = $$props.centroidsD);
     		if ('outlineD' in $$props) $$invalidate(10, outlineD = $$props.outlineD);
     		if ('butterflies' in $$props) $$invalidate(11, butterflies = $$props.butterflies);
-    		if ('regions' in $$props) regions = $$props.regions;
     		if ('regionFlow' in $$props) $$invalidate(12, regionFlow = $$props.regionFlow);
     		if ('w' in $$props) $$invalidate(4, w = $$props.w);
     		if ('projection' in $$props) $$invalidate(5, projection = $$props.projection);
@@ -12042,7 +13953,7 @@ var app = (function () {
     		}
 
     		if ($$self.$$.dirty & /*w, h*/ 80) {
-    			$$invalidate(5, projection = geoNaturalEarth1().fitSize([w, h], outlineD)); // .rotate([45, 0, 0]) would cut out Alaska
+    			$$invalidate(5, projection = geoNaturalEarth1().fitSize([w, h], outlineD).rotate([-5, 0, 0]));
     		}
 
     		if ($$self.$$.dirty & /*projection*/ 32) {
@@ -12064,6 +13975,7 @@ var app = (function () {
     		outlineD,
     		butterflies,
     		regionFlow,
+    		mapexplainer_hoveredRegionCode_binding,
     		mappoints_selectedRegion_binding,
     		mappoints_hoveredRegionCode_binding,
     		mappoints_selectedCountry_binding,
@@ -12075,7 +13987,7 @@ var app = (function () {
     	constructor(options) {
     		super(options);
 
-    		init$1(this, options, instance$3, create_fragment$3, safe_not_equal, {
+    		init$1(this, options, instance$2, create_fragment$2, safe_not_equal, {
     			dataset: 3,
     			selectedRegion: 0,
     			hoveredRegionCode: 1,
@@ -12086,7 +13998,7 @@ var app = (function () {
     			component: this,
     			tagName: "MapContainer",
     			options,
-    			id: create_fragment$3.name
+    			id: create_fragment$2.name
     		});
 
     		const { ctx } = this.$$;
@@ -12142,71 +14054,90 @@ var app = (function () {
     	}
     }
 
-    /* src/Overview.svelte generated by Svelte v3.46.4 */
-
-    function create_fragment$2(ctx) {
-    	const block = {
-    		c: noop$2,
-    		l: function claim(nodes) {
-    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
-    		},
-    		m: noop$2,
-    		p: noop$2,
-    		i: noop$2,
-    		o: noop$2,
-    		d: noop$2
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_fragment$2.name,
-    		type: "component",
-    		source: "",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    function instance$2($$self, $$props) {
-    	let { $$slots: slots = {}, $$scope } = $$props;
-    	validate_slots('Overview', slots, []);
-    	const writable_props = [];
-
-    	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<Overview> was created with unknown prop '${key}'`);
-    	});
-
-    	return [];
-    }
-
-    class Overview extends SvelteComponentDev {
-    	constructor(options) {
-    		super(options);
-    		init$1(this, options, instance$2, create_fragment$2, safe_not_equal, {});
-
-    		dispatch_dev("SvelteRegisterComponent", {
-    			component: this,
-    			tagName: "Overview",
-    			options,
-    			id: create_fragment$2.name
-    		});
-    	}
-    }
-
     /* src/Footer.svelte generated by Svelte v3.46.4 */
 
+    const file$1 = "src/Footer.svelte";
+
     function create_fragment$1(ctx) {
+    	let div;
+    	let article;
+    	let strong;
+    	let t1;
+    	let ul;
+    	let li0;
+    	let a0;
+    	let t3;
+    	let li1;
+    	let a1;
+    	let t5;
+    	let br0;
+    	let br1;
+    	let t6;
+
     	const block = {
-    		c: noop$2,
+    		c: function create() {
+    			div = element("div");
+    			article = element("article");
+    			strong = element("strong");
+    			strong.textContent = "Data sources:";
+    			t1 = space();
+    			ul = element("ul");
+    			li0 = element("li");
+    			a0 = element("a");
+    			a0.textContent = "GLOBALCIT citizenship law dataset";
+    			t3 = space();
+    			li1 = element("li");
+    			a1 = element("a");
+    			a1.textContent = "United Nations Population Division";
+    			t5 = text$1("\n    This is a group project for Information Design Studio 2 at Northeastern University's College of Arts, Media and Design.\n    ");
+    			br0 = element("br");
+    			br1 = element("br");
+    			t6 = text$1("\n    Special thanks to Prof. Todd Linkner for his valuable feedback!");
+    			add_location(strong, file$1, 2, 4, 22);
+    			attr_dev(a0, "href", "https://cadmus.eui.eu//handle/1814/73190");
+    			attr_dev(a0, "target", "_blank");
+    			add_location(a0, file$1, 5, 8, 81);
+    			attr_dev(li0, "class", "svelte-egefd5");
+    			add_location(li0, file$1, 4, 6, 68);
+    			attr_dev(a1, "href", "https://www.un.org/development/desa/pd/content/international-migrant-stock");
+    			attr_dev(a1, "target", "_blank");
+    			add_location(a1, file$1, 8, 8, 217);
+    			attr_dev(li1, "class", "svelte-egefd5");
+    			add_location(li1, file$1, 7, 6, 204);
+    			attr_dev(ul, "class", "svelte-egefd5");
+    			add_location(ul, file$1, 3, 4, 57);
+    			add_location(br0, file$1, 12, 4, 507);
+    			add_location(br1, file$1, 12, 8, 511);
+    			attr_dev(article, "class", "svelte-egefd5");
+    			add_location(article, file$1, 1, 2, 8);
+    			attr_dev(div, "class", "svelte-egefd5");
+    			add_location(div, file$1, 0, 0, 0);
+    		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
-    		m: noop$2,
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div, anchor);
+    			append_dev(div, article);
+    			append_dev(article, strong);
+    			append_dev(article, t1);
+    			append_dev(article, ul);
+    			append_dev(ul, li0);
+    			append_dev(li0, a0);
+    			append_dev(ul, t3);
+    			append_dev(ul, li1);
+    			append_dev(li1, a1);
+    			append_dev(article, t5);
+    			append_dev(article, br0);
+    			append_dev(article, br1);
+    			append_dev(article, t6);
+    		},
     		p: noop$2,
     		i: noop$2,
     		o: noop$2,
-    		d: noop$2
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div);
+    		}
     	};
 
     	dispatch_dev("SvelteRegisterBlock", {
@@ -12271,14 +14202,12 @@ var app = (function () {
     	return block;
     }
 
-    // (60:2) {:then dataset}
+    // (59:2) {:then dataset}
     function create_then_block(ctx) {
     	let mapcontainer;
     	let updating_selectedRegion;
     	let updating_hoveredRegionCode;
     	let updating_selectedCountry;
-    	let t;
-    	let overview;
     	let current;
 
     	function mapcontainer_selectedRegion_binding(value) {
@@ -12315,18 +14244,13 @@ var app = (function () {
     	binding_callbacks.push(() => bind$1(mapcontainer, 'selectedRegion', mapcontainer_selectedRegion_binding));
     	binding_callbacks.push(() => bind$1(mapcontainer, 'hoveredRegionCode', mapcontainer_hoveredRegionCode_binding));
     	binding_callbacks.push(() => bind$1(mapcontainer, 'selectedCountry', mapcontainer_selectedCountry_binding));
-    	overview = new Overview({ $$inline: true });
 
     	const block = {
     		c: function create() {
     			create_component(mapcontainer.$$.fragment);
-    			t = space();
-    			create_component(overview.$$.fragment);
     		},
     		m: function mount(target, anchor) {
     			mount_component(mapcontainer, target, anchor);
-    			insert_dev(target, t, anchor);
-    			mount_component(overview, target, anchor);
     			current = true;
     		},
     		p: function update(ctx, dirty) {
@@ -12356,18 +14280,14 @@ var app = (function () {
     		i: function intro(local) {
     			if (current) return;
     			transition_in(mapcontainer.$$.fragment, local);
-    			transition_in(overview.$$.fragment, local);
     			current = true;
     		},
     		o: function outro(local) {
     			transition_out(mapcontainer.$$.fragment, local);
-    			transition_out(overview.$$.fragment, local);
     			current = false;
     		},
     		d: function destroy(detaching) {
     			destroy_component(mapcontainer, detaching);
-    			if (detaching) detach_dev(t);
-    			destroy_component(overview, detaching);
     		}
     	};
 
@@ -12375,14 +14295,14 @@ var app = (function () {
     		block,
     		id: create_then_block.name,
     		type: "then",
-    		source: "(60:2) {:then dataset}",
+    		source: "(59:2) {:then dataset}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (56:18)      <div>       Loading...     </div>   {:then dataset}
+    // (55:18)      <div>       Loading...     </div>   {:then dataset}
     function create_pending_block(ctx) {
     	let div;
 
@@ -12391,7 +14311,7 @@ var app = (function () {
     			div = element("div");
     			div.textContent = "Loading...";
     			attr_dev(div, "class", "svelte-1brbny8");
-    			add_location(div, file, 56, 4, 1814);
+    			add_location(div, file, 55, 4, 1758);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -12408,7 +14328,7 @@ var app = (function () {
     		block,
     		id: create_pending_block.name,
     		type: "pending",
-    		source: "(56:18)      <div>       Loading...     </div>   {:then dataset}",
+    		source: "(55:18)      <div>       Loading...     </div>   {:then dataset}",
     		ctx
     	});
 
@@ -12418,7 +14338,9 @@ var app = (function () {
     function create_fragment(ctx) {
     	let main;
     	let title;
-    	let t;
+    	let t0;
+    	let t1;
+    	let footer;
     	let current;
     	title = new TItle({ $$inline: true });
 
@@ -12435,14 +14357,17 @@ var app = (function () {
     	};
 
     	handle_promise(/*promise*/ ctx[4], info);
+    	footer = new Footer({ $$inline: true });
 
     	const block = {
     		c: function create() {
     			main = element("main");
     			create_component(title.$$.fragment);
-    			t = space();
+    			t0 = space();
     			info.block.c();
-    			add_location(main, file, 53, 0, 1772);
+    			t1 = space();
+    			create_component(footer.$$.fragment);
+    			add_location(main, file, 52, 0, 1716);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -12450,10 +14375,12 @@ var app = (function () {
     		m: function mount(target, anchor) {
     			insert_dev(target, main, anchor);
     			mount_component(title, main, null);
-    			append_dev(main, t);
+    			append_dev(main, t0);
     			info.block.m(main, info.anchor = null);
     			info.mount = () => main;
-    			info.anchor = null;
+    			info.anchor = t1;
+    			append_dev(main, t1);
+    			mount_component(footer, main, null);
     			current = true;
     		},
     		p: function update(new_ctx, [dirty]) {
@@ -12464,6 +14391,7 @@ var app = (function () {
     			if (current) return;
     			transition_in(title.$$.fragment, local);
     			transition_in(info.block);
+    			transition_in(footer.$$.fragment, local);
     			current = true;
     		},
     		o: function outro(local) {
@@ -12474,6 +14402,7 @@ var app = (function () {
     				transition_out(block);
     			}
 
+    			transition_out(footer.$$.fragment, local);
     			current = false;
     		},
     		d: function destroy(detaching) {
@@ -12482,6 +14411,7 @@ var app = (function () {
     			info.block.d();
     			info.token = null;
     			info = null;
+    			destroy_component(footer);
     		}
     	};
 
@@ -12499,7 +14429,7 @@ var app = (function () {
     function parseData(datasets) {
     	// parse byCountryD
     	datasets[3].map(d => {
-    		d.n_acq_modes = +d.n_acq_modes;
+    		d.value = +d.value;
     	});
 
     	// parse by regionFlow
@@ -12519,19 +14449,21 @@ var app = (function () {
     	let promise = getData();
 
     	async function getData() {
-    		let mapCentroidsD = await json("data/mapData/region-centroid.geojson");
+    		let mapCentroidsD = await json("data/mapData/region-centroids.geojson");
     		let mapOutlineD = await json("data/mapData/world.geojson");
     		let butterflySvg1 = await text(butterflies[0]);
     		let butterflySvg2 = await text(butterflies[1]);
     		let butterflySvg3 = await text(butterflies[2]);
     		let butterflySvgs = [butterflySvg1, butterflySvg2, butterflySvg3];
-    		let byCountryD = await csv("data/acq_by_country.csv");
+    		let byCountryD = await csv("data/by_country.csv");
     		let warnings = await csv("data/warnings.csv");
     		let definitions = await csv("data/definitions.csv");
     		let questions = await csv("data/questions.csv");
     		let acqMode = await csv("data/modes_acq.csv");
     		let regions = await csv("data/regions.csv");
     		let regionFlow = await csv("data/region_flows.csv");
+    		let questionsToMode = await csv("data/questions_modes.csv");
+    		let modeA06a = await csv("data/modeA06a.csv");
 
     		$$invalidate(0, datasets = [
     			mapCentroidsD,
@@ -12543,7 +14475,9 @@ var app = (function () {
     			questions,
     			acqMode,
     			regions,
-    			regionFlow
+    			regionFlow,
+    			questionsToMode,
+    			modeA06a
     		]);
 
     		parseData(datasets);
@@ -12580,9 +14514,6 @@ var app = (function () {
     		csv,
     		Title: TItle,
     		MapContainer,
-    		CountryCardContainer,
-    		BigButterflyContainer,
-    		Overview,
     		Footer,
     		datasets,
     		selectedRegion,
