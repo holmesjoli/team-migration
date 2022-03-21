@@ -1,0 +1,35 @@
+restriction_warning,message
+residence,{cntry} requires residence to acquire citizenship. Please see country-specific notes.
+general,{cntry} may havea restriction to acquire citizenship. Please see-country-specific notes.
+age,{cntry} restricts citizenship acquisition based on age. Please see country-specific notes.
+mode,{cntry} has an mode restriction to acquire citizenship. Please see country-specific notes.
+public-service,{cntry} restricts acquisition of citizenship to those who served in a public-service-role. Please see country-specific notes.
+military,{cntry} restricts acquisition of citizenship to those who served in a military. Please see country-specific notes.
+parent-residence,{cntry} restricts citizenship to those whose parents reside or have resided in {cntry}. Please see country-specific notes.
+group,"{cntry} restricts acquisition of citizenship if you are part of a specific group (e.g. ethnicity, race or religion). Please see country-specific notes."
+father-birth,{cntry} requires father is also born in the country. Please see country-specific notes.
+parent-group,"{cntry} restricts acquisition of citizenship if parent is part of a specific group (e.g. ethnicity, race or religion). Please see country-specific notes."
+parent-resident,{cntry} requires your parent reside in {cntry} to acquire citizenship. Please see country-specific notes.
+dual,{cntry} has a dual citizenship restriction. Please see country-specific notes.
+wedlock,{cntry} requires child is born to married parents to acquire citizenship. Please see country-specific notes.
+father-citizen,{cntry} requires child is born to a father who is a citizen of {cntry}. Please see country-specific notes.
+spouse-female,{cntry} restricts acquisition of citizenship to the female spouse of a male citizen of {cntry}. Please see country-specific notes.
+spouse-female-residence,{cntry} restricts citizenship to the female spouse of a male citizen of {cntry} residing in {cntry}. Please see country-specific notes.
+spouse-male,{cntry} restricts acquisition of citizenship to the male spouse of a female citizen. Please see country-specific notes.
+spouse-gender,{cntry} restricts acquisition of citizenship by gender. Please see country-specific notes.
+spouse-group,"{cntry} restricts acquisition of citizenship if spouse of a citizen is part of a specific group (e.g. ethnicity, race or religion). Please see country-specific notes."
+generational,{cntry} restricts acquisition of citizenship only to children or grandchild. Please see country-specific notes.
+spousal,{cntry} restricts acquisition of citizenship only to the spouse. Please see country-specific notes.
+schooling-period,{cntry} restricts acquisition of citizenship to those who have schooled in {cntry} for a period of time. Please see country-specific notes.
+residence-period,{cntry} restricts acquisition of citizenship to those who have resided in {cntry} for a period of time. Please see country-specific notes.
+major-exceptio'ns,Please see country-specific notes.
+no-major-exceptions,Please see country-specific notes.
+no-provision,Please see country-specific notes.
+language-requirement-no-test,{cntry} restricts acquisition of citizenship to those who can speak and read the national language. Please see country-specific notes.
+language-requirement-test,{cntry} restricts acquisition of citizenship to those who can pass a test to prove they can speak and read the national language. Please see country-specific notes.
+civic-requirement-no-test,{cntry} restricts acquisition of citizenship to those who can have civic knowledge of {cntry}. Please see-country-specific notes.
+civic-requirement-test,{cntry} restricts acquisition of citizenship to those who can pass a test of the civic knowledge of {cntry}. Please see-country-specific notes.
+crimes,"{cntry} bars citizenship for specificed crimes, offences, or character queries. Please see country-specific notes."
+crimes-general-moral-character,"{cntry} bars citizenship for specificed crimes, offences, or character queries. Good moral character is required. Please see country-specific notes."
+moral-character,{cntry} restricts acquisition of citizenship to those with good moral character. Please see country-specific notes.
+economic-resources,{cntry} restricts acquisition of citizenship to those with economic resources. Please see country-specific notes.

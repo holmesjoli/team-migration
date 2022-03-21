@@ -1,0 +1,22 @@
+dest_loc,TOTAL_MIGRANTS,subregion,TOTAL_MIGRANTS_BINS
+905,19015190,Northern America,> 5 million
+906,869265,Eastern Asia,< 1 million
+910,684472,Eastern Africa,< 1 million
+911,309686,Middle Africa,"< 500,000"
+912,684472,Northern Africa,< 1 million
+913,381192,Southern Africa,"< 500,000"
+914,53602,Western Africa,"< 500,000"
+915,306271,Caribbean,"< 500,000"
+916,315657,Central America,"< 500,000"
+920,604923,South-eastern Asia,< 1 million
+922,4268667,Western Asia,< 5 million
+923,4225260,Eastern Europe,< 5 million
+924,3388932,Northern Europe,< 5 million
+925,2468646,Southern Europe,< 5 million
+926,9186937,Western Europe,> 5 million
+927,4586298,Australia and New Zealand,< 5 million
+928,41055,Melanesia,"< 500,000"
+931,764931,South America,< 1 million
+957,20073,Polynesia,"< 500,000"
+5500,2487050,Central Asia,< 5 million
+5501,653697,Southern Asia,< 1 million
